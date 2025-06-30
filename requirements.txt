@@ -1,0 +1,11 @@
+selenium
+screeninfo
+pandas
+requests
+beautifulsoup4
+lxml
+tqdm
+seaborn
+matplotlib
+fastapi[all]
+uvicorn
