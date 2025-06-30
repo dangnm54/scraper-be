@@ -1,0 +1,10 @@
+___Command
+run server: uvicorn main:app --reload 
+    - look inside 'main.py', find 'app' object to run
+    - '--reload' means auto restart server whenever save changes
+
+
+____vocab:
+- GET (Get Data): use when retrieve info from server.
+- POST (Send Data / Create Something): use when send new info to server, often to create something or trigger an action
+- uvicorn: server program installed earlier
