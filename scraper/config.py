@@ -1,14 +1,15 @@
 import random
 
 # __Proxy authen data
-proxy_user = "Waq8yminhd"
-proxy_password = "CdTDcgsX"
-proxy_ip = "103.149.13.200"
-proxy_port = "8173"
+proxy_user = "sgrgq_minhd"
+proxy_password = "XrGsPncf"
+proxy_ip = "171.229.243.144"
+proxy_port = "37495"
 
 
-driver_path = r'D:\software\other\cursor\python\airbnb_proj\msedgedriver.exe'
+driver_path = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\scraper\msedgedriver.exe'
 
+data_folder_path = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data'
 
 # __Website links
 main_website_url = 'https://www.airbnb.com.vn/homes'

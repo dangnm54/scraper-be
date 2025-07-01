@@ -8,14 +8,30 @@ import inspect
 import sys
 import traceback
 
-import scraper.utils as utl
-
-from config import wait_time
+from config import wait_time, data_folder_path
 from datetime import datetime
 from selenium.webdriver.common.by import By
 
 
 # -----------------------------------------------------------------------------------
+
+
+def log_error(e):
+
+    print(f'Error start @ Function: {inspect.currentframe().f_back.f_code.co_name} | {e}\n')
+
+    exc_type, exc_value, exc_traceback = sys.exc_info()
+    traceback_info = traceback.extract_tb(exc_traceback)
+    
+    traceback_level = 3
+    traceback_list = traceback_info[-traceback_level:]    # if requested level larger than actual list -> start from beginning of list
+    
+    for i, frame in enumerate(traceback_list):
+        print(f'__Error level #{i+1}__')
+        print(f'- Function: {frame.name}\n- File: {frame.filename}\n- Line #{frame.lineno}: {frame.line}')
+        print('-'*10)
+    print('-'*30)
+
 
 
 def list_dict_to_df(list_dict, index='ID'):
@@ -38,7 +54,7 @@ def merge_df(df1, df2):
 
 
 def df_to_csv(df, name=None):
-    folder_name = r'D:\software\other\cursor\python\airbnb_proj\file'
+    folder_name = data_folder_path
 
     current_time = datetime.now().strftime('%d_%m')
     csv_name = f'{name}_{current_time}.csv'
@@ -50,7 +66,7 @@ def df_to_csv(df, name=None):
         df.to_csv(full_csv_path, index=True, encoding='utf-8-sig')
         print(f'Dataframe saved to file: {full_csv_path}')
     except Exception as e:
-        print(f'Error saving file | {e}')
+        log_error(e)
 
     print('-'*30)
     return full_csv_path
@@ -117,7 +133,7 @@ def get_info_from_string(string, mode='int'):
         return target_word
     
     except Exception as e:
-        utl.log_error(e)
+        log_error(e)
         return None
 
 
@@ -153,7 +169,7 @@ def clean_text(string, mode=1):
         return clean_string
     
     except Exception as e:
-        utl.log_error(e)
+        log_error(e)
         return None
 
 
@@ -169,19 +185,5 @@ def print_pretty_dict(dict):
 
 
 
-def log_error(e):
 
-    print(f'Error start @ Function: {inspect.currentframe().f_back.f_code.co_name} | {e}\n')
-
-    exc_type, exc_value, exc_traceback = sys.exc_info()
-    tb_info = traceback.extract_tb(exc_traceback)
-    
-    traceback_level = 3
-    traceback_list = tb_info[-traceback_level:]    # if requested level larger than actual list -> start from beginning of list
-    
-    for i, frame in enumerate(traceback_list):
-        print(f'__Error level #{i+1}__')
-        print(f'- Function: {frame.name}\n- File: {frame.filename}\n- Line #{frame.lineno}: {frame.line}')
-        print('-'*10)
-    print('-'*30)
 

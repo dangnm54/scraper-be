@@ -1,4 +1,4 @@
-import scraper.utils as utl
+import utils as utl
 
 import time
 import inspect

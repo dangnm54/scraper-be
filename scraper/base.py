@@ -1,14 +1,14 @@
-from . import utils as utl          # import module from same directory (folder / package)
-from . import get_ipt as ipt
-from . import browser as brws
-from . import scrape_p1 as scr1
-from . import scrape_p2 as scr2
-from . import calculation as cal
-from . import dashboard as dshb
+import utils as utl          # import module from same directory (folder / package)
+import get_ipt as ipt
+import browser as brws
+import scrape_p1 as scr1
+import scrape_p2 as scr2
+import calculation as cal
+import dashboard as dshb
 
-from .config import proxy_user, proxy_password, proxy_ip, proxy_port
-from .config import driver_path, wait_time
-from .config import main_website_url, ip_website_url
+from config import proxy_user, proxy_password, proxy_ip, proxy_port
+from config import driver_path, wait_time
+from config import main_website_url, ip_website_url
 
 import matplotlib.pyplot as plt
 
@@ -28,7 +28,7 @@ def scrape_p1(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path,
         print(f"An error in 'if driver'")
 
     original_tab_handle = scr1.go_to_website(driver, wait, wait_time, main_website_url, view='main_page')
-    scr1.check_proxy_ip(driver, wait, wait_time, ip_website_url, original_tab_handle)
+    # scr1.check_proxy_ip(driver, wait, wait_time, ip_website_url, original_tab_handle)
 
     scr1.search_location(driver, wait_time, location)
     scr1.search_date(driver, wait_time)
@@ -211,8 +211,9 @@ def run_full_flow(
         collect_booking_rate: bool = False
 ):
     
+    
     print("API Request Received")
-    print("""
+    print(f"""
         - Location: {location}
         - Number of guests: {num_guest}
         - Number of properties: {num_property}
@@ -230,22 +231,22 @@ def run_full_flow(
         # property_link_csv_path = r'D:\software\other\cursor\python\airbnb_proj\file\D3_link_20_05_final.csv'
 
 
-        property_full_csv_path = scrape_p2(
-            proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, property_link_csv_path,
-            file_name, collect_host_data, collect_booking_rate
-        )
-        print(f"Phase 2 (detail scraping) completed. File saved to: {property_full_csv_path}")
-        # property_full_csv_path = r'D:\software\other\cursor\python\airbnb_proj\file\D3_full_03_06_final.csv'
+        # property_full_csv_path = scrape_p2(
+        #     proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, property_link_csv_path,
+        #     file_name, collect_host_data, collect_booking_rate
+        # )
+        # print(f"Phase 2 (detail scraping) completed. File saved to: {property_full_csv_path}")
+        # # property_full_csv_path = r'D:\software\other\cursor\python\airbnb_proj\file\D3_full_03_06_final.csv'
 
 
-        # cal_data = calculate_data(property_full_csv_path)
-        # draw_dashboard(property_full_csv_path, cal_data)
+        # # cal_data = calculate_data(property_full_csv_path)
+        # # draw_dashboard(property_full_csv_path, cal_data)
 
-        return {
-            "status": "success",
-            "message": "scraping process completed",
-            "output_file": property_full_csv_path
-        }
+        # return {
+        #     "status": "success",
+        #     "message": "scraping process completed",
+        #     "output_file": property_full_csv_path
+        # }
 
 
     except Exception as e:
@@ -258,7 +259,14 @@ def run_full_flow(
 
 
 
-
+run_full_flow(
+    file_name = 'HoTay_HN',
+    location = 'Ho Tay, hanoi',
+    num_guest = 2,
+    num_property = 10,
+    collect_host_data = True,
+    collect_booking_rate = True
+)
 
 
 

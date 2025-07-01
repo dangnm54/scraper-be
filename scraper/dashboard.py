@@ -1,4 +1,4 @@
-import scraper.utils as utl
+import utils as utl
 
 import matplotlib.pyplot as plt
 import seaborn as sns
