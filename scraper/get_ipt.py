@@ -1,5 +1,5 @@
 from datetime import date, datetime, timedelta
-#from dateutil.relativedelta import relativedelta
+# from dateutil.relativedelta import relativedelta
 
 
 # -----------------------------------------------------------------------------------
@@ -49,7 +49,6 @@ def get_date_for_book_data():
 
         # last_1m_date = today_date - relativedelta(months=1)
         # last_1m_month = last_1m_date.month
-
         # last_3m_month = [last_1m_month-2, last_1m_month-1, last_1m_month]
 
         next_1m_month = today_month + 1

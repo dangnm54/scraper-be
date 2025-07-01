@@ -1,21 +1,24 @@
-import scraper.utils as utl
-import scraper.get_ipt as ipt
-import browser as brws
-import scraper.scrape_p1 as scr1
-import scraper.scrape_p2 as scr2
-import calculation as cal
-import scraper.dashboard as dshb
+from . import utils as utl          # import module from same directory (folder / package)
+from . import get_ipt as ipt
+from . import browser as brws
+from . import scrape_p1 as scr1
+from . import scrape_p2 as scr2
+from . import calculation as cal
+from . import dashboard as dshb
 
-from config import proxy_user, proxy_password, proxy_ip, proxy_port
-from config import driver_path, wait_time
-from config import main_website_url, ip_website_url
+from .config import proxy_user, proxy_password, proxy_ip, proxy_port
+from .config import driver_path, wait_time
+from .config import main_website_url, ip_website_url
 
 import matplotlib.pyplot as plt
 
 # -----------------------------------------------------------------------------------
 
 
-def scrape_p1(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path):
+def scrape_p1(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path,
+            file_name: str, location: str, num_guest: int, num_property: int
+    ):
+    
     extension_dir = brws.crt_proxy_helper_extention(proxy_user, proxy_password, proxy_ip, proxy_port)
     options_1 = brws.config_basic_driver_setting()
     options_2 = brws.config_advanced_driver_setting(extension_dir, options_1)
@@ -23,8 +26,6 @@ def scrape_p1(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path):
 
     if driver is None or wait is None:
         print(f"An error in 'if driver'")
-
-    location, num_guest, num_property = ipt.get_basic_search_info()
 
     original_tab_handle = scr1.go_to_website(driver, wait, wait_time, main_website_url, view='main_page')
     scr1.check_proxy_ip(driver, wait, wait_time, ip_website_url, original_tab_handle)
@@ -36,8 +37,7 @@ def scrape_p1(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path):
 
     property_link_list = scr1.view_page_get_all_link(driver, wait, wait_time, num_property)
     property_link_df = utl.list_dict_to_df(property_link_list, index='ID')
-    property_link_csv_path = utl.df_to_csv(property_link_df, name='D1_link')
-
+    property_link_csv_path = utl.df_to_csv(property_link_df, name=f'{file_name}_link')
 
     brws.close_browser(driver)
 
@@ -45,14 +45,18 @@ def scrape_p1(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path):
 
 
 
-def scrape_p2(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, csv_path):
+
+
+def scrape_p2(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, property_link_csv_path,
+            file_name: str, collect_host_data: bool=False, collect_booking_rate: bool=False
+    ):
 
     extension_dir = brws.crt_proxy_helper_extention(proxy_user, proxy_password, proxy_ip, proxy_port)
     options_1 = brws.config_basic_driver_setting()
     options_2 = brws.config_advanced_driver_setting(extension_dir, options_1)
     driver, wait = brws.start_browser(driver_path, options_2)
 
-    property_link_df = utl.csv_to_df(csv_path, index='ID', mode=1)
+    property_link_df = utl.csv_to_df(property_link_csv_path, index='ID', mode=1)
     property_detail_list = []
 
     if driver is None or wait is None:
@@ -73,7 +77,7 @@ def scrape_p2(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, csv
             'Bath_num': None,
             'Location': None,
 
-            'Utility_num': None,
+            # 'Utility_num': None,
             # 'Utility_bathroom': None,
             # 'Utility_bedroom': None,
             # 'Utility_entertain': None,
@@ -123,21 +127,23 @@ def scrape_p2(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, csv
             overview_data = scr2.overview_info(driver, wait)
             property_detail_data.update(overview_data)
 
-            utility_data = scr2.utility_info(driver, wait_time)
-            property_detail_data.update(utility_data)
+            # utility_data = scr2.utility_info(driver, wait_time)
+            # property_detail_data.update(utility_data)
     
             rating_data = scr2.rating_info(driver)
             property_detail_data.update(rating_data)
 
-            host_data = scr2.host_info(driver)
-            property_detail_data.update(host_data)
+            if collect_host_data:
+                host_data = scr2.host_info(driver)
+                property_detail_data.update(host_data)
 
             # co_host_data = scr2.co_host_info(driver)
             # property_detail_data.update(co_host_data)
 
-            month_data = ipt.get_date_for_book_data()
-            book_rate_data = scr2.book_rate_info(driver, wait_time, month_data)
-            property_detail_data.update(book_rate_data)
+            if collect_booking_rate:
+                month_data = ipt.get_date_for_book_data()
+                book_rate_data = scr2.book_rate_info(driver, wait_time, month_data)
+                property_detail_data.update(book_rate_data)
 
         except Exception as e:
             utl.log_error(e)
@@ -155,8 +161,10 @@ def scrape_p2(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, csv
 
     property_detail_df = utl.list_dict_to_df(property_detail_list, index='ID') 
     property_full_df = utl.merge_df(property_link_df, property_detail_df)
-    property_full_csv_path = utl.df_to_csv(property_full_df, name='D1_full')
+    property_full_csv_path = utl.df_to_csv(property_full_df, name=f'{file_name}_full')
     return property_full_csv_path
+
+
 
 
 
@@ -167,6 +175,8 @@ def calculate_data(csv_path):
     cnt_rating_cate_df = cal.cnt_rating_categories(property_full_df)
 
     return cnt_rating_cate_df
+
+
 
 
 
@@ -188,15 +198,71 @@ def draw_dashboard(csv_path, cal_data):
     plt.show()
 
 
+# -----------------------------------------------------------------------------------
 
-# property_link_csv_path = scrape_p1(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path)
-property_link_csv_path = r'D:\software\other\cursor\python\airbnb_proj\file\D3_link_20_05_final.csv'
 
-# property_full_csv_path = scrape_p2(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, property_link_csv_path)
-property_full_csv_path = r'D:\software\other\cursor\python\airbnb_proj\file\D3_full_03_06_final.csv'
 
-# cal_data = calculate_data(property_full_csv_path)
-# cal_data = None
+def run_full_flow(
+        file_name: str,
+        location: str,
+        num_guest: int,
+        num_property: int,
+        collect_host_data: bool = False,
+        collect_booking_rate: bool = False
+):
+    
+    print("API Request Received")
+    print("""
+        - Location: {location}
+        - Number of guests: {num_guest}
+        - Number of properties: {num_property}
+        - Collect host data: {collect_host_data}
+        - Collect booking rate: {collect_booking_rate}
+    """)
 
-# draw_dashboard(property_full_csv_path, cal_data)
+
+    try:
+        property_link_csv_path = scrape_p1(
+            proxy_user, proxy_password, proxy_ip, proxy_port, driver_path,
+            file_name, location, num_guest, num_property
+        )
+        print(f"Phase 1 (link scraping) completed. File saved to: {property_link_csv_path}")
+        # property_link_csv_path = r'D:\software\other\cursor\python\airbnb_proj\file\D3_link_20_05_final.csv'
+
+
+        property_full_csv_path = scrape_p2(
+            proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, property_link_csv_path,
+            file_name, collect_host_data, collect_booking_rate
+        )
+        print(f"Phase 2 (detail scraping) completed. File saved to: {property_full_csv_path}")
+        # property_full_csv_path = r'D:\software\other\cursor\python\airbnb_proj\file\D3_full_03_06_final.csv'
+
+
+        # cal_data = calculate_data(property_full_csv_path)
+        # draw_dashboard(property_full_csv_path, cal_data)
+
+        return {
+            "status": "success",
+            "message": "scraping process completed",
+            "output_file": property_full_csv_path
+        }
+
+
+    except Exception as e:
+        utl.log_error(e)
+        return {
+            "status": "error",
+            "message": f"scraping process failed: {str(e)}"
+        }
+
+
+
+
+
+
+
+
+
+
+
 

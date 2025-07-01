@@ -4,7 +4,18 @@ run server: uvicorn main:app --reload
     - '--reload' means auto restart server whenever save changes
 
 
-____vocab:
+____Vocab
 - GET (Get Data): use when retrieve info from server.
 - POST (Send Data / Create Something): use when send new info to server, often to create something or trigger an action
 - uvicorn: server program installed earlier
+
+
+
+
+____Checklist
+
+
+- check if selenium can be viewed on FE
+- test all api
+- step for raw data
+- step for clean data
