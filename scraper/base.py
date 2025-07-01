@@ -242,11 +242,11 @@ def run_full_flow(
         # # cal_data = calculate_data(property_full_csv_path)
         # # draw_dashboard(property_full_csv_path, cal_data)
 
-        # return {
-        #     "status": "success",
-        #     "message": "scraping process completed",
-        #     "output_file": property_full_csv_path
-        # }
+        return {
+            "status": "success",
+            "message": "scraping process completed",
+            "output_file": property_link_csv_path
+        }
 
 
     except Exception as e:

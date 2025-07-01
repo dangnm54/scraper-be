@@ -1,8 +1,16 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel 
+from typing import Optional
+
+from scraper.base import run_full_flow
+import scraper.utils as utl
 
 
-# ____________ Create "FastAPI application" instance -> manages all web routes and functions
+# -------------------------------------------------------------------
+
+
+# ____________ Create "FastAPI app" instance -> manages all web routes + functions
 app = FastAPI()
 
 
@@ -25,10 +33,46 @@ app.add_middleware(
 )
 
 
+# define data structure for request from FE
+class ScraperSettings(BaseModel):
+    file_name: Optional[str] = None # Optional, if not defined, will be None
+    location: str
+    num_guests: int
+    num_properties: int
+    collect_overview_data: bool = False 
+    collect_host_data: bool = False
+    collect_booking_rate: bool = False
 
 
 
 # ____________ Define "API Endpoint" (specific URL server will respond to)
+
+
+@app.post("/api/run")
+async def run_scraper_api(settings: ScraperSettings):
+    """
+    Receives scraper settings from FE and triggers scraping process.
+    """
+
+    print(f"Received FE data: {settings.dict()}")
+
+    try:
+        
+        result = run_full_flow(
+            file_name = settings.file_name,
+            location = settings.location,
+            num_guest = settings.num_guests,
+            num_property = settings.num_properties,
+            collect_host_data = settings.collect_host_data,
+            collect_booking_rate = settings.collect_booking_rate
+        )
+        return result
+
+    except Exception as e:
+        utl.log_error(e)
+        return result
+
+
 
 # @app.get("/") means: "When someone sends a GET request to the '/' (root) address,
     # '@' -> decorator | means 'when ever someone visit' 
