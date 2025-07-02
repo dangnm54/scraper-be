@@ -1,4 +1,4 @@
-import utils as utl
+import scraper.utils as utl
 
 import time
 import lxml

@@ -8,7 +8,7 @@ import inspect
 import sys
 import traceback
 
-from config import wait_time, data_folder_path
+from scraper.config import wait_time, data_folder_path
 from datetime import datetime
 from selenium.webdriver.common.by import By
 

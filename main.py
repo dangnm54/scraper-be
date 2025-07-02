@@ -37,9 +37,8 @@ app.add_middleware(
 class ScraperSettings(BaseModel):
     file_name: Optional[str] = None # Optional, if not defined, will be None
     location: str
-    num_guests: int
-    num_properties: int
-    collect_overview_data: bool = False 
+    num_guest: int
+    num_property: int
     collect_host_data: bool = False
     collect_booking_rate: bool = False
 
@@ -53,16 +52,16 @@ async def run_scraper_api(settings: ScraperSettings):
     """
     Receives scraper settings from FE and triggers scraping process.
     """
-
-    print(f"Received FE data: {settings.dict()}")
+    # print(f"Received FE data: {settings.dict()}")
+    print(f"Received FE data: {settings.model_dump()}")
 
     try:
         
         result = run_full_flow(
             file_name = settings.file_name,
             location = settings.location,
-            num_guest = settings.num_guests,
-            num_property = settings.num_properties,
+            num_guest = settings.num_guest,
+            num_property = settings.num_property,
             collect_host_data = settings.collect_host_data,
             collect_booking_rate = settings.collect_booking_rate
         )
@@ -80,9 +79,4 @@ async def run_scraper_api(settings: ScraperSettings):
     # will run function right below the line
 @app.get("/")
 def read_root():
-    return {"message": "Hello from your Python Backend! hahaha"}
-
-# Let's add another simple endpoint for testing
-@app.get("/hello")
-def say_hello():
-    return {"greeting": "Greetings, user!"}
+    return {"message": "Seeing this output means BE is running ok hhehe"}

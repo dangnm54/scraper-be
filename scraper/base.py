@@ -1,14 +1,14 @@
-import utils as utl          # import module from same directory (folder / package)
-import get_ipt as ipt
-import browser as brws
-import scrape_p1 as scr1
-import scrape_p2 as scr2
-import calculation as cal
-import dashboard as dshb
+import scraper.utils as utl          # import module from same directory (folder / package)
+import scraper.get_ipt as ipt
+import scraper.browser as brws
+import scraper.scrape_p1 as scr1
+import scraper.scrape_p2 as scr2
+import scraper.calculation as cal
+import scraper.dashboard as dshb
 
-from config import proxy_user, proxy_password, proxy_ip, proxy_port
-from config import driver_path, wait_time
-from config import main_website_url, ip_website_url
+from scraper.config import proxy_user, proxy_password, proxy_ip, proxy_port
+from scraper.config import driver_path, wait_time
+from scraper.config import main_website_url, ip_website_url
 
 import matplotlib.pyplot as plt
 
@@ -259,14 +259,14 @@ def run_full_flow(
 
 
 
-run_full_flow(
-    file_name = 'HoTay_HN',
-    location = 'Ho Tay, hanoi',
-    num_guest = 2,
-    num_property = 10,
-    collect_host_data = True,
-    collect_booking_rate = True
-)
+# run_full_flow(
+#     file_name = 'HoTay_HN',
+#     location = 'Ho Tay, hanoi',
+#     num_guest = 2,
+#     num_property = 10,
+#     collect_host_data = True,
+#     collect_booking_rate = True
+# )
 
 
 
