@@ -223,11 +223,11 @@ def run_full_flow(
 
 
     try:
-        property_link_csv_path = scrape_p1(
-            proxy_user, proxy_password, proxy_ip, proxy_port, driver_path,
-            file_name, location, num_guest, num_property
-        )
-        print(f"Phase 1 (link scraping) completed. File saved to: {property_link_csv_path}")
+        # property_link_csv_path = scrape_p1(
+        #     proxy_user, proxy_password, proxy_ip, proxy_port, driver_path,
+        #     file_name, location, num_guest, num_property
+        # )
+        # print(f"Phase 1 (link scraping) completed. File saved to: {property_link_csv_path}")
         # property_link_csv_path = r'D:\software\other\cursor\python\airbnb_proj\file\D3_link_20_05_final.csv'
 
 
@@ -242,10 +242,11 @@ def run_full_flow(
         # # cal_data = calculate_data(property_full_csv_path)
         # # draw_dashboard(property_full_csv_path, cal_data)
 
+
         return {
             "status": "success",
             "message": "scraping process completed",
-            "output_file": property_link_csv_path
+            # "output_file": property_link_csv_path
         }
 
 

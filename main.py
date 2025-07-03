@@ -1,10 +1,13 @@
+import os
+from datetime import datetime
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel 
 from typing import Optional
 
-from scraper.base import run_full_flow
 import scraper.utils as utl
+from scraper.base import run_full_flow
 
 
 # -------------------------------------------------------------------
@@ -42,6 +45,13 @@ class ScraperSettings(BaseModel):
     collect_host_data: bool = False
     collect_booking_rate: bool = False
 
+
+class FileMetadata(BaseModel):
+    id: int
+    file_name: str
+    date_created: str
+    item_count: int
+    path: str
 
 
 # ____________ Define "API Endpoint" (specific URL server will respond to)
