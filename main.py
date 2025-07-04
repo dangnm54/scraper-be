@@ -7,8 +7,8 @@ from pydantic import BaseModel
 from typing import Optional
 
 import scraper.utils as utl
+import scraper.file_op as fop
 from scraper.base import run_full_flow
-from scraper.config import data_folder_path
 
 
 # -------------------------------------------------------------------
@@ -82,22 +82,22 @@ def read_root():
 
 
 @app.post("/api/run")
-async def run_scraper_api(settings: ScraperSettings):
+async def run_scraper_api(fe_input: ScraperSettings):
     """
     Receives scraper settings from FE and triggers scraping process.
     """
     # print(f"Received FE data: {settings.dict()}")
-    print(f"Received FE data: {settings.model_dump()}")
+    print(f"Received FE data: {fe_input.model_dump()}")
 
     try:
         
         result = run_full_flow(
-            file_name = settings.file_name,
-            location = settings.location,
-            num_guest = settings.num_guest,
-            num_property = settings.num_property,
-            collect_host_data = settings.collect_host_data,
-            collect_booking_rate = settings.collect_booking_rate
+            file_name = fe_input.file_name,
+            location = fe_input.location,
+            num_guest = fe_input.num_guest,
+            num_property = fe_input.num_property,
+            collect_host_data = fe_input.collect_host_data,
+            collect_booking_rate = fe_input.collect_booking_rate
         )
         return result
 
@@ -114,56 +114,26 @@ async def give_list_files():
     """
     Scans 'data' folder and return list of file metadata
     """
-
-    data_path = data_folder_path
-    file_list = []
-    file_id = 1
-
-    if not os.path.exists(data_path):
-        return []       # return empty list if directory not exist
-
-    for file_name in os.listdir(data_path):
-        if file_name.endswith(".csv") and "link" in file_name.lower():
-            file_path = os.path.join(data_path, file_name)
-
-            # get file date
-            try:
-                timestamp = os.path.getmtime(file_path) # get modification time
-                file_date = datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d')
-            except Exception as e:
-                utl.log_error(e)
-                file_date = 'Unknown date'
-                
-            # get item count
-            item_count = 0
-            try:
-                with open(file_path, 'r', encoding='utf-8') as f:
-                    item_count = sum(1 for line in f) - 1 # Subtract 1 for header row
-                    if item_count < 0: item_count = 0
-            except Exception:
-                item_count = 0
-
-            file_list.append(
-                FileMetadata(
-                    id = file_id,
-                    file_name = file_name,
-                    date_created = file_date,
-                    item_count = item_count,
-                    path = file_path
-                )
+    try:
+        file_metadata_list = fop.get_file_metadata_list()
+        
+        # Convert to FileMetadata objects
+        file_list = [
+            FileMetadata(
+                id=item['id'],
+                file_name=item['file_name'],
+                date_created=item['date_created'],
+                item_count=item['item_count'],
+                path=item['path']
             )
-            file_id += 1
-
-            # print(f'file name: {file_name}')
-            # print(f'date created: {file_date}')
-            # print(f'item count: {item_count}')
-            # print(f'path: {file_path}')
-            # print('-'*10)
-
-
-    file_list.sort(key=lambda f: f.date_created, reverse=True)
-
-    return file_list
+            for item in file_metadata_list
+        ]
+        
+        return file_list
+        
+    except Exception as e:
+        utl.log_error(e)
+        return []
 
 
 

@@ -1,5 +1,6 @@
 try:
     # When running from root directory (FastAPI)
+    import scraper.file_op as fop
     import scraper.utils as utl
     import scraper.get_ipt as ipt
     import scraper.browser as brws
@@ -12,6 +13,7 @@ try:
     from scraper.config import main_website_url, ip_website_url
 except ImportError:
     # When running directly from scraper directory
+    import file_op as fop
     import utils as utl
     import get_ipt as ipt
     import browser as brws
@@ -49,8 +51,8 @@ def scrape_p1(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path,
     scr1.press_search(driver)
 
     property_link_list = scr1.view_page_get_all_link(driver, wait, wait_time, num_property)
-    property_link_df = utl.list_dict_to_df(property_link_list, index='ID')
-    property_link_csv_path = utl.df_to_csv(property_link_df, name=f'{file_name}_link')
+    property_link_df = fop.list_dict_to_df(property_link_list, index='ID')
+    property_link_csv_path = fop.df_to_csv(property_link_df, name=f'{file_name}_link')
 
     brws.close_browser(driver)
 
@@ -69,7 +71,7 @@ def scrape_p2(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, pro
     options_2 = brws.config_advanced_driver_setting(extension_dir, options_1)
     driver, wait = brws.start_browser(driver_path, options_2)
 
-    property_link_df = utl.csv_to_df(property_link_csv_path, index='ID', mode=1)
+    property_link_df = fop.csv_to_df(property_link_csv_path, index='ID', mode=1)
     property_detail_list = []
 
     if driver is None or wait is None:
@@ -173,8 +175,8 @@ def scrape_p2(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, pro
     brws.close_browser(driver)  
 
     property_detail_df = utl.list_dict_to_df(property_detail_list, index='ID') 
-    property_full_df = utl.merge_df(property_link_df, property_detail_df)
-    property_full_csv_path = utl.df_to_csv(property_full_df, name=f'{file_name}_full')
+    property_full_df = fop.merge_df(property_link_df, property_detail_df)
+    property_full_csv_path = fop.df_to_csv(property_full_df, name=f'{file_name}_full')
     return property_full_csv_path
 
 
@@ -183,7 +185,7 @@ def scrape_p2(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, pro
 
 def calculate_data(csv_path):
 
-    property_full_df = utl.csv_to_df(csv_path, index='ID', mode=2)
+    property_full_df = fop.csv_to_df(csv_path, index='ID', mode=2)
 
     cnt_rating_cate_df = cal.cnt_rating_categories(property_full_df)
 
@@ -195,7 +197,7 @@ def calculate_data(csv_path):
 
 def draw_dashboard(csv_path, cal_data):
     
-    property_full_df = utl.csv_to_df(csv_path, index='ID', mode=2)
+    property_full_df = fop.csv_to_df(csv_path, index='ID', mode=2)
 
     fig, axes = plt.subplots(2, 3, figsize=(15, 10))
     axes_list = axes.flatten()

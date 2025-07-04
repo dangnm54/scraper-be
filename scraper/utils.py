@@ -1,20 +1,15 @@
-import os
 import json
 import time
 import unicodedata
-import pandas as pd
 
 import inspect
 import sys
 import traceback
-from datetime import datetime
-from selenium.webdriver.common.by import By
-
 
 try:
-    from scraper.config import wait_time, data_folder_path
+    from scraper.config import wait_time
 except ImportError:
-    from config import wait_time, data_folder_path
+    from config import wait_time
 
 
 
@@ -36,65 +31,6 @@ def log_error(e):
         print(f'- Function: {frame.name}\n- File: {frame.filename}\n- Line #{frame.lineno}: {frame.line}')
         print('-'*10)
     print('-'*30)
-
-
-
-def list_dict_to_df(list_dict, index='ID'):
-    df = pd.DataFrame(list_dict)
-    df.set_index(index, inplace=True)
-
-    print('List_of_dict -> Dataframe successful')
-    print('-'*30)
-    return df
-
-
-
-def merge_df(df1, df2):
-    merged_df = df1.merge(df2, left_index=True, right_index=True, how='left')
-    
-    print(f'Successfully merge Dataframe <{df1}> and Dataframe <{df2}>')
-    print('-'*30)
-    return merged_df    
-
-
-
-def df_to_csv(df, name=None):
-    folder_name = data_folder_path
-
-    current_time = datetime.now().strftime('%d_%m')
-    csv_name = f'{name}_{current_time}.csv'
-
-    full_csv_path = os.path.join(folder_name, csv_name)
-    os.makedirs(folder_name, exist_ok=True) #crt folder if not exist
-    
-    try:
-        df.to_csv(full_csv_path, index=True, encoding='utf-8-sig')
-        print(f'Dataframe saved to file: {full_csv_path}')
-    except Exception as e:
-        log_error(e)
-
-    print('-'*30)
-    return full_csv_path
-
-
-
-def csv_to_df(csv_path, index=None, mode=1):
-    match mode:
-        case 1:
-            df = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig')
-        case 2:
-            df = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig', 
-                dtype={
-                'This_month_booked_rate': float,
-                'Last_1_month_booked_rate': float,
-                'Last_3_month_booked_rate': float,
-                'Next_1_month_booked_rate': float,
-                'Next_3_month_booked_rate': float, 
-                })
-    
-    print(f'Dataframe created from file: {csv_path}')
-    print('-'*30)
-    return df
 
 
 
