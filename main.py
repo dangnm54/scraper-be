@@ -123,18 +123,17 @@ async def give_list_files():
         return []       # return empty list if directory not exist
 
     for file_name in os.listdir(data_path):
-        if file_name.endswith(".csv") and "full" in file_name.lower():
+        if file_name.endswith(".csv") and "link" in file_name.lower():
             file_path = os.path.join(data_path, file_name)
 
             # get file date
-            file_date = "Unknown Date"
             try:
-                # fx to extract date from filename later
-                pass
-            except Exception:
                 timestamp = os.path.getmtime(file_path) # get modification time
                 file_date = datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d')
-
+            except Exception as e:
+                utl.log_error(e)
+                file_date = 'Unknown date'
+                
             # get item count
             item_count = 0
             try:
@@ -155,7 +154,14 @@ async def give_list_files():
             )
             file_id += 1
 
-    file_list.sort(key=lambda f: f.date, reverse=True)
+            # print(f'file name: {file_name}')
+            # print(f'date created: {file_date}')
+            # print(f'item count: {item_count}')
+            # print(f'path: {file_path}')
+            # print('-'*10)
+
+
+    file_list.sort(key=lambda f: f.date_created, reverse=True)
 
     return file_list
 

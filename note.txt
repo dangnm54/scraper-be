@@ -15,7 +15,12 @@ ____Vocab
 ____Checklist
 
 
-- check if selenium can be viewed on FE
+- check if selenium can be viewed on FE -> not
+
+- split seperate file for file_operation
+- split seperate fx for checking proxy
+
+
 - test all api
 - step for raw data
 - step for clean data

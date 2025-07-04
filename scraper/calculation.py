@@ -1,4 +1,7 @@
-import scraper.utils as utl
+try:
+    import scraper.utils as utl
+except ImportError:
+    import utils as utl
 
 import pandas as pd
 

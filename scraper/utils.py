@@ -7,10 +7,15 @@ import pandas as pd
 import inspect
 import sys
 import traceback
-
-from scraper.config import wait_time, data_folder_path
 from datetime import datetime
 from selenium.webdriver.common.by import By
+
+
+try:
+    from scraper.config import wait_time, data_folder_path
+except ImportError:
+    from config import wait_time, data_folder_path
+
 
 
 # -----------------------------------------------------------------------------------

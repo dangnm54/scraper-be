@@ -3,7 +3,7 @@ import random
 # __Proxy authen data
 proxy_user = "sgrgq_minhd"
 proxy_password = "XrGsPncf"
-proxy_ip = "171.229.243.144"
+proxy_ip = "171.229.224.9"
 proxy_port = "37495"
 
 
