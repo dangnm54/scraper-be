@@ -79,7 +79,7 @@ def overview_info(driver, wait):
 def utility_info(driver, wait_time):
     try:
         utility_data = {
-            'Utility_num': None,
+            # 'Utility_num': None,
             # 'Utility_bathroom': None,
             # 'Utility_bedroom': None,
             # 'Utility_entertain': None,
@@ -507,3 +507,64 @@ def detail_booking_cal(driver, wait_time, target_month):
     except Exception as e:
         utl.log_error(e)
         return 0, 0
+    
+
+
+
+# -----------------------------------------------------------------------------------
+
+
+# full detail data
+
+# property_detail_data = {
+#     'ID': index,
+#     'Scrape_status': None,
+
+#     'Guest_num': None,
+#     'Bed_num': None,
+#     'Bath_num': None,
+#     'Location': None,
+
+#     # 'Utility_num': None,
+#     # 'Utility_bathroom': None,
+#     # 'Utility_bedroom': None,
+#     # 'Utility_entertain': None,
+#     # 'Utility_safety': None,
+#     # 'Utility_kitchen': None,
+#     # 'Utility_outdoor': None,
+#     # 'Utility_parking': None,
+#     # 'Utility_service': None,
+#     # 'Utility_not_included': None,
+
+#     'Rating_title':None,
+#     'Rating_num': None,
+#     'Rating_star': None,
+#     # 'Rating_clean_score': None,
+#     # 'Rating_accuracy_score': None,
+#     # 'Rating_checkin_score': None,
+#     # 'Rating_commu_score': None,
+#     # 'Rating_location_score': None,
+#     # 'Rating_value_score': None,
+
+#     'Host_name': None,
+#     'Host_title': None,
+#     'Host_rating_star': None,
+#     'Host_rating_num': None,
+#     'Host_exp': None,
+#     'Host_link': None,
+
+#     # 'Co_host_num': None,
+#     # 'Co_host_name': None,
+#     # 'Co_host_link': None,
+
+#     'This_month_booked_rate': None,
+#     # 'Last_1_month_booked_rate': None,
+#     # 'Last_3_month_booked_rate': None,
+#     'Next_1_month_booked_rate': None,
+#     'Next_3_month_booked_rate': None, 
+# } 
+
+
+
+
+

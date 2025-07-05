@@ -59,12 +59,9 @@ def get_file_metadata_list():
             print(f'file_list: {file_list.dict()}')
             print('-'*30)
 
-    
-
-
-
     # Sort by date created (newest first)
-    file_list.sort(key=lambda f: f['date_created'], reverse=True)
+        # lambda is shorthand mini function to get date_created value of each file
+    file_list.sort(key=lambda file: file['date_created'], reverse=True)
 
     return file_list
 
@@ -84,7 +81,7 @@ def list_dict_to_df(list_dict, index='ID'):
 def merge_df(df1, df2):
     merged_df = df1.merge(df2, left_index=True, right_index=True, how='left')
     
-    print(f'Successfully merge Dataframe <{df1}> and Dataframe <{df2}>')
+    print(f'Successfully merge 2 Dataframe')
     print('-'*30)
     return merged_df    
 
@@ -93,8 +90,16 @@ def merge_df(df1, df2):
 def df_to_csv(df, name=None):
     folder_name = data_folder_path
 
-    current_time = datetime.now().strftime('%d_%m')
-    csv_name = f'{name}_{current_time}.csv'
+    current_time = datetime.now().strftime('%d%m%y')
+    base_csv_name = f'{name}_{current_time}.csv'
+    
+
+    counter = 1
+    csv_name = base_csv_name
+    while os.path.exists(os.path.join(folder_name, csv_name)):
+        name_without_ext = base_csv_name.replace('.csv', '')
+        csv_name = f'{name_without_ext} ({counter}).csv'
+        counter += 1
 
     full_csv_path = os.path.join(folder_name, csv_name)
     os.makedirs(folder_name, exist_ok=True) #crt folder if not exist

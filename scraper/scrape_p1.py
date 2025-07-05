@@ -50,11 +50,11 @@ def go_to_website(driver, wait, wait_time, website_url, view=None):
         time.sleep(wait_time)
         
 
-        original_tab_handle = driver.current_window_handle
-        print(f'Handle <{original_tab_handle}> is for URL:{website_url}')
-        print('-'*30)
+        # original_tab_handle = driver.current_window_handle
+        # print(f'Handle <{original_tab_handle}> is for URL:{website_url}')
+        # print('-'*30)
 
-        return original_tab_handle
+        # return original_tab_handle
 
     except Exception as e:
         utl.log_error(e)
@@ -62,40 +62,41 @@ def go_to_website(driver, wait, wait_time, website_url, view=None):
 
 
 
-def check_proxy_ip(driver, wait, wait_time, website_url, original_tab_handle):
-    try:
-        driver.execute_script(f"window.open('{website_url}', '_blank');")   # _blank means open in new tab
+# def check_proxy_ip(driver, wait, wait_time, website_url, original_tab_handle):
+    # try:
+    #     driver.execute_script(f"window.open('{website_url}', '_blank');")   # _blank means open in new tab
 
-        all_tab_handle = driver.window_handles
-        new_tab_handle = None
-        for tab in all_tab_handle:
-            if tab != original_tab_handle:
-                new_tab_handle = tab
-                print(f'Handle <{new_tab_handle}> is for URL:{website_url}')
-                print('-'*30)
-                break
+    #     all_tab_handle = driver.window_handles
+    #     new_tab_handle = None
+    #     for tab in all_tab_handle:
+    #         if tab != original_tab_handle:
+    #             new_tab_handle = tab
+    #             print(f'Handle <{new_tab_handle}> is for URL:{website_url}')
+    #             print('-'*30)
+    #             break
         
-        if new_tab_handle:
-            driver.switch_to.window(new_tab_handle)
-            print(f'Switched to {website_url}')
+    #     if new_tab_handle:
+    #         driver.switch_to.window(new_tab_handle)
+    #         print(f'Switched to {website_url}')
 
-            wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'p.heading-xl.mb-4')))
-            time.sleep(wait_time)
+    #         wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'p.heading-xl.mb-4')))
+    #         time.sleep(wait_time)
             
-            ip_tag = driver.find_element(By.CSS_SELECTOR, 'p.heading-xl.mb-4')
-            provider_tag = driver.find_element(By.CSS_SELECTOR, 'p.body-md-medium.mb-6')
-            print(f'Proxy IP: {ip_tag.text} | Provider: {provider_tag.text}')
+    #         ip_tag = driver.find_element(By.CSS_SELECTOR, 'p.heading-xl.mb-4')
+    #         provider_tag = driver.find_element(By.CSS_SELECTOR, 'p.body-md-medium.mb-6')
+    #         print(f'Proxy IP: {ip_tag.text} | Provider: {provider_tag.text}')
 
-            driver.close()
-            print('Close current tab')
-            print('-'*30)
+    #         driver.close()
+    #         print('Close current tab')
+    #         print('-'*30)
 
-        driver.switch_to.window(original_tab_handle)
-        print('Switched back to orginal tab')
-        print('-'*30)
+    #     driver.switch_to.window(original_tab_handle)
+    #     print('Switched back to orginal tab')
+    #     print('-'*30)
     
-    except Exception as e:
-        utl.log_error(e)
+    # except Exception as e:
+    #     utl.log_error(e)
+
 
 
 
