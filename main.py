@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel 
 from typing import Optional
@@ -67,6 +67,15 @@ class FileMetadata(BaseModel):
 # ____________ define "API Endpoint" (specific URL server will respond to) ------------
 
 
+# ___Lesson
+    # GET  
+    #     URL parameter is src of truth -> define available parameter
+    #     Fx receive what URL provide
+    # POST
+    #     Fx  parameter is src of truth -> define what API expect
+    #     URL has no parameter
+    #     request body (JSON) is validated against the Fx parameter type
+
 
 
 # @app.get("/") means: "When someone sends a GET request to the '/' (root) address,
@@ -103,14 +112,14 @@ async def run_scraper_api(fe_input: ScraperSettings):
 
     except Exception as e:
         utl.log_error(e)
-        return result
+        raise HTTPException(status_code=500, detail=f"Server error: {str(e)}")
 
 
 
 
 
-@app.get("/api/data/files", response_model=list[FileMetadata])
-async def give_list_files():
+@app.get("/api/data/file-list", response_model=list[FileMetadata])
+async def get_file_list():
     """
     Scans 'data' folder and return list of file metadata
     """
@@ -120,11 +129,11 @@ async def give_list_files():
         # Convert to FileMetadata objects
         file_list = [
             FileMetadata(
-                id=item['id'],
-                file_name=item['file_name'],
-                date_created=item['date_created'],
-                item_count=item['item_count'],
-                path=item['path']
+                id = item['id'],
+                file_name = item['file_name'],
+                date_created = item['date_created'],
+                item_count = item['item_count'],
+                path = item['path']
             )
             for item in file_metadata_list
         ]
@@ -137,3 +146,44 @@ async def give_list_files():
 
 
 
+
+@app.get("/api/data/file-detail/{file_id}")
+async def get_file_detail(file_id: int):
+    """
+    Fetches content of specific file by ID.
+    Reads CSV, convert to list of dict, return to FE
+    """
+
+    try:
+        file_metadata_list = fop.get_file_metadata_list()
+        file_path = None
+        file_name = None
+
+        for item in file_metadata_list:
+            if item['id'] == file_id:
+                file_path = item['path']
+                file_name = item['file_name']
+                break
+
+        if not file_path:   
+            # file_path is None -> not None is true -> raise 404
+            raise HTTPException(status_code=404, detail=f"File ID {file_id} not found.")
+        
+
+        # read csv content
+        detail_df = fop.csv_to_df(file_path, mode=2)
+        
+            # orient -> dictate the struc of dict
+            # 'records' -> 'list of dict' structure 
+        detail_dict = detail_df.to_dict(orient='records') 
+
+        return {
+            "status": "success",
+            "message": f'Content for {file_name} fetched successfully',
+            "data": detail_dict
+        }
+
+
+    except Exception as e:
+        utl.log_error(e)
+        raise HTTPException(status_code=500, detail=f"Server error: {str(e)}")

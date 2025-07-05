@@ -33,8 +33,7 @@ def get_file_metadata_list():
             try:
                 timestamp = os.path.getmtime(file_path) # get modification time
                 file_date = datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d')
-            except Exception as e:
-                utl.log_error(e)
+            except Exception:
                 file_date = 'Unknown date'
                 
             # get item count
@@ -56,7 +55,6 @@ def get_file_metadata_list():
             file_id += 1
 
             print(f'file_path: {file_path}')
-            print(f'file_list: {file_list.dict()}')
             print('-'*30)
 
     # Sort by date created (newest first)

@@ -209,7 +209,7 @@ def run_full_flow(
         num_property: int,
         collect_host_data: bool = False,
         collect_booking_rate: bool = False
-):
+    ):
     
     
     print("API Request Received")
@@ -222,34 +222,26 @@ def run_full_flow(
     """)
 
 
-    try:
-        # link_csv_path = scrape_p1(main_website_url, file_name, location, num_guest, num_property)
-        # print(f"Phase 1 (link scraping) completed. File saved to: {link_csv_path}")
-        link_csv_path = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_050725.csv'
+    link_csv_path = scrape_p1(main_website_url, file_name, location, num_guest, num_property)
+    print(f"Phase 1 (link scraping) completed. File saved to: {link_csv_path}")
+    # link_csv_path = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_050725.csv'
 
 
-        full_csv_path = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
-        print(f"Phase 2 (detail scraping) completed. File saved to: {full_csv_path}")
-        # full_csv_path = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\D3_full_03_06_final.csv'
+    # full_csv_path = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
+    # print(f"Phase 2 (detail scraping) completed. File saved to: {full_csv_path}")
+    # full_csv_path = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\D3_full_03_06_final.csv'
 
 
-        # # cal_data = calculate_data(full_csv_path)
-        # # draw_dashboard(full_csv_path, cal_data)
+    # # cal_data = calculate_data(full_csv_path)
+    # # draw_dashboard(full_csv_path, cal_data)
 
 
-        return {
-            "status": "success",
-            "message": "scraping process completed",
-            # "output_file": property_link_csv_path
-        }
+    return {
+        "status": "success",
+        "message": "scraping process completed",
+        # "output_file": property_link_csv_path
+    }
 
-
-    except Exception as e:
-        utl.log_error(e)
-        return {
-            "status": "error",
-            "message": f"scraping process failed: {str(e)}"
-        }
 
 
 
@@ -269,5 +261,5 @@ def run_full_flow(
 # )
 
 
-start_driver()
+# start_driver()
 
