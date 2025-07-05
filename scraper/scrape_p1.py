@@ -212,10 +212,11 @@ def view_page_get_all_link(driver, wait, wait_time, num_property):
                 name = name_element.text 
                 link_element = property.find_element(By.CSS_SELECTOR,'div[data-testid="card-container"] > a')
                 link = link_element.get_attribute('href')
+                clean_link = utl.clean_text(link, mode=5)
                 
                 property_info['ID'] = property_count + 1
                 property_info['Name'] = name
-                property_info['Link'] = link
+                property_info['Link'] = clean_link
                 property_link_list.append(property_info)
                 
                 print(property_info)

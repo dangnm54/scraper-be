@@ -90,10 +90,10 @@ def merge_df(df1, df2):
 def df_to_csv(df, name=None):
     folder_name = data_folder_path
 
+    # make file name
     current_time = datetime.now().strftime('%d%m%y')
     base_csv_name = f'{name}_{current_time}.csv'
     
-
     counter = 1
     csv_name = base_csv_name
     while os.path.exists(os.path.join(folder_name, csv_name)):
@@ -104,6 +104,8 @@ def df_to_csv(df, name=None):
     full_csv_path = os.path.join(folder_name, csv_name)
     os.makedirs(folder_name, exist_ok=True) #crt folder if not exist
     
+    
+    # convert to csv
     try:
         df.to_csv(full_csv_path, index=True, encoding='utf-8-sig')
         print(f'Dataframe saved to file: {full_csv_path}')

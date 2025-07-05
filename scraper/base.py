@@ -30,7 +30,7 @@ import matplotlib.pyplot as plt
 # -----------------------------------------------------------------------------------
 
 
-def start_driver(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, wait_time):
+def start_driver():
 
     extension_dir = brws.crt_proxy_helper_extention(proxy_user, proxy_password, proxy_ip, proxy_port)
     options_1 = brws.config_basic_driver_setting()
@@ -42,6 +42,7 @@ def start_driver(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, 
 
     # check proxy if working
     # scr1.go_to_website(driver, wait, wait_time, ip_website_url)
+    # brws.close_browser(driver)
 
     return driver, wait
 
@@ -49,12 +50,11 @@ def start_driver(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, 
 
 
 
-def scrape_p1(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, 
-            wait_time, main_website_url,
+def scrape_p1(main_website_url,
             file_name: str, location: str, num_guest: int, num_property: int
     ):
     
-    driver, wait = start_driver(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, wait_time)
+    driver, wait = start_driver()
     
     scr1.go_to_website(driver, wait, wait_time, main_website_url, view='main_page')
 
@@ -63,30 +63,29 @@ def scrape_p1(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path,
     scr1.search_guest(driver, wait_time, num_guest)
     scr1.press_search(driver)
 
-    property_link_list = scr1.view_page_get_all_link(driver, wait, wait_time, num_property)
-    property_link_df = fop.list_dict_to_df(property_link_list, index='ID')
-    property_link_csv_path = fop.df_to_csv(property_link_df, name=f'{file_name}_link')
+    link_list = scr1.view_page_get_all_link(driver, wait, wait_time, num_property)
+    link_df = fop.list_dict_to_df(link_list, index='ID')
+    link_csv_path = fop.df_to_csv(link_df, name=f'{file_name}_link')
 
     brws.close_browser(driver)
 
-    return property_link_csv_path
+    return link_csv_path
 
 
 
 
 
-def scrape_p2(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, 
-            property_link_csv_path, wait_time,
+def scrape_p2(property_link_csv_path,
             file_name: str, collect_host_data: bool=False, collect_booking_rate: bool=False
     ):
 
-    driver, wait = start_driver(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, wait_time)
+    driver, wait = start_driver()
 
-    property_link_df = fop.csv_to_df(property_link_csv_path, index='ID', mode=1)
-    property_detail_list = []
+    link_df = fop.csv_to_df(property_link_csv_path, index='ID', mode=1)
+    detail_list = []
 
 
-    for index, row in property_link_df.iterrows():
+    for index, row in link_df.iterrows():
         # print(f'{index} | {row['Name']} | {row['Link']}')
 
         # if index < 8:
@@ -151,17 +150,18 @@ def scrape_p2(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path,
 
         utl.print_pretty_dict(property_detail_data)
         print('-'*30)    
-        property_detail_list.append(property_detail_data)
+        detail_list.append(property_detail_data)
 
         # if index == 1:
         #     break
 
     brws.close_browser(driver)  
 
-    property_detail_df = fop.list_dict_to_df(property_detail_list, index='ID') 
-    property_full_df = fop.merge_df(property_link_df, property_detail_df)
-    property_full_csv_path = fop.df_to_csv(property_full_df, name=f'{file_name}_full')
-    return property_full_csv_path
+    detail_df = fop.list_dict_to_df(detail_list, index='ID') 
+    full_df = fop.merge_df(link_df, detail_df)
+    full_csv_path = fop.df_to_csv(full_df, name=f'{file_name}_full')
+
+    return full_csv_path
 
 
 
@@ -169,9 +169,9 @@ def scrape_p2(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path,
 
 def calculate_data(csv_path):
 
-    property_full_df = fop.csv_to_df(csv_path, index='ID', mode=2)
+    full_df = fop.csv_to_df(csv_path, index='ID', mode=2)
 
-    cnt_rating_cate_df = cal.cnt_rating_categories(property_full_df)
+    cnt_rating_cate_df = cal.cnt_rating_categories(full_df)
 
     return cnt_rating_cate_df
 
@@ -181,17 +181,17 @@ def calculate_data(csv_path):
 
 def draw_dashboard(csv_path, cal_data):
     
-    property_full_df = fop.csv_to_df(csv_path, index='ID', mode=2)
+    full_df = fop.csv_to_df(csv_path, index='ID', mode=2)
 
     fig, axes = plt.subplots(2, 3, figsize=(15, 10))
     axes_list = axes.flatten()
 
-    dshb.util_num_rating_star(axes_list[0], property_full_df)
+    dshb.util_num_rating_star(axes_list[0], full_df)
     dshb.rating_category_ratio(axes_list[1], cal_data)
-    dshb.rating_num_rating_star(axes_list[2], property_full_df)
-    dshb.this_month_BR_rating_star(axes_list[3], property_full_df)
-    dshb.next_1month_BR_rating_star(axes_list[4], property_full_df)
-    dshb.next_3month_BR_rating_star(axes_list[5], property_full_df)
+    dshb.rating_num_rating_star(axes_list[2], full_df)
+    dshb.this_month_BR_rating_star(axes_list[3], full_df)
+    dshb.next_1month_BR_rating_star(axes_list[4], full_df)
+    dshb.next_3month_BR_rating_star(axes_list[5], full_df)
 
     plt.tight_layout()
     plt.show()
@@ -223,26 +223,18 @@ def run_full_flow(
 
 
     try:
-        # property_link_csv_path = scrape_p1(
-        #     proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, 
-        #     wait_time, main_website_url,
-        #     file_name, location, num_guest, num_property
-        # )
-        # print(f"Phase 1 (link scraping) completed. File saved to: {property_link_csv_path}")
-        property_link_csv_path = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\VinhYen_link_02_07.csv'
+        # link_csv_path = scrape_p1(main_website_url, file_name, location, num_guest, num_property)
+        # print(f"Phase 1 (link scraping) completed. File saved to: {link_csv_path}")
+        link_csv_path = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_050725.csv'
 
 
-        property_full_csv_path = scrape_p2(
-            proxy_user, proxy_password, proxy_ip, proxy_port, driver_path, 
-            property_link_csv_path, wait_time,
-            file_name, collect_host_data, collect_booking_rate
-        )
-        print(f"Phase 2 (detail scraping) completed. File saved to: {property_full_csv_path}")
-        # property_full_csv_path = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\D3_full_03_06_final.csv'
+        full_csv_path = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
+        print(f"Phase 2 (detail scraping) completed. File saved to: {full_csv_path}")
+        # full_csv_path = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\D3_full_03_06_final.csv'
 
 
-        # # cal_data = calculate_data(property_full_csv_path)
-        # # draw_dashboard(property_full_csv_path, cal_data)
+        # # cal_data = calculate_data(full_csv_path)
+        # # draw_dashboard(full_csv_path, cal_data)
 
 
         return {
@@ -267,14 +259,15 @@ def run_full_flow(
 
 
 
-run_full_flow(
-    file_name = 'HoTay_HN',
-    location = 'Ho Tay, hanoi',
-    num_guest = 2,
-    num_property = 1,
-    # collect_host_data = False,
-    # collect_booking_rate = False
-)
+# run_full_flow(
+#     file_name = 'HoTay',
+#     location = 'Ho Tay, hanoi',
+#     num_guest = 2,
+#     num_property = 3,
+#     collect_host_data = True,
+#     collect_booking_rate = True
+# )
 
 
-# start_driver(proxy_user, proxy_password, proxy_ip, proxy_port, driver_path)
+start_driver()
+

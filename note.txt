@@ -13,15 +13,19 @@ ____Vocab
 
 
 ____Checklist
-
-
-- check if selenium can be viewed on FE -> not
+- check if selenium can be viewed on FE -> cannot
 - split seperate file for file_operation -> done
 - split seperate fx for checking proxy -> done
 - naming again -> done
+- clean link -> done
+- take raw data -> done
 
--> clean link 
--> take raw data
 
-- test all api
-- step for clean data
+
+____APIs
+- run scraper  -> done
+ get file list -> done
+
+- view file detail
+- export file
+- view command

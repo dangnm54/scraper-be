@@ -277,7 +277,7 @@ def host_info(driver):
 
         host_title_element = host_section.find_elements(By.CSS_SELECTOR, 'span.s1h3l0w7')
         host_title = host_title_element[0].text
-        if host_title != 'Host':         
+        if host_title != 'Host':
             host_data['Host_title'] = host_title
 
         host_detail_section = host_section.find_element(By.CSS_SELECTOR, 'div.s13au5n7')

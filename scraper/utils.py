@@ -106,6 +106,9 @@ def clean_text(string, mode=1):
                 clean_string = float(string.replace(',','.'))
             case 4:
                 clean_string = string.replace('.','')
+            case 5:
+                clean_string = string.split('?')[0]
+
 
         return clean_string
     
@@ -123,7 +126,6 @@ def scroll_focus_element(driver, element):
 
 def print_pretty_dict(dict):
     print(json.dumps(dict, indent=4, ensure_ascii=False))
-
 
 
 
