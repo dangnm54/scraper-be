@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel 
 from typing import Optional
 
+
 import scraper.utils as utl
 import scraper.file_op as fop
 from scraper.base import run_full_flow
@@ -119,10 +120,7 @@ async def run_scraper_api(fe_input: ScraperSettings):
 
 
 @app.get("/api/data/file-list", response_model=list[FileMetadata])
-async def get_file_list():
-    """
-    Scans 'data' folder and return list of file metadata
-    """
+async def get_file_list_api():
     try:
         file_metadata_list = fop.get_file_metadata_list()
         
@@ -148,42 +146,11 @@ async def get_file_list():
 
 
 @app.get("/api/data/file-detail/{file_id}")
-async def get_file_detail(file_id: int):
-    """
-    Fetches content of specific file by ID.
-    Reads CSV, convert to list of dict, return to FE
-    """
-
+async def get_file_detail_api(file_id: int):
     try:
-        file_metadata_list = fop.get_file_metadata_list()
-        file_path = None
-        file_name = None
-
-        for item in file_metadata_list:
-            if item['id'] == file_id:
-                file_path = item['path']
-                file_name = item['file_name']
-                break
-
-        if not file_path:   
-            # file_path is None -> not None is true -> raise 404
-            raise HTTPException(status_code=404, detail=f"File ID {file_id} not found.")
-        
-
-        # read csv content
-        detail_df = fop.csv_to_df(file_path, mode=2)
-        
-            # orient -> dictate the struc of dict
-            # 'records' -> 'list of dict' structure 
-        detail_dict = detail_df.to_dict(orient='records') 
-
-        return {
-            "status": "success",
-            "message": f'Content for {file_name} fetched successfully',
-            "data": detail_dict
-        }
-
+        file_detail = fop.get_file_detail(file_id)
+        return file_detail
 
     except Exception as e:
         utl.log_error(e)
-        raise HTTPException(status_code=500, detail=f"Server error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"[file-detail api] Server error: {str(e)}")
