@@ -10,6 +10,7 @@ matplotlib
 fastapi[all]
 uvicorn
 pydantic
+numpy
 
 # pip install -r requirements.txt -> install all packages in the requirements.txt file
 # pip list -> view all packages installed
