@@ -68,21 +68,6 @@ class FileMetadata(BaseModel):
 # ____________ define "API Endpoint" (specific URL server will respond to) ------------
 
 
-# ___Lesson
-    # GET  
-    #     URL parameter is src of truth -> define available parameter
-    #     Fx receive what URL provide
-    # POST
-    #     Fx  parameter is src of truth -> define what API expect
-    #     URL has no parameter
-    #     request body (JSON) is validated against the Fx parameter type
-
-
-
-# @app.get("/") means: "When someone sends a GET request to the '/' (root) address,
-    # '@' -> decorator | means 'when ever someone visit' 
-    # '/' -> root address
-    # will run function right below the line
 @app.get("/")
 def read_root():
     return {"message": "Seeing this output means BE is running ok hhehe"}
