@@ -16,7 +16,7 @@ ____API Lesson
     #     URL parameter is src of truth -> define available parameter
     #     Fx receive what URL provide
     # POST
-    #     Fx  parameter is src of truth -> define what API expect
+    #     Fx parameter is src of truth -> define what API expect
     #     URL has no parameter
     #     request body (JSON) is validated against the Fx parameter type
 

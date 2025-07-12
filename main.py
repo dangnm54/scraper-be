@@ -1,10 +1,10 @@
 import os
-from datetime import datetime
 
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse 
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel 
-from typing import Optional
+from typing import Optional, List 
 
 
 import scraper.utils as utl
@@ -62,6 +62,10 @@ class FileMetadata(BaseModel):
     path: str
 
 
+class FileDetail(BaseModel):
+    status: str
+    message: Optional[str] = None
+    data: Optional[List[dict]] = None
 
 
 
@@ -130,12 +134,39 @@ async def get_file_list_api():
 
 
 
-@app.get("/api/data/file-detail/{file_id}")
+
+@app.get("/api/data/file-detail/{file_id}", response_model=FileDetail)
 async def get_file_detail_api(file_id: int):
     try:
         file_detail = fop.get_file_detail(file_id)
         return file_detail
+    
+    except HTTPException as e:
+        raise e
 
     except Exception as e:
         utl.log_error(e)
-        raise HTTPException(status_code=500, detail=f"[file-detail api] Server error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"[file-detail api] Server error: {str(e)}")    
+
+
+
+
+
+@app.get("/api/data/file-download/{file_id}")
+async def download_file_api(file_id: int):
+    try:
+        file_info = fop.get_file_path(file_id)
+        file_name = file_info['file_name']
+        file_path = file_info['file_path']
+
+        # check if file exist in server's file system
+        if not os.path.exists(file_path):
+            raise HTTPException(status_code=404, detail=f"File '{file_name}' not found on path '{file_path}'.")
+
+        return FileResponse(path=file_path, media_type='text/csv', filename=file_name)
+
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        utl.log_error(e)
+        raise HTTPException(status_code=500, detail=f'[file-download api] Server error: {str(e)}')
