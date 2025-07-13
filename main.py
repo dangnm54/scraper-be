@@ -1,6 +1,12 @@
 import os
 
-from fastapi import FastAPI, HTTPException
+
+import asyncio
+import sys
+from starlette.responses import StreamingResponse
+
+
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse 
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel 
@@ -69,6 +75,36 @@ class FileDetail(BaseModel):
 
 
 
+FE_log_queue: asyncio.Queue = asyncio.Queue()
+
+
+
+# SSELogStream class intercepts print() and direct message to SEE queue
+class SSELogStream:
+
+    def __init__(self, BE_log_queue, queue:asyncio.Queue):
+        self.BE_log_queue = BE_log_queue
+        self.queue = queue
+
+    async def write(self, message):
+        self.BE_log_queue.write(message)
+        self.BE_log_queue.flush()
+
+        if message.strip():
+            await self.queue.put(message.strip())
+
+
+    def flush(self):
+        self.BE_log_queue.flush()
+
+
+BE_log_queue = sys.stdout
+sys.stdout = SSELogStream(BE_log_queue, FE_log_queue)
+
+
+
+
+
 # ____________ define "API Endpoint" (specific URL server will respond to) ------------
 
 
@@ -83,10 +119,18 @@ def read_root():
 @app.post("/api/run")
 async def run_scraper_api(fe_input: ScraperSettings):
     """
-    Receives scraper settings from FE and triggers scraping process.
+    - input: data required from Fe
+    - output: file in data folder
+    - note:
+        - trigger scraping process
+        - log will be sent via SSE stream
     """
-    # print(f"Received FE data: {settings.dict()}")
-    print(f"Received FE data: {fe_input.model_dump()}")
+
+    # .model_dump() = .dict() | new syntax
+    print(f"Received FE data: {fe_input.model_dump()}")     
+
+    # .put -> adding specified string to the queue
+    await FE_log_queue.put("--- Scraping started ---")
 
     try:
         
@@ -98,11 +142,15 @@ async def run_scraper_api(fe_input: ScraperSettings):
             collect_host_data = fe_input.collect_host_data,
             collect_booking_rate = fe_input.collect_booking_rate
         )
+
+        await FE_log_queue.put('--- Scraping completed ---')
         return result
 
     except Exception as e:
         utl.log_error(e)
+        await FE_log_queue.put('--- Scraping failed: {e} ---')
         raise HTTPException(status_code=500, detail=f"Server error: {str(e)}")
+
 
 
 
@@ -155,9 +203,7 @@ async def get_file_detail_api(file_id: int):
 @app.get("/api/data/file-download/{file_id}")
 async def download_file_api(file_id: int):
     try:
-        file_info = fop.get_file_path(file_id)
-        file_name = file_info['file_name']
-        file_path = file_info['file_path']
+        file_name, file_path = fop.get_file_path(file_id).values()
 
         # check if file exist in server's file system
         if not os.path.exists(file_path):
@@ -170,3 +216,46 @@ async def download_file_api(file_id: int):
     except Exception as e:
         utl.log_error(e)
         raise HTTPException(status_code=500, detail=f'[file-download api] Server error: {str(e)}')
+
+
+
+
+
+# setup a contininuous connection, constantly check for new message in FE_log_queue and stream to connected client
+@app.get("/sse/logs")
+async def sse_logs(request:Request):
+    """
+    Streams server-sent events (SSE) from the FE_log_queue to connected clients.
+    """
+    
+    async def event_generator():
+        while True:
+
+            # generator fx -> instead returning 1 value and exiting, generates sequence of values one by one, on demand.
+                # - become generator function if use 'yield' keyword inside it
+                # - only produce value when requested
+                # - they paused execution between 'yield's
+                # when run this fx, it doesn't run its code immediately, it return a 'generator object' that can be iterated
+                
+            if await request.is_disconnected():
+                print('SSE client disconnected')
+                print('-'*20)
+                break
+
+            try:
+                message = await asyncio.wait_for(FE_log_queue.get(), timeout=1.0)
+                yield f"data: {message}\n\n"
+
+                FE_log_queue.task_done()
+            
+            except asyncio.TimeoutError:
+                yield ":keep-alive\n\n"
+            except Exception as e:
+                utl.log_error(e)
+                yield "data: Error: {e}\n\n"
+                break
+
+    # note
+        # StreamingResponse -> FastAPI response class, designed for responsed where content generated overtime
+        # when called event_generator() -> return a generator object that StreamingResponse can iterate over to get data
+    return StreamingResponse(event_generator(), media_type="text/event-stream")

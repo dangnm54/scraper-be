@@ -5,11 +5,11 @@ from datetime import datetime
 from fastapi import HTTPException
 
 try:
-    import scraper.utils as utl
-    from scraper.config import data_folder_path
+   import scraper.utils as utl
+   from scraper.config import data_folder_path
 except ImportError:
-    import utils as utl
-    from config import data_folder_path
+   import utils as utl
+   from config import data_folder_path
 
 
 
@@ -115,9 +115,7 @@ def get_file_detail(file_id: int):
 
    print(f"[get-file-detail] Received file_id: {file_id}")
 
-   file_info = get_file_path(file_id)
-   file_name = file_info['file_name']
-   file_path = file_info['file_path']
+   file_name, file_path = get_file_path(file_id).values()
    
    # make dataframe from file path
    detail_df = csv_to_df(file_path, mode=2)

@@ -38,3 +38,215 @@ ____APIs
 - view file detail
 - export file
 - view command
+
+
+
+
+
+
+
+______ SSE __________________________________________________________________________________________________________________ 
+
+
+# ____________  define data structure for request from FE ----------------------------
+
+
+# global queue for log message
+    # create queue object for BE to store all log message and send to FE
+    # asyncio -> Python lib for writing cocurrent code
+    # .Queue -> specify Queue class: first-in-first-out data structure
+FE_log_queue: asyncio.Queue = asyncio.Queue()
+
+
+
+
+# SSELogStream class intercepts print() and direct message to SEE queue
+class SSELogStream:
+
+    # function inside class object is called 'method'
+        # syntax to use: object.method
+
+
+    # write flow:
+        # You call print("some message").
+        # print() internally calls sys.stdout.write("some message\n").
+        # Since we reassigned sys.stdout to our SSELogStream object -> this call actually goes to SSELogStream.write("some message\n").
+        # Inside SSELogStream.write(), we call self.queue.put("some message") to add the message to the asyncio.Queue.
+        # So, SSELogStream.write() acts as a bridge. It accepts the write() call (as print() expects) and then internally translates that into a put() call on the FE_log_queue.
+
+    # .put 
+        # - specific method for queue object 
+        # designed to add item to end of queue
+
+
+
+    # __init__
+        # -> auto called when whenever new object of this class is created
+        # purpose to to initialize the object's attribute
+    def __init__(self, BE_log_queue, queue:asyncio.Queue):
+
+        # create an instance variable (attribute) named 'BE_log_queue' on SSELogStream object
+            # BE_log_queue points to terminal
+            # assigns 'BE_log_queue' passed-in to it (self)
+            # allow each SSELogStream instance to remember what the original output was
+        self.BE_log_queue = BE_log_queue
+
+        # similar to above, create variable and assign value to it
+            # let the stream know which queue to put message into
+        self.queue = queue
+
+
+    async def write(self, message):
+        # .write -> add message to buffer (temporary holding area for data)
+            # works with file-like / standard-output-stream object (eg: terminal)
+            # buffering output is common -> collect + store chunk of output data in temporary memory before displaying user 
+        self.BE_log_queue.write(message)
+        
+        # ensure any bufferd output (saved in temporary storage) is immediately written to terminal
+        self.BE_log_queue.flush()
+
+        # put message into the queue, but only if its not empty / whitespace
+        if message.strip():
+            # add message to the end of the queue
+                # .strip() -> removes leading/trailing whitespace, including newlines
+            await self.queue.put(message.strip())
+
+
+    def flush(self):
+        self.BE_log_queue.flush()
+
+
+
+
+
+# ____________  SSE Object - related --------------------------------------------------
+
+# purpose of 2 lines below: 
+    # all future print() will go through SEELogStream object
+    # allow to capture those message and sent to SEE clients
+
+# create new label ('BE_log_queue') pointing to the same thing sys.stdout is pointing to (eg: terminal)
+    # sys.stdout -> just a variable name, a label points to standard output stream (eg: termnial)
+    # -> saves a reference (address) to the original output stream (eg: terminal)
+    # so when later reassign the 'sys.stdout' label to another destination, we don't lose address to the terminal
+BE_log_queue = sys.stdout
+
+# anything write the to sys.stdout (eg: print() ) will create new instance of SEELogStream
+sys.stdout = SSELogStream(BE_log_queue, FE_log_queue)
+
+
+
+
+
+
+
+# ____________  Setup API ---------------------------------------------------------------
+
+
+@app.post("/api/run")
+async def run_scraper_api(fe_input: ScraperSettings):
+    """
+    - input: data required from Fe
+    - output: file in data folder
+    - note:
+        - trigger scraping process
+        - log will be sent via SSE stream
+    """
+
+    # .model_dump() = .dict() | new syntax
+    print(f"Received FE data: {fe_input.model_dump()}")     
+
+    # .put -> adding specified string to the queue
+    await FE_log_queue.put("--- Scraping started ---")
+
+    try:
+        
+        result = run_full_flow(
+            file_name = fe_input.file_name,
+            location = fe_input.location,
+            num_guest = fe_input.num_guest,
+            num_property = fe_input.num_property,
+            collect_host_data = fe_input.collect_host_data,
+            collect_booking_rate = fe_input.collect_booking_rate
+        )
+
+        await FE_log_queue.put('--- Scraping completed ---')
+        return result
+
+    except Exception as e:
+        utl.log_error(e)
+        await FE_log_queue.put('--- Scraping failed: {e} ---')
+        raise HTTPException(status_code=500, detail=f"Server error: {str(e)}")
+
+
+
+
+
+# setup a contininuous connection, constantly check for new message in FE_log_queue and stream to connected client
+@app.get("/sse/logs")
+async def sse_logs(request:Request):
+    """
+    Streams server-sent events (SSE) from the FE_log_queue to connected clients.
+    """
+
+    # Request -> FastAPI class
+        # - provide info of every incoming request
+        # - method like 'is_disconnected' is one of those info
+    
+    async def event_generator():
+        while True:
+
+            # generator fx -> instead returning 1 value and exiting, generates sequence of values one by one, on demand.
+                # - become generator function if use 'yield' keyword inside it
+                # - only produce value when requested
+                # - they paused execution between 'yield's
+                # when run this fx, it doesn't run its code immediately, it return a 'generator object' that can be iterated
+                
+
+            # check if client (browser) initiated the SEE connection has disconnected or not
+            if await request.is_disconnected():
+                print('SSE client disconnected')
+                print('-'*20)
+                break
+
+            try:
+                # wait for log message from queue
+                    # 2 wait    
+                        # await -> pauses the current async function, allowing other async tasks to run while it waits. 
+                            # steps aside so other functions can work. 
+                            # once the awaited operation finishes, the paused function will be scheduled to resume
+                        # wait_for -> set time limit for awaitable object to finish its job
+                    # await -> waiting for 'asyncio.wait_for' to finish its job.
+                    # wait_for -> wait for waitable object with timeout (because 'FE_log_queue.get() can wait forever if no item available)
+                        # timeout ensure the generator occasionally yield to check for disconnection
+                        # wait_for -> asyncio function that wait for the awaitable (FE_log_queue.get()) to complete
+                        # if the awaitable not complete in that time, it raise TimeoutError
+                    # FE_log_queue.get() -> retrieve item infront of the queue
+                        # of queue is empty, FE_log_queue.get() will wait until an item is available
+                message = await asyncio.wait_for(FE_log_queue.get(), timeout=1.0)
+
+                # yield -> send value to caller (StreamingResponse) and pause execution
+                    # when caller ask for next value, execution resumes right after yield
+                    # data -> required prefix for SSE event message
+                    # \n\n -> required SSE protocol to signal the end of event message
+                yield f"data: {message}\n\n"
+
+                # just part of queue management good practice syntax
+                    # signal a task (process message retrieved from FE_log_queue.get()) is done
+                    # only useful or need to learn deeper if need to use more complex queue management
+                FE_log_queue.task_done()
+            
+            except asyncio.TimeoutError:
+                # if no message in 1s, send a keep-alive comment
+                    # any line start with ':' is ignored by client' EventSource API
+                    # -> keeps the connection alive without sending actual data
+                yield ":keep-alive\n\n"
+            except Exception as e:
+                utl.log_error(e)
+                yield "data: Error: {e}\n\n"
+                break
+
+    # note
+        # StreamingResponse -> FastAPI response class, designed for responsed where content generated overtime
+        # when called event_generator() -> return a generator object that StreamingResponse can iterate over to get data
+    return StreamingResponse(event_generator(), media_type="text/event-stream")
