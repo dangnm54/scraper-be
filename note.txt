@@ -111,7 +111,8 @@ class SSELogStream:
                 # .strip() -> removes leading/trailing whitespace, including newlines
             await self.queue.put(message.strip())
 
-
+    # need flush fx to ensure our custom stream object behave like the standard original one (sys.stdout)
+        # other part of program or third party library might directly call flush method
     def flush(self):
         self.BE_log_queue.flush()
 

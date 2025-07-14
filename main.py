@@ -82,17 +82,16 @@ FE_log_queue: asyncio.Queue = asyncio.Queue()
 # SSELogStream class intercepts print() and direct message to SEE queue
 class SSELogStream:
 
-    def __init__(self, BE_log_queue, queue:asyncio.Queue):
+    def __init__(self, BE_log_queue, FE_log_queue:asyncio.Queue):
         self.BE_log_queue = BE_log_queue
-        self.queue = queue
+        self.FE_log_queue = FE_log_queue
 
     async def write(self, message):
         self.BE_log_queue.write(message)
         self.BE_log_queue.flush()
 
         if message.strip():
-            await self.queue.put(message.strip())
-
+            await self.FE_log_queue.put(message.strip())
 
     def flush(self):
         self.BE_log_queue.flush()
