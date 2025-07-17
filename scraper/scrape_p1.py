@@ -4,7 +4,6 @@ except ImportError:
     import utils as utl
 
 import time
-import inspect
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -17,7 +16,7 @@ from selenium.webdriver.support import expected_conditions as EC
 def go_to_website(driver, wait, wait_time, website_url, view=None):
     try:
         driver.get(website_url)
-        print(f'Go to website: {website_url}')
+        print(f'Go to website: {website_url}', flush=True)
         
         time.sleep(wait_time)
 
@@ -25,26 +24,26 @@ def go_to_website(driver, wait, wait_time, website_url, view=None):
         try:
             ad_element1 = driver.find_element(By.CSS_SELECTOR, 'div.c1qme1pd')
             if EC.visibility_of(ad_element1):
-                print('Found Ad pop-up')
+                print('Found Ad pop-up', flush=True)
                 ok_button = ad_element1.find_element(By.CSS_SELECTOR, 'button')
                 ok_button.click()
-                print('Close Ad pop-up')
+                print('Close Ad pop-up', flush=True)
         except:
             pass
 
         try:
             ad_element2 = driver.find_element(By.CSS_SELECTOR, 'div[aria-label="Dịch trên"]')
             if EC.visibility_of(ad_element2):
-                print('Found Ad pop-up')
+                print('Found Ad pop-up', flush=True)
                 ok_button = ad_element2.find_element(By.CSS_SELECTOR, 'button[aria-label="Đóng"]')
                 ok_button.click()
-                print('Close Ad pop-up')
+                print('Close Ad pop-up', flush=True)
         except:
             pass
 
         match view:
             case 'main_page':
-                wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'main.m1un5iz5')))
+                wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div.m1un5iz5')))
             case 'detail_page':
                 wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[data-section-id="HIGHLIGHTS_DEFAULT"]')))
         time.sleep(wait_time)
@@ -105,15 +104,15 @@ def search_location(driver, wait_time, location_ipt):
         location_element = driver.find_element(By.CSS_SELECTOR, 'div.f1o8nkkf.atm_mk_h2mmj6.atm_wq_cs5v99')
         location_element.click()
 
-        print('Location element found and clicked')
+        print('Location element found and clicked', flush=True)
         time.sleep(wait_time)
 
         location_input = location_element.find_element(By.CSS_SELECTOR, 'input.fp9kp52')
         location_input.send_keys(location_ipt, Keys.ENTER)
         
-        print(f'<{location_ipt}> typed and ENTER')
+        print(f'<{location_ipt}> typed and ENTER', flush=True)
         time.sleep(wait_time)
-        print('-'*30)
+        print('-'*30, flush=True)
         
     except Exception as e:
         utl.log_error(e)
@@ -125,16 +124,16 @@ def search_date(driver, wait_time):
         flexible_date_button = driver.find_element(By.CSS_SELECTOR,'button[id="tab--tabs--2"]')
         flexible_date_button.click()
 
-        print('Flexible time button found and clicked')
+        print('Flexible time button found and clicked', flush=True)
         time.sleep(wait_time)
 
         weekend_date_button = driver.find_element(By.CSS_SELECTOR,'label[id="flexible_trip_lengths-weekend_trip"]')
         weekend_date_button.click()
         
-        print('Flexible weekend button found and clicked')
+        print('Flexible weekend button found and clicked', flush=True)
         time.sleep(wait_time)
 
-        print('-'*30)
+        print('-'*30, flush=True)
 
     except Exception as e:
         utl.log_error(e)
@@ -148,7 +147,7 @@ def search_guest(driver, wait_time, num_guest):
             if element.text == 'Thêm khách':
                 element.click()
 
-        print('Guest element found and clicked')
+        print('Guest element found and clicked', flush=True)
         time.sleep(wait_time)
 
         guest_section = driver.find_element(By.CSS_SELECTOR,'div.p1nt1a2q')
@@ -160,10 +159,10 @@ def search_guest(driver, wait_time, num_guest):
             add_button.click()
             num_click += 1
 
-        print(f'{num_guest} guests added')
+        print(f'{num_guest} guests added', flush=True)
         time.sleep(wait_time)
 
-        print('-'*30)           
+        print('-'*30, flush=True)
 
     except Exception as e:
         utl.log_error(e)
@@ -175,8 +174,8 @@ def press_search(driver):
         search_button = driver.find_element(By.CSS_SELECTOR,'button.siey6h7')
         search_button.click()
 
-        print('Seach button founded and clicked')
-        print('-'*30)
+        print('Seach button founded and clicked', flush=True)
+        print('-'*30, flush=True)
 
     except Exception as e:
         utl.log_error(e)
@@ -188,8 +187,8 @@ def view_page_get_all_link(driver, wait, wait_time, num_property):
         property_link_list = []
         property_count = 0 
 
-        print(f'Ready to scrape {num_property} properties')
-        print('-'*30)
+        print(f'Ready to scrape {num_property} properties', flush=True)
+        print('-'*30, flush=True)
 
         while property_count < num_property:
             wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR,'div.cy5jw6o')))
@@ -219,8 +218,8 @@ def view_page_get_all_link(driver, wait, wait_time, num_property):
                 property_info['Link'] = clean_link
                 property_link_list.append(property_info)
                 
-                print(property_info)
-                print('-'*20)
+                print(property_info, flush=True)
+                print('-'*20, flush=True)
 
                 property_count += 1
 
@@ -234,15 +233,15 @@ def view_page_get_all_link(driver, wait, wait_time, num_property):
                     pagination_section = driver.find_element(By.CSS_SELECTOR, 'div.p1j2gy66')
                     next_page_element = pagination_section.find_element(By.CSS_SELECTOR, 'a[aria-label="Tiếp theo"]')
                     next_page_element.click()
-                    print('Move to next page')
-                    print('-'*30)
+                    print('Move to next page', flush=True)
+                    print('-'*30, flush=True)
                 except Exception as e:
-                    print(f'On last page, no more property to scrape | {e}')
-                    print('-'*30)
+                    print(f'On last page, no more property to scrape | {e}', flush=True)
+                    print('-'*30, flush=True)
                     break
 
-        print(f'{property_count} properties scraped')
-        print('-'*30)
+        print(f'{property_count} properties scraped', flush=True)
+        print('-'*30, flush=True)
         return property_link_list
 
     except Exception as e:

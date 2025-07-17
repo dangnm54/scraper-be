@@ -63,13 +63,13 @@ def scrape_p1(main_website_url,
     scr1.search_guest(driver, wait_time, num_guest)
     scr1.press_search(driver)
 
-    link_list = scr1.view_page_get_all_link(driver, wait, wait_time, num_property)
-    link_df = fop.list_dict_to_df(link_list, index='ID')
-    link_csv_path = fop.df_to_csv(link_df, name=f'{file_name}_link')
+    # link_list = scr1.view_page_get_all_link(driver, wait, wait_time, num_property)
+    # link_df = fop.list_dict_to_df(link_list, index='ID')
+    # link_csv_path = fop.df_to_csv(link_df, name=f'{file_name}_link')
 
     brws.close_browser(driver)
 
-    return link_csv_path
+    # return link_csv_path
 
 
 
@@ -256,8 +256,8 @@ def run_full_flow(
 #     location = 'Ho Tay, hanoi',
 #     num_guest = 2,
 #     num_property = 3,
-#     collect_host_data = True,
-#     collect_booking_rate = True
+#     # collect_host_data = True,
+#     # collect_booking_rate = True
 # )
 
 
