@@ -75,38 +75,50 @@ class FileDetail(BaseModel):
 
 
 
-FE_log_queue: asyncio.Queue = asyncio.Queue()
+FE_log_stream: asyncio.Queue = asyncio.Queue()
 
 
 
 # SSELogStream class intercepts print() and direct message to SEE queue
+# worker thread use method in this class
 class SSELogStream:
 
-    def __init__(self, BE_log_queue, FE_log_queue:asyncio.Queue):
-        self.BE_log_queue = BE_log_queue
-        self.FE_log_queue = FE_log_queue
+    def __init__(self, BE_log_stream, FE_log_stream:asyncio.Queue):
+        self.BE_log_stream = BE_log_stream
+        self.FE_log_stream = FE_log_stream
+
+        # loop -> refer to main thread's event loop (event loop manage multi async tasks in thread)
         self.loop = None
 
     def write(self, message):
         # Write to the original stdout (e.g., the console)
-        self.BE_log_queue.write(message)
-        self.BE_log_queue.flush()
+        self.BE_log_stream.write(message)
+        self.BE_log_stream.flush()
 
         # If the asyncio loop is available, also put the message in the queue for the frontend
         if self.loop and self.loop.is_running():
             for line in message.splitlines():
                 if line.strip():
-                    # This is thread-safe and will run the coroutine on the main event loop
+                    # cross-thread communication
+                        # FE_log_stream -> async fx
+                        # worker thread hand over '.put' to main thread
+                        # a thread-safe way for worker thread to say: 
+                            # I'm the worker thread
+                            # and I need you (main thread) to execute this .put coroutine task for me.
                     asyncio.run_coroutine_threadsafe(
-                        self.FE_log_queue.put(line.strip()), self.loop
+                        self.FE_log_stream.put(line.strip()), self.loop
                     )
 
     def flush(self):
-        self.BE_log_queue.flush()
+        self.BE_log_stream.flush()
 
 
-BE_log_queue = sys.stdout
-sse_log_stream = SSELogStream(BE_log_queue, FE_log_queue)
+
+# BE_log_stream points to the original stdout (console)
+BE_log_stream = sys.stdout
+
+# every print() will go through this sse_log_stream instance
+sse_log_stream = SSELogStream(BE_log_stream, FE_log_stream)
 sys.stdout = sse_log_stream
 
 
@@ -133,7 +145,7 @@ async def run_scraper_api(fe_input: ScraperSettings):
         - log will be sent via SSE stream
     """
 
-    # Ensure the SSELogStream has the running event loop.
+    # .get_running_loop -> get reference to the current event loop (main thread)
     # This is necessary because print() will be called from a different thread.
     if not sse_log_stream.loop:
         sse_log_stream.loop = asyncio.get_running_loop()
@@ -143,7 +155,7 @@ async def run_scraper_api(fe_input: ScraperSettings):
     print(f"Received FE data: {fe_input.model_dump()}")     
 
     # .put -> adding specified string to the queue
-    await FE_log_queue.put("--- Scraping started ---")
+    await FE_log_stream.put("--- Scraping started ---")
 
     try:
         
@@ -151,20 +163,20 @@ async def run_scraper_api(fe_input: ScraperSettings):
         # This allows the main event loop to remain unblocked and stream logs
         result = await asyncio.to_thread(
             run_full_flow,
-            file_name = fe_input.file_name,
-            location = fe_input.location,
-            num_guest = fe_input.num_guest,
-            num_property = fe_input.num_property,
-            collect_host_data = fe_input.collect_host_data,
-            collect_booking_rate = fe_input.collect_booking_rate
+                file_name = fe_input.file_name,
+                location = fe_input.location,
+                num_guest = fe_input.num_guest,
+                num_property = fe_input.num_property,
+                collect_host_data = fe_input.collect_host_data,
+                collect_booking_rate = fe_input.collect_booking_rate
         )
 
-        await FE_log_queue.put('--- Scraping completed ---')
+        await FE_log_stream.put('--- Scraping completed ---')
         return result
 
     except Exception as e:
         utl.log_error(e)
-        await FE_log_queue.put('--- Scraping failed: {e} ---')
+        await FE_log_stream.put('--- Scraping failed: {e} ---')
         raise HTTPException(status_code=500, detail=f"Server error: {str(e)}")
 
 
@@ -237,11 +249,11 @@ async def download_file_api(file_id: int):
 
 
 
-# setup a contininuous connection, constantly check for new message in FE_log_queue and stream to connected client
+# setup a contininuous connection, constantly check for new message in FE_log_stream and stream to connected client
 @app.get("/sse/logs")
 async def sse_logs(request:Request):
     """
-    Streams server-sent events (SSE) from the FE_log_queue to connected clients.
+    Streams server-sent events (SSE) from the FE_log_stream to connected clients.
     """
     
     async def event_generator():
@@ -259,10 +271,10 @@ async def sse_logs(request:Request):
                 break
 
             try:
-                message = await asyncio.wait_for(FE_log_queue.get(), timeout=1.0)
+                message = await asyncio.wait_for(FE_log_stream.get(), timeout=1.0)
                 yield f"data: {message}\n\n"
 
-                FE_log_queue.task_done()
+                FE_log_stream.task_done()
             
             except asyncio.TimeoutError:
                 yield ":keep-alive\n\n"
@@ -276,22 +288,3 @@ async def sse_logs(request:Request):
         # when called event_generator() -> return a generator object that StreamingResponse can iterate over to get data
     return StreamingResponse(event_generator(), media_type="text/event-stream")
 
-
-# new api endpoint for testing SSE logs
-@app.get("/sse/test-logs")
-async def sse_test_logs():
-    print("--- SSE Test Logs Started ---", flush=True)
-    await FE_log_queue.put("--- SSE Test Logs Started ---")
-    
-    for i in range(1, 4):
-        message = f"SSE Test Log: Step {i} of 3"
-        print(message, flush=True)
-        await FE_log_queue.put(message)
-        await asyncio.sleep(1) # Non-blocking sleep
-
-    print("--- SSE Test Logs Completed ---", flush=True)
-    await FE_log_queue.put("--- SSE Test Logs Completed ---")
-    return {"message": "SSE test logs initiated."}
-
-
-# print('heheheh')
