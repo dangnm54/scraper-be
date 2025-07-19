@@ -1,6 +1,5 @@
 import os
-
-
+import logging
 import asyncio
 import sys
 from starlette.responses import StreamingResponse
@@ -20,8 +19,13 @@ from scraper.base import run_full_flow
 
 # -------------------------------------------------------------------
 
+utl.setup_logging_for_file_directly_run()
 
-# ____________  setup ------------------------------------------------------------
+log = logging.getLogger(__name__)
+
+
+
+# ____________  setup FastAPI app ------------------------------------------------------------
 
 # ____ create "FastAPI app" instance -> manages all web routes + functions
 app = FastAPI()
@@ -152,7 +156,7 @@ async def run_scraper_api(fe_input: ScraperSettings):
 
 
     # .model_dump() = .dict() | new syntax
-    print(f"Received FE data: {fe_input.model_dump()}")     
+    log.info(f"Received FE data: {fe_input.model_dump()}")     
 
     # .put -> adding specified string to the queue
     await FE_log_stream.put("--- Scraping started ---")
@@ -266,8 +270,8 @@ async def sse_logs(request:Request):
                 # when run this fx, it doesn't run its code immediately, it return a 'generator object' that can be iterated
                 
             if await request.is_disconnected():
-                print('SSE client disconnected')
-                print('-'*20)
+                log.info('SSE client disconnected')
+                log.info('-'*20)
                 break
 
             try:

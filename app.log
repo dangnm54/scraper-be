@@ -1,0 +1,27 @@
+LOG RECORDED AT: 19-07-2025 20:16:14
+
+2025-07-19 20:16:14 | browser - crt_proxy_helper_extention - 34 | DEBUG - Created proxy_auth_extension
+2025-07-19 20:16:14 | browser - crt_proxy_helper_extention - 35 | DEBUG - ------------------------------
+2025-07-19 20:16:14 | browser - crt_proxy_helper_extention - 61 | DEBUG - Created proxy_auth_extension\manifest.json
+2025-07-19 20:16:14 | browser - crt_proxy_helper_extention - 62 | DEBUG - ------------------------------
+2025-07-19 20:16:14 | browser - crt_proxy_helper_extention - 103 | DEBUG - Created proxy_auth_extension\background.js
+2025-07-19 20:16:14 | browser - crt_proxy_helper_extention - 107 | INFO - ------------------------------
+2025-07-19 20:16:14 | browser - config_basic_driver_setting - 117 | INFO - Configured basic settings
+2025-07-19 20:16:14 | browser - config_basic_driver_setting - 118 | INFO - ------------------------------
+2025-07-19 20:16:14 | browser - config_advanced_driver_setting - 125 | DEBUG - Configured minimal logging
+2025-07-19 20:16:14 | browser - config_advanced_driver_setting - 131 | DEBUG - Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+2025-07-19 20:16:14 | driver_finder - _binary_paths - 60 | DEBUG - Skipping Selenium Manager; path to MicrosoftEdge driver specified in Service class: C:\Users\ADMIN\Pictures\scraper\scraper-be\scraper\msedgedriver.exe
+2025-07-19 20:16:14 | service - _start_process - 226 | DEBUG - Started executable: `C:\Users\ADMIN\Pictures\scraper\scraper-be\scraper\msedgedriver.exe` in a child process with pid: 1960 using 0 to output -3
+2025-07-19 20:16:14 | connectionpool - _new_conn - 241 | DEBUG - Starting new HTTP connection (1): localhost:57841
+2025-07-19 20:16:15 | connectionpool - _make_request - 544 | DEBUG - http://localhost:57841 "POST /session HTTP/1.1" 200 0
+2025-07-19 20:16:15 | browser - start_browser - 145 | INFO - Edge browser started
+2025-07-19 20:16:15 | browser - start_browser - 149 | DEBUG - Detected 2 monitors
+2025-07-19 20:16:15 | browser - start_browser - 161 | DEBUG - Secondary monitor found, open browser on secondary monitor
+2025-07-19 20:16:15 | connectionpool - _make_request - 544 | DEBUG - http://localhost:57841 "POST /session/f3bd1e11d02f80b0a4c29ece5659ce5a/window/rect HTTP/1.1" 200 0
+2025-07-19 20:16:15 | browser - start_browser - 170 | INFO - ------------------------------
+2025-07-19 20:16:19 | connectionpool - _make_request - 544 | DEBUG - http://localhost:57841 "POST /session/f3bd1e11d02f80b0a4c29ece5659ce5a/url HTTP/1.1" 200 0
+2025-07-19 20:16:24 | connectionpool - _make_request - 544 | DEBUG - http://localhost:57841 "POST /session/f3bd1e11d02f80b0a4c29ece5659ce5a/element HTTP/1.1" 404 0
+2025-07-19 20:16:24 | connectionpool - _make_request - 544 | DEBUG - http://localhost:57841 "POST /session/f3bd1e11d02f80b0a4c29ece5659ce5a/element HTTP/1.1" 404 0
+2025-07-19 20:16:29 | connectionpool - _make_request - 544 | DEBUG - http://localhost:57841 "DELETE /session/f3bd1e11d02f80b0a4c29ece5659ce5a HTTP/1.1" 200 0
+2025-07-19 20:16:31 | browser - close_browser - 185 | INFO - Close browser
+2025-07-19 20:16:31 | browser - close_browser - 186 | INFO - ------------------------------

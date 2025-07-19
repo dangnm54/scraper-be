@@ -41,7 +41,23 @@ ____APIs
 
 
 
+_____Log type
+logging.debug("This is a debug message")    # For low-level system info
+logging.info("This is an info message")     # For general events
+logging.warning("This is a warning")        # For something unexpected, but not an error
+logging.error("This is an error")           # For errors that don't stop the program
+logging.critical("This is critical!")       # For very serious errors
 
+
+
+_____Log format
+
+# File: scraper/utils/helpers.py
+log = logging.getLogger(__name__)
+log.info("Hello")
+
+%(name): "scraper.utils.helpers"
+%(module): "helpers"
 
 
 

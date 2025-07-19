@@ -1,10 +1,11 @@
 import json
 import time
 import unicodedata
-
+import logging
 import inspect
 import sys
 import traceback
+from datetime import datetime
 
 try:
     from scraper.config import wait_time
@@ -14,6 +15,33 @@ except ImportError:
 
 
 # -----------------------------------------------------------------------------------
+
+
+
+def setup_logging_for_file_directly_run():
+
+    current_time = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
+    with open('./app.log', 'w') as f:
+        f.write(f'LOG RECORDED AT: {current_time}\n\n')
+
+
+
+    console_handler = logging.StreamHandler()
+    file_handler = logging.FileHandler('./app.log', mode='a')
+    
+    log_format = logging.Formatter(
+        '%(asctime)s | %(module)s - %(funcName)s - %(lineno)d | %(levelname)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
+    
+    console_handler.setFormatter(log_format)
+    file_handler.setFormatter(log_format)
+    
+    root_logger = logging.getLogger()
+    root_logger.setLevel(logging.DEBUG)
+    root_logger.addHandler(console_handler)
+    root_logger.addHandler(file_handler)
+
 
 
 def log_error(e):

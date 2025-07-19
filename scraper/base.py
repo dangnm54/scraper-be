@@ -1,3 +1,4 @@
+
 try:
     # When running from root directory (FastAPI)
     import scraper.file_op as fop
@@ -25,24 +26,31 @@ except ImportError:
     from config import driver_path, wait_time
     from config import main_website_url, ip_website_url
 
+import logging
 import matplotlib.pyplot as plt
+
 
 # -----------------------------------------------------------------------------------
 
+if __name__ == "__main__":
+    utl.setup_logging_for_file_directly_run()
+
+log = logging.getLogger(__name__)
+
+
 
 def start_driver():
-
     extension_dir = brws.crt_proxy_helper_extention(proxy_user, proxy_password, proxy_ip, proxy_port)
     options_1 = brws.config_basic_driver_setting()
     options_2 = brws.config_advanced_driver_setting(extension_dir, options_1)
     driver, wait = brws.start_browser(driver_path, options_2)
 
     if driver is None or wait is None:
-        print(f"An error in 'if driver'")
+        log.error(f"An error in 'if driver'")
 
     # check proxy if working
-    # scr1.go_to_website(driver, wait, wait_time, ip_website_url)
-    # brws.close_browser(driver)
+    scr1.go_to_website(driver, wait, wait_time, ip_website_url)
+    brws.close_browser(driver)
 
     return driver, wait
 
@@ -261,5 +269,5 @@ def run_full_flow(
 # )
 
 
-# start_driver()
+start_driver()
 
