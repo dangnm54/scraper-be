@@ -8,24 +8,23 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.webdriver.edge.service import Service as EdgeService
 
+try:
+    import scraper.utils as utl
+except ImportError:
+    import utils as utl
+
 
 # -----------------------------------------------------------------------------------
 
-# __name__ -> hold this file's name (this case: scraper.browser)
+
 log = logging.getLogger(__name__)
 
 
 
 
-
-
-
-
-
-
-# -----------------------------------------------------------------------------------
-
 def crt_proxy_helper_extention(proxy_user, proxy_password, proxy_ip, proxy_port):
+
+    utl.log_divider('Create proxy helper extension')
 
     # 1. define directory (folder) for the extension
     extension_dir = 'proxy_auth_extension'

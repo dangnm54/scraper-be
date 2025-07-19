@@ -24,8 +24,6 @@ def setup_logging_for_file_directly_run():
     with open('./app.log', 'w') as f:
         f.write(f'LOG RECORDED AT: {current_time}\n\n')
 
-
-
     console_handler = logging.StreamHandler()
     file_handler = logging.FileHandler('./app.log', mode='a')
     
@@ -41,6 +39,19 @@ def setup_logging_for_file_directly_run():
     root_logger.setLevel(logging.DEBUG)
     root_logger.addHandler(console_handler)
     root_logger.addHandler(file_handler)
+
+
+
+def log_divider(header=''):
+    divider = '=' * 30
+    if header:
+        log_message = f'\n\n{divider} {header} {divider}\n'
+    else:
+        log_message = f'\n\n{divider}{divider}\n'
+
+    log = logging.getLogger()
+    log.info(log_message)
+
 
 
 
