@@ -1,31 +1,22 @@
-LOG RECORDED AT: 19-07-2025 20:56:59
+LOG RECORDED AT: 20-07-2025 16:35:11
 
-2025-07-19 20:56:59 | utils - log_divider - 53 | INFO - 
 
-============================== Create proxy helper extension ==============================
+============================== Create proxy helper extension
 
-2025-07-19 20:56:59 | browser - crt_proxy_helper_extention - 33 | DEBUG - Created proxy_auth_extension
-2025-07-19 20:56:59 | browser - crt_proxy_helper_extention - 34 | DEBUG - ------------------------------
-2025-07-19 20:56:59 | browser - crt_proxy_helper_extention - 60 | DEBUG - Created proxy_auth_extension\manifest.json
-2025-07-19 20:56:59 | browser - crt_proxy_helper_extention - 61 | DEBUG - ------------------------------
-2025-07-19 20:56:59 | browser - crt_proxy_helper_extention - 102 | DEBUG - Created proxy_auth_extension\background.js
-2025-07-19 20:56:59 | browser - crt_proxy_helper_extention - 106 | INFO - ------------------------------
-2025-07-19 20:56:59 | browser - config_basic_driver_setting - 116 | INFO - Configured basic settings
-2025-07-19 20:56:59 | browser - config_basic_driver_setting - 117 | INFO - ------------------------------
-2025-07-19 20:56:59 | browser - config_advanced_driver_setting - 124 | DEBUG - Configured minimal logging
-2025-07-19 20:56:59 | browser - config_advanced_driver_setting - 130 | DEBUG - Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
-2025-07-19 20:56:59 | driver_finder - _binary_paths - 60 | DEBUG - Skipping Selenium Manager; path to MicrosoftEdge driver specified in Service class: C:\Users\ADMIN\Pictures\scraper\scraper-be\scraper\msedgedriver.exe
-2025-07-19 20:56:59 | service - _start_process - 226 | DEBUG - Started executable: `C:\Users\ADMIN\Pictures\scraper\scraper-be\scraper\msedgedriver.exe` in a child process with pid: 15824 using 0 to output -3
-2025-07-19 20:57:00 | connectionpool - _new_conn - 241 | DEBUG - Starting new HTTP connection (1): localhost:59260
-2025-07-19 20:57:00 | connectionpool - _make_request - 544 | DEBUG - http://localhost:59260 "POST /session HTTP/1.1" 200 0
-2025-07-19 20:57:00 | browser - start_browser - 144 | INFO - Edge browser started
-2025-07-19 20:57:00 | browser - start_browser - 148 | DEBUG - Detected 2 monitors
-2025-07-19 20:57:00 | browser - start_browser - 160 | DEBUG - Secondary monitor found, open browser on secondary monitor
-2025-07-19 20:57:00 | connectionpool - _make_request - 544 | DEBUG - http://localhost:59260 "POST /session/692755af467fee8088fa419e54ea51cd/window/rect HTTP/1.1" 200 0
-2025-07-19 20:57:00 | browser - start_browser - 169 | INFO - ------------------------------
-2025-07-19 20:57:04 | connectionpool - _make_request - 544 | DEBUG - http://localhost:59260 "POST /session/692755af467fee8088fa419e54ea51cd/url HTTP/1.1" 200 0
-2025-07-19 20:57:10 | connectionpool - _make_request - 544 | DEBUG - http://localhost:59260 "POST /session/692755af467fee8088fa419e54ea51cd/element HTTP/1.1" 404 0
-2025-07-19 20:57:10 | connectionpool - _make_request - 544 | DEBUG - http://localhost:59260 "POST /session/692755af467fee8088fa419e54ea51cd/element HTTP/1.1" 404 0
-2025-07-19 20:57:16 | connectionpool - _make_request - 544 | DEBUG - http://localhost:59260 "DELETE /session/692755af467fee8088fa419e54ea51cd HTTP/1.1" 200 0
-2025-07-19 20:57:18 | browser - close_browser - 184 | INFO - Close browser
-2025-07-19 20:57:18 | browser - close_browser - 185 | INFO - ------------------------------
+2025-07-20 16:35:11 | DEBUG | browser - crt_proxy_helper_extention - 34 | Created proxy_auth_extension
+
+------------------------------------------------------------
+
+2025-07-20 16:35:11 | DEBUG | browser - crt_proxy_helper_extention - 62 | Created proxy_auth_extension\manifest.json
+2025-07-20 16:35:11 | DEBUG | browser - crt_proxy_helper_extention - 103 | Created proxy_auth_extension\background.js
+
+
+============================== Config basic driver setting
+
+2025-07-20 16:35:11 | INFO | browser - config_basic_driver_setting - 119 | Configured basic settings
+
+
+============================== Config advanced driver setting
+
+2025-07-20 16:35:11 | DEBUG | browser - config_advanced_driver_setting - 129 | Configured minimal logging
+2025-07-20 16:35:11 | DEBUG | browser - config_advanced_driver_setting - 135 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension

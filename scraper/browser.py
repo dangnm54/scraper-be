@@ -10,8 +10,10 @@ from selenium.webdriver.edge.service import Service as EdgeService
 
 try:
     import scraper.utils as utl
+    import scraper.log_op as lg
 except ImportError:
     import utils as utl
+    import log_op as lg
 
 
 # -----------------------------------------------------------------------------------
@@ -21,17 +23,17 @@ log = logging.getLogger(__name__)
 
 
 
-
 def crt_proxy_helper_extention(proxy_user, proxy_password, proxy_ip, proxy_port):
 
-    utl.log_divider('Create proxy helper extension')
+    lg.log_divider('Create proxy helper extension')
 
     # 1. define directory (folder) for the extension
     extension_dir = 'proxy_auth_extension'
     if not os.path.exists(extension_dir):
         os.makedirs(extension_dir)
     log.debug(f'Created {extension_dir}')
-    log.debug('-' * 30)
+
+    lg.log_divider()
 
     # 2. crt manifest.json file -> describ extension
     manifest_content = """
@@ -58,7 +60,6 @@ def crt_proxy_helper_extention(proxy_user, proxy_password, proxy_ip, proxy_port)
     with open(manifest_path, 'w') as f:
         f.write(manifest_content)
     log.debug(f'Created {manifest_path}')
-    log.debug('-' * 30)
 
     # 3. crt background.js file -> the script adds Proxy-Authen header (handles proxy logic)
     proxy_cred = f'{proxy_user}:{proxy_password}'
@@ -103,23 +104,27 @@ def crt_proxy_helper_extention(proxy_user, proxy_password, proxy_ip, proxy_port)
     except IOError as e:
         log.error(f"Error writing {background_script_path}: {e}")
         log.error("Cannot proceed with creating extension files.")
-    log.info('-' * 30)
 
     return extension_dir
 
 
 
 def config_basic_driver_setting():
+
+    lg.log_divider('Config basic driver setting')
+
     options = EdgeOptions()
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36 Edg/136.0.0.0") # Example Chrome User-Agent
 
     log.info('Configured basic settings')
-    log.info('-' * 30)
     return options
 
 
 
 def config_advanced_driver_setting(extension_dir_ipt, options_ipt):
+
+    lg.log_divider('Config advanced driver setting')
+
     logging.getLogger('selenium.webdriver.remote.remote_connection').setLevel(logging.WARNING)
     log.debug(f'Configured minimal logging')
 
@@ -132,11 +137,13 @@ def config_advanced_driver_setting(extension_dir_ipt, options_ipt):
     except Exception as e:
         log.error(f'Error loading Proxy Helper Extension | {e}')
         log.error(f'Absolute_extension_dir: {absolute_extension_dir}')
-    log.info('-' * 30)
 
     
 
 def start_browser(driver_path_ipt, option_ipt):
+
+    lg.log_divider('Start browser')
+
     driver = None
     try:
         service = EdgeService(executable_path = driver_path_ipt, log_output=os.devnull)
@@ -166,7 +173,6 @@ def start_browser(driver_path_ipt, option_ipt):
         else:
             log.debug(f'Only 1 monitor, maximizing browser')
             driver.set_window_rect(x=960, y=10, width=960, height=1010)
-        log.info('-'*30)
 
         wait = WebDriverWait(driver,20)
         return driver, wait
@@ -180,8 +186,10 @@ def start_browser(driver_path_ipt, option_ipt):
 
 
 def close_browser(driver):
+
+    lg.log_divider('Close browser')
+
     driver.quit()
     log.info('Close browser')
-    log.info('-'*30)
     
 

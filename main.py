@@ -13,13 +13,14 @@ from typing import Optional, List
 
 
 import scraper.utils as utl
+import scraper.log_op as lg
 import scraper.file_op as fop
 from scraper.base import run_full_flow
 
 
 # -------------------------------------------------------------------
 
-utl.setup_logging_for_file_directly_run()
+lg.setup_logging_for_file_directly_run()
 
 log = logging.getLogger(__name__)
 

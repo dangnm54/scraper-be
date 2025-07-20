@@ -2,6 +2,7 @@
 try:
     # When running from root directory (FastAPI)
     import scraper.file_op as fop
+    import scraper.log_op as lg
     import scraper.utils as utl
     import scraper.get_ipt as ipt
     import scraper.browser as brws
@@ -15,6 +16,7 @@ try:
 except ImportError:
     # When running directly from scraper directory
     import file_op as fop
+    import log_op as lg
     import utils as utl
     import get_ipt as ipt
     import browser as brws
@@ -33,7 +35,7 @@ import matplotlib.pyplot as plt
 # -----------------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    utl.setup_logging_for_file_directly_run()
+    lg.setup_logging_for_file_directly_run()
 
 log = logging.getLogger(__name__)
 
@@ -43,16 +45,16 @@ def start_driver():
     extension_dir = brws.crt_proxy_helper_extention(proxy_user, proxy_password, proxy_ip, proxy_port)
     options_1 = brws.config_basic_driver_setting()
     options_2 = brws.config_advanced_driver_setting(extension_dir, options_1)
-    driver, wait = brws.start_browser(driver_path, options_2)
+    # driver, wait = brws.start_browser(driver_path, options_2)
 
-    if driver is None or wait is None:
-        log.error(f"An error in 'if driver'")
+    # if driver is None or wait is None:
+    #     log.error(f"An error in 'if driver'")
 
-    # check proxy if working
-    scr1.go_to_website(driver, wait, wait_time, ip_website_url)
-    brws.close_browser(driver)
+    # # check proxy if working
+    # scr1.go_to_website(driver, wait, wait_time, ip_website_url)
+    # brws.close_browser(driver)
 
-    return driver, wait
+    # return driver, wait
 
 
 
