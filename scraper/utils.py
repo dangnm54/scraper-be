@@ -1,37 +1,17 @@
 import json
 import time
 import unicodedata
-import logging
-import inspect
-import sys
-import traceback
-from datetime import datetime
 
 try:
     from scraper.config import wait_time
+    import scraper.log_op as lg
 except ImportError:
     from config import wait_time
+    import log_op as lg
 
 
 
 # -----------------------------------------------------------------------------------
-
-
-def log_error(e):
-
-    print(f'Error start @ Function: {inspect.currentframe().f_back.f_code.co_name} | {e}\n')
-
-    exc_type, exc_value, exc_traceback = sys.exc_info()
-    traceback_info = traceback.extract_tb(exc_traceback)
-    
-    traceback_level = 3
-    traceback_list = traceback_info[-traceback_level:]    # if requested level larger than actual list -> start from beginning of list
-    
-    for i, frame in enumerate(traceback_list):
-        print(f'__Error level #{i+1}__')
-        print(f'- Function: {frame.name}\n- File: {frame.filename}\n- Line #{frame.lineno}: {frame.line}')
-        print('-'*10)
-    print('-'*30)
 
 
 
@@ -75,7 +55,7 @@ def get_info_from_string(string, mode='int'):
         return target_word
     
     except Exception as e:
-        log_error(e)
+        lg.log_detail_error(e)
         return None
 
 
@@ -114,7 +94,7 @@ def clean_text(string, mode=1):
         return clean_string
     
     except Exception as e:
-        log_error(e)
+        lg.log_detail_error(e)
         return None
 
 

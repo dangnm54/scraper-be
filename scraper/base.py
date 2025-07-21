@@ -154,7 +154,7 @@ def scrape_p2(property_link_csv_path,
 
 
         except Exception as e:
-            utl.log_error(e)
+            lg.log_detail_error(e)
             property_detail_data.update({'ID': index, 'Scrape_status':'Failed'})
 
 

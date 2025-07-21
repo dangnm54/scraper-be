@@ -102,8 +102,9 @@ def crt_proxy_helper_extention(proxy_user, proxy_password, proxy_ip, proxy_port)
             f.write(background_script_content)
         log.debug(f"Created {background_script_path}")
     except IOError as e:
-        log.error(f"Error writing {background_script_path}: {e}")
-        log.error("Cannot proceed with creating extension files.")
+        log.error(f"Error writing {background_script_path} | Cannot proceed with creating extension files.")
+        lg.log_detail_error(e)
+        
 
     return extension_dir
 
@@ -135,8 +136,8 @@ def config_advanced_driver_setting(extension_dir_ipt, options_ipt):
         log.debug(f'Configured Edge to load proxy helper extension from: {absolute_extension_dir}')
         return options
     except Exception as e:
-        log.error(f'Error loading Proxy Helper Extension | {e}')
-        log.error(f'Absolute_extension_dir: {absolute_extension_dir}')
+        log.error(f'Error loading Proxy Helper Extension | Absolute_extension_dir: {absolute_extension_dir}')
+        lg.log_detail_error(e)
 
     
 
@@ -178,8 +179,9 @@ def start_browser(driver_path_ipt, option_ipt):
         return driver, wait
 
     except Exception as e:
-        log.error(f'Error starting Edge browser with the specified path | {e}')
+        log.error(f'Error starting Edge browser with the specified path')
         log.error('Please check driver_path, Edge version, and selenium-stealth installation.')
+        lg.log_detail_error(e)
     
     
 

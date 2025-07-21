@@ -1,22 +1,22 @@
-LOG RECORDED AT: 20-07-2025 16:35:11
+LOG RECORDED AT: 21-07-2025 21:09:19
 
 
 ============================== Create proxy helper extension
 
-2025-07-20 16:35:11 | DEBUG | browser - crt_proxy_helper_extention - 34 | Created proxy_auth_extension
+21:09:19 | DEBUG | browser - crt_proxy_helper_extention - 34 | Created proxy_auth_extension
 
 ------------------------------------------------------------
 
-2025-07-20 16:35:11 | DEBUG | browser - crt_proxy_helper_extention - 62 | Created proxy_auth_extension\manifest.json
-2025-07-20 16:35:11 | DEBUG | browser - crt_proxy_helper_extention - 103 | Created proxy_auth_extension\background.js
+21:09:19 | DEBUG | browser - crt_proxy_helper_extention - 62 | Created proxy_auth_extension\manifest.json
+21:09:19 | DEBUG | browser - crt_proxy_helper_extention - 103 | Created proxy_auth_extension\background.js
 
 
 ============================== Config basic driver setting
 
-2025-07-20 16:35:11 | INFO | browser - config_basic_driver_setting - 119 | Configured basic settings
+21:09:19 | INFO | browser - config_basic_driver_setting - 120 | Configured basic settings
 
 
 ============================== Config advanced driver setting
 
-2025-07-20 16:35:11 | DEBUG | browser - config_advanced_driver_setting - 129 | Configured minimal logging
-2025-07-20 16:35:11 | DEBUG | browser - config_advanced_driver_setting - 135 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+21:09:19 | DEBUG | browser - config_advanced_driver_setting - 130 | Configured minimal logging
+21:09:19 | DEBUG | browser - config_advanced_driver_setting - 136 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
