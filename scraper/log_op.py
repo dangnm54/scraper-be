@@ -49,7 +49,7 @@ def setup_logging_for_file_directly_run():
 
 
     console_handler = logging.StreamHandler()
-    file_handler = logging.FileHandler('./app.log', mode='a', encoding='utf-8')
+    file_handler = logging.StreamHandler(open('./app.log', mode='a', encoding='utf-8'))
 
 
     log_format = LogFormat()
@@ -76,7 +76,7 @@ def log_divider(ipt_message=''):
     if ipt_message:
         message = f'\n\n{"="*30} {ipt_message}\n'
     else:
-        message = f'\n\n{"-"*60}\n'
+        message = f'\n{"-"*60}\n'
     
     # same root logger created earlier (if any)
     root_logger = logging.getLogger()

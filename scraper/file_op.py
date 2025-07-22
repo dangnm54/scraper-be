@@ -1,19 +1,21 @@
 import os
+import logging
 import numpy as np
 import pandas as pd
 from datetime import datetime
 from fastapi import HTTPException
 
 try:
-   import scraper.utils as utl
+   import scraper.log_op as lg
    from scraper.config import data_folder_path
 except ImportError:
-   import utils as utl
+   import log_op as lg
    from config import data_folder_path
 
 
-
 # -----------------------------------------------------------------------------------
+
+log = logging.getLogger(__name__)
 
 
 def get_file_metadata_list():
@@ -22,6 +24,9 @@ def get_file_metadata_list():
    output: list of file metadata
    Scans 'data' folder and return list of file metadata
    """
+   
+   lg.log_divider('Get file metadata list')
+   
    data_path = data_folder_path
    file_list = []
    file_id = 1
@@ -63,8 +68,7 @@ def get_file_metadata_list():
          })
          file_id += 1
 
-         print(f'file_path: {file_path}')
-   print('-'*30)
+         log.info(f'file_path: {file_path}')
 
    # Sort by date created (newest first)
       # lambda is shorthand mini function to get date_created value of each file
@@ -76,7 +80,9 @@ def get_file_metadata_list():
 
 def get_file_path(file_id: int):
 
-   print(f"[get-file-path] Received file_id: {file_id}")
+   lg.log_divider('Get file path')
+
+   log.info(f"Received file_id: {file_id}")
 
    file_metadata_list = get_file_metadata_list()
    file_path = None
@@ -87,8 +93,8 @@ def get_file_path(file_id: int):
          file_path = item['path']
          file_name = item['file_name']
          break
-   print(f"Found file_path: {file_path}")
-   print(f"Found file_name: {file_name}")
+   log.info(f"Found file_path: {file_path}")
+   log.info(f"Found file_name: {file_name}")
 
    # check if file exist in file_metadata_list
    if not file_path:   
@@ -102,7 +108,6 @@ def get_file_path(file_id: int):
 
 
 
-
 def get_file_detail(file_id: int):
    """
    input: file_id
@@ -113,7 +118,9 @@ def get_file_detail(file_id: int):
       - turn dataframe to list of dict
    """
 
-   print(f"[get-file-detail] Received file_id: {file_id}")
+   lg.log_divider('Get file detail')
+
+   log.info(f"Received file_id: {file_id}")
 
    file_name, file_path = get_file_path(file_id).values()
    
@@ -140,14 +147,11 @@ def get_file_detail(file_id: int):
 
 
 
-
-
 def list_dict_to_df(list_dict, index='ID'):
    df = pd.DataFrame(list_dict)
    df.set_index(index, inplace=True)
 
-   print('List_of_dict -> Dataframe successful')
-   print('-'*30)
+   log.info('List_of_dict -> Dataframe successful')
    return df
 
 
@@ -155,8 +159,7 @@ def list_dict_to_df(list_dict, index='ID'):
 def merge_df(df1, df2):
    merged_df = df1.merge(df2, left_index=True, right_index=True, how='left')
    
-   print(f'Successfully merge 2 Dataframe')
-   print('-'*30)
+   log.info(f'Successfully merge 2 Dataframe')
    return merged_df    
 
 
@@ -182,11 +185,10 @@ def df_to_csv(df, name=None):
    # convert to csv
    try:
       df.to_csv(full_csv_path, index=True, encoding='utf-8-sig')
-      print(f'Dataframe saved to file: {full_csv_path}')
+      log.info(f'Dataframe saved to file: {full_csv_path}')
    except Exception as e:
-      utl.log_error(e)
+      lg.log_detail_error(e)
 
-   print('-'*30)
    return full_csv_path
 
 
@@ -216,8 +218,7 @@ def csv_to_df(csv_path, index=None, mode=1):
                'Next_3_month_booked_rate': str, 
                })
    
-   print(f'Dataframe created from file: {csv_path}')
-   print('-'*30)
+   log.info(f'Dataframe created from file: {csv_path}')
    return df
 
 

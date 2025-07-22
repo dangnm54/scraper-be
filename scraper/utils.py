@@ -1,5 +1,6 @@
 import json
 import time
+import logging
 import unicodedata
 
 try:
@@ -13,6 +14,8 @@ except ImportError:
 
 # -----------------------------------------------------------------------------------
 
+
+log = logging.getLogger(__name__)
 
 
 def get_info_from_string(string, mode='int'):
@@ -106,7 +109,7 @@ def scroll_focus_element(driver, element):
 
 
 def print_pretty_dict(dict):
-    print(json.dumps(dict, indent=4, ensure_ascii=False))
+    log.info(json.dumps(dict, indent=4, ensure_ascii=False))
 
 
 

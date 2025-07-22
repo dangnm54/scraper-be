@@ -162,8 +162,8 @@ def scrape_p2(property_link_csv_path,
         print('-'*30)    
         detail_list.append(property_detail_data)
 
-        # if index == 1:
-        #     break
+        if index == 1:
+            break
 
     brws.close_browser(driver)  
 
@@ -233,13 +233,13 @@ def run_full_flow(
     """)
 
 
-    link_csv_path = scrape_p1(main_website_url, file_name, location, num_guest, num_property)
-    log.info(f"Phase 1 (link scraping) completed. File saved to: {link_csv_path}")
-    # link_csv_path = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_050725.csv'
+    # link_csv_path = scrape_p1(main_website_url, file_name, location, num_guest, num_property)
+    # log.info(f"Phase 1 (link scraping) completed. File saved to: {link_csv_path}")
+    link_csv_path = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_220725.csv'
 
 
-    # full_csv_path = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
-    # print(f"Phase 2 (detail scraping) completed. File saved to: {full_csv_path}")
+    full_csv_path = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
+    log.info(f"Phase 2 (detail scraping) completed. File saved to: {full_csv_path}")
     # full_csv_path = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\D3_full_03_06_final.csv'
 
 
@@ -267,8 +267,8 @@ run_full_flow(
     location = 'Ho Tay, hanoi',
     num_guest = 2,
     num_property = 3,
-    # collect_host_data = True,
-    # collect_booking_rate = True
+    collect_host_data = True,
+    collect_booking_rate = True
 )
 
 

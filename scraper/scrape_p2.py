@@ -1,10 +1,13 @@
 try:
     import scraper.utils as utl
+    import scraper.log_op as lg
 except ImportError:
     import utils as utl
+    import log_op as lg
 
 import time
 import lxml
+import logging
 
 from tqdm import tqdm
 from bs4 import BeautifulSoup
@@ -15,23 +18,14 @@ from selenium.webdriver.support import expected_conditions as EC
 # -----------------------------------------------------------------------------------
 
 
-# def get_soup_from_driver(driver): 
-#     try:
-#         html_content = driver.page_source
-#         print('HTML content retrieved from driver')
-
-#         soup = BeautifulSoup(html_content, 'lxml')
-#         print('HTML content parsed')
-        
-#         print('-'*30)
-#         return soup
-
-#     except Exception as e:
-#         utl.log_error(e)
+log = logging.getLogger(__name__)
 
 
 
 def overview_info(driver, wait):
+
+    lg.log_divider('Overview info')
+    
     try:
         overview_data = {
             'Guest_num': None,
@@ -41,7 +35,7 @@ def overview_info(driver, wait):
         }
     
         overview_section = driver.find_element(By.CSS_SELECTOR, 'div[data-section-id="OVERVIEW_DEFAULT_V2"]')
-        print('Overview section found')
+        log.info('Overview section found')
 
         info_list = overview_section.find_elements(By.CSS_SELECTOR, 'li.l7n4lsf')
         for info in info_list:
@@ -67,16 +61,18 @@ def overview_info(driver, wait):
         overview_data['Location'] = clean_location
 
         utl.print_pretty_dict(overview_data)
-        print('-'*30)
         return overview_data
     
     except Exception as e:
-        utl.log_error(e)
+        lg.log_detail_error(e)
         return overview_data
 
 
 
-def utility_info(driver, wait_time):
+# def utility_info(driver, wait_time):
+
+    lg.log_divider('Utility info')
+
     try:
         utility_data = {
             # 'Utility_num': None,
@@ -95,12 +91,12 @@ def utility_info(driver, wait_time):
         utility_button = utility_section.find_element(By.CSS_SELECTOR, 'button.l1ovpqvx')
         utl.scroll_focus_element(driver, utility_button)
 
-        utility_num = utl.get_info_from_string(utility_button.text, mode='int')
-        utility_data['Utility_num'] = utility_num
+        # utility_num = utl.get_info_from_string(utility_button.text, mode='int')
+        # utility_data['Utility_num'] = utility_num
         
         # utility_button.click()
         # time.sleep(wait_time)
-        # print('Open utility modal')
+        # log.info('Open utility modal')
 
         # utility_modal = driver.find_element(By.CSS_SELECTOR, 'div.d1pe7dt2')
         # utility_category_list = utility_modal.find_elements(By.CSS_SELECTOR,'div._11jhslp')
@@ -143,26 +139,27 @@ def utility_info(driver, wait_time):
         #         if cate_name in clean_cate_name:
         #             utility_data[key] = item_list
 
-        #     print(f'\nCategory: {clean_cate_name}')
-        #     print(f'Item list: {item_list}')
-        #     print('-'*10)
+        #     log.info(f'\nCategory: {clean_cate_name}')
+        #     log.info(f'Item list: {item_list}')
+        #     lg.log_divider()
             
         # close_button = utility_modal.find_element(By.CSS_SELECTOR, 'button[aria-label="Đóng"]')
         # close_button.click()
-        # print('Close modal')
-        # print('-'*30)
+        # log.info('Close modal')
 
         utl.print_pretty_dict(utility_data)
-        print('-'*30)
         return utility_data
 
     except Exception as e:
-        utl.log_error(e)
+        lg.log_detail_error(e)
         return utility_data
 
 
 
 def rating_info(driver):
+
+    lg.log_divider('Rating info')
+
     try:
         rating_data = {
             'Rating_title':None,
@@ -183,7 +180,7 @@ def rating_info(driver):
         if overview_rating_special:
             overview_rating_special = overview_rating_special[0]
             utl.scroll_focus_element(driver, overview_rating_special)            
-            print('Special rating element found')
+            log.info('Special rating element found')
             
             rating_title = overview_rating_special.find_element(By.CSS_SELECTOR, 'div.lbjrbi0')
             clean_rating_title = rating_title.text.replace('\n',' ')
@@ -199,13 +196,12 @@ def rating_info(driver):
             rating_num = int(rating_num_elements[0].text)
             rating_data['Rating_num'] = rating_num
 
-            print('Special overview rating data collected')
-            print('-'*30)
+            log.info('Special overview rating data collected')
             
         elif overview_rating_normal:
             overview_rating_normal = overview_rating_normal[0]
             utl.scroll_focus_element(driver, overview_rating_normal)            
-            print('Normal rating element found')
+            log.info('Normal rating element found')
 
             rating_star = overview_rating_normal.find_element(By.CSS_SELECTOR, 'div.rmtgcc3')
             clean_rating_star = utl.clean_text(rating_star.text, mode=3)
@@ -215,13 +211,12 @@ def rating_info(driver):
             clean_rating_num = utl.get_info_from_string(rating_num.text, mode='int')
             rating_data['Rating_num'] = clean_rating_num
             
-            print('Normal overview rating data collected')
-            print('-'*30)
+            log.info('Normal overview rating data collected')
 
 
         # detail data
         # rating_detail_section = driver.find_element(By.CSS_SELECTOR, 'div[data-section-id="REVIEWS_DEFAULT"]')
-        # print('Rating section found')
+        # log.info('Rating section found')
 
         # rating_category_list = rating_detail_section.find_elements(By.CSS_SELECTOR, 'div.l925rvg')
         # for category in tqdm(rating_category_list, desc='Scraping rating detail data: '):
@@ -244,21 +239,23 @@ def rating_info(driver):
         #         if cate_name in category_name:
         #             rating_data[key] = category_rating
 
-        #     print(f'\nCategory: {category_name}')
-        #     print(f'Rating: {category_rating}')
-        #     print('-'*10)
+        #     log.info(f'\nCategory: {category_name}')
+        #     log.info(f'Rating: {category_rating}')
+        #     lg.log_divider()
 
         utl.print_pretty_dict(rating_data)
-        print('-'*30)
         return rating_data
 
     except Exception as e:
-        utl.log_error(e)
+        lg.log_detail_error(e)
         return rating_data    
 
 
 
 def host_info(driver):
+
+    lg.log_divider('Host info')
+    
     try:
         host_data = {
             'Host_name': None,
@@ -302,16 +299,18 @@ def host_info(driver):
         host_data['Host_link'] = host_link
 
         utl.print_pretty_dict(host_data)
-        print('-'*30)
         return host_data
 
     except Exception as e:
-        utl.log_error(e)
+        lg.log_detail_error(e)
         return host_data
 
 
 
-def co_host_info(driver):
+# def co_host_info(driver):
+
+    lg.log_divider('Co-host info')
+
     try:
         co_host_data = {
             'Co_host_num': None,
@@ -337,28 +336,29 @@ def co_host_info(driver):
                 link = link_element.get_attribute('href')
                 link_list.append(link)
 
-                print(f'Co-host name: {name}')
-                print(f'Co-host link: {link}')
-                print('-'*10)
+                log.info(f'Co-host name: {name}')
+                log.info(f'Co-host link: {link}')
 
             co_host_data['Co_host_name'] = name_list
             co_host_data['Co_host_link'] = link_list
 
         else:
             co_host_data['Co_host_num'] = 0
-            print('No co-host')
+            log.info('No co-host')
 
         utl.print_pretty_dict(co_host_data)
-        print('-'*30)
         return co_host_data
 
     except Exception as e:
-        utl.log_error(e)
+        lg.log_detail_error(e)
         return co_host_data
 
 
 
 def book_rate_info(driver, wait_time, month_data):
+
+    lg.log_divider('Book rate info')
+
     try:
         book_rate_data = {
             'This_month_booked_rate': None,
@@ -370,19 +370,18 @@ def book_rate_info(driver, wait_time, month_data):
 
         book_section = driver.find_element(By.CSS_SELECTOR, 'div[data-section-id="BOOK_IT_SIDEBAR"]')
         utl.scroll_focus_element(driver, book_section)
-        print('Book time section found')
+        log.info('Book time section found')
 
         start_date_element = book_section.find_element(By.CSS_SELECTOR, 'div._19y8o0j')
         start_date_element.click()
 
-        print('Open calender')
-        print('-'*10)
+        log.info('Open calender')
         time.sleep(wait_time)
         
         today_month, next_1m_month, next_3m_month = month_data
 
         for month in month_data:
-            print(f'\n_____Checking month <{month}>_____')
+            log.info(f'\n_____Checking month <{month}>_____')
             # month = month_data[0]
         
             if type(month) == int:
@@ -403,13 +402,13 @@ def book_rate_info(driver, wait_time, month_data):
 
             elif type(month) == list:
                 target_month_range = month
-                print(f'Target month list: {target_month_range}')
+                log.info(f'Target month list: {target_month_range}')
 
                 all_tot_date = 0
                 all_booked_date = 0
                 
                 for target_month in target_month_range:
-                    print(f'Single target month: {target_month}')
+                    log.info(f'Single target month: {target_month}')
                     single_tot_date, single_booked_date = detail_booking_cal(driver, wait_time, target_month)
                     all_tot_date += single_tot_date
                     all_booked_date += single_booked_date
@@ -422,34 +421,38 @@ def book_rate_info(driver, wait_time, month_data):
                     book_rate_data['Next_3_month_booked_rate'] = book_rate 
 
         utl.print_pretty_dict(book_rate_data)
-        print('-'*30)
         return book_rate_data
 
     except Exception as e:
-        utl.log_error(e)
+        lg.log_detail_error(e)
 
 
 
 def final_stage_book_cal(booked_date, tot_date):
+
+    lg.log_divider()
+
     try:
         book_rate = float(booked_date/tot_date*100)
-        print(f'{booked_date} / {tot_date} = {book_rate:.2f}%')
+        log.info(f'{booked_date} / {tot_date} = {book_rate:.2f}%')
     except ZeroDivisionError:
         book_rate = None
-        print('No data to calculate book_rate')
-    
-    print('-'*30)
+        log.info('No data to calculate book_rate')
+
     return book_rate
 
 
 
 def detail_booking_cal(driver, wait_time, target_month):
+
+    lg.log_divider()
+
     try:
         max_try = 12
         current_try = 0
         while current_try < max_try:
             current_try += 1
-            print(f'Try #{current_try}')
+            log.info(f'Try #{current_try}')
 
             calender_section = driver.find_elements(By.CSS_SELECTOR, 'div.c1e8f4ze')[1]
             button_section = calender_section.find_element(By.CSS_SELECTOR, 'div._5neba7a')
@@ -462,19 +465,17 @@ def detail_booking_cal(driver, wait_time, target_month):
             for month_box in month_sides:
                 month_name = month_box.find_element(By.CSS_SELECTOR, 'h3')
 
-                # print(month_name.text)
-
+                # log.info(month_name.text)
 
                 clean_month_name = utl.get_info_from_string(month_name.text, 'month')
                 month_pair.append(clean_month_name)
             
-            # print(f'Target month: {target_month}')
-            # print(f'Current month_pair: {month_pair}')
+            # log.info(f'Target month: {target_month}')
+            # log.info(f'Current month_pair: {month_pair}')
 
             if target_month in month_pair:
-                print('At the right calendar view')
+                log.info('At the right calendar view')
                 time.sleep(wait_time)
-                print('-'*10)
 
                 matched_month_box = month_sides[0] if target_month == month_pair[0] else month_sides[1]
                 date_list = matched_month_box.find_elements(By.CSS_SELECTOR, 'td[class]')
@@ -491,21 +492,20 @@ def detail_booking_cal(driver, wait_time, target_month):
 
                     if last_month_button.is_enabled():
                         last_month_button.click()
-                        print('Wrong calendar view -> last_month_button clicked')
+                        log.info('Wrong calendar view -> last_month_button clicked')
                         time.sleep(wait_time)
                     else:
-                        print('No more calender data visible to scrape')
-                        print('-'*30)
+                        log.info('No more calender data visible to scrape')
+                        lg.log_divider()
                         return 0, 0
 
                 elif target_month > month_pair[1]:
                     next_month_button.click()
-                    print('Wrong calendar view -> next_month_button clicked')
+                    log.info('Wrong calendar view -> next_month_button clicked')
                     time.sleep(wait_time)
-                print('-'*10)
 
     except Exception as e:
-        utl.log_error(e)
+        lg.log_detail_error(e)
         return 0, 0
     
 
