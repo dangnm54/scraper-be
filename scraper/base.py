@@ -42,19 +42,19 @@ log = logging.getLogger(__name__)
 
 
 def start_driver():
+
     extension_dir = brws.crt_proxy_helper_extention(proxy_user, proxy_password, proxy_ip, proxy_port)
     options_1 = brws.config_basic_driver_setting()
     options_2 = brws.config_advanced_driver_setting(extension_dir, options_1)
-    # driver, wait = brws.start_browser(driver_path, options_2)
+    driver, wait = brws.start_browser(driver_path, options_2)
 
     # if driver is None or wait is None:
     #     log.error(f"An error in 'if driver'")
 
-    # # check proxy if working
     # scr1.go_to_website(driver, wait, wait_time, ip_website_url)
     # brws.close_browser(driver)
 
-    # return driver, wait
+    return driver, wait
 
 
 
@@ -73,13 +73,13 @@ def scrape_p1(main_website_url,
     scr1.search_guest(driver, wait_time, num_guest)
     scr1.press_search(driver)
 
-    # link_list = scr1.view_page_get_all_link(driver, wait, wait_time, num_property)
-    # link_df = fop.list_dict_to_df(link_list, index='ID')
-    # link_csv_path = fop.df_to_csv(link_df, name=f'{file_name}_link')
+    link_list = scr1.view_page_get_all_link(driver, wait, wait_time, num_property)
+    link_df = fop.list_dict_to_df(link_list, index='ID')
+    link_csv_path = fop.df_to_csv(link_df, name=f'{file_name}_link')
 
     brws.close_browser(driver)
 
-    # return link_csv_path
+    return link_csv_path
 
 
 
@@ -220,10 +220,11 @@ def run_full_flow(
         collect_host_data: bool = False,
         collect_booking_rate: bool = False
     ):
-    
-    
-    print("API Request Received")
-    print(f"""
+
+    lg.log_divider('Start full flow')
+
+    log.info("API Request Received")
+    log.info(f"""
     - Location: {location}
     - Number of guests: {num_guest}
     - Number of properties: {num_property}
@@ -233,7 +234,7 @@ def run_full_flow(
 
 
     link_csv_path = scrape_p1(main_website_url, file_name, location, num_guest, num_property)
-    print(f"Phase 1 (link scraping) completed. File saved to: {link_csv_path}")
+    log.info(f"Phase 1 (link scraping) completed. File saved to: {link_csv_path}")
     # link_csv_path = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_050725.csv'
 
 
@@ -261,15 +262,15 @@ def run_full_flow(
 
 
 
-# run_full_flow(
-#     file_name = 'HoTay',
-#     location = 'Ho Tay, hanoi',
-#     num_guest = 2,
-#     num_property = 3,
-#     # collect_host_data = True,
-#     # collect_booking_rate = True
-# )
+run_full_flow(
+    file_name = 'HoTay',
+    location = 'Ho Tay, hanoi',
+    num_guest = 2,
+    num_property = 3,
+    # collect_host_data = True,
+    # collect_booking_rate = True
+)
 
 
-start_driver()
+# start_driver()
 

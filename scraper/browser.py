@@ -31,9 +31,7 @@ def crt_proxy_helper_extention(proxy_user, proxy_password, proxy_ip, proxy_port)
     extension_dir = 'proxy_auth_extension'
     if not os.path.exists(extension_dir):
         os.makedirs(extension_dir)
-    log.debug(f'Created {extension_dir}')
-
-    lg.log_divider()
+    log.info(f'Created {extension_dir}')
 
     # 2. crt manifest.json file -> describ extension
     manifest_content = """
@@ -59,7 +57,7 @@ def crt_proxy_helper_extention(proxy_user, proxy_password, proxy_ip, proxy_port)
     manifest_path = os.path.join(extension_dir, 'manifest.json')
     with open(manifest_path, 'w') as f:
         f.write(manifest_content)
-    log.debug(f'Created {manifest_path}')
+    log.info(f'Created {manifest_path}')
 
     # 3. crt background.js file -> the script adds Proxy-Authen header (handles proxy logic)
     proxy_cred = f'{proxy_user}:{proxy_password}'
@@ -100,7 +98,7 @@ def crt_proxy_helper_extention(proxy_user, proxy_password, proxy_ip, proxy_port)
     try:
         with open(background_script_path, "w") as f:
             f.write(background_script_content)
-        log.debug(f"Created {background_script_path}")
+        log.info(f"Created {background_script_path}")
     except IOError as e:
         log.error(f"Error writing {background_script_path} | Cannot proceed with creating extension files.")
         lg.log_detail_error(e)
@@ -127,13 +125,13 @@ def config_advanced_driver_setting(extension_dir_ipt, options_ipt):
     lg.log_divider('Config advanced driver setting')
 
     logging.getLogger('selenium.webdriver.remote.remote_connection').setLevel(logging.WARNING)
-    log.debug(f'Configured minimal logging')
+    log.info(f'Configured minimal logging for selenium')
 
     options = options_ipt
     absolute_extension_dir = os.path.abspath(extension_dir_ipt)
     try:
         options.add_argument(f'--load-extension={absolute_extension_dir}')
-        log.debug(f'Configured Edge to load proxy helper extension from: {absolute_extension_dir}')
+        log.info(f'Configured Edge to load proxy helper extension from: {absolute_extension_dir}')
         return options
     except Exception as e:
         log.error(f'Error loading Proxy Helper Extension | Absolute_extension_dir: {absolute_extension_dir}')
@@ -165,14 +163,14 @@ def start_browser(driver_path_ipt, option_ipt):
                     break
 
             if secondary_monitor:
-                log.debug(f'Secondary monitor found, open browser on secondary monitor')
-                # driver.set_window_rect(x=-1920, y=180, width=1500, height=1010)
-                driver.set_window_rect(x=960, y=10, width=960, height=1010)
+                log.info(f'Secondary monitor found, open browser on secondary monitor')
+                driver.set_window_rect(x=-1920, y=180, width=1500, height=1010)
+                # driver.set_window_rect(x=960, y=10, width=960, height=1010)
             else:
-                log.debug(f'Cannot identify clear secondary monitor, maximizing browser')
+                log.info(f'Cannot identify clear secondary monitor, maximizing browser')
                 driver.set_window_rect(x=960, y=10, width=960, height=1010)
         else:
-            log.debug(f'Only 1 monitor, maximizing browser')
+            log.info(f'Only 1 monitor, maximizing browser')
             driver.set_window_rect(x=960, y=10, width=960, height=1010)
 
         wait = WebDriverWait(driver,20)

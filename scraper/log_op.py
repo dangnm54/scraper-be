@@ -32,12 +32,8 @@ class LogFormat(logging.Formatter):
     def format(self, record):
         
         if record.levelno == HEADER_LV:
-            if record.msg:
-                return f'\n\n{"="*30} {record.msg}\n'
-            else:
-                return f'\n{"-"*60}\n'
+            return record.msg
         
-
         # use .format() from parent class (logging.Formatter) -> internally use self.fmt and self.datefmt
         return super().format(record)
 
@@ -48,13 +44,14 @@ class LogFormat(logging.Formatter):
 def setup_logging_for_file_directly_run():
 
     current_time = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
-    with open('./app.log', 'w') as f:
+    with open('./app.log', 'w', encoding='utf-8') as f:
         f.write(f'LOG RECORDED AT: {current_time}\n')
 
 
     console_handler = logging.StreamHandler()
-    file_handler = logging.FileHandler('./app.log', mode='a')
-    
+    file_handler = logging.FileHandler('./app.log', mode='a', encoding='utf-8')
+
+
     log_format = LogFormat()
 
 
@@ -64,21 +61,26 @@ def setup_logging_for_file_directly_run():
     console_handler.setFormatter(log_format)
     file_handler.setFormatter(log_format)
 
+
     # root logger is global for entire project    
     root_logger = logging.getLogger()
-    root_logger.setLevel(logging.DEBUG)
+    root_logger.setLevel(logging.INFO)
     root_logger.addHandler(console_handler)
     root_logger.addHandler(file_handler)
+    
 
 
 
+def log_divider(ipt_message=''):
 
-
-def log_divider(log_message=''):
-
+    if ipt_message:
+        message = f'\n\n{"="*30} {ipt_message}\n'
+    else:
+        message = f'\n\n{"-"*60}\n'
+    
     # same root logger created earlier (if any)
     root_logger = logging.getLogger()
-    root_logger.log(HEADER_LV, log_message)
+    root_logger.log(HEADER_LV, message)
 
 
 
@@ -97,13 +99,13 @@ def log_detail_error(e):
             frame_info = f'- Error level #{i+1}: File <{frame.filename}> | Function <{frame.name}> | Line #{frame.lineno}: {frame.line}'
             error_list.append(frame_info)
 
-        log_message = '\n'.join(error_list)
+        message = '\n'.join(error_list)
 
     else:
-        log_message = e
+        message = e
 
     root_logger = logging.getLogger()
-    root_logger.error(log_message)
+    root_logger.error(message)
 
 
 

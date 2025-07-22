@@ -1,22 +1,81 @@
-LOG RECORDED AT: 21-07-2025 21:09:19
+LOG RECORDED AT: 22-07-2025 21:12:46
+
+
+============================== Start full flow
+
+21:12:46 | INFO | base - run_full_flow - 226 | API Request Received
+21:12:46 | INFO | base - run_full_flow - 227 | 
+    - Location: Ho Tay, hanoi
+    - Number of guests: 2
+    - Number of properties: 3
+    - Collect host data: False
+    - Collect booking rate: False
+    
 
 
 ============================== Create proxy helper extension
 
-21:09:19 | DEBUG | browser - crt_proxy_helper_extention - 34 | Created proxy_auth_extension
-
-------------------------------------------------------------
-
-21:09:19 | DEBUG | browser - crt_proxy_helper_extention - 62 | Created proxy_auth_extension\manifest.json
-21:09:19 | DEBUG | browser - crt_proxy_helper_extention - 103 | Created proxy_auth_extension\background.js
+21:12:46 | INFO | browser - crt_proxy_helper_extention - 34 | Created proxy_auth_extension
+21:12:46 | INFO | browser - crt_proxy_helper_extention - 60 | Created proxy_auth_extension\manifest.json
+21:12:46 | INFO | browser - crt_proxy_helper_extention - 101 | Created proxy_auth_extension\background.js
 
 
 ============================== Config basic driver setting
 
-21:09:19 | INFO | browser - config_basic_driver_setting - 120 | Configured basic settings
+21:12:46 | INFO | browser - config_basic_driver_setting - 118 | Configured basic settings
 
 
 ============================== Config advanced driver setting
 
-21:09:19 | DEBUG | browser - config_advanced_driver_setting - 130 | Configured minimal logging
-21:09:19 | DEBUG | browser - config_advanced_driver_setting - 136 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+21:12:46 | INFO | browser - config_advanced_driver_setting - 128 | Configured minimal logging for selenium
+21:12:46 | INFO | browser - config_advanced_driver_setting - 134 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+
+
+============================== Start browser
+
+21:12:48 | INFO | browser - start_browser - 150 | Edge browser started
+21:12:48 | INFO | browser - start_browser - 166 | Secondary monitor found, open browser on secondary monitor
+
+
+============================== Go to website
+
+21:12:52 | INFO | scrape_p1 - go_to_website - 29 | Go to website: https://www.airbnb.com.vn/homes
+21:12:57 | INFO | scrape_p1 - go_to_website - 37 | Found Ad pop-up
+21:12:57 | INFO | scrape_p1 - go_to_website - 40 | Close Ad pop-up
+
+
+============================== Search location
+
+21:13:02 | INFO | scrape_p1 - search_location - 119 | Location element found and clicked
+21:13:07 | INFO | scrape_p1 - search_location - 125 | <Ho Tay, hanoi> typed and ENTER
+
+
+============================== Search date
+
+21:13:12 | INFO | scrape_p1 - search_date - 141 | Flexible time button found and clicked
+21:13:17 | INFO | scrape_p1 - search_date - 147 | Flexible weekend button found and clicked
+
+
+============================== Search guest
+
+21:13:22 | INFO | scrape_p1 - search_guest - 165 | Guest element found and clicked
+21:13:27 | INFO | scrape_p1 - search_guest - 177 | 2 guests added
+
+
+============================== Press search
+
+21:13:32 | INFO | scrape_p1 - press_search - 193 | Seach button founded and clicked
+
+
+============================== View page and get all link
+
+21:13:32 | INFO | scrape_p1 - view_page_get_all_link - 208 | Ready to scrape 3 properties
+21:13:43 | INFO | scrape_p1 - view_page_get_all_link - 238 | {'ID': 1, 'Name': 'Perfect Sunset Lakeview-Well equipped-Brand New', 'Link': 'https://www.airbnb.com.vn/rooms/1376847746179925424'}
+21:13:53 | INFO | scrape_p1 - view_page_get_all_link - 238 | {'ID': 3, 'Name': 'Soft Light & Lake View Studio', 'Link': 'https://www.airbnb.com.vn/rooms/1421467779265994002'}
+21:13:53 | INFO | scrape_p1 - view_page_get_all_link - 259 | 3 properties scraped
+
+
+============================== Close browser
+
+21:13:55 | INFO | browser - close_browser - 193 | Close browser
+21:13:55 | INFO | base - run_full_flow - 237 | Phase 1 (link scraping) completed. File saved to: C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_220725.csv
