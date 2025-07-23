@@ -35,7 +35,8 @@ import matplotlib.pyplot as plt
 # -----------------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    lg.setup_logging_for_file_directly_run()
+    log_file_path = lg.setup_logging_for_file_directly_run()
+
 
 log = logging.getLogger(__name__)
 
@@ -48,8 +49,8 @@ def start_driver():
     options_2 = brws.config_advanced_driver_setting(extension_dir, options_1)
     driver, wait = brws.start_browser(driver_path, options_2)
 
-    # if driver is None or wait is None:
-    #     log.error(f"An error in 'if driver'")
+    if driver is None or wait is None:
+        log.error(f"An error in 'if driver'")
 
     # scr1.go_to_website(driver, wait, wait_time, ip_website_url)
     # brws.close_browser(driver)
@@ -159,11 +160,11 @@ def scrape_p2(property_link_csv_path,
 
 
         utl.print_pretty_dict(property_detail_data)
-        print('-'*30)    
+        lg.log_divider()    
         detail_list.append(property_detail_data)
 
-        if index == 1:
-            break
+        # if index == 1:
+        #     break
 
     brws.close_browser(driver)  
 
@@ -235,16 +236,14 @@ def run_full_flow(
 
     # link_csv_path = scrape_p1(main_website_url, file_name, location, num_guest, num_property)
     # log.info(f"Phase 1 (link scraping) completed. File saved to: {link_csv_path}")
-    link_csv_path = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_220725.csv'
-
+    link_csv_path = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_230725.csv'
 
     full_csv_path = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
     log.info(f"Phase 2 (detail scraping) completed. File saved to: {full_csv_path}")
     # full_csv_path = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\D3_full_03_06_final.csv'
-
-
-    # # cal_data = calculate_data(full_csv_path)
-    # # draw_dashboard(full_csv_path, cal_data)
+    
+    # cal_data = calculate_data(full_csv_path)
+    # draw_dashboard(full_csv_path, cal_data)
 
 
     return {
@@ -266,11 +265,13 @@ run_full_flow(
     file_name = 'HoTay',
     location = 'Ho Tay, hanoi',
     num_guest = 2,
-    num_property = 3,
+    num_property = 1,
     collect_host_data = True,
     collect_booking_rate = True
 )
 
 
+
 # start_driver()
 
+print(f'\nLog file saved to: {log_file_path}\n')

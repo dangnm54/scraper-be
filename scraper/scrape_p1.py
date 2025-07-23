@@ -30,6 +30,13 @@ def go_to_website(driver, wait, wait_time, website_url, view=None):
         
         time.sleep(wait_time)
 
+        try:
+            driver.find_element(By.CSS_SELECTOR, 'body')
+        except:
+            log.info('Page not loaded properly, refreshing...')
+            driver.refresh()
+            time.sleep(wait_time)
+
         #close ads if any
         try:
             ad_element1 = driver.find_element(By.CSS_SELECTOR, 'div.c1qme1pd')

@@ -1,13 +1,14 @@
-LOG RECORDED AT: 22-07-2025 21:54:29
+LOG RECORDED AT: 23-07-2025 09:05:38
+STARTED BY FILE: base.py
 
 
 ============================== Start full flow
 
-21:54:29 | INFO | base - run_full_flow - 226 | API Request Received
-21:54:29 | INFO | base - run_full_flow - 227 | 
+09:05:38 | INFO | base - run_full_flow - 227 | API Request Received
+09:05:38 | INFO | base - run_full_flow - 228 | 
     - Location: Ho Tay, hanoi
     - Number of guests: 2
-    - Number of properties: 3
+    - Number of properties: 1
     - Collect host data: True
     - Collect booking rate: True
     
@@ -15,156 +16,159 @@ LOG RECORDED AT: 22-07-2025 21:54:29
 
 ============================== Create proxy helper extension
 
-21:54:29 | INFO | browser - crt_proxy_helper_extention - 34 | Created proxy_auth_extension
-21:54:29 | INFO | browser - crt_proxy_helper_extention - 60 | Created proxy_auth_extension\manifest.json
-21:54:29 | INFO | browser - crt_proxy_helper_extention - 101 | Created proxy_auth_extension\background.js
+09:05:38 | INFO | browser - crt_proxy_helper_extention - 34 | Created proxy_auth_extension
+09:05:38 | INFO | browser - crt_proxy_helper_extention - 60 | Created proxy_auth_extension\manifest.json
+09:05:38 | INFO | browser - crt_proxy_helper_extention - 101 | Created proxy_auth_extension\background.js
 
 
 ============================== Config basic driver setting
 
-21:54:29 | INFO | browser - config_basic_driver_setting - 118 | Configured basic settings
+09:05:38 | INFO | browser - config_basic_driver_setting - 118 | Configured basic settings
 
 
 ============================== Config advanced driver setting
 
-21:54:29 | INFO | browser - config_advanced_driver_setting - 128 | Configured minimal logging for selenium
-21:54:29 | INFO | browser - config_advanced_driver_setting - 134 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+09:05:38 | INFO | browser - config_advanced_driver_setting - 128 | Configured minimal logging for selenium
+09:05:38 | INFO | browser - config_advanced_driver_setting - 134 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
 
 
 ============================== Start browser
 
-21:54:30 | INFO | browser - start_browser - 150 | Edge browser started
-21:54:30 | INFO | browser - start_browser - 166 | Secondary monitor found, open browser on secondary monitor
-21:54:30 | INFO | file_op - csv_to_df - 221 | Dataframe created from file: C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_220725.csv
+09:05:39 | INFO | browser - start_browser - 150 | Edge browser started
+09:05:39 | INFO | browser - start_browser - 166 | Secondary monitor found, open browser on secondary monitor
+09:05:39 | INFO | file_op - csv_to_df - 221 | Dataframe created from file: C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_230725.csv
 
 
 ============================== Go to website
 
-21:54:32 | INFO | scrape_p1 - go_to_website - 29 | Go to website: https://www.airbnb.com.vn/rooms/1376847746179925424
-21:54:38 | INFO | scrape_p1 - go_to_website - 47 | Found Ad pop-up
-21:54:38 | INFO | scrape_p1 - go_to_website - 50 | Close Ad pop-up
+09:05:41 | INFO | scrape_p1 - go_to_website - 29 | Go to website: https://www.airbnb.com.vn/rooms/1399115341365819479
+09:05:44 | INFO | scrape_p1 - go_to_website - 47 | Found Ad pop-up
+09:05:45 | INFO | scrape_p1 - go_to_website - 50 | Close Ad pop-up
 
 
 ============================== Overview info
 
-21:54:46 | INFO | scrape_p2 - overview_info - 38 | Overview section found
-21:54:52 | INFO | utils - print_pretty_dict - 112 | {
+09:05:48 | INFO | scrape_p2 - overview_info - 38 | Overview section found
+09:05:52 | INFO | utils - print_pretty_dict - 112 | {
     "Guest_num": 2,
     "Bed_num": 1,
-    "Bath_num": 1,
-    "Location": "21.0509,105.8385"
+    "Bath_num": null,
+    "Location": "21.0804,105.817"
 }
 
 
 ============================== Rating info
 
-21:54:59 | INFO | scrape_p2 - rating_info - 183 | Special rating element found
-21:54:59 | INFO | scrape_p2 - rating_info - 199 | Special overview rating data collected
-21:54:59 | INFO | utils - print_pretty_dict - 112 | {
-    "Rating_title": "Được khách yêu thích",
+09:05:55 | INFO | scrape_p2 - rating_info - 204 | Normal rating element found
+09:05:55 | INFO | scrape_p2 - rating_info - 214 | Normal overview rating data collected
+09:05:55 | INFO | utils - print_pretty_dict - 112 | {
+    "Rating_title": null,
     "Rating_star": 5.0,
-    "Rating_num": 9
+    "Rating_num": 4
 }
 
 
 ============================== Host info
 
-21:55:06 | INFO | utils - print_pretty_dict - 112 | {
-    "Host_name": "Annam Maison - Premium",
+09:05:59 | INFO | utils - print_pretty_dict - 112 | {
+    "Host_name": "PentPlex",
     "Host_title": "Chủ nhà siêu cấp",
-    "Host_rating_num": 186,
-    "Host_rating_star": 4.82,
-    "Host_exp": "6 nam",
-    "Host_link": "https://www.airbnb.com.vn/users/show/311962872"
+    "Host_rating_num": 96,
+    "Host_rating_star": 4.93,
+    "Host_exp": "11 thang",
+    "Host_link": "https://www.airbnb.com.vn/users/show/594052948"
 }
 
 
 ============================== Book rate info
 
-21:55:12 | INFO | scrape_p2 - book_rate_info - 373 | Book time section found
-21:55:12 | INFO | scrape_p2 - book_rate_info - 378 | Open calender
-21:55:19 | INFO | scrape_p2 - book_rate_info - 384 | 
+09:06:02 | INFO | scrape_p2 - book_rate_info - 373 | Book time section found
+09:06:02 | INFO | scrape_p2 - book_rate_info - 378 | Open calender
+09:06:06 | INFO | scrape_p2 - book_rate_info - 384 | 
 _____Checking month <7>_____
 
 ------------------------------------------------------------
 
-21:55:19 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #1
-21:55:19 | INFO | scrape_p2 - detail_booking_cal - 477 | At the right calendar view
+09:06:06 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #1
+09:06:06 | INFO | scrape_p2 - detail_booking_cal - 477 | At the right calendar view
 
 ------------------------------------------------------------
 
-21:55:25 | INFO | scrape_p2 - final_stage_book_cal - 437 | 29 / 31 = 93.55%
-21:55:25 | INFO | scrape_p2 - book_rate_info - 384 | 
+09:06:09 | INFO | scrape_p2 - final_stage_book_cal - 437 | 24 / 31 = 77.42%
+09:06:09 | INFO | scrape_p2 - book_rate_info - 384 | 
 _____Checking month <8>_____
 
 ------------------------------------------------------------
 
-21:55:25 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #1
-21:55:26 | INFO | scrape_p2 - detail_booking_cal - 477 | At the right calendar view
+09:06:09 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #1
+09:06:09 | INFO | scrape_p2 - detail_booking_cal - 477 | At the right calendar view
 
 ------------------------------------------------------------
 
-21:55:32 | INFO | scrape_p2 - final_stage_book_cal - 437 | 19 / 31 = 61.29%
-21:55:32 | INFO | scrape_p2 - book_rate_info - 384 | 
+09:06:13 | INFO | scrape_p2 - final_stage_book_cal - 437 | 8 / 31 = 25.81%
+09:06:13 | INFO | scrape_p2 - book_rate_info - 384 | 
 _____Checking month <[8, 9, 10]>_____
-21:55:32 | INFO | scrape_p2 - book_rate_info - 405 | Target month list: [8, 9, 10]
-21:55:32 | INFO | scrape_p2 - book_rate_info - 411 | Single target month: 8
+09:06:13 | INFO | scrape_p2 - book_rate_info - 405 | Target month list: [8, 9, 10]
+09:06:13 | INFO | scrape_p2 - book_rate_info - 411 | Single target month: 8
 
 ------------------------------------------------------------
 
-21:55:32 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #1
-21:55:32 | INFO | scrape_p2 - detail_booking_cal - 477 | At the right calendar view
-21:55:39 | INFO | scrape_p2 - book_rate_info - 411 | Single target month: 9
+09:06:13 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #1
+09:06:13 | INFO | scrape_p2 - detail_booking_cal - 477 | At the right calendar view
+09:06:16 | INFO | scrape_p2 - book_rate_info - 411 | Single target month: 9
 
 ------------------------------------------------------------
 
-21:55:39 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #1
-21:55:39 | INFO | scrape_p2 - detail_booking_cal - 504 | Wrong calendar view -> next_month_button clicked
-21:55:45 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #2
-21:55:45 | INFO | scrape_p2 - detail_booking_cal - 477 | At the right calendar view
-21:55:52 | INFO | scrape_p2 - book_rate_info - 411 | Single target month: 10
+09:06:16 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #1
+09:06:16 | INFO | scrape_p2 - detail_booking_cal - 504 | Wrong calendar view -> next_month_button clicked
+09:06:20 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #2
+09:06:20 | INFO | scrape_p2 - detail_booking_cal - 477 | At the right calendar view
+09:06:23 | INFO | scrape_p2 - book_rate_info - 411 | Single target month: 10
 
 ------------------------------------------------------------
 
-21:55:52 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #1
-21:55:52 | INFO | scrape_p2 - detail_booking_cal - 504 | Wrong calendar view -> next_month_button clicked
-21:55:58 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #2
-21:55:59 | INFO | scrape_p2 - detail_booking_cal - 477 | At the right calendar view
+09:06:23 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #1
+09:06:23 | INFO | scrape_p2 - detail_booking_cal - 504 | Wrong calendar view -> next_month_button clicked
+09:06:27 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #2
+09:06:27 | INFO | scrape_p2 - detail_booking_cal - 477 | At the right calendar view
 
 ------------------------------------------------------------
 
-21:56:05 | INFO | scrape_p2 - final_stage_book_cal - 437 | 63 / 92 = 68.48%
-21:56:05 | INFO | utils - print_pretty_dict - 112 | {
-    "This_month_booked_rate": 93.54838709677419,
-    "Next_1_month_booked_rate": 61.29032258064516,
-    "Next_3_month_booked_rate": 68.47826086956522
+09:06:30 | INFO | scrape_p2 - final_stage_book_cal - 437 | 10 / 92 = 10.87%
+09:06:30 | INFO | utils - print_pretty_dict - 112 | {
+    "This_month_booked_rate": 77.41935483870968,
+    "Next_1_month_booked_rate": 25.806451612903224,
+    "Next_3_month_booked_rate": 10.869565217391305
 }
-21:56:05 | INFO | utils - print_pretty_dict - 112 | {
+09:06:30 | INFO | utils - print_pretty_dict - 112 | {
     "ID": 1,
     "Scrape_status": "Success",
     "Guest_num": 2,
     "Bed_num": 1,
-    "Bath_num": 1,
-    "Location": "21.0509,105.8385",
-    "Rating_title": "Được khách yêu thích",
-    "Rating_num": 9,
+    "Bath_num": null,
+    "Location": "21.0804,105.817",
+    "Rating_title": null,
+    "Rating_num": 4,
     "Rating_star": 5.0,
-    "Host_name": "Annam Maison - Premium",
+    "Host_name": "PentPlex",
     "Host_title": "Chủ nhà siêu cấp",
-    "Host_rating_star": 4.82,
-    "Host_rating_num": 186,
-    "Host_exp": "6 nam",
-    "Host_link": "https://www.airbnb.com.vn/users/show/311962872",
-    "This_month_booked_rate": 93.54838709677419,
-    "Next_1_month_booked_rate": 61.29032258064516,
-    "Next_3_month_booked_rate": 68.47826086956522
+    "Host_rating_star": 4.93,
+    "Host_rating_num": 96,
+    "Host_exp": "11 thang",
+    "Host_link": "https://www.airbnb.com.vn/users/show/594052948",
+    "This_month_booked_rate": 77.41935483870968,
+    "Next_1_month_booked_rate": 25.806451612903224,
+    "Next_3_month_booked_rate": 10.869565217391305
 }
+
+------------------------------------------------------------
+
 
 
 ============================== Close browser
 
-21:56:07 | INFO | browser - close_browser - 193 | Close browser
-21:56:07 | INFO | file_op - list_dict_to_df - 154 | List_of_dict -> Dataframe successful
-21:56:07 | INFO | file_op - merge_df - 162 | Successfully merge 2 Dataframe
-21:56:07 | INFO | file_op - df_to_csv - 188 | Dataframe saved to file: C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_full_220725 (2).csv
-21:56:07 | INFO | base - run_full_flow - 242 | Phase 2 (detail scraping) completed. File saved to: C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_full_220725 (2).csv
+09:06:33 | INFO | browser - close_browser - 193 | Close browser
+09:06:33 | INFO | file_op - list_dict_to_df - 154 | List_of_dict -> Dataframe successful
+09:06:33 | INFO | file_op - merge_df - 162 | Successfully merge 2 Dataframe
+09:06:33 | INFO | file_op - df_to_csv - 188 | Dataframe saved to file: C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_full_230725.csv
+09:06:33 | INFO | base - run_full_flow - 242 | Phase 2 (detail scraping) completed. File saved to: C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_full_230725.csv

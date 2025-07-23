@@ -12,6 +12,7 @@ uvicorn
 pydantic
 numpy
 python-logging-loki
+colorama
 
 # pip install -r requirements.txt -> install all packages in the requirements.txt file
 # pip list -> view all packages installed

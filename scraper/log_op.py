@@ -1,7 +1,8 @@
-import logging
-from datetime import datetime
+import os
 import sys
+import logging
 import traceback
+from datetime import datetime
 
 
 # -----------------------------------------------------------------------------------
@@ -27,7 +28,6 @@ class LogFormat(logging.Formatter):
             datefmt='%H:%M:%S'
         )
 
-
     # when log system called format(), it always provide a record object
     def format(self, record):
         
@@ -41,11 +41,13 @@ class LogFormat(logging.Formatter):
 
 
 
+
 def setup_logging_for_file_directly_run():
 
     current_time = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
     with open('./app.log', 'w', encoding='utf-8') as f:
         f.write(f'LOG RECORDED AT: {current_time}\n')
+        f.write(f'STARTED BY FILE: {os.path.basename(sys.argv[0])}\n')
 
 
     console_handler = logging.StreamHandler()
@@ -67,7 +69,13 @@ def setup_logging_for_file_directly_run():
     root_logger.setLevel(logging.INFO)
     root_logger.addHandler(console_handler)
     root_logger.addHandler(file_handler)
-    
+
+    log_file_path = os.path.abspath('./app.log')
+
+    return log_file_path
+
+
+
 
 
 
