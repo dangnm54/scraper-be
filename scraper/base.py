@@ -168,11 +168,11 @@ def scrape_p2(property_link_csv_path,
 
     brws.close_browser(driver)  
 
-    detail_df = fop.list_dict_to_df(detail_list, index='ID') 
-    full_df = fop.merge_df(link_df, detail_df)
-    full_csv_path = fop.df_to_csv(full_df, name=f'{file_name}_full')
+    # detail_df = fop.list_dict_to_df(detail_list, index='ID') 
+    # full_df = fop.merge_df(link_df, detail_df)
+    # full_csv_path = fop.df_to_csv(full_df, name=f'{file_name}_full')
 
-    return full_csv_path
+    # return full_csv_path
 
 
 
@@ -261,17 +261,17 @@ def run_full_flow(
 
 
 
-run_full_flow(
-    file_name = 'HoTay',
-    location = 'Ho Tay, hanoi',
-    num_guest = 2,
-    num_property = 1,
-    collect_host_data = True,
-    collect_booking_rate = True
-)
+# run_full_flow(
+#     file_name = 'HoTay',
+#     location = 'Ho Tay, hanoi',
+#     num_guest = 2,
+#     num_property = 1,
+#     # collect_host_data = True,
+#     # collect_booking_rate = True
+# )
 
 
 
 # start_driver()
 
-print(f'\nLog file saved to: {log_file_path}\n')
+# print(f'\nLog file saved to: {log_file_path}\n')

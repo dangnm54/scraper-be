@@ -1,55 +1,56 @@
-LOG RECORDED AT: 23-07-2025 09:05:38
-STARTED BY FILE: base.py
+LOG RECORDED AT: 23-07-2025 21:33:28
+STARTED BY FILE: __main__.py
+21:33:39 | INFO | main - run_scraper_api - 147 | Received FE data: {'file_name': 'D9', 'location': 'D9', 'num_guest': 2, 'num_property': 3, 'collect_host_data': False, 'collect_booking_rate': False}
 
 
 ============================== Start full flow
 
-09:05:38 | INFO | base - run_full_flow - 227 | API Request Received
-09:05:38 | INFO | base - run_full_flow - 228 | 
-    - Location: Ho Tay, hanoi
+21:33:39 | INFO | base - run_full_flow - 227 | API Request Received
+21:33:39 | INFO | base - run_full_flow - 228 | 
+    - Location: D9
     - Number of guests: 2
-    - Number of properties: 1
-    - Collect host data: True
-    - Collect booking rate: True
+    - Number of properties: 3
+    - Collect host data: False
+    - Collect booking rate: False
     
 
 
 ============================== Create proxy helper extension
 
-09:05:38 | INFO | browser - crt_proxy_helper_extention - 34 | Created proxy_auth_extension
-09:05:38 | INFO | browser - crt_proxy_helper_extention - 60 | Created proxy_auth_extension\manifest.json
-09:05:38 | INFO | browser - crt_proxy_helper_extention - 101 | Created proxy_auth_extension\background.js
+21:33:39 | INFO | browser - crt_proxy_helper_extention - 34 | Created proxy_auth_extension
+21:33:39 | INFO | browser - crt_proxy_helper_extention - 60 | Created proxy_auth_extension\manifest.json
+21:33:39 | INFO | browser - crt_proxy_helper_extention - 101 | Created proxy_auth_extension\background.js
 
 
 ============================== Config basic driver setting
 
-09:05:38 | INFO | browser - config_basic_driver_setting - 118 | Configured basic settings
+21:33:39 | INFO | browser - config_basic_driver_setting - 118 | Configured basic settings
 
 
 ============================== Config advanced driver setting
 
-09:05:38 | INFO | browser - config_advanced_driver_setting - 128 | Configured minimal logging for selenium
-09:05:38 | INFO | browser - config_advanced_driver_setting - 134 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+21:33:39 | INFO | browser - config_advanced_driver_setting - 128 | Configured minimal logging for selenium
+21:33:39 | INFO | browser - config_advanced_driver_setting - 134 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
 
 
 ============================== Start browser
 
-09:05:39 | INFO | browser - start_browser - 150 | Edge browser started
-09:05:39 | INFO | browser - start_browser - 166 | Secondary monitor found, open browser on secondary monitor
-09:05:39 | INFO | file_op - csv_to_df - 221 | Dataframe created from file: C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_230725.csv
+21:33:41 | INFO | browser - start_browser - 150 | Edge browser started
+21:33:41 | INFO | browser - start_browser - 166 | Secondary monitor found, open browser on secondary monitor
+21:33:41 | INFO | file_op - csv_to_df - 221 | Dataframe created from file: C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_230725.csv
 
 
 ============================== Go to website
 
-09:05:41 | INFO | scrape_p1 - go_to_website - 29 | Go to website: https://www.airbnb.com.vn/rooms/1399115341365819479
-09:05:44 | INFO | scrape_p1 - go_to_website - 47 | Found Ad pop-up
-09:05:45 | INFO | scrape_p1 - go_to_website - 50 | Close Ad pop-up
+21:33:44 | INFO | scrape_p1 - go_to_website - 29 | Go to website: https://www.airbnb.com.vn/rooms/1399115341365819479
+21:33:48 | INFO | scrape_p1 - go_to_website - 54 | Found Ad pop-up
+21:33:49 | INFO | scrape_p1 - go_to_website - 57 | Close Ad pop-up
 
 
 ============================== Overview info
 
-09:05:48 | INFO | scrape_p2 - overview_info - 38 | Overview section found
-09:05:52 | INFO | utils - print_pretty_dict - 112 | {
+21:33:53 | INFO | scrape_p2 - overview_info - 38 | Overview section found
+21:33:58 | INFO | utils - print_pretty_dict - 112 | {
     "Guest_num": 2,
     "Bed_num": 1,
     "Bath_num": null,
@@ -59,88 +60,14 @@ STARTED BY FILE: base.py
 
 ============================== Rating info
 
-09:05:55 | INFO | scrape_p2 - rating_info - 204 | Normal rating element found
-09:05:55 | INFO | scrape_p2 - rating_info - 214 | Normal overview rating data collected
-09:05:55 | INFO | utils - print_pretty_dict - 112 | {
+21:34:03 | INFO | scrape_p2 - rating_info - 204 | Normal rating element found
+21:34:03 | INFO | scrape_p2 - rating_info - 214 | Normal overview rating data collected
+21:34:03 | INFO | utils - print_pretty_dict - 112 | {
     "Rating_title": null,
     "Rating_star": 5.0,
     "Rating_num": 4
 }
-
-
-============================== Host info
-
-09:05:59 | INFO | utils - print_pretty_dict - 112 | {
-    "Host_name": "PentPlex",
-    "Host_title": "Chủ nhà siêu cấp",
-    "Host_rating_num": 96,
-    "Host_rating_star": 4.93,
-    "Host_exp": "11 thang",
-    "Host_link": "https://www.airbnb.com.vn/users/show/594052948"
-}
-
-
-============================== Book rate info
-
-09:06:02 | INFO | scrape_p2 - book_rate_info - 373 | Book time section found
-09:06:02 | INFO | scrape_p2 - book_rate_info - 378 | Open calender
-09:06:06 | INFO | scrape_p2 - book_rate_info - 384 | 
-_____Checking month <7>_____
-
-------------------------------------------------------------
-
-09:06:06 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #1
-09:06:06 | INFO | scrape_p2 - detail_booking_cal - 477 | At the right calendar view
-
-------------------------------------------------------------
-
-09:06:09 | INFO | scrape_p2 - final_stage_book_cal - 437 | 24 / 31 = 77.42%
-09:06:09 | INFO | scrape_p2 - book_rate_info - 384 | 
-_____Checking month <8>_____
-
-------------------------------------------------------------
-
-09:06:09 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #1
-09:06:09 | INFO | scrape_p2 - detail_booking_cal - 477 | At the right calendar view
-
-------------------------------------------------------------
-
-09:06:13 | INFO | scrape_p2 - final_stage_book_cal - 437 | 8 / 31 = 25.81%
-09:06:13 | INFO | scrape_p2 - book_rate_info - 384 | 
-_____Checking month <[8, 9, 10]>_____
-09:06:13 | INFO | scrape_p2 - book_rate_info - 405 | Target month list: [8, 9, 10]
-09:06:13 | INFO | scrape_p2 - book_rate_info - 411 | Single target month: 8
-
-------------------------------------------------------------
-
-09:06:13 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #1
-09:06:13 | INFO | scrape_p2 - detail_booking_cal - 477 | At the right calendar view
-09:06:16 | INFO | scrape_p2 - book_rate_info - 411 | Single target month: 9
-
-------------------------------------------------------------
-
-09:06:16 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #1
-09:06:16 | INFO | scrape_p2 - detail_booking_cal - 504 | Wrong calendar view -> next_month_button clicked
-09:06:20 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #2
-09:06:20 | INFO | scrape_p2 - detail_booking_cal - 477 | At the right calendar view
-09:06:23 | INFO | scrape_p2 - book_rate_info - 411 | Single target month: 10
-
-------------------------------------------------------------
-
-09:06:23 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #1
-09:06:23 | INFO | scrape_p2 - detail_booking_cal - 504 | Wrong calendar view -> next_month_button clicked
-09:06:27 | INFO | scrape_p2 - detail_booking_cal - 455 | Try #2
-09:06:27 | INFO | scrape_p2 - detail_booking_cal - 477 | At the right calendar view
-
-------------------------------------------------------------
-
-09:06:30 | INFO | scrape_p2 - final_stage_book_cal - 437 | 10 / 92 = 10.87%
-09:06:30 | INFO | utils - print_pretty_dict - 112 | {
-    "This_month_booked_rate": 77.41935483870968,
-    "Next_1_month_booked_rate": 25.806451612903224,
-    "Next_3_month_booked_rate": 10.869565217391305
-}
-09:06:30 | INFO | utils - print_pretty_dict - 112 | {
+21:34:03 | INFO | utils - print_pretty_dict - 112 | {
     "ID": 1,
     "Scrape_status": "Success",
     "Guest_num": 2,
@@ -150,15 +77,15 @@ _____Checking month <[8, 9, 10]>_____
     "Rating_title": null,
     "Rating_num": 4,
     "Rating_star": 5.0,
-    "Host_name": "PentPlex",
-    "Host_title": "Chủ nhà siêu cấp",
-    "Host_rating_star": 4.93,
-    "Host_rating_num": 96,
-    "Host_exp": "11 thang",
-    "Host_link": "https://www.airbnb.com.vn/users/show/594052948",
-    "This_month_booked_rate": 77.41935483870968,
-    "Next_1_month_booked_rate": 25.806451612903224,
-    "Next_3_month_booked_rate": 10.869565217391305
+    "Host_name": null,
+    "Host_title": null,
+    "Host_rating_star": null,
+    "Host_rating_num": null,
+    "Host_exp": null,
+    "Host_link": null,
+    "This_month_booked_rate": null,
+    "Next_1_month_booked_rate": null,
+    "Next_3_month_booked_rate": null
 }
 
 ------------------------------------------------------------
@@ -167,8 +94,5 @@ _____Checking month <[8, 9, 10]>_____
 
 ============================== Close browser
 
-09:06:33 | INFO | browser - close_browser - 193 | Close browser
-09:06:33 | INFO | file_op - list_dict_to_df - 154 | List_of_dict -> Dataframe successful
-09:06:33 | INFO | file_op - merge_df - 162 | Successfully merge 2 Dataframe
-09:06:33 | INFO | file_op - df_to_csv - 188 | Dataframe saved to file: C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_full_230725.csv
-09:06:33 | INFO | base - run_full_flow - 242 | Phase 2 (detail scraping) completed. File saved to: C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_full_230725.csv
+21:34:05 | INFO | browser - close_browser - 193 | Close browser
+21:34:05 | INFO | base - run_full_flow - 242 | Phase 2 (detail scraping) completed. File saved to: None

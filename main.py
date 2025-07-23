@@ -79,52 +79,40 @@ class FileDetail(BaseModel):
     data: Optional[List[dict]] = None
 
 
-
-FE_log_stream: asyncio.Queue = asyncio.Queue()
-
-
-
-# SSELogStream class intercepts print() and direct message to SEE queue
-# worker thread use method in this class
-class SSELogStream:
-
-    def __init__(self, BE_log_stream, FE_log_stream:asyncio.Queue):
-        self.BE_log_stream = BE_log_stream
+class SSELogHandler(logging.Handler):
+    def __init__(self, FE_log_stream:asyncio.Queue, loop=None):
+        super().__init__()
         self.FE_log_stream = FE_log_stream
 
         # loop -> refer to main thread's event loop (event loop manage multi async tasks in thread)
-        self.loop = None
+        self.loop = loop
 
-    def write(self, message):
-        # Write to the original stdout (e.g., the console)
-        self.BE_log_stream.write(message)
-        self.BE_log_stream.flush()
+    def emit(self, record):
+        try:
+            message = self.format(record)
+            # message = record.msg
 
-        # If the asyncio loop is available, also put the message in the queue for the frontend
-        if self.loop and self.loop.is_running():
-            for line in message.splitlines():
-                if line.strip():
-                    # cross-thread communication
+            # If the asyncio loop is available, also put the message in the queue for the frontend
+            if self.loop and self.loop.is_running():
+                # cross-thread communication
                         # FE_log_stream -> async fx
                         # worker thread hand over '.put' to main thread
                         # a thread-safe way for worker thread to say: 
                             # I'm the worker thread
                             # and I need you (main thread) to execute this .put coroutine task for me.
-                    asyncio.run_coroutine_threadsafe(
-                        self.FE_log_stream.put(line.strip()), self.loop
-                    )
-
-    def flush(self):
-        self.BE_log_stream.flush()
-
+                asyncio.run_coroutine_threadsafe(
+                    self.FE_log_stream.put(message), self.loop
+                )
+        except Exception as e:
+            log.detail_error(e)
 
 
-# BE_log_stream points to the original stdout (console)
-BE_log_stream = sys.stdout
 
-# every print() will go through this sse_log_stream instance
-sse_log_stream = SSELogStream(BE_log_stream, FE_log_stream)
-sys.stdout = sse_log_stream
+FE_log_stream: asyncio.Queue = asyncio.Queue()
+sse_handler = SSELogHandler(FE_log_stream)
+
+root_logger = logging.getLogger()
+root_logger.addHandler(sse_handler)
 
 
 
@@ -151,9 +139,8 @@ async def run_scraper_api(fe_input: ScraperSettings):
     """
 
     # .get_running_loop -> get reference to the current event loop (main thread)
-    # This is necessary because print() will be called from a different thread.
-    if not sse_log_stream.loop:
-        sse_log_stream.loop = asyncio.get_running_loop()
+    if not sse_handler.loop:
+        sse_handler.loop = asyncio.get_running_loop()
 
 
     # .model_dump() = .dict() | new syntax
@@ -180,7 +167,7 @@ async def run_scraper_api(fe_input: ScraperSettings):
         return result
 
     except Exception as e:
-        utl.log_error(e)
+        log.detail_error(e)
         await FE_log_stream.put('--- Scraping failed: {e} ---')
         raise HTTPException(status_code=500, detail=f"Server error: {str(e)}")
 
