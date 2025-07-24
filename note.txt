@@ -67,92 +67,42 @@ ______ SSE _____________________________________________________________________
 # ____________  define data structure for request from FE ----------------------------
 
 
-# global queue for log message
-    # create queue object for BE to store all log message and send to FE
-    # asyncio -> Python lib for writing cocurrent code
-    # .Queue -> specify Queue class: first-in-first-out data structure
-FE_log_queue: asyncio.Queue = asyncio.Queue()
+class SSELogHandler(logging.Handler):
+    def __init__(self, FE_log_stream:asyncio.Queue, loop=None):
+        super().__init__()
+        self.FE_log_stream = FE_log_stream
+
+        # loop -> refer to main thread's event loop (event loop manage multi async tasks in thread)
+        self.loop = loop
+
+    def emit(self, record):
+        try:
+            message = self.format(record)
+            # message = record.msg
+
+            # If the asyncio loop is available, also put the message in the queue for the frontend
+            if self.loop and self.loop.is_running():
+                # cross-thread communication
+                        # FE_log_stream -> async fx
+                        # worker thread hand over '.put' to main thread
+                        # a thread-safe way for worker thread to say: 
+                            # I'm the worker thread
+                            # and I need you (main thread) to execute this .put coroutine task for me.
+                asyncio.run_coroutine_threadsafe(
+                    self.FE_log_stream.put(message), self.loop
+                )
+        except Exception as e:
+            lg.log_detail_error(e)
 
 
 
+FE_log_stream: asyncio.Queue = asyncio.Queue()
 
-# SSELogStream class intercepts print() and direct message to SEE queue
-class SSELogStream:
+sse_handler = SSELogHandler(FE_log_stream)
+sse_handler.setFormatter(lg.LogFormat())
 
-    # function inside class object is called 'method'
-        # syntax to use: object.method
-
-
-    # write flow:
-        # You call print("some message").
-        # print() internally calls sys.stdout.write("some message\n").
-        # Since we reassigned sys.stdout to our SSELogStream object -> this call actually goes to SSELogStream.write("some message\n").
-        # Inside SSELogStream.write(), we call self.queue.put("some message") to add the message to the asyncio.Queue.
-        # So, SSELogStream.write() acts as a bridge. It accepts the write() call (as print() expects) and then internally translates that into a put() call on the FE_log_queue.
-
-    # .put 
-        # - specific method for queue object 
-        # designed to add item to end of queue
-
-
-
-    # __init__
-        # -> auto called when whenever new object of this class is created
-        # purpose to to initialize the object's attribute
-    def __init__(self, BE_log_queue, queue:asyncio.Queue):
-
-        # create an instance variable (attribute) named 'BE_log_queue' on SSELogStream object
-            # BE_log_queue points to terminal
-            # assigns 'BE_log_queue' passed-in to it (self)
-            # allow each SSELogStream instance to remember what the original output was
-        self.BE_log_queue = BE_log_queue
-
-        # similar to above, create variable and assign value to it
-            # let the stream know which queue to put message into
-        self.queue = queue
-
-
-    async def write(self, message):
-        # .write -> add message to buffer (temporary holding area for data)
-            # works with file-like / standard-output-stream object (eg: terminal)
-            # buffering output is common -> collect + store chunk of output data in temporary memory before displaying user 
-        self.BE_log_queue.write(message)
-        
-        # ensure any bufferd output (saved in temporary storage) is immediately written to terminal
-        self.BE_log_queue.flush()
-
-        # put message into the queue, but only if its not empty / whitespace
-        if message.strip():
-            # add message to the end of the queue
-                # .strip() -> removes leading/trailing whitespace, including newlines
-            await self.queue.put(message.strip())
-
-    # need flush fx to ensure our custom stream object behave like the standard original one (sys.stdout)
-        # other part of program or third party library might directly call flush method
-    def flush(self):
-        self.BE_log_queue.flush()
-
-
-
-
-
-# ____________  SSE Object - related --------------------------------------------------
-
-# purpose of 2 lines below: 
-    # all future print() will go through SEELogStream object
-    # allow to capture those message and sent to SEE clients
-
-# create new label ('BE_log_queue') pointing to the same thing sys.stdout is pointing to (eg: terminal)
-    # sys.stdout -> just a variable name, a label points to standard output stream (eg: termnial)
-    # -> saves a reference (address) to the original output stream (eg: terminal)
-    # so when later reassign the 'sys.stdout' label to another destination, we don't lose address to the terminal
-BE_log_queue = sys.stdout
-
-# anything write the to sys.stdout (eg: print() ) will create new instance of SEELogStream
-sys.stdout = SSELogStream(BE_log_queue, FE_log_queue)
-
-
-
+root_logger = logging.getLogger()
+root_logger.addHandler(sse_handler)
 
 
 

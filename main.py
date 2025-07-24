@@ -94,22 +94,19 @@ class SSELogHandler(logging.Handler):
 
             # If the asyncio loop is available, also put the message in the queue for the frontend
             if self.loop and self.loop.is_running():
-                # cross-thread communication
-                        # FE_log_stream -> async fx
-                        # worker thread hand over '.put' to main thread
-                        # a thread-safe way for worker thread to say: 
-                            # I'm the worker thread
-                            # and I need you (main thread) to execute this .put coroutine task for me.
                 asyncio.run_coroutine_threadsafe(
                     self.FE_log_stream.put(message), self.loop
                 )
         except Exception as e:
-            log.detail_error(e)
+            lg.log_detail_error(e)
 
 
 
 FE_log_stream: asyncio.Queue = asyncio.Queue()
+
 sse_handler = SSELogHandler(FE_log_stream)
+sse_handler.setFormatter(lg.LogFormat())
+sse_handler.setLevel(logging.INFO)
 
 root_logger = logging.getLogger()
 root_logger.addHandler(sse_handler)
@@ -167,7 +164,7 @@ async def run_scraper_api(fe_input: ScraperSettings):
         return result
 
     except Exception as e:
-        log.detail_error(e)
+        lg.log_detail_error(e)
         await FE_log_stream.put('--- Scraping failed: {e} ---')
         raise HTTPException(status_code=500, detail=f"Server error: {str(e)}")
 
@@ -196,7 +193,7 @@ async def get_file_list_api():
         return file_list
         
     except Exception as e:
-        utl.log_error(e)
+        lg.log_detail_error(e)
         return []
 
 
@@ -213,7 +210,7 @@ async def get_file_detail_api(file_id: int):
         raise e
 
     except Exception as e:
-        utl.log_error(e)
+        lg.log_detail_error(e)
         raise HTTPException(status_code=500, detail=f"[file-detail api] Server error: {str(e)}")    
 
 
@@ -234,7 +231,7 @@ async def download_file_api(file_id: int):
     except HTTPException as e:
         raise e
     except Exception as e:
-        utl.log_error(e)
+        lg.log_detail_error(e)
         raise HTTPException(status_code=500, detail=f'[file-download api] Server error: {str(e)}')
 
 
@@ -264,14 +261,24 @@ async def sse_logs(request:Request):
 
             try:
                 message = await asyncio.wait_for(FE_log_stream.get(), timeout=1.0)
-                yield f"data: {message}\n\n"
+                
+                # Properly format multi-line messages for SSE
+                sse_message = ""
+                
+                # Use message.split('\n') to preserve leading/trailing newlines for headers
+                for line in message.split('\n'):
+                    sse_message += f"data: {line}\n"
+                
+                if sse_message:
+                    # The final \n is added here to terminate the SSE event
+                    yield f"{sse_message}\n"
 
                 FE_log_stream.task_done()
             
             except asyncio.TimeoutError:
                 yield ":keep-alive\n\n"
             except Exception as e:
-                utl.log_error(e)
+                lg.log_detail_error(e)
                 yield "data: Error: {e}\n\n"
                 break
 

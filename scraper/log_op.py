@@ -47,7 +47,7 @@ def setup_logging_for_file_directly_run():
     current_time = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
     with open('./app.log', 'w', encoding='utf-8') as f:
         f.write(f'LOG RECORDED AT: {current_time}\n')
-        f.write(f'STARTED BY FILE: {os.path.basename(sys.argv[0])}\n')
+        f.write(f'STARTED BY FILE: {os.path.basename(sys.argv[0])}\n\n\n')
 
 
     console_handler = logging.StreamHandler()
@@ -102,15 +102,16 @@ def log_detail_error(e):
         traceback_level = 3
         traceback_list = traceback_info[-traceback_level:]    # if requested level larger than actual list -> start from beginning of list
     
-        error_list = [e]
+        error_list = [str(e)]
         for i, frame in enumerate(traceback_list):
-            frame_info = f'- Error level #{i+1}: File <{frame.filename}> | Function <{frame.name}> | Line #{frame.lineno}: {frame.line}'
+            short_file_name = os.path.basename(frame.filename)
+            frame_info = f'- Error level #{i+1}: File <{short_file_name}> | Function <{frame.name}> | Line #{frame.lineno}: {frame.line}'
             error_list.append(frame_info)
 
         message = '\n'.join(error_list)
 
     else:
-        message = e
+        message = str(e)
 
     root_logger = logging.getLogger()
     root_logger.error(message)
