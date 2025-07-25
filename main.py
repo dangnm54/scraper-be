@@ -89,8 +89,11 @@ class SSELogHandler(logging.Handler):
 
     def emit(self, record):
         try:
-            message = self.format(record)
-            # message = record.msg
+            # message = self.format(record)
+            message = record.msg
+
+            if record.levelno == lg.HEADER_LV:
+                message += '\n'
 
             # If the asyncio loop is available, also put the message in the queue for the frontend
             if self.loop and self.loop.is_running():
@@ -256,7 +259,6 @@ async def sse_logs(request:Request):
                 
             if await request.is_disconnected():
                 log.info('SSE client disconnected')
-                log.info('-'*20)
                 break
 
             try:

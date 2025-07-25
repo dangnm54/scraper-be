@@ -160,7 +160,7 @@ def scrape_p2(property_link_csv_path,
 
 
         utl.print_pretty_dict(property_detail_data)
-        lg.log_divider()    
+        # lg.log_divider()    
         detail_list.append(property_detail_data)
 
         # if index == 1:

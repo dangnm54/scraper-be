@@ -1,14 +1,14 @@
-LOG RECORDED AT: 24-07-2025 09:29:38
+LOG RECORDED AT: 25-07-2025 08:48:43
 STARTED BY FILE: __main__.py
 
 
-09:29:42 | INFO | main - run_scraper_api - 144 | Received FE data: {'file_name': 'D9', 'location': 'D9', 'num_guest': 2, 'num_property': 3, 'collect_host_data': False, 'collect_booking_rate': False}
+08:48:54 | INFO | main - run_scraper_api - 147 | Received FE data: {'file_name': 'D9', 'location': 'D9', 'num_guest': 2, 'num_property': 3, 'collect_host_data': False, 'collect_booking_rate': False}
 
 
 ============================== Start full flow
 
-09:29:42 | INFO | base - run_full_flow - 227 | API Request Received
-09:29:42 | INFO | base - run_full_flow - 228 | 
+08:48:54 | INFO | base - run_full_flow - 227 | API Request Received
+08:48:54 | INFO | base - run_full_flow - 228 | 
     - Location: D9
     - Number of guests: 2
     - Number of properties: 3
@@ -19,40 +19,40 @@ STARTED BY FILE: __main__.py
 
 ============================== Create proxy helper extension
 
-09:29:42 | INFO | browser - crt_proxy_helper_extention - 34 | Created proxy_auth_extension
-09:29:42 | INFO | browser - crt_proxy_helper_extention - 60 | Created proxy_auth_extension\manifest.json
-09:29:42 | INFO | browser - crt_proxy_helper_extention - 101 | Created proxy_auth_extension\background.js
+08:48:54 | INFO | browser - crt_proxy_helper_extention - 34 | Created proxy_auth_extension
+08:48:54 | INFO | browser - crt_proxy_helper_extention - 60 | Created proxy_auth_extension\manifest.json
+08:48:54 | INFO | browser - crt_proxy_helper_extention - 101 | Created proxy_auth_extension\background.js
 
 
 ============================== Config basic driver setting
 
-09:29:42 | INFO | browser - config_basic_driver_setting - 118 | Configured basic settings
+08:48:54 | INFO | browser - config_basic_driver_setting - 118 | Configured basic settings
 
 
 ============================== Config advanced driver setting
 
-09:29:42 | INFO | browser - config_advanced_driver_setting - 128 | Configured minimal logging for selenium
-09:29:42 | INFO | browser - config_advanced_driver_setting - 134 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+08:48:54 | INFO | browser - config_advanced_driver_setting - 128 | Configured minimal logging for selenium
+08:48:54 | INFO | browser - config_advanced_driver_setting - 134 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
 
 
 ============================== Start browser
 
-09:29:43 | INFO | browser - start_browser - 150 | Edge browser started
-09:29:43 | INFO | browser - start_browser - 166 | Secondary monitor found, open browser on secondary monitor
-09:29:43 | INFO | file_op - csv_to_df - 221 | Dataframe created from file: C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_230725.csv
+08:48:55 | INFO | browser - start_browser - 150 | Edge browser started
+08:48:55 | INFO | browser - start_browser - 166 | Secondary monitor found, open browser on secondary monitor
+08:48:55 | INFO | file_op - csv_to_df - 221 | Dataframe created from file: C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_230725.csv
 
 
 ============================== Go to website
 
-09:29:45 | INFO | scrape_p1 - go_to_website - 29 | Go to website: https://www.airbnb.com.vn/rooms/1399115341365819479
-09:29:51 | INFO | scrape_p1 - go_to_website - 54 | Found Ad pop-up
-09:29:51 | INFO | scrape_p1 - go_to_website - 57 | Close Ad pop-up
+08:48:56 | INFO | scrape_p1 - go_to_website - 29 | Go to website: https://www.airbnb.com.vn/rooms/1399115341365819479
+08:49:01 | INFO | scrape_p1 - go_to_website - 54 | Found Ad pop-up
+08:49:01 | INFO | scrape_p1 - go_to_website - 57 | Close Ad pop-up
 
 
 ============================== Overview info
 
-09:29:57 | INFO | scrape_p2 - overview_info - 37 | Overview section found
-09:30:03 | INFO | utils - print_pretty_dict - 112 | {
+08:49:07 | INFO | scrape_p2 - overview_info - 37 | Overview section found
+08:49:12 | INFO | utils - print_pretty_dict - 112 | {
     "Guest_num": 2,
     "Bed_num": 1,
     "Bath_num": null,
@@ -62,14 +62,14 @@ STARTED BY FILE: __main__.py
 
 ============================== Rating info
 
-09:30:09 | INFO | scrape_p2 - rating_info - 203 | Normal rating element found
-09:30:09 | INFO | scrape_p2 - rating_info - 213 | Normal overview rating data collected
-09:30:09 | INFO | utils - print_pretty_dict - 112 | {
+08:49:18 | INFO | scrape_p2 - rating_info - 203 | Normal rating element found
+08:49:18 | INFO | scrape_p2 - rating_info - 213 | Normal overview rating data collected
+08:49:18 | INFO | utils - print_pretty_dict - 112 | {
     "Rating_title": null,
     "Rating_star": 5.0,
     "Rating_num": 4
 }
-09:30:09 | INFO | utils - print_pretty_dict - 112 | {
+08:49:18 | INFO | utils - print_pretty_dict - 112 | {
     "ID": 1,
     "Scrape_status": "Success",
     "Guest_num": 2,
@@ -90,11 +90,8 @@ STARTED BY FILE: __main__.py
     "Next_3_month_booked_rate": null
 }
 
-------------------------------------------------------------
-
-
 
 ============================== Close browser
 
-09:30:11 | INFO | browser - close_browser - 193 | Close browser
-09:30:11 | INFO | base - run_full_flow - 242 | Phase 2 (detail scraping) completed. File saved to: None
+08:49:20 | INFO | browser - close_browser - 193 | Close browser
+08:49:20 | INFO | base - run_full_flow - 242 | Phase 2 (detail scraping) completed. File saved to: None
