@@ -1,7 +1,7 @@
 import os
 import logging
 import asyncio
-import sys
+from datetime import datetime
 from starlette.responses import StreamingResponse
 
 
@@ -142,12 +142,12 @@ async def run_scraper_api(fe_input: ScraperSettings):
     if not sse_handler.loop:
         sse_handler.loop = asyncio.get_running_loop()
 
+    current_time = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
+    log.info(f"Scraping started at: {current_time}\n\n")
 
-    # .model_dump() = .dict() | new syntax
+    log.info(f"api called: /api/run | fe_input={fe_input.model_dump()}")
+
     log.info(f"Received FE data: {fe_input.model_dump()}")     
-
-    # .put -> adding specified string to the queue
-    await FE_log_stream.put("--- Scraping started ---")
 
     try:
         
@@ -163,7 +163,6 @@ async def run_scraper_api(fe_input: ScraperSettings):
                 collect_booking_rate = fe_input.collect_booking_rate
         )
 
-        await FE_log_stream.put('--- Scraping completed ---')
         return result
 
     except Exception as e:
@@ -243,20 +242,41 @@ async def download_file_api(file_id: int):
 
 # setup a contininuous connection, constantly check for new message in FE_log_stream and stream to connected client
 @app.get("/sse/logs")
-async def sse_logs(request:Request):
+async def sse_logs(request:Request, debug:bool=False):
     """
     Streams server-sent events (SSE) from the FE_log_stream to connected clients.
     """
+
+    log.info(f"api called: /sse/log | debug={debug}")
     
     async def event_generator():
+
+        # debug = True
+        if debug:
+            counter = 0
+            log.info(f"SEE endpoin in DEBUG mode")            
+            
+            try:
+                while True:
+                    if await request.is_disconnected():
+                        log.info('SSE client disconnected')
+                        break
+
+                    counter += 1
+                    int_message = (f"SSE message #{counter}")
+                    
+                    yield f'data: {int_message}\n\n'
+                    await asyncio.sleep(1)
+
+            except asyncio.CancelledError:
+                yield "data: SSE debug stream cancelled\n\n"
+            
+            return
+
+
+
         while True:
 
-            # generator fx -> instead returning 1 value and exiting, generates sequence of values one by one, on demand.
-                # - become generator function if use 'yield' keyword inside it
-                # - only produce value when requested
-                # - they paused execution between 'yield's
-                # when run this fx, it doesn't run its code immediately, it return a 'generator object' that can be iterated
-                
             if await request.is_disconnected():
                 log.info('SSE client disconnected')
                 break
@@ -264,15 +284,12 @@ async def sse_logs(request:Request):
             try:
                 message = await asyncio.wait_for(FE_log_stream.get(), timeout=1.0)
                 
-                # Properly format multi-line messages for SSE
                 sse_message = ""
                 
-                # Use message.split('\n') to preserve leading/trailing newlines for headers
                 for line in message.split('\n'):
                     sse_message += f"data: {line}\n"
                 
                 if sse_message:
-                    # The final \n is added here to terminate the SSE event
                     yield f"{sse_message}\n"
 
                 FE_log_stream.task_done()

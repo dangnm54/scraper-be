@@ -224,8 +224,8 @@ def run_full_flow(
 
     lg.log_divider('Start full flow')
 
-    log.info("API Request Received")
-    log.info(f"""
+    log.info("API Request Received:")
+    log.info(f"""    
     - Location: {location}
     - Number of guests: {num_guest}
     - Number of properties: {num_property}

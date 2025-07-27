@@ -31,14 +31,6 @@ ____Checklist
 
 
 
-____APIs
-- run scraper  -> done
- get file list -> done
-
-- view file detail
-- export file
-- view command
-
 
 
 _____Log type
