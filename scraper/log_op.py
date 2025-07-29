@@ -41,13 +41,28 @@ class LogFormat(logging.Formatter):
 
 
 
+def file_run_method():
+    is_server_run = False
+
+    for arg in sys.argv:
+        if 'uvicorn' in arg.lower():
+            is_server_run = True
+            break
+
+    if is_server_run:
+        return "Server started (uvicorn)"
+    else:
+        return "Directly in Terminal"    
+
+
 
 def setup_logging_for_file_directly_run():
 
     current_time = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
     with open('./app.log', 'w', encoding='utf-8') as f:
         f.write(f'LOG RECORDED AT: {current_time}\n')
-        f.write(f'STARTED BY FILE: {os.path.basename(sys.argv[0])}\n\n\n')
+        f.write(f'STARTED BY FILE: {os.path.basename(sys.argv[0])}\n')
+        f.write(f'RUN METHOD: {file_run_method()}\n\n\n')
 
 
     console_handler = logging.StreamHandler()

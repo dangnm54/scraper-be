@@ -143,7 +143,7 @@ async def run_scraper_api(fe_input: ScraperSettings):
         sse_handler.loop = asyncio.get_running_loop()
 
     current_time = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
-    log.info(f"Scraping started at: {current_time}\n\n")
+    lg.log_divider(f"Scraping started at: {current_time}")
 
     log.info(f"api called: /api/run | fe_input={fe_input.model_dump()}")
 
