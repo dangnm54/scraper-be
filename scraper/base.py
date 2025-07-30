@@ -247,9 +247,7 @@ def run_full_flow(
 
 
     return {
-        "status": "success",
-        "message": "scraping process completed",
-        # "output_file": property_link_csv_path
+        "detail": "scraping process completed"
     }
 
 
