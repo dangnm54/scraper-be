@@ -168,7 +168,7 @@ async def run_scraper_api(fe_input: ScraperSettings):
     except Exception as e:
         lg.log_detail_error(e)
         await FE_log_stream.put('--- Scraping failed: {e} ---')
-        raise HTTPException(status_code=500, detail=f"Server error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"[run-scraper api] Server error: {str(e)}")
 
 
 
@@ -213,7 +213,8 @@ async def get_file_detail_api(file_id: int):
 
     except Exception as e:
         lg.log_detail_error(e)
-        raise HTTPException(status_code=500, detail=f"[file-detail api] Server error: {str(e)}")    
+        raise HTTPException(status_code=500, detail=f"[file-detail api] Server error: {str(e)}")
+        
 
 
 
@@ -298,7 +299,7 @@ async def sse_logs(request:Request, debug:bool=False):
                 yield ":keep-alive\n\n"
             except Exception as e:
                 lg.log_detail_error(e)
-                yield "data: Error: {e}\n\n"
+                yield "[sse-logs api] data: Error: {e}\n\n"
                 break
 
     # note

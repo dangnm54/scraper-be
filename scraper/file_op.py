@@ -138,10 +138,8 @@ def get_file_detail(file_id: int):
    # 'records' -> 'list of dict' structure 
    detail_dict = detail_df.to_dict(orient='records') 
 
-
    return {
-      "status": "success",
-      "message": f'Content for {file_name} fetched successfully',
+      "detail": f'[file-detail api] Content for {file_name} fetched successfully',
       "data": detail_dict
    }
 
