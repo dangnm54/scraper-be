@@ -12,13 +12,13 @@ from pydantic import BaseModel
 from typing import Optional, List 
 
 
-import scraper.utils as utl
-import scraper.log_op as lg
-import scraper.file_op as fop
+import scraper.tool.log_op as lg
+import scraper.detail_step.file_op as fop
 from scraper.base import run_full_flow
 
 
 # -------------------------------------------------------------------
+
 
 lg.setup_logging_for_file_directly_run()
 

@@ -1,9 +1,9 @@
 try:
-    import scraper.utils as utl
-    import scraper.log_op as lg
+    import scraper.tool.utils as utl
+    import scraper.tool.log_op as lg
 except ImportError:
-    import utils as utl
-    import log_op as lg
+    import tool.utils as utl
+    import tool.log_op as lg
 
 import time
 import lxml

@@ -4,11 +4,11 @@ import logging
 import unicodedata
 
 try:
-    from scraper.config import wait_time
-    import scraper.log_op as lg
+    from scraper.tool.config import wait_time
+    import scraper.tool.log_op as lg
 except ImportError:
-    from config import wait_time
-    import log_op as lg
+    from scraper.tool.config import wait_time
+    import tool.log_op as lg
 
 
 

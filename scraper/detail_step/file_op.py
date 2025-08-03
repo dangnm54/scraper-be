@@ -6,11 +6,11 @@ from datetime import datetime
 from fastapi import HTTPException
 
 try:
-   import scraper.log_op as lg
-   from scraper.config import data_folder_path
+   import scraper.tool.log_op as lg
+   from scraper.tool.config import data_folder_path
 except ImportError:
-   import log_op as lg
-   from config import data_folder_path
+   import tool.log_op as lg
+   from scraper.tool.config import data_folder_path
 
 
 # -----------------------------------------------------------------------------------

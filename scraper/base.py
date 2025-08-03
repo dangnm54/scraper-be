@@ -1,32 +1,33 @@
 
 try:
     # When running from root directory (FastAPI)
-    import scraper.file_op as fop
-    import scraper.log_op as lg
-    import scraper.utils as utl
-    import scraper.get_ipt as ipt
-    import scraper.browser as brws
-    import scraper.scrape_p1 as scr1
-    import scraper.scrape_p2 as scr2
-    import scraper.calculation as cal
-    import scraper.dashboard as dshb
-    from scraper.config import proxy_user, proxy_password, proxy_ip, proxy_port
-    from scraper.config import driver_path, wait_time
-    from scraper.config import main_website_url, ip_website_url
+    import scraper.detail_step.file_op as fop
+    import scraper.detail_step.browser as brws
+    import scraper.detail_step.scrape_p1 as scr1
+    import scraper.detail_step.scrape_p2 as scr2
+    import scraper.detail_step.calculation as cal
+    import scraper.detail_step.dashboard as dshb
+    import scraper.tool.log_op as lg
+    import scraper.tool.utils as utl
+    import scraper.tool.get_ipt as ipt
+    from scraper.tool.config import proxy_user, proxy_password, proxy_ip, proxy_port
+    from scraper.tool.config import driver_path, wait_time
+    from scraper.tool.config import main_website_url, ip_website_url
 except ImportError:
     # When running directly from scraper directory
-    import file_op as fop
-    import log_op as lg
-    import utils as utl
-    import get_ipt as ipt
-    import browser as brws
-    import scrape_p1 as scr1
-    import scrape_p2 as scr2
-    import calculation as cal
-    import dashboard as dshb
-    from config import proxy_user, proxy_password, proxy_ip, proxy_port
-    from config import driver_path, wait_time
-    from config import main_website_url, ip_website_url
+    import detail_step.file_op as fop
+    import detail_step.browser as brws
+    import detail_step.scrape_p1 as scr1
+    import detail_step.scrape_p2 as scr2
+    import detail_step.calculation as cal
+    import detail_step.dashboard as dshb
+    import tool.log_op as lg
+    import tool.utils as utl
+    import tool.get_ipt as ipt
+    from tool.config import proxy_user, proxy_password, proxy_ip, proxy_port
+    from tool.config import driver_path, wait_time
+    from tool.config import main_website_url, ip_website_url
+
 
 import logging
 import matplotlib.pyplot as plt
