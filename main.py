@@ -1,7 +1,7 @@
 import os
 import logging
 import asyncio
-from typing import Dict, Any, List
+from typing import Dict, List
 from datetime import datetime
 from starlette.responses import StreamingResponse
 
@@ -36,7 +36,7 @@ class SSELogHandler(logging.Handler):
     def emit(self, record):
         try:
             # message = self.format(record)
-            message = record.msg
+            message: str = str(record.msg)
 
             if record.levelno == lg.HEADER_LV:
                 message += '\n'
@@ -52,11 +52,11 @@ class SSELogHandler(logging.Handler):
 
 FE_log_stream: asyncio.Queue = asyncio.Queue()
 
-sse_handler = SSELogHandler(FE_log_stream)
+sse_handler: SSELogHandler = SSELogHandler(FE_log_stream)
 sse_handler.setFormatter(lg.LogFormat())
 sse_handler.setLevel(logging.INFO)
 
-root_logger = logging.getLogger()
+root_logger: logging.Logger = logging.getLogger()
 root_logger.addHandler(sse_handler)
 
 
@@ -113,7 +113,7 @@ async def run_scraper_api(fe_input: ScraperSettings) -> Dict[str, str]:
     if not sse_handler.loop:
         sse_handler.loop = asyncio.get_running_loop()
 
-    current_time = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
+    current_time: str = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
     lg.log_divider(f"Scraping started at: {current_time}")
 
     log.info(f"api called: /api/run | fe_input={fe_input.model_dump()}")
@@ -143,24 +143,10 @@ async def run_scraper_api(fe_input: ScraperSettings) -> Dict[str, str]:
 
 
 
-
 @app.get("/api/data/file-list", response_model=List[FileMetadata])
 async def get_file_list_api() -> List[FileMetadata]:
     try:
-        file_metadata_list: List[Dict[str, str | int]] = fop.get_file_metadata_list()
-        
-        # Convert to FileMetadata objects
-        file_list: List[FileMetadata] = [
-            FileMetadata(
-                id = item['id'],
-                file_name = item['file_name'],
-                date_created = item['date_created'],
-                item_count = item['item_count'],
-                path = item['path']
-            )
-            for item in file_metadata_list
-        ]
-        
+        file_list: List[FileMetadata] = fop.get_file_metadata_list()
         return file_list
         
     except Exception as e:
@@ -182,17 +168,17 @@ async def get_file_detail_api(file_id: int) -> FileDetail:
 
     except Exception as e:
         lg.log_detail_error(e)
-        raise HTTPException(status_code=500, detail=f"[file-detail api] Server error: {str(e)}")
-        
+        raise HTTPException(status_code=500, detail=f"[file-detail api] Server error: {str(e)}")        
 
 
 
 
 
 @app.get("/api/data/file-download/{file_id}")
-async def download_file_api(file_id: int):
+async def download_file_api(file_id: int) -> FileResponse:
     try:
-        file_name, file_path = fop.get_file_path(file_id).values()
+        file_name: str = fop.get_file_path(file_id)['file_name']
+        file_path: str = fop.get_file_path(file_id)['file_path']
 
         # check if file exist in server's file system
         if not os.path.exists(file_path):
@@ -212,7 +198,7 @@ async def download_file_api(file_id: int):
 
 # setup a contininuous connection, constantly check for new message in FE_log_stream and stream to connected client
 @app.get("/sse/logs")
-async def sse_logs(request:Request, debug:bool=False):
+async def sse_logs(request:Request, debug:bool=False) -> StreamingResponse:
     """
     Streams server-sent events (SSE) from the FE_log_stream to connected clients.
     """
@@ -223,7 +209,7 @@ async def sse_logs(request:Request, debug:bool=False):
 
         # debug = True
         if debug:
-            counter = 0
+            counter: int = 0
             log.info(f"SEE endpoin in DEBUG mode")            
             
             try:
@@ -233,13 +219,13 @@ async def sse_logs(request:Request, debug:bool=False):
                         break
 
                     counter += 1
-                    int_message = (f"SSE message #{counter}")
+                    int_message: str = f"SSE message #{counter}"
                     
                     yield f'data: {int_message}\n\n'
                     await asyncio.sleep(1)
 
             except asyncio.CancelledError:
-                yield "data: SSE debug stream cancelled\n\n"
+                yield f"data: SSE debug stream cancelled\n\n"
             
             return
 
@@ -252,9 +238,9 @@ async def sse_logs(request:Request, debug:bool=False):
                 break
 
             try:
-                message = await asyncio.wait_for(FE_log_stream.get(), timeout=1.0)
+                message: str = await asyncio.wait_for(FE_log_stream.get(), timeout=1.0)
                 
-                sse_message = ""
+                sse_message: str = ''
                 
                 for line in message.split('\n'):
                     sse_message += f"data: {line}\n"
@@ -268,7 +254,7 @@ async def sse_logs(request:Request, debug:bool=False):
                 yield ":keep-alive\n\n"
             except Exception as e:
                 lg.log_detail_error(e)
-                yield "[sse-logs api] data: Error: {e}\n\n"
+                yield f"[sse-logs api] data: Error: {e}\n\n"
                 break
 
     # note

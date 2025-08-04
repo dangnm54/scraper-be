@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 from fastapi import HTTPException
-from typing import Dict, List
+from typing import Dict, List, Any, Hashable
 
 try:
    import scraper.tool.log_op as lg
@@ -36,26 +36,21 @@ def get_file_metadata_list() -> List[FileMetadata]:
    file_id: int = 1
 
    if not os.path.exists(data_path):
-      if not os.path.exists(data_path):
-         return {
-               "status": "success",
-               "message": "No files found",
-               "data": []
-         }
+      return []
 
    for file_name in os.listdir(data_path):
       if file_name.endswith(".csv") and "full" in file_name.lower():
-         file_path = os.path.join(data_path, file_name)
+         file_path: str = os.path.join(data_path, file_name)
 
          # get file date
          try:
-               timestamp = os.path.getmtime(file_path) # get modification time
-               file_date = datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d')
+               timestamp: float = os.path.getmtime(file_path) # get modification time
+               file_date: str = datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d')
          except Exception:
-               file_date = 'Unknown date'
+               file_date: str = 'Unknown date'
                
          # get item count
-         item_count = 0
+         item_count: int = 0
          try:
                with open(file_path, 'r', encoding='utf-8') as f:
                   item_count = sum(1 for line in f) - 1 # Subtract 1 for header row
@@ -63,39 +58,39 @@ def get_file_metadata_list() -> List[FileMetadata]:
          except Exception:
                item_count = 0
 
-         file_list.append({
-               'id': file_id,
-               'file_name': file_name,
-               'date_created': file_date,
-               'item_count': item_count,
-               'path': file_path
-         })
+         file_list.append(FileMetadata(
+               id = file_id,
+               file_name = file_name,
+               date_created = file_date,
+               item_count = item_count,
+               path = file_path
+         ))
          file_id += 1
 
          log.info(f'file_path: {file_path}')
 
    # Sort by date created (newest first)
       # lambda is shorthand mini function to get date_created value of each file
-   file_list.sort(key=lambda file: file['date_created'], reverse=True)
+   file_list.sort(key=lambda file: file.date_created, reverse=True)
 
    return file_list
 
 
 
-def get_file_path(file_id: int):
+def get_file_path(file_id: int) -> Dict[str, str]:
 
    lg.log_divider('Get file path')
 
    log.info(f"Received file_id: {file_id}")
 
-   file_metadata_list = get_file_metadata_list()
-   file_path = None
-   file_name = None
+   file_metadata_list: List[FileMetadata] = get_file_metadata_list()
+   file_path: str = ''
+   file_name: str = ''
 
    for item in file_metadata_list:
-      if item['id'] == file_id:
-         file_path = item['path']
-         file_name = item['file_name']
+      if item.id == file_id:
+         file_path = item.path
+         file_name = item.file_name
          break
    log.info(f"Found file_path: {file_path}")
    log.info(f"Found file_name: {file_name}")
@@ -126,10 +121,11 @@ def get_file_detail(file_id: int) -> FileDetail:
 
    log.info(f"Received file_id: {file_id}")
 
-   file_name, file_path = get_file_path(file_id).values()
-   
+   file_name: str = get_file_path(file_id)['file_name']
+   file_path: str = get_file_path(file_id)['file_path']
+
    # make dataframe from file path
-   detail_df = csv_to_df(file_path, mode=2)
+   detail_df: pd.DataFrame = csv_to_df(file_path, mode=2)
 
    # Replace all inf/-inf, null-like (eg: NaN, None, NaT) values with None (which becomes null in JSON)
    detail_df = detail_df.replace([np.inf, -np.inf], None)
@@ -140,7 +136,7 @@ def get_file_detail(file_id: int) -> FileDetail:
    
    # orient -> dictate the struc of dict
    # 'records' -> 'list of dict' structure 
-   detail_dict = detail_df.to_dict(orient='records') 
+   detail_dict: List[Dict[Hashable, Any]] = detail_df.to_dict(orient='records') 
 
    return FileDetail(
       detail = f'[file-detail api] Content for {file_name} fetched successfully',
@@ -149,8 +145,8 @@ def get_file_detail(file_id: int) -> FileDetail:
 
 
 
-def list_dict_to_df(list_dict, index='ID'):
-   df = pd.DataFrame(list_dict)
+def list_dict_to_df(list_dict: List[Dict[str, Any]], index:str='ID') -> pd.DataFrame:
+   df: pd.DataFrame = pd.DataFrame(list_dict)
    df.set_index(index, inplace=True)
 
    log.info('List_of_dict -> Dataframe successful')
@@ -158,31 +154,30 @@ def list_dict_to_df(list_dict, index='ID'):
 
 
 
-def merge_df(df1, df2):
-   merged_df = df1.merge(df2, left_index=True, right_index=True, how='left')
+def merge_df(df1: pd.DataFrame, df2: pd.DataFrame) -> pd.DataFrame:
+   merged_df: pd.DataFrame = df1.merge(df2, left_index=True, right_index=True, how='left')
    
    log.info(f'Successfully merge 2 Dataframe')
    return merged_df    
 
 
 
-def df_to_csv(df, name=None):
-   folder_name = data_folder_path
+def df_to_csv(df: pd.DataFrame, name:str|None=None) -> str:
+   folder_name: str = data_folder_path
 
    # make file name
-   current_time = datetime.now().strftime('%d%m%y')
-   base_csv_name = f'{name}_{current_time}.csv'
+   current_time: str = datetime.now().strftime('%d%m%y')
+   base_csv_name: str = f'{name}_{current_time}.csv'
    
-   counter = 1
-   csv_name = base_csv_name
+   counter: int = 1
+   csv_name: str = base_csv_name
    while os.path.exists(os.path.join(folder_name, csv_name)):
-      name_without_ext = base_csv_name.replace('.csv', '')
-      csv_name = f'{name_without_ext} ({counter}).csv'
+      name_without_ext: str = base_csv_name.replace('.csv', '')
+      csv_name: str = f'{name_without_ext} ({counter}).csv'
       counter += 1
 
-   full_csv_path = os.path.join(folder_name, csv_name)
+   full_csv_path: str = os.path.join(folder_name, csv_name)
    os.makedirs(folder_name, exist_ok=True) #crt folder if not exist
-   
    
    # convert to csv
    try:
@@ -195,13 +190,13 @@ def df_to_csv(df, name=None):
 
 
 
-def csv_to_df(csv_path, index=None, mode=1):
+def csv_to_df(csv_path: str, mode: int, index:str|None=None) -> pd.DataFrame:
    match mode:
       case 1:
-         df = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig')
+         df: pd.DataFrame = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig')
       case 2:
          # for calculation
-         df = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig', 
+         df: pd.DataFrame = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig', 
                dtype={
                'This_month_booked_rate': float,
                'Last_1_month_booked_rate': float,
@@ -211,7 +206,7 @@ def csv_to_df(csv_path, index=None, mode=1):
                })
       case 3:
          # for api json response
-         df = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig', 
+         df: pd.DataFrame = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig', 
                dtype={
                'This_month_booked_rate': str,
                'Last_1_month_booked_rate': str,

@@ -1,4 +1,4 @@
-from typing import Optional, Dict, List, Any, Hashable
+from typing import Dict, List, Any, Hashable
 from pydantic import BaseModel
 
 
@@ -23,10 +23,11 @@ class FileMetadata(BaseModel):
     path: str
 
 
+
 # pandas creates dictionaries with Hashable keys
 class FileDetail(BaseModel):
     detail: str
-    data: Optional[List[Dict[Hashable, Any]]] = None
+    data: List[Dict[Hashable, Any]] | None
 
 
 
