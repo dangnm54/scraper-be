@@ -31,6 +31,7 @@ except ImportError:
 
 import logging
 import matplotlib.pyplot as plt
+from typing import Dict
 
 
 # -----------------------------------------------------------------------------------
@@ -224,7 +225,7 @@ def run_full_flow(
         num_property: int,
         collect_host_data: bool = False,
         collect_booking_rate: bool = False
-    ):
+    ) -> Dict[str, str]:
 
     lg.log_divider('Start full flow')
 

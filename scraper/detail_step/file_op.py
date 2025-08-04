@@ -4,13 +4,16 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 from fastapi import HTTPException
+from typing import Dict, List
 
 try:
    import scraper.tool.log_op as lg
    from scraper.tool.config import data_folder_path
+   from scraper.types.api import FileDetail, FileMetadata
 except ImportError:
    import tool.log_op as lg
-   from scraper.tool.config import data_folder_path
+   from tool.config import data_folder_path
+   from types.api import FileDetail, FileMetadata
 
 
 # -----------------------------------------------------------------------------------
@@ -19,7 +22,7 @@ except ImportError:
 log = logging.getLogger(__name__)
 
 
-def get_file_metadata_list():
+def get_file_metadata_list() -> List[FileMetadata]:
    """
    input: None
    output: list of file metadata
@@ -28,9 +31,9 @@ def get_file_metadata_list():
    
    lg.log_divider('Get file metadata list')
    
-   data_path = data_folder_path
-   file_list = []
-   file_id = 1
+   data_path: str = data_folder_path
+   file_list: List[FileMetadata] = []
+   file_id: int = 1
 
    if not os.path.exists(data_path):
       if not os.path.exists(data_path):
@@ -109,7 +112,7 @@ def get_file_path(file_id: int):
 
 
 
-def get_file_detail(file_id: int):
+def get_file_detail(file_id: int) -> FileDetail:
    """
    input: file_id
    output: detail of file (list of dict)
@@ -139,10 +142,10 @@ def get_file_detail(file_id: int):
    # 'records' -> 'list of dict' structure 
    detail_dict = detail_df.to_dict(orient='records') 
 
-   return {
-      "detail": f'[file-detail api] Content for {file_name} fetched successfully',
-      "data": detail_dict
-   }
+   return FileDetail(
+      detail = f'[file-detail api] Content for {file_name} fetched successfully',
+      data = detail_dict
+   )
 
 
 

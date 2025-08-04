@@ -1,6 +1,7 @@
 import os
 import logging
 import asyncio
+from typing import Dict, Any, List
 from datetime import datetime
 from starlette.responses import StreamingResponse
 
@@ -8,75 +9,20 @@ from starlette.responses import StreamingResponse
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse 
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel 
-from typing import Optional, List 
 
 
 import scraper.tool.log_op as lg
 import scraper.detail_step.file_op as fop
 from scraper.base import run_full_flow
+from scraper.types.api import ScraperSettings, FileMetadata, FileDetail
 
 
-# -------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------
 
 
 lg.setup_logging_for_file_directly_run()
 
 log = logging.getLogger(__name__)
-
-
-
-# ____________  setup FastAPI app ------------------------------------------------------------
-
-# ____ create "FastAPI app" instance -> manages all web routes + functions
-app = FastAPI()
-
-
-# ____ configure CORS
-# list specific origins (FE) that allowed to talk to BE
-origins = [
-    "http://localhost:5173",  
-    # eg: http://127.0.0.1:5173",      
-    # eg: "http://your-deployed-frontend.com"
-]
-
-
-# ____ add CORS middleware to FastAPI app
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins = origins,        # Allow requests from these specific origins
-    allow_credentials = True,       # Allow cookies to be sent (useful for authentication later)
-    allow_methods = ["*"],          # Allow all HTTP methods (GET, POST, PUT, DELETE, etc.)
-    allow_headers = ["*"]           # Allow all headers in the request
-)
-
-
-
-
-
-# ____________  define data structure for request from FE ----------------------------
-
-class ScraperSettings(BaseModel):
-    file_name: Optional[str] = None # Optional, if not defined, will be None
-    location: str
-    num_guest: int
-    num_property: int
-    collect_host_data: bool = False
-    collect_booking_rate: bool = False
-
-
-class FileMetadata(BaseModel):
-    id: int
-    file_name: str
-    date_created: str
-    item_count: int
-    path: str
-
-
-class FileDetail(BaseModel):
-    status: str
-    message: Optional[str] = None
-    data: Optional[List[dict]] = None
 
 
 class SSELogHandler(logging.Handler):
@@ -104,7 +50,6 @@ class SSELogHandler(logging.Handler):
             lg.log_detail_error(e)
 
 
-
 FE_log_stream: asyncio.Queue = asyncio.Queue()
 
 sse_handler = SSELogHandler(FE_log_stream)
@@ -116,12 +61,38 @@ root_logger.addHandler(sse_handler)
 
 
 
+# ------------------------------------------------------------------------------------------------
 
-# ____________ define "API Endpoint" (specific URL server will respond to) ------------
+
+# create "FastAPI app" instance -> manages all web routes + functions
+app = FastAPI()
+
+
+# configure CORS
+# list specific origins (FE) that allowed to talk to BE
+origins: List[str] = [
+    "http://localhost:5173",  
+    # eg: http://127.0.0.1:5173",      
+    # eg: "http://your-deployed-frontend.com"
+]
+
+
+# add CORS middleware to FastAPI app
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = origins,        # Allow requests from these specific origins
+    allow_credentials = True,       # Allow cookies to be sent (useful for authentication later)
+    allow_methods = ["*"],          # Allow all HTTP methods (GET, POST, PUT, DELETE, etc.)
+    allow_headers = ["*"]           # Allow all headers in the request
+)
+
+
+
+# ------------------------------------------------------------------------------------------------
 
 
 @app.get("/")
-def read_root():
+def read_root() -> Dict[str, str]:
     return {"message": "Seeing this output means BE is running ok hhehe"}
 
 
@@ -129,7 +100,7 @@ def read_root():
 
 
 @app.post("/api/run")
-async def run_scraper_api(fe_input: ScraperSettings):
+async def run_scraper_api(fe_input: ScraperSettings) -> Dict[str, str]:
     """
     - input: data required from Fe
     - output: file in data folder
@@ -147,13 +118,11 @@ async def run_scraper_api(fe_input: ScraperSettings):
 
     log.info(f"api called: /api/run | fe_input={fe_input.model_dump()}")
 
-    log.info(f"Received FE data: {fe_input.model_dump()}")     
-
     try:
         
         # Run the synchronous, blocking function in a separate thread
         # This allows the main event loop to remain unblocked and stream logs
-        result = await asyncio.to_thread(
+        result: Dict[str, str] = await asyncio.to_thread(
             run_full_flow,
                 file_name = fe_input.file_name,
                 location = fe_input.location,
@@ -175,13 +144,13 @@ async def run_scraper_api(fe_input: ScraperSettings):
 
 
 
-@app.get("/api/data/file-list", response_model=list[FileMetadata])
-async def get_file_list_api():
+@app.get("/api/data/file-list", response_model=List[FileMetadata])
+async def get_file_list_api() -> List[FileMetadata]:
     try:
-        file_metadata_list = fop.get_file_metadata_list()
+        file_metadata_list: List[Dict[str, str | int]] = fop.get_file_metadata_list()
         
         # Convert to FileMetadata objects
-        file_list = [
+        file_list: List[FileMetadata] = [
             FileMetadata(
                 id = item['id'],
                 file_name = item['file_name'],
@@ -203,9 +172,9 @@ async def get_file_list_api():
 
 
 @app.get("/api/data/file-detail/{file_id}", response_model=FileDetail)
-async def get_file_detail_api(file_id: int):
+async def get_file_detail_api(file_id: int) -> FileDetail:
     try:
-        file_detail = fop.get_file_detail(file_id)
+        file_detail: FileDetail = fop.get_file_detail(file_id)
         return file_detail
     
     except HTTPException as e:
