@@ -31,7 +31,10 @@ except ImportError:
 
 import logging
 import matplotlib.pyplot as plt
-from typing import Dict
+from typing import Dict, Tuple
+from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.edge.options import Options as EdgeOptions
 
 
 # -----------------------------------------------------------------------------------
@@ -47,18 +50,23 @@ log = logging.getLogger(__name__)
 
 
 
-def start_driver():
+def start_driver() -> Tuple[WebDriver | None, WebDriverWait | None]:
 
-    extension_dir = brws.crt_proxy_helper_extention(proxy_user, proxy_password, proxy_ip, proxy_port)
-    options_1 = brws.config_basic_driver_setting()
-    options_2 = brws.config_advanced_driver_setting(extension_dir, options_1)
-    driver, wait = brws.start_browser(driver_path, options_2)
+    extension_dir: str = brws.crt_proxy_helper_extention(proxy_user, proxy_password, proxy_ip, proxy_port)
+    options_1: EdgeOptions = brws.config_basic_driver_setting()
+    options_2: EdgeOptions | None = brws.config_advanced_driver_setting(extension_dir, options_1)
+    
+
+    if options_2 != None:
+        driver: WebDriver | None = brws.start_browser(driver_path, options_2)[0]
+        wait: WebDriverWait | None = brws.start_browser(driver_path, options_2)[1]
+
 
     if driver is None or wait is None:
         log.error(f"An error in 'if driver'")
-
-    # scr1.go_to_website(driver, wait, wait_time, ip_website_url)
-    # brws.close_browser(driver)
+    else:
+        scr1.go_to_website(driver, wait, wait_time, ip_website_url)
+        brws.close_browser(driver)
 
     return driver, wait
 

@@ -11,6 +11,9 @@ import logging
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 # -----------------------------------------------------------------------------------
@@ -20,7 +23,7 @@ log = logging.getLogger(__name__)
 
 
 
-def go_to_website(driver, wait, wait_time, website_url, view=None):
+def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, website_url: str, view: str | None = None) -> None:
 
     lg.log_divider('Go to website')
 
@@ -39,24 +42,25 @@ def go_to_website(driver, wait, wait_time, website_url, view=None):
 
         #close ads if any
         try:
-            ad_element1 = driver.find_element(By.CSS_SELECTOR, 'div.c1qme1pd')
+            ad_element1: WebElement = driver.find_element(By.CSS_SELECTOR, 'div.c1qme1pd')
             if EC.visibility_of(ad_element1):
                 log.info('Found Ad pop-up')
-                ok_button = ad_element1.find_element(By.CSS_SELECTOR, 'button')
+                ok_button: WebElement = ad_element1.find_element(By.CSS_SELECTOR, 'button')
                 ok_button.click()
                 log.info('Close Ad pop-up')
         except:
             pass
 
         try:
-            ad_element2 = driver.find_element(By.CSS_SELECTOR, 'div[aria-label="Dịch trên"]')
+            ad_element2: WebElement = driver.find_element(By.CSS_SELECTOR, 'div[aria-label="Dịch trên"]')
             if EC.visibility_of(ad_element2):
                 log.info('Found Ad pop-up')
-                ok_button = ad_element2.find_element(By.CSS_SELECTOR, 'button[aria-label="Đóng"]')
+                ok_button: WebElement = ad_element2.find_element(By.CSS_SELECTOR, 'button[aria-label="Đóng"]')
                 ok_button.click()
                 log.info('Close Ad pop-up')
         except:
             pass
+
 
         match view:
             case 'main_page':
@@ -66,10 +70,10 @@ def go_to_website(driver, wait, wait_time, website_url, view=None):
         time.sleep(wait_time)
         
 
-        # original_tab_handle = driver.current_window_handle
+        # # return original_tab_handle to switch tabs between Main page and IP page
+        # original_tab_handle: str = driver.current_window_handle
         # print(f'Handle <{original_tab_handle}> is for URL:{website_url}')
         # print('-'*30)
-
         # return original_tab_handle
 
     except Exception as e:
