@@ -74,24 +74,26 @@ def start_driver() -> Tuple[WebDriver | None, WebDriverWait | None]:
 
 
 
-def scrape_p1(main_website_url,
+def scrape_p1(main_website_url, 
             file_name: str, location: str, num_guest: int, num_property: int
-    ):
+    ) -> str:
     
-    driver, wait = start_driver()
-    
-    scr1.go_to_website(driver, wait, wait_time, main_website_url, view='main_page')
+    driver: WebDriver | None = start_driver()[0]
+    wait: WebDriverWait | None = start_driver()[1]
 
-    scr1.search_location(driver, wait_time, location)
-    scr1.search_date(driver, wait_time)
-    scr1.search_guest(driver, wait_time, num_guest)
-    scr1.press_search(driver)
+    if driver != None and wait != None:
+        scr1.go_to_website(driver, wait, wait_time, main_website_url, view='main_page')
 
-    link_list = scr1.view_page_get_all_link(driver, wait, wait_time, num_property)
-    link_df = fop.list_dict_to_df(link_list, index='ID')
-    link_csv_path = fop.df_to_csv(link_df, name=f'{file_name}_link')
+        scr1.search_location(driver, wait_time, location)
+        scr1.search_date(driver, wait_time)
+        scr1.search_guest(driver, wait_time, num_guest)
+        scr1.press_search(driver)
 
-    brws.close_browser(driver)
+        link_list = scr1.view_page_get_all_link(driver, wait, wait_time, num_property)
+        link_df = fop.list_dict_to_df(link_list, index='ID')
+        link_csv_path = fop.df_to_csv(link_df, name=f'{file_name}_link')
+
+        brws.close_browser(driver)
 
     return link_csv_path
 
@@ -99,9 +101,9 @@ def scrape_p1(main_website_url,
 
 
 
-def scrape_p2(property_link_csv_path,
+def scrape_p2(property_link_csv_path: str,
             file_name: str, collect_host_data: bool=False, collect_booking_rate: bool=False
-    ):
+    ) -> str:
 
     driver, wait = start_driver()
 
@@ -181,11 +183,11 @@ def scrape_p2(property_link_csv_path,
 
     brws.close_browser(driver)  
 
-    # detail_df = fop.list_dict_to_df(detail_list, index='ID') 
-    # full_df = fop.merge_df(link_df, detail_df)
-    # full_csv_path = fop.df_to_csv(full_df, name=f'{file_name}_full')
+    detail_df = fop.list_dict_to_df(detail_list, index='ID') 
+    full_df = fop.merge_df(link_df, detail_df)
+    full_csv_path = fop.df_to_csv(full_df, name=f'{file_name}_full')
 
-    # return full_csv_path
+    return full_csv_path
 
 
 
@@ -247,13 +249,13 @@ def run_full_flow(
     """)
 
 
-    # link_csv_path = scrape_p1(main_website_url, file_name, location, num_guest, num_property)
+    # link_csv_path: str = scrape_p1(main_website_url, file_name, location, num_guest, num_property)
     # log.info(f"Phase 1 (link scraping) completed. File saved to: {link_csv_path}")
-    link_csv_path = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_230725.csv'
+    link_csv_path: str = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_230725.csv'
 
-    full_csv_path = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
+    full_csv_path: str = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
     log.info(f"Phase 2 (detail scraping) completed. File saved to: {full_csv_path}")
-    # full_csv_path = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\D3_full_03_06_final.csv'
+    # full_csv_path: str = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\D3_full_03_06_final.csv'
     
     # cal_data = calculate_data(full_csv_path)
     # draw_dashboard(full_csv_path, cal_data)

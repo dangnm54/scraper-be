@@ -7,6 +7,7 @@ except ImportError:
 
 import time
 import logging
+from typing import List
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -119,18 +120,18 @@ def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, webs
 
 
 
-def search_location(driver, wait_time, location_ipt):
+def search_location(driver: WebDriver, wait_time: float, location_ipt: str) -> None:
 
     lg.log_divider('Search location')
 
     try:
-        location_element = driver.find_element(By.CSS_SELECTOR, 'div.f1o8nkkf.atm_mk_h2mmj6.atm_wq_cs5v99')
+        location_element: WebElement = driver.find_element(By.CSS_SELECTOR, 'div.f1o8nkkf.atm_mk_h2mmj6.atm_wq_cs5v99')
         location_element.click()
 
         log.info('Location element found and clicked')
         time.sleep(wait_time)
 
-        location_input = location_element.find_element(By.CSS_SELECTOR, 'input.fp9kp52')
+        location_input: WebElement = location_element.find_element(By.CSS_SELECTOR, 'input.fp9kp52')
         location_input.send_keys(location_ipt, Keys.ENTER)
         
         log.info(f'<{location_ipt}> typed and ENTER')
@@ -141,18 +142,18 @@ def search_location(driver, wait_time, location_ipt):
 
 
 
-def search_date(driver, wait_time):
+def search_date(driver: WebDriver, wait_time: float) -> None:
 
     lg.log_divider('Search date')
 
     try:
-        flexible_date_button = driver.find_element(By.CSS_SELECTOR,'button[id="tab--tabs--2"]')
+        flexible_date_button: WebElement = driver.find_element(By.CSS_SELECTOR,'button[id="tab--tabs--2"]')
         flexible_date_button.click()
 
         log.info('Flexible time button found and clicked')
         time.sleep(wait_time)
 
-        weekend_date_button = driver.find_element(By.CSS_SELECTOR,'label[id="flexible_trip_lengths-weekend_trip"]')
+        weekend_date_button: WebElement = driver.find_element(By.CSS_SELECTOR,'label[id="flexible_trip_lengths-weekend_trip"]')
         weekend_date_button.click()
         
         log.info('Flexible weekend button found and clicked')
@@ -163,12 +164,12 @@ def search_date(driver, wait_time):
 
 
 
-def search_guest(driver, wait_time, num_guest):
+def search_guest(driver: WebDriver, wait_time: float, num_guest: int) -> None:
 
     lg.log_divider('Search guest')
 
     try:
-        date_guest_elements = driver.find_elements(By.CSS_SELECTOR,'div.fbb0tkq')
+        date_guest_elements: List[WebElement] = driver.find_elements(By.CSS_SELECTOR,'div.fbb0tkq')
         for element in date_guest_elements:
             if element.text == 'Thêm khách':
                 element.click()
@@ -176,17 +177,18 @@ def search_guest(driver, wait_time, num_guest):
         log.info('Guest element found and clicked')
         time.sleep(wait_time)
 
-        guest_section = driver.find_element(By.CSS_SELECTOR,'div.p1nt1a2q')
-        adult_element = guest_section.find_element(By.CSS_SELECTOR,'div[data-testid="search-block-filter-stepper-row-adults"]')
-        add_button = adult_element.find_element(By.CSS_SELECTOR, 'button[aria-label="tăng giá trị"]')
-                
-        num_click = 0
+        guest_section: WebElement = driver.find_element(By.CSS_SELECTOR,'div.p1nt1a2q')
+        adult_element: WebElement = guest_section.find_element(By.CSS_SELECTOR,'div[data-testid="search-block-filter-stepper-row-adults"]')
+        add_button: WebElement = adult_element.find_element(By.CSS_SELECTOR, 'button[aria-label="tăng giá trị"]')
+
+        num_click: int = 0
         while num_click < num_guest:
             add_button.click()
             num_click += 1
 
         log.info(f'{num_guest} guests added')
         time.sleep(wait_time)
+
 
     except Exception as e:
         lg.log_detail_error(e)

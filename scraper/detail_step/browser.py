@@ -196,5 +196,4 @@ def close_browser(driver: WebDriver) -> None:
 
     driver.quit()
     log.info('Close browser')
-    
 
