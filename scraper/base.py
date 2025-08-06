@@ -282,6 +282,6 @@ def run_full_flow(
 
 
 
-# start_driver()
+start_driver()
 
 # print(f'\nLog file saved to: {log_file_path}\n')

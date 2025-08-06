@@ -7,7 +7,7 @@ except ImportError:
 
 import time
 import logging
-from typing import List
+from typing import List, Dict
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -210,13 +210,13 @@ def press_search(driver: WebDriver) -> None:
 
 
 
-def view_page_get_all_link(driver, wait, wait_time, num_property):
+def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: float, num_property: int) -> List[Dict[str, str]]:
     
     lg.log_divider('View page and get all link')
 
     try:
-        property_link_list = []
-        property_count = 0 
+        property_link_list: List[Dict[str, str]] = []
+        property_count: int = 0 
 
         log.info(f'Ready to scrape {num_property} properties')
 
@@ -224,24 +224,28 @@ def view_page_get_all_link(driver, wait, wait_time, num_property):
             wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR,'div.cy5jw6o')))
             time.sleep(wait_time)
 
-            property_section = driver.find_element(By.CSS_SELECTOR,'div.gsgwcjk')
-            property_lists = property_section.find_elements(By.CSS_SELECTOR,'div.c965t3n')
+            property_section: WebElement = driver.find_element(By.CSS_SELECTOR,'div.gsgwcjk')
+            property_lists: List[WebElement] = property_section.find_elements(By.CSS_SELECTOR,'div.c965t3n')
 
             for property in property_lists:
 
                 utl.scroll_focus_element(driver, property)
 
-                property_info = {
+                property_info: Dict[str, str] = {
                     'ID': '',
                     'Name': '',
                     'Link': ''
                 }
 
-                name_element = property.find_element(By.CSS_SELECTOR,'span[data-testid="listing-card-name"]')
-                name = name_element.text 
-                link_element = property.find_element(By.CSS_SELECTOR,'div[data-testid="card-container"] > a')
-                link = link_element.get_attribute('href')
-                clean_link = utl.clean_text(link, mode=5)
+                name_element: WebElement = property.find_element(By.CSS_SELECTOR,'span[data-testid="listing-card-name"]')
+                name: str = name_element.text 
+
+                link_element: WebElement = property.find_element(By.CSS_SELECTOR,'div[data-testid="card-container"] > a')
+                link: str | None = link_element.get_attribute('href')
+                if link:
+                    clean_link: str = utl.clean_text(link, mode=5)
+                else:
+                    clean_link = ''
                 
                 property_info['ID'] = utl.generate_random_id()
                 property_info['Name'] = name
@@ -259,8 +263,8 @@ def view_page_get_all_link(driver, wait, wait_time, num_property):
                     break
             else:
                 try:
-                    pagination_section = driver.find_element(By.CSS_SELECTOR, 'div.p1j2gy66')
-                    next_page_element = pagination_section.find_element(By.CSS_SELECTOR, 'a[aria-label="Tiếp theo"]')
+                    pagination_section: WebElement = driver.find_element(By.CSS_SELECTOR, 'div.p1j2gy66')
+                    next_page_element: WebElement = pagination_section.find_element(By.CSS_SELECTOR, 'a[aria-label="Tiếp theo"]')
                     next_page_element.click()
                     log.info('Move to next page')
                     lg.log_divider()
@@ -274,3 +278,4 @@ def view_page_get_all_link(driver, wait, wait_time, num_property):
 
     except Exception as e:
         lg.log_detail_error(e)
+        return []

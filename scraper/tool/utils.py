@@ -66,15 +66,12 @@ def get_info_from_string(string, mode='int'):
 
 
 
-def clean_text(string, mode=1):
+def clean_text(string: str, mode: int) -> str:
     try:
         match mode:
             case 1:
-                clean_string = string.strip('"').strip(' · ').lower()
-
-            case 2:
-                nfd_string = unicodedata.normalize('NFD', string)
-                clean_string = ''.join(char for char in nfd_string if unicodedata.category(char) != 'Mn')
+                nfd_string: str = unicodedata.normalize('NFD', string)
+                clean_string: str = ''.join(char for char in nfd_string if unicodedata.category(char) != 'Mn')
 
                 replacements = {
                     'đ': 'd', 'Đ': 'D',
@@ -88,20 +85,24 @@ def clean_text(string, mode=1):
 
                 for vn_key, en_value in replacements.items():
                     clean_string = clean_string.replace(vn_key, en_value).lower()
-
+            
+            case 2:
+                clean_string: str = string.strip('"').strip(' · ').lower()
             case 3:
-                clean_string = float(string.replace(',','.'))
+                clean_string: str = str(string.replace(',','.'))
             case 4:
-                clean_string = string.replace('.','')
+                clean_string: str = string.replace('.','')
             case 5:
-                clean_string = string.split('?')[0]
+                clean_string: str = string.split('?')[0]
 
 
         return clean_string
     
     except Exception as e:
         lg.log_detail_error(e)
-        return None
+        return ''
+
+
 
 
 

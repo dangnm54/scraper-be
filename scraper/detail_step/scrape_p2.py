@@ -38,8 +38,8 @@ def overview_info(driver, wait):
 
         info_list = overview_section.find_elements(By.CSS_SELECTOR, 'li.l7n4lsf')
         for info in info_list:
-            clean_info1 = utl.clean_text(info.text, mode=1)
-            clean_info2 = utl.clean_text(clean_info1, mode=2)
+            clean_info1 = utl.clean_text(info.text, mode=2)
+            clean_info2 = utl.clean_text(clean_info1, mode=1)
 
             num = utl.get_info_from_string(clean_info2, mode='int')
 
@@ -120,7 +120,7 @@ def overview_info(driver, wait):
         #         item_list.append(item_name)
 
         #     cate_name = category.find_element(By.CSS_SELECTOR, 'h2.hpipapi').text
-        #     clean_cate_name = utl.clean_text(cate_name, mode=2)
+        #     clean_cate_name = utl.clean_text(cate_name, mode=1)
 
         #     category_map = {
         #         'Utility_bathroom':'phong tam',
@@ -222,7 +222,7 @@ def rating_info(driver):
         #     utl.scroll_focus_element(driver, category)
 
         #     detail_element = category.find_elements(By.CSS_SELECTOR, 'div')
-        #     category_name = utl.clean_text(detail_element[0].text, mode=2)
+        #     category_name = utl.clean_text(detail_element[0].text, mode=1)
         #     category_rating = utl.clean_text(detail_element[1].text, mode=3)
 
         #     rating_map = {

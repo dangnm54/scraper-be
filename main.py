@@ -14,7 +14,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import scraper.tool.log_op as lg
 import scraper.detail_step.file_op as fop
 from scraper.base import run_full_flow
-from scraper.types.api import ScraperSettings, FileMetadata, FileDetail
+from scraper.type.api import ScraperSettings, FileMetadata, FileDetail
 
 
 # ------------------------------------------------------------------------------------------------

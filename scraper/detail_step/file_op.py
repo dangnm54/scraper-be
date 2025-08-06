@@ -6,14 +6,18 @@ from datetime import datetime
 from fastapi import HTTPException
 from typing import Dict, List, Any, Hashable
 
+import sys
+import os
+
+
 try:
    import scraper.tool.log_op as lg
    from scraper.tool.config import data_folder_path
-   from scraper.types.api import FileDetail, FileMetadata
+   from scraper.type.api import FileDetail, FileMetadata
 except ImportError:
    import tool.log_op as lg
    from tool.config import data_folder_path
-   from types.api import FileDetail, FileMetadata
+   from type.api import FileDetail, FileMetadata
 
 
 # -----------------------------------------------------------------------------------
