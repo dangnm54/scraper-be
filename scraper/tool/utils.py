@@ -2,13 +2,16 @@ import json
 import time
 import logging
 import unicodedata
+import random
+import string
+from typing import Optional
 
 try:
     from scraper.tool.config import wait_time
     import scraper.tool.log_op as lg
 except ImportError:
-    from scraper.tool.config import wait_time
-    import tool.log_op as lg
+    from config import wait_time
+    import log_op as lg
 
 
 
@@ -113,4 +116,16 @@ def print_pretty_dict(dict):
 
 
 
+def generate_random_id() -> str:
+    """
+    Generate a random ID in format P-XXXXXX
+    X is a random uppercase letter or number
+    """
 
+    char_list: str = string.ascii_uppercase + string.digits
+    random_id: str = ''.join(random.choice(char_list) for _ in range(6))
+    
+    return f"P-{random_id}"
+
+
+print(generate_random_id())

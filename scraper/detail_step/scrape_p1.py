@@ -195,12 +195,12 @@ def search_guest(driver: WebDriver, wait_time: float, num_guest: int) -> None:
 
 
 
-def press_search(driver):
+def press_search(driver: WebDriver) -> None:
 
     lg.log_divider('Press search')
 
     try:
-        search_button = driver.find_element(By.CSS_SELECTOR,'button.siey6h7')
+        search_button: WebElement = driver.find_element(By.CSS_SELECTOR,'button.siey6h7')
         search_button.click()
 
         log.info('Seach button founded and clicked')
@@ -211,7 +211,7 @@ def press_search(driver):
 
 
 def view_page_get_all_link(driver, wait, wait_time, num_property):
-
+    
     lg.log_divider('View page and get all link')
 
     try:
@@ -232,7 +232,7 @@ def view_page_get_all_link(driver, wait, wait_time, num_property):
                 utl.scroll_focus_element(driver, property)
 
                 property_info = {
-                    'ID': 0,
+                    'ID': '',
                     'Name': '',
                     'Link': ''
                 }
@@ -243,7 +243,7 @@ def view_page_get_all_link(driver, wait, wait_time, num_property):
                 link = link_element.get_attribute('href')
                 clean_link = utl.clean_text(link, mode=5)
                 
-                property_info['ID'] = property_count + 1
+                property_info['ID'] = utl.generate_random_id()
                 property_info['Name'] = name
                 property_info['Link'] = clean_link
                 property_link_list.append(property_info)
