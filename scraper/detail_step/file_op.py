@@ -6,10 +6,6 @@ from datetime import datetime
 from fastapi import HTTPException
 from typing import Dict, List, Any, Hashable
 
-import sys
-import os
-
-
 try:
    import scraper.tool.log_op as lg
    from scraper.tool.config import data_folder_path
@@ -38,6 +34,7 @@ def get_file_metadata_list() -> List[FileMetadata]:
    data_path: str = data_folder_path
    file_list: List[FileMetadata] = []
    file_id: int = 1
+   file_date: str = ''
 
    if not os.path.exists(data_path):
       return []
@@ -49,9 +46,9 @@ def get_file_metadata_list() -> List[FileMetadata]:
          # get file date
          try:
                timestamp: float = os.path.getmtime(file_path) # get modification time
-               file_date: str = datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d')
+               file_date = datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d')
          except Exception:
-               file_date: str = 'Unknown date'
+               file_date = 'Unknown date'
                
          # get item count
          item_count: int = 0
@@ -129,7 +126,7 @@ def get_file_detail(file_id: int) -> FileDetail:
    file_path: str = get_file_path(file_id)['file_path']
 
    # make dataframe from file path
-   detail_df: pd.DataFrame = csv_to_df(file_path, mode=2)
+   detail_df: pd.DataFrame = csv_to_df(file_path, index='ID', mode=2)
 
    # Replace all inf/-inf, null-like (eg: NaN, None, NaT) values with None (which becomes null in JSON)
    detail_df = detail_df.replace([np.inf, -np.inf], None)
@@ -159,14 +156,15 @@ def list_dict_to_df(list_dict: List[Dict[str, Any]], index:str='ID') -> pd.DataF
 
 
 def merge_df(df1: pd.DataFrame, df2: pd.DataFrame) -> pd.DataFrame:
+
    merged_df: pd.DataFrame = df1.merge(df2, left_index=True, right_index=True, how='left')
-   
    log.info(f'Successfully merge 2 Dataframe')
-   return merged_df    
+   
+   return merged_df
 
 
 
-def df_to_csv(df: pd.DataFrame, name:str|None=None) -> str:
+def df_to_csv(df: pd.DataFrame, name: str) -> str:
    folder_name: str = data_folder_path
 
    # make file name
@@ -194,7 +192,7 @@ def df_to_csv(df: pd.DataFrame, name:str|None=None) -> str:
 
 
 
-def csv_to_df(csv_path: str, mode: int, index:str|None=None) -> pd.DataFrame:
+def csv_to_df(csv_path: str, index: str, mode: int) -> pd.DataFrame:
    match mode:
       case 1:
          df: pd.DataFrame = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig')

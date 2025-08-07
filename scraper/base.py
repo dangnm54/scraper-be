@@ -1,40 +1,32 @@
-
-try:
-    # When running from root directory (FastAPI)
-    import scraper.detail_step.file_op as fop
-    import scraper.detail_step.browser as brws
-    import scraper.detail_step.scrape_p1 as scr1
-    import scraper.detail_step.scrape_p2 as scr2
-    import scraper.detail_step.calculation as cal
-    import scraper.detail_step.dashboard as dshb
-    import scraper.tool.log_op as lg
-    import scraper.tool.utils as utl
-    import scraper.tool.get_ipt as ipt
-    from scraper.tool.config import proxy_user, proxy_password, proxy_ip, proxy_port
-    from scraper.tool.config import driver_path, wait_time
-    from scraper.tool.config import main_website_url, ip_website_url
-except ImportError:
-    # When running directly from scraper directory
-    import detail_step.file_op as fop
-    import detail_step.browser as brws
-    import detail_step.scrape_p1 as scr1
-    import detail_step.scrape_p2 as scr2
-    import detail_step.calculation as cal
-    import detail_step.dashboard as dshb
-    import tool.log_op as lg
-    import tool.utils as utl
-    import tool.get_ipt as ipt
-    from tool.config import proxy_user, proxy_password, proxy_ip, proxy_port
-    from tool.config import driver_path, wait_time
-    from tool.config import main_website_url, ip_website_url
-
-
+import sys
+import os
 import logging
+import pandas as pd
 import matplotlib.pyplot as plt
 from typing import Dict, Tuple
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.edge.options import Options as EdgeOptions
+
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
+
+# When running from root directory (FastAPI)
+import scraper.detail_step.file_op as fop
+import scraper.detail_step.browser as brws
+import scraper.detail_step.scrape_p1 as scr1
+import scraper.detail_step.scrape_p2 as scr2
+import scraper.detail_step.calculation as cal
+import scraper.detail_step.dashboard as dshb
+import scraper.tool.log_op as lg
+import scraper.tool.utils as utl
+import scraper.tool.get_ipt as ipt
+from scraper.tool.config import proxy_user, proxy_password, proxy_ip, proxy_port
+from scraper.tool.config import driver_path, wait_time
+from scraper.tool.config import main_website_url, ip_website_url
+from scraper.type.data import PropertyDetail
+
+
 
 
 # -----------------------------------------------------------------------------------
@@ -105,10 +97,18 @@ def scrape_p2(property_link_csv_path: str,
             file_name: str, collect_host_data: bool=False, collect_booking_rate: bool=False
     ) -> str:
 
-    driver, wait = start_driver()
+    driver: WebDriver | None = start_driver()[0]
+    wait: WebDriverWait | None = start_driver()[1]
 
-    link_df = fop.csv_to_df(property_link_csv_path, index='ID', mode=1)
-    detail_list = []
+    if driver != None and wait != None:
+        pass
+    else:
+        log.error(f"An error in 'if driver'")
+        return ''
+
+
+    link_df: pd.DataFrame = fop.csv_to_df(property_link_csv_path, index='ID', mode=1)
+    detail_list: List[PropertyDetail] = []
 
 
     for index, row in link_df.iterrows():
@@ -120,7 +120,7 @@ def scrape_p2(property_link_csv_path: str,
         property_detail_data = {
             # overview_data
             'ID': index,
-            'Scrape_status': None,
+            'Scrape_result': None,
 
             'Guest_num': None,
             'Bed_num': None,

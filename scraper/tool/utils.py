@@ -21,10 +21,14 @@ except ImportError:
 log = logging.getLogger(__name__)
 
 
-def get_info_from_string(string, mode='int'):
+def get_info_from_string(string: str, mode: str='int') -> str | int | None:
     try:
         word_list = string.split()
-        target_word = None
+        target_word: str | int | None = ''
+
+        
+            
+            
         match mode:
             case 'int':
                 for word in word_list:
@@ -129,4 +133,3 @@ def generate_random_id() -> str:
     return f"P-{random_id}"
 
 
-print(generate_random_id())
