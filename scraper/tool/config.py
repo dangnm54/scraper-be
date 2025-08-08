@@ -17,7 +17,7 @@ data_folder_path: str = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data'
 # ___Website links
 main_website_url: str = 'https://www.airbnb.com.vn/homes'
 ip_website_url: str = 'https://nordvpn.com/what-is-my-ip/'
-
+# ip_website_url: str = 'https://youtube.com'
 
 
 # ___Wait random 

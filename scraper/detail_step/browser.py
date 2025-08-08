@@ -151,7 +151,10 @@ def start_browser(driver_path_ipt: str, option_ipt: EdgeOptions) -> Tuple[WebDri
     try:
         service: EdgeService = EdgeService(executable_path = driver_path_ipt, log_output=os.devnull)
         driver = webdriver.Edge(service = service, options = option_ipt)
-        log.info('Edge browser started')
+        log.info(f'Edge browser started | Driver <{driver}> created')
+
+        wait: WebDriverWait = WebDriverWait(driver,20)
+        log.info(f'Wait <{wait}> created')
 
 
         # open browser in specific screen
@@ -174,17 +177,18 @@ def start_browser(driver_path_ipt: str, option_ipt: EdgeOptions) -> Tuple[WebDri
             else:
                 log.info(f'Cannot identify clear secondary monitor, maximizing browser')
                 driver.set_window_rect(x=960, y=10, width=960, height=1010)
+
         else:
             log.info(f'Only 1 monitor, maximizing browser')
             driver.set_window_rect(x=960, y=10, width=960, height=1010)
 
-        wait: WebDriverWait = WebDriverWait(driver,20)
+
         return driver, wait
 
 
     except Exception as e:
         log.error(f'Error starting Edge browser with the specified path')
-        log.error('Please check driver_path, Edge version, and selenium-stealth installation.')
+        log.error('Please check driver_path and Edge browser / driver version')
         lg.log_detail_error(e)
         return None, None
 

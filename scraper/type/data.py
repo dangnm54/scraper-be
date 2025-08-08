@@ -1,4 +1,4 @@
-from typing import Literal,Optional, List
+from typing import Hashable, Literal,Optional, List
 from pydantic import BaseModel
 
 
@@ -9,7 +9,7 @@ ScrapeResult = Literal['Success', 'Failed', 'Partial']
 class PropertyDetail(BaseModel):
 
     # overview_data 
-    ID: str
+    ID: Hashable
     Scrape_result: ScrapeResult
     Guest_num: Optional[int] = None
     Bed_num: Optional[int] = None

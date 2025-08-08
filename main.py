@@ -177,8 +177,9 @@ async def get_file_detail_api(file_id: int) -> FileDetail:
 @app.get("/api/data/file-download/{file_id}")
 async def download_file_api(file_id: int) -> FileResponse:
     try:
-        file_name: str = fop.get_file_path(file_id)['file_name']
-        file_path: str = fop.get_file_path(file_id)['file_path']
+        file_name: str = ''
+        file_path: str = ''
+        file_name, file_path = fop.get_file_path(file_id)
 
         # check if file exist in server's file system
         if not os.path.exists(file_path):

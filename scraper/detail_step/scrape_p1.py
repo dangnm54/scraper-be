@@ -215,7 +215,7 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
     lg.log_divider('View page and get all link')
 
     try:
-        property_link_list: List[Dict[str, str]] = []
+        link_list: List[Dict[str, str]] = []
         property_count: int = 0 
 
         log.info(f'Ready to scrape {num_property} properties')
@@ -250,7 +250,7 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                 property_info['ID'] = utl.generate_random_id()
                 property_info['Name'] = name
                 property_info['Link'] = clean_link
-                property_link_list.append(property_info)
+                link_list.append(property_info)
                 
                 log.info(property_info)
 
@@ -274,7 +274,7 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                     break
 
         log.info(f'{property_count} properties scraped')
-        return property_link_list
+        return link_list
 
     except Exception as e:
         lg.log_detail_error(e)

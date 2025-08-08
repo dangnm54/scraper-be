@@ -113,17 +113,23 @@ def log_detail_error(e):
     exc_type, exc_value, exc_traceback = sys.exc_info()
     
     if exc_traceback:
-        traceback_info = traceback.extract_tb(exc_traceback)
-        traceback_level = 3
-        traceback_list = traceback_info[-traceback_level:]    # if requested level larger than actual list -> start from beginning of list
-    
-        error_list = [str(e)]
-        for i, frame in enumerate(traceback_list):
-            short_file_name = os.path.basename(frame.filename)
-            frame_info = f'- Error level #{i+1}: File <{short_file_name}> | Function <{frame.name}> | Line #{frame.lineno}: {frame.line}'
-            error_list.append(frame_info)
 
-        message = '\n'.join(error_list)
+        # get full traceback
+        full_traceback = traceback.format_exc()
+        message = f"Full traceback:\n{full_traceback}"
+
+        # # get 3 lastest level of error
+        # traceback_info = traceback.extract_tb(exc_traceback)
+        # traceback_level = 3
+        # traceback_list = traceback_info[-traceback_level:]    # if requested level larger than actual list -> start from beginning of list
+    
+        # error_list = [str(e)]
+        # for i, frame in enumerate(traceback_list):
+        #     short_file_name = os.path.basename(frame.filename)
+        #     frame_info = f'- Error level #{i+1}: File <{short_file_name}> | Function <{frame.name}> | Line #{frame.lineno}: {frame.line}'
+        #     error_list.append(frame_info)
+
+        # message = '\n'.join(error_list)
 
     else:
         message = str(e)

@@ -10,10 +10,12 @@ try:
    import scraper.tool.log_op as lg
    from scraper.tool.config import data_folder_path
    from scraper.type.api import FileDetail, FileMetadata
+   from scraper.type.data import PropertyDetail
 except ImportError:
    import tool.log_op as lg
    from tool.config import data_folder_path
    from type.api import FileDetail, FileMetadata
+   from type.data import PropertyDetail
 
 
 # -----------------------------------------------------------------------------------
@@ -122,8 +124,9 @@ def get_file_detail(file_id: int) -> FileDetail:
 
    log.info(f"Received file_id: {file_id}")
 
-   file_name: str = get_file_path(file_id)['file_name']
-   file_path: str = get_file_path(file_id)['file_path']
+   file_name: str = ''
+   file_path: str = ''
+   file_name, file_path = get_file_path(file_id)
 
    # make dataframe from file path
    detail_df: pd.DataFrame = csv_to_df(file_path, index='ID', mode=2)
@@ -146,7 +149,11 @@ def get_file_detail(file_id: int) -> FileDetail:
 
 
 
-def list_dict_to_df(list_dict: List[Dict[str, Any]], index:str='ID') -> pd.DataFrame:
+def list_dict_to_df(list_dict: List[Dict[str, Any]] | List[PropertyDetail], index:str='ID') -> pd.DataFrame:
+   
+   if isinstance(list_dict[0], PropertyDetail):
+      list_dict = [item.model_dump() for item in list_dict]
+   
    df: pd.DataFrame = pd.DataFrame(list_dict)
    df.set_index(index, inplace=True)
 
@@ -201,8 +208,6 @@ def csv_to_df(csv_path: str, index: str, mode: int) -> pd.DataFrame:
          df: pd.DataFrame = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig', 
                dtype={
                'This_month_booked_rate': float,
-               'Last_1_month_booked_rate': float,
-               'Last_3_month_booked_rate': float,
                'Next_1_month_booked_rate': float,
                'Next_3_month_booked_rate': float, 
                })
@@ -211,8 +216,6 @@ def csv_to_df(csv_path: str, index: str, mode: int) -> pd.DataFrame:
          df: pd.DataFrame = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig', 
                dtype={
                'This_month_booked_rate': str,
-               'Last_1_month_booked_rate': str,
-               'Last_3_month_booked_rate': str,
                'Next_1_month_booked_rate': str,
                'Next_3_month_booked_rate': str, 
                })

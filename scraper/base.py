@@ -3,7 +3,7 @@ import os
 import logging
 import pandas as pd
 import matplotlib.pyplot as plt
-from typing import Dict, Tuple
+from typing import Any, Dict, List, Tuple
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.edge.options import Options as EdgeOptions
@@ -50,15 +50,17 @@ def start_driver() -> Tuple[WebDriver | None, WebDriverWait | None]:
     
 
     if options_2 != None:
-        driver: WebDriver | None = brws.start_browser(driver_path, options_2)[0]
-        wait: WebDriverWait | None = brws.start_browser(driver_path, options_2)[1]
+        driver: WebDriver | None = None
+        wait: WebDriverWait | None = None
+        driver, wait = brws.start_browser(driver_path, options_2)
 
 
-    if driver is None or wait is None:
-        log.error(f"An error in 'if driver'")
+    if driver != None and wait != None:
+        # scr1.go_to_website(driver, wait, wait_time, ip_website_url)
+        # brws.close_browser(driver)
+        pass
     else:
-        scr1.go_to_website(driver, wait, wait_time, ip_website_url)
-        brws.close_browser(driver)
+        log.error(f"Cannot create driver and wait")
 
     return driver, wait
 
@@ -70,8 +72,9 @@ def scrape_p1(main_website_url,
             file_name: str, location: str, num_guest: int, num_property: int
     ) -> str:
     
-    driver: WebDriver | None = start_driver()[0]
-    wait: WebDriverWait | None = start_driver()[1]
+    driver: WebDriver | None = None
+    wait: WebDriverWait | None = None
+    driver, wait = start_driver()
 
     if driver != None and wait != None:
         scr1.go_to_website(driver, wait, wait_time, main_website_url, view='main_page')
@@ -82,8 +85,13 @@ def scrape_p1(main_website_url,
         scr1.press_search(driver)
 
         link_list = scr1.view_page_get_all_link(driver, wait, wait_time, num_property)
-        link_df = fop.list_dict_to_df(link_list, index='ID')
-        link_csv_path = fop.df_to_csv(link_df, name=f'{file_name}_link')
+        
+        if link_list:
+            link_df = fop.list_dict_to_df(link_list, index='ID')
+            link_csv_path = fop.df_to_csv(link_df, name=f'{file_name}_link')
+        else:
+            log.error(f"link_list is empty: {link_list}")
+            link_csv_path = ''
 
         brws.close_browser(driver)
 
@@ -112,12 +120,12 @@ def scrape_p2(property_link_csv_path: str,
 
 
     for index, row in link_df.iterrows():
-        # print(f'{index} | {row['Name']} | {row['Link']}')
+        # print(f'{index} | {row["Name"]} | {row["Link"]}')
 
         # if index < 8:
         #     continue
 
-        property_detail_data = {
+        property_detail_data: Dict[str, Any] = {
             # overview_data
             'ID': index,
             'Scrape_result': None,
@@ -175,8 +183,8 @@ def scrape_p2(property_link_csv_path: str,
 
 
         utl.print_pretty_dict(property_detail_data)
-        # lg.log_divider()    
-        detail_list.append(property_detail_data)
+        detail_instance: PropertyDetail = PropertyDetail(**property_detail_data)
+        detail_list.append(detail_instance)
 
         # if index == 1:
         #     break
@@ -184,8 +192,8 @@ def scrape_p2(property_link_csv_path: str,
     brws.close_browser(driver)  
 
     detail_df = fop.list_dict_to_df(detail_list, index='ID') 
-    full_df = fop.merge_df(link_df, detail_df)
-    full_csv_path = fop.df_to_csv(full_df, name=f'{file_name}_full')
+    full_df: pd.DataFrame = fop.merge_df(link_df, detail_df)
+    full_csv_path: str = fop.df_to_csv(full_df, name=f'{file_name}_full')
 
     return full_csv_path
 
@@ -249,12 +257,12 @@ def run_full_flow(
     """)
 
 
-    # link_csv_path: str = scrape_p1(main_website_url, file_name, location, num_guest, num_property)
-    # log.info(f"Phase 1 (link scraping) completed. File saved to: {link_csv_path}")
-    link_csv_path: str = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_230725.csv'
+    link_csv_path: str = scrape_p1(main_website_url, file_name, location, num_guest, num_property)
+    log.info(f"Phase 1 (link scraping) completed. File saved to: {link_csv_path}")
+    # link_csv_path: str = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_230725.csv'
 
-    full_csv_path: str = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
-    log.info(f"Phase 2 (detail scraping) completed. File saved to: {full_csv_path}")
+    # full_csv_path: str = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
+    # log.info(f"Phase 2 (detail scraping) completed. File saved to: {full_csv_path}")
     # full_csv_path: str = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\D3_full_03_06_final.csv'
     
     # cal_data = calculate_data(full_csv_path)
@@ -271,17 +279,17 @@ def run_full_flow(
 
 
 
-# run_full_flow(
-#     file_name = 'HoTay',
-#     location = 'Ho Tay, hanoi',
-#     num_guest = 2,
-#     num_property = 1,
-#     # collect_host_data = True,
-#     # collect_booking_rate = True
-# )
+run_full_flow(
+    file_name = 'HoTay',
+    location = 'Ho Tay, hanoi',
+    num_guest = 2,
+    num_property = 3,
+    # collect_host_data = True,
+    # collect_booking_rate = True
+)
 
 
 
-start_driver()
+# start_driver()
 
 # print(f'\nLog file saved to: {log_file_path}\n')

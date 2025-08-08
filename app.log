@@ -1,5 +1,89 @@
-LOG RECORDED AT: 07-08-2025 21:15:13
-STARTED BY FILE: __main__.py
-RUN METHOD: Server started (uvicorn)
+LOG RECORDED AT: 08-08-2025 09:00:49
+STARTED BY FILE: base.py
+RUN METHOD: Directly in Terminal
 
 
+
+
+============================== Start full flow
+
+09:00:49 | INFO | base - run_full_flow - 250 | API Request Received:
+09:00:49 | INFO | base - run_full_flow - 251 |     
+    - Location: Ho Tay, hanoi
+    - Number of guests: 2
+    - Number of properties: 3
+    - Collect host data: False
+    - Collect booking rate: False
+    
+
+
+============================== Create proxy helper extension
+
+09:00:49 | INFO | browser - crt_proxy_helper_extention - 37 | Created proxy_auth_extension
+09:00:49 | INFO | browser - crt_proxy_helper_extention - 63 | Created proxy_auth_extension\manifest.json
+09:00:49 | INFO | browser - crt_proxy_helper_extention - 104 | Created proxy_auth_extension\background.js
+
+
+============================== Config basic driver setting
+
+09:00:49 | INFO | browser - config_basic_driver_setting - 121 | Configured basic settings
+
+
+============================== Config advanced driver setting
+
+09:00:49 | INFO | browser - config_advanced_driver_setting - 131 | Configured minimal logging for selenium
+09:00:49 | INFO | browser - config_advanced_driver_setting - 137 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+
+
+============================== Start browser
+
+09:00:51 | INFO | browser - start_browser - 154 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="0e06aa940f52a2ffcc2120b407c01811")>> created
+09:00:51 | INFO | browser - start_browser - 157 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="0e06aa940f52a2ffcc2120b407c01811")>> created
+09:00:51 | INFO | browser - start_browser - 174 | Secondary monitor found, open browser on secondary monitor
+
+
+============================== Go to website
+
+09:00:52 | INFO | scrape_p1 - go_to_website - 33 | Go to website: https://www.airbnb.com.vn/homes
+09:00:58 | INFO | scrape_p1 - go_to_website - 48 | Found Ad pop-up
+09:00:58 | INFO | scrape_p1 - go_to_website - 51 | Close Ad pop-up
+
+
+============================== Search location
+
+09:01:04 | INFO | scrape_p1 - search_location - 131 | Location element found and clicked
+09:01:10 | INFO | scrape_p1 - search_location - 137 | <Ho Tay, hanoi> typed and ENTER
+
+
+============================== Search date
+
+09:01:15 | INFO | scrape_p1 - search_date - 153 | Flexible time button found and clicked
+09:01:21 | INFO | scrape_p1 - search_date - 159 | Flexible weekend button found and clicked
+
+
+============================== Search guest
+
+09:01:26 | INFO | scrape_p1 - search_guest - 177 | Guest element found and clicked
+09:01:32 | INFO | scrape_p1 - search_guest - 189 | 2 guests added
+
+
+============================== Press search
+
+09:01:38 | INFO | scrape_p1 - press_search - 206 | Seach button founded and clicked
+
+
+============================== View page and get all link
+
+09:01:38 | INFO | scrape_p1 - view_page_get_all_link - 221 | Ready to scrape 3 properties
+09:01:50 | INFO | scrape_p1 - view_page_get_all_link - 255 | {'ID': 'P-7Y8LU1', 'Name': '[Mới] Giảm giá 20% | Ấm cúng và yên tĩnh | Máy chiếu - 202', 'Link': 'https://www.airbnb.com.vn/rooms/1466518307217478368'}
+09:01:56 | INFO | scrape_p1 - view_page_get_all_link - 255 | {'ID': 'P-2WMO7W', 'Name': '1 phòng ngủ • Ánh sáng tự nhiên • Hướng nhìn ra vườn • Bồn tắm', 'Link': 'https://www.airbnb.com.vn/rooms/901967023899739140'}
+09:02:01 | INFO | scrape_p1 - view_page_get_all_link - 255 | {'ID': 'P-Q4P7M3', 'Name': 'XOI Lumi_L1_Lakeside 1BR-50m²_Kitchen_Laundry @CBD', 'Link': 'https://www.airbnb.com.vn/rooms/1392415670783111134'}
+09:02:01 | INFO | scrape_p1 - view_page_get_all_link - 276 | 3 properties scraped
+09:02:01 | INFO | file_op - list_dict_to_df - 154 | List_of_dict -> Dataframe successful
+09:02:01 | INFO | file_op - df_to_csv - 188 | Dataframe saved to file: C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_080825 (1).csv
+
+
+============================== Close browser
+
+09:02:03 | INFO | browser - close_browser - 202 | Close browser
+09:02:03 | INFO | base - run_full_flow - 261 | Phase 1 (link scraping) completed. File saved to: C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_080825 (1).csv
