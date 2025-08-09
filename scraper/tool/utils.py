@@ -4,7 +4,10 @@ import logging
 import unicodedata
 import random
 import string
-from typing import Optional, List
+from typing import List, Dict, Any
+
+from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.remote.webelement import WebElement
 
 try:
     from scraper.tool.config import wait_time
@@ -106,16 +109,13 @@ def clean_text(string: str, mode: int) -> str:
 
 
 
-
-
-
-def scroll_focus_element(driver, element):
+def scroll_focus_element(driver: WebDriver, element: WebElement) -> None:
     driver.execute_script("arguments[0].scrollIntoView({block:'center', inline:'center', behavior:'smooth'});", element)
     time.sleep(wait_time)
 
 
 
-def print_pretty_dict(dict):
+def print_pretty_dict(dict: Dict[str, Any]) -> None:
     log.info(json.dumps(dict, indent=4, ensure_ascii=False))
 
 

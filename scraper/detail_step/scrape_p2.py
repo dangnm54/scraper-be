@@ -1,13 +1,6 @@
-try:
-    import scraper.tool.utils as utl
-    import scraper.tool.log_op as lg
-except ImportError:
-    import tool.utils as utl
-    import tool.log_op as lg
-
 import time
 import logging
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Tuple
 
 from tqdm import tqdm
 from selenium.webdriver.common.by import By
@@ -15,6 +8,15 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
+
+try:
+    import scraper.tool.utils as utl
+    import scraper.tool.log_op as lg
+    from scraper.type.data import ScrapeResult
+except ImportError:
+    import tool.utils as utl
+    import tool.log_op as lg
+    from type.data import ScrapeResult
 
 
 # -----------------------------------------------------------------------------------
@@ -65,9 +67,6 @@ def overview_info(driver: WebDriver, wait: WebDriverWait) -> Dict[str, Any]:
         if location:
             clean_location: str | int | None = utl.get_info_from_string(location, mode='coordinate')
             if isinstance(clean_location, str):
-                overview_data['Location'] = clean_location
-
-            if clean_location != None:
                 overview_data['Location'] = clean_location
         
         utl.print_pretty_dict(overview_data)
@@ -370,7 +369,7 @@ def host_info(driver: WebDriver) -> Dict[str, Any]:
 
 
 
-def book_rate_info(driver: WebDriver, wait_time: int, month_data: List[int]) -> Dict[str, Any]:
+def book_rate_info(driver: WebDriver, wait_time: float, month_data: Dict[str, Any]) -> Dict[str, Any]:
 
     lg.log_divider('Book rate info')
 
@@ -382,57 +381,66 @@ def book_rate_info(driver: WebDriver, wait_time: int, month_data: List[int]) -> 
 
     try:
 
-        book_section = driver.find_element(By.CSS_SELECTOR, 'div[data-section-id="BOOK_IT_SIDEBAR"]')
+        book_section: WebElement = driver.find_element(By.CSS_SELECTOR, 'div[data-section-id="BOOK_IT_SIDEBAR"]')
         utl.scroll_focus_element(driver, book_section)
         log.info('Book time section found')
 
-        start_date_element = book_section.find_element(By.CSS_SELECTOR, 'div._19y8o0j')
+        start_date_element: WebElement = book_section.find_element(By.CSS_SELECTOR, 'div._19y8o0j')
         start_date_element.click()
 
         log.info('Open calender')
         time.sleep(wait_time)
-        
-        today_month, next_1m_month, next_3m_month = month_data
 
-        for month in month_data:
+        # month_data struc
+        # month_data: Dict[str, Any] = {
+        #     'This_month': 0, # int
+        #     'Next_1m_month': 0, # int
+        #     'Next_3m_month': [], # List[int]
+        # }        
+
+        for key, month in month_data.items():
             log.info(f'\n_____Checking month <{month}>_____')
             # month = month_data[0]
-        
+
+            book_rate: float | None = None
+
             if type(month) == int:
                 # continue
-                target_month = month
+                target_month: int = month
+                log.info(f'Target month: {target_month}')
 
+                tot_date: int = 0
+                booked_date: int = 0
                 tot_date, booked_date = detail_booking_cal(driver, wait_time, target_month)
 
                 book_rate = final_stage_book_cal(booked_date, tot_date)
 
-                if month == month_data[0]:
-                    book_rate_data['This_month_booked_rate'] = book_rate
-                # elif month == month_data[1]:
-                #     book_rate_data['Last_1_month_booked_rate'] = book_rate 
-                elif month == month_data[1]:
-                    book_rate_data['Next_1_month_booked_rate'] = book_rate 
-
 
             elif type(month) == list:
-                target_month_range = month
-                log.info(f'Target month list: {target_month_range}')
+                target_month_range: List[int] = month
+                log.info(f'Target month_list: {target_month_range}')
 
-                all_tot_date = 0
-                all_booked_date = 0
+                all_tot_date: int = 0
+                all_booked_date: int = 0
                 
                 for target_month in target_month_range:
                     log.info(f'Single target month: {target_month}')
+
+                    single_tot_date: int = 0
+                    single_booked_date: int = 0
                     single_tot_date, single_booked_date = detail_booking_cal(driver, wait_time, target_month)
+                    
                     all_tot_date += single_tot_date
                     all_booked_date += single_booked_date
 
                 book_rate = final_stage_book_cal(all_booked_date, all_tot_date)
 
-                # if target_month_range == month_data[2]:
-                #     book_rate_data['Last_3_month_booked_rate'] = book_rate
-                if target_month_range == month_data[2]:
-                    book_rate_data['Next_3_month_booked_rate'] = book_rate 
+
+            inloop_key: str = f'{key}_booked_rate'
+            for key_otp in book_rate_data.keys():
+                if inloop_key == key_otp:
+                    book_rate_data[key_otp] = book_rate
+                    break
 
         utl.print_pretty_dict(book_rate_data)
         return book_rate_data
@@ -443,12 +451,14 @@ def book_rate_info(driver: WebDriver, wait_time: int, month_data: List[int]) -> 
 
 
 
-def final_stage_book_cal(booked_date, tot_date):
+def final_stage_book_cal(booked_date: int, tot_date: int) -> float | None:
 
     lg.log_divider()
 
+    book_rate: float | None = None
+
     try:
-        book_rate = float(booked_date/tot_date*100)
+        book_rate = float(booked_date / tot_date * 100)
         log.info(f'{booked_date} / {tot_date} = {book_rate:.2f}%')
     except ZeroDivisionError:
         book_rate = None
@@ -458,32 +468,30 @@ def final_stage_book_cal(booked_date, tot_date):
 
 
 
-def detail_booking_cal(driver, wait_time, target_month):
+def detail_booking_cal(driver: WebDriver, wait_time: float, target_month: int) -> Tuple[int, int]:
 
     lg.log_divider()
 
     try:
-        max_try = 12
-        current_try = 0
+        max_try: int = 12
+        current_try: int = 0
         while current_try < max_try:
             current_try += 1
             log.info(f'Try #{current_try}')
 
-            calender_section = driver.find_elements(By.CSS_SELECTOR, 'div.c1e8f4ze')[1]
-            button_section = calender_section.find_element(By.CSS_SELECTOR, 'div._5neba7a')
-            last_month_button = button_section.find_element(By.CSS_SELECTOR, 'button[aria-label="Chuyển sang tháng trước."]')
-            next_month_button = button_section.find_element(By.CSS_SELECTOR, 'button[aria-label="Di chuyển lên trên để chuyển sang tháng sau."]')
+            calender_section: WebElement = driver.find_elements(By.CSS_SELECTOR, 'div.c1e8f4ze')[1]
+            button_section: WebElement = calender_section.find_element(By.CSS_SELECTOR, 'div._5neba7a')
+            last_month_button: WebElement = button_section.find_element(By.CSS_SELECTOR, 'button[aria-label="Chuyển sang tháng trước."]')
+            next_month_button: WebElement = button_section.find_element(By.CSS_SELECTOR, 'button[aria-label="Di chuyển lên trên để chuyển sang tháng sau."]')
 
-            month_sides = calender_section.find_elements(By.CSS_SELECTOR, 'div._1lds9wb') 
-            month_pair = []
+            month_sides: List[WebElement] = calender_section.find_elements(By.CSS_SELECTOR, 'div._1lds9wb') 
+            month_pair: List[int] = []
 
             for month_box in month_sides:
-                month_name = month_box.find_element(By.CSS_SELECTOR, 'h3')
-
-                # log.info(month_name.text)
-
-                clean_month_name = utl.get_info_from_string(month_name.text, mode='month')
-                month_pair.append(clean_month_name)
+                month_name: WebElement = month_box.find_element(By.CSS_SELECTOR, 'h3')
+                clean_month_name: str | int | None = utl.get_info_from_string(month_name.text, mode='month')
+                if isinstance(clean_month_name, int):
+                    month_pair.append(clean_month_name)
             
             # log.info(f'Target month: {target_month}')
             # log.info(f'Current month_pair: {month_pair}')
@@ -492,13 +500,12 @@ def detail_booking_cal(driver, wait_time, target_month):
                 log.info('At the right calendar view')
                 time.sleep(wait_time)
 
-                matched_month_box = month_sides[0] if target_month == month_pair[0] else month_sides[1]
-                date_list = matched_month_box.find_elements(By.CSS_SELECTOR, 'td[class]')
-                booked_date_list = matched_month_box.find_elements(By.CSS_SELECTOR, 'td[aria-disabled="true"]')
-                avai_date_list = matched_month_box.find_elements(By.CSS_SELECTOR, 'td[aria-disabled="true"]')
+                matched_month_box: WebElement = month_sides[0] if target_month == month_pair[0] else month_sides[1]
+                date_list: List[WebElement] = matched_month_box.find_elements(By.CSS_SELECTOR, 'td[class]')
+                booked_date_list: List[WebElement] = matched_month_box.find_elements(By.CSS_SELECTOR, 'td[aria-disabled="true"]')
 
-                tot_date = len(date_list)
-                booked_date = len(booked_date_list)
+                tot_date: int = len(date_list)
+                booked_date: int = len(booked_date_list)
                 
                 return tot_date, booked_date
             
@@ -510,7 +517,7 @@ def detail_booking_cal(driver, wait_time, target_month):
                         log.info('Wrong calendar view -> last_month_button clicked')
                         time.sleep(wait_time)
                     else:
-                        log.info('No more calender data visible to scrape')
+                        log.info('No visible calender data -> stop scraping target_month data')
                         lg.log_divider()
                         return 0, 0
 
@@ -518,6 +525,8 @@ def detail_booking_cal(driver, wait_time, target_month):
                     next_month_button.click()
                     log.info('Wrong calendar view -> next_month_button clicked')
                     time.sleep(wait_time)
+        
+        raise Exception('No visible calender data -> stop scraping target_month data')
 
     except Exception as e:
         lg.log_detail_error(e)
@@ -525,6 +534,13 @@ def detail_booking_cal(driver, wait_time, target_month):
     
 
 
+def get_scrape_result(property_detail_data: Dict[str, Any]) -> "ScrapeResult":
 
-# -----------------------------------------------------------------------------------
+    value_list: List[Any] = [value for value in property_detail_data.values()]
 
+    if all(value is None for value in value_list):
+        return 'Failed'
+    elif not all(value is None for value in value_list) and None in value_list:
+        return 'Partial'
+    else:
+        return 'Success'

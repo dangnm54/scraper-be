@@ -1,8 +1,14 @@
+import logging
+from typing import Dict, Any, List
 from datetime import date, datetime, timedelta
+
 # from dateutil.relativedelta import relativedelta
 
 
 # -----------------------------------------------------------------------------------
+
+
+log = logging.getLogger(__name__)
 
 
 def get_basic_search_info():
@@ -31,35 +37,28 @@ def get_basic_search_info():
     
 
 
-def get_date_for_book_data():
+def get_date_for_book_data() -> Dict[str, Any]:
         
-        print('--Month info--')
+        log.info('--Month info--')
     
-        cal_data = {
-            'This_month_booked_rate': None,
-            # 'Last_1_month_booked_rate': None,
-            # 'Last_3_month_booked_rate': None,
-            'Next_1_month_booked_rate': None,
-            'Next_3_month_booked_rate': None,
-            'Avg_nightly_price': None            
+        month_data: Dict[str, Any] = {
+            'This_month': None, # int
+            'Next_1m_month': None, # int
+            'Next_3m_month': None, # List[int]
         }
         
-        today_date = datetime.now().date()        
-        today_month = today_date.month
+        today_date: date = datetime.now().date()        
+        today_month: int = today_date.month
 
         # last_1m_date = today_date - relativedelta(months=1)
         # last_1m_month = last_1m_date.month
         # last_3m_month = [last_1m_month-2, last_1m_month-1, last_1m_month]
 
-        next_1m_month = today_month + 1
+        next_1m_month: int = today_month + 1
+        next_3m_month: List[int] = [next_1m_month, next_1m_month + 1, next_1m_month + 2]
 
-        next_3m_month = [next_1m_month, next_1m_month+1, next_1m_month+2]
+        log.info(f'today_month: {today_month}')
+        log.info(f'next_1m_month: {next_1m_month}')
+        log.info(f'next_3m_month: {next_3m_month}')
 
-        print(f'today_month: {today_month}')
-        # print(f'last_1m_month: {last_1m_month}')
-        # print(f'last_3m_month: {last_3m_month}')
-        print(f'next_1m_month: {next_1m_month}')
-        print(f'next_3m_month: {next_3m_month}')
-        print('-'*30)
-
-        return today_month, next_1m_month, next_3m_month
+        return month_data

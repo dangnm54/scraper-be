@@ -8,6 +8,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.edge.options import Options as EdgeOptions
 
+
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 
@@ -24,7 +25,7 @@ import scraper.tool.get_ipt as ipt
 from scraper.tool.config import proxy_user, proxy_password, proxy_ip, proxy_port
 from scraper.tool.config import driver_path, wait_time
 from scraper.tool.config import main_website_url, ip_website_url
-from scraper.type.data import PropertyDetail
+from scraper.type.data import PropertyDetail, ScrapeResult
 
 
 
@@ -159,7 +160,7 @@ def scrape_p2(property_link_csv_path: str,
             'Next_3_month_booked_rate': None,  # Optional[float]
         } 
 
-        log.info(f'Scraping property #{index} - {row["Name"]}')
+        log.info(f'Scraping property: {index} - {row["Name"]}')
         
         scr1.go_to_website(driver, wait, wait_time, row['Link'], view='detail_page')
 
@@ -175,16 +176,16 @@ def scrape_p2(property_link_csv_path: str,
                 property_detail_data.update(host_data)
 
             if collect_booking_rate:
-                month_data = ipt.get_date_for_book_data()
-                book_rate_data = scr2.book_rate_info(driver, wait_time, month_data)
+                month_data: Dict[str, Any] = ipt.get_date_for_book_data()
+                book_rate_data: Dict[str, Any] = scr2.book_rate_info(driver, wait_time, month_data)
                 property_detail_data.update(book_rate_data)
-
-            property_detail_data['Scrape_status'] = 'Success'
 
         except Exception as e:
             lg.log_detail_error(e)
-            property_detail_data.update({'ID': index, 'Scrape_status':'Failed'})
 
+
+        scrape_result: ScrapeResult = scr2.get_scrape_result(property_detail_data)
+        property_detail_data['Scrape_result'] = scrape_result
 
         utl.print_pretty_dict(property_detail_data)
         detail_instance: PropertyDetail = PropertyDetail(**property_detail_data)

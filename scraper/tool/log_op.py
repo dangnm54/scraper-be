@@ -41,8 +41,8 @@ class LogFormat(logging.Formatter):
 
 
 
-def file_run_method():
-    is_server_run = False
+def file_run_method() -> str:
+    is_server_run: bool = False
 
     for arg in sys.argv:
         if 'uvicorn' in arg.lower():
@@ -56,20 +56,22 @@ def file_run_method():
 
 
 
-def setup_logging_for_file_directly_run():
 
-    current_time = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
+
+def setup_logging_for_file_directly_run() -> str:
+
+    current_time: str = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
     with open('./app.log', 'w', encoding='utf-8') as f:
         f.write(f'LOG RECORDED AT: {current_time}\n')
         f.write(f'STARTED BY FILE: {os.path.basename(sys.argv[0])}\n')
         f.write(f'RUN METHOD: {file_run_method()}\n\n\n')
 
 
-    console_handler = logging.StreamHandler()
-    file_handler = logging.StreamHandler(open('./app.log', mode='a', encoding='utf-8'))
+    console_handler: logging.StreamHandler = logging.StreamHandler()
+    file_handler: logging.StreamHandler = logging.StreamHandler(open('./app.log', mode='a', encoding='utf-8'))
 
 
-    log_format = LogFormat()
+    log_format: LogFormat = LogFormat()
 
 
     # when handler recieve a log record
@@ -80,12 +82,12 @@ def setup_logging_for_file_directly_run():
 
 
     # root logger is global for entire project    
-    root_logger = logging.getLogger()
+    root_logger: logging.Logger = logging.getLogger()
     root_logger.setLevel(logging.INFO)
     root_logger.addHandler(console_handler)
     root_logger.addHandler(file_handler)
 
-    log_file_path = os.path.abspath('./app.log')
+    log_file_path: str = os.path.abspath('./app.log')
 
     return log_file_path
 
@@ -93,8 +95,7 @@ def setup_logging_for_file_directly_run():
 
 
 
-
-def log_divider(ipt_message=''):
+def log_divider(ipt_message: str = '') -> None:
 
     if ipt_message:
         message = f'\n\n{"="*30} {ipt_message}\n'
@@ -109,7 +110,8 @@ def log_divider(ipt_message=''):
 
 
 
-def log_detail_error(e):
+def log_detail_error(e: Exception) -> None:
+    
     exc_type, exc_value, exc_traceback = sys.exc_info()
     
     if exc_traceback:
