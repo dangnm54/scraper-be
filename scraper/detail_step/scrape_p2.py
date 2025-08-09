@@ -6,12 +6,15 @@ except ImportError:
     import tool.log_op as lg
 
 import time
-import lxml
 import logging
+from typing import Dict, Any, List
 
 from tqdm import tqdm
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 # -----------------------------------------------------------------------------------
@@ -21,44 +24,52 @@ log = logging.getLogger(__name__)
 
 
 
-def overview_info(driver, wait):
+def overview_info(driver: WebDriver, wait: WebDriverWait) -> Dict[str, Any]:
 
     lg.log_divider('Overview info')
     
+    overview_data: Dict[str, Any] = {
+        'Guest_num': None,  # Optional[int]
+        'Bed_num': None,  # Optional[int]
+        'Bath_num': None,  # Optional[int]
+        'Location': None  # Optional[str]
+    }
+
     try:
-        overview_data = {
-            'Guest_num': None,
-            'Bed_num': None,
-            'Bath_num': None,
-            'Location': None
-        }
     
-        overview_section = driver.find_element(By.CSS_SELECTOR, 'div[data-section-id="OVERVIEW_DEFAULT_V2"]')
+        overview_section: WebElement = driver.find_element(By.CSS_SELECTOR, 'div[data-section-id="OVERVIEW_DEFAULT_V2"]')
         log.info('Overview section found')
 
-        info_list = overview_section.find_elements(By.CSS_SELECTOR, 'li.l7n4lsf')
+        info_list: List[WebElement] = overview_section.find_elements(By.CSS_SELECTOR, 'li.l7n4lsf')
         for info in info_list:
-            clean_info1 = utl.clean_text(info.text, mode=2)
-            clean_info2 = utl.clean_text(clean_info1, mode=1)
+            clean_info1: str = utl.clean_text(info.text, mode=2)
+            clean_info2: str = utl.clean_text(clean_info1, mode=1)
 
-            num = utl.get_info_from_string(clean_info2, mode='int')
+            num: str | int | None = utl.get_info_from_string(clean_info2, mode='int')
 
-            if 'khach' in clean_info2:
-                overview_data['Guest_num'] = num
-            if 'giuong' in clean_info2:
-                overview_data['Bed_num'] = num
-            if 'tam' in clean_info2:
-                overview_data['Bath_num'] = num
+            if isinstance(num, int):
+                if 'khach' in clean_info2:
+                    overview_data['Guest_num'] = num
+                if 'giuong' in clean_info2:
+                    overview_data['Bed_num'] = num
+                if 'tam' in clean_info2:
+                    overview_data['Bath_num'] = num
 
-        location_section = driver.find_element(By.CSS_SELECTOR, 'div[data-section-id="LOCATION_DEFAULT"]')
+        location_section: WebElement = driver.find_element(By.CSS_SELECTOR, 'div[data-section-id="LOCATION_DEFAULT"]')
         utl.scroll_focus_element(driver, location_section)
 
         wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'a[title="Báo cáo lỗi trong bản đồ đường hoặc hình ảnh đến Google"]')))
-        location_element = location_section.find_element(By.CSS_SELECTOR, 'a[title="Báo cáo lỗi trong bản đồ đường hoặc hình ảnh đến Google"]')
-        location = location_element.get_attribute('href')
-        clean_location = utl.get_info_from_string(location, 'coordinate')
-        overview_data['Location'] = clean_location
+        location_element: WebElement = location_section.find_element(By.CSS_SELECTOR, 'a[title="Báo cáo lỗi trong bản đồ đường hoặc hình ảnh đến Google"]')
+        location: str | None = location_element.get_attribute('href')
+        
+        if location:
+            clean_location: str | int | None = utl.get_info_from_string(location, mode='coordinate')
+            if isinstance(clean_location, str):
+                overview_data['Location'] = clean_location
 
+            if clean_location != None:
+                overview_data['Location'] = clean_location
+        
         utl.print_pretty_dict(overview_data)
         return overview_data
     
@@ -155,62 +166,58 @@ def overview_info(driver, wait):
 
 
 
-def rating_info(driver):
+def rating_info(driver: WebDriver) -> Dict[str, Any]:
 
     lg.log_divider('Rating info')
 
+    rating_data: Dict[str, Any] = {
+        'Rating_title': None,  # Optional[str]
+        'Rating_star': None,  # Optional[float]
+        'Rating_num': None,  # Optional[int]
+    }
+
     try:
-        rating_data = {
-            'Rating_title':None,
-            'Rating_star': None,
-            'Rating_num': None,
-            # 'Rating_clean_score': None,
-            # 'Rating_accuracy_score': None,
-            # 'Rating_checkin_score': None,
-            # 'Rating_commu_score': None,
-            # 'Rating_location_score': None,
-            # 'Rating_value_score': None,
-        }
 
         # overview data
-        overview_rating_special = driver.find_elements(By.CSS_SELECTOR, 'div[data-section-id="GUEST_FAVORITE_BANNER"]')
-        overview_rating_normal = driver.find_elements(By.CSS_SELECTOR, 'div.rgr5sph')
+        overview_rating_special_section: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, 'div[data-section-id="GUEST_FAVORITE_BANNER"]')
+        overview_rating_normal_section: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, 'div.rgr5sph')
 
-        if overview_rating_special:
-            overview_rating_special = overview_rating_special[0]
+        if overview_rating_special_section:
+            overview_rating_special: WebElement = overview_rating_special_section[0]
             utl.scroll_focus_element(driver, overview_rating_special)            
             log.info('Special rating element found')
             
-            rating_title = overview_rating_special.find_element(By.CSS_SELECTOR, 'div.lbjrbi0')
-            clean_rating_title = rating_title.text.replace('\n',' ')
+            rating_title: WebElement = overview_rating_special.find_element(By.CSS_SELECTOR, 'div.lbjrbi0')
+            clean_rating_title: str = rating_title.text.replace('\n',' ')
             rating_data['Rating_title'] = clean_rating_title
 
-            rating_star_section = overview_rating_special.find_element(By.CSS_SELECTOR, 'div.a8jhwcl')
-            rating_star_elements = rating_star_section.find_elements(By.CSS_SELECTOR, 'div')
-            rating_star = utl.clean_text(rating_star_elements[0].text, mode=3)
-            rating_data['Rating_star'] = rating_star
+            rating_star_section: WebElement = overview_rating_special.find_element(By.CSS_SELECTOR, 'div.a8jhwcl')
+            rating_star_elements: List[WebElement] = rating_star_section.find_elements(By.CSS_SELECTOR, 'div')
+            rating_star: str = utl.clean_text(rating_star_elements[0].text, mode=3)
+            rating_data['Rating_star'] = float(rating_star)
 
-            rating_num_section = overview_rating_special.find_element(By.CSS_SELECTOR, 'div.r16onr0j')
-            rating_num_elements = rating_num_section.find_elements(By.CSS_SELECTOR, 'div')
-            rating_num = int(rating_num_elements[0].text)
-            rating_data['Rating_num'] = rating_num
+            rating_num_section: WebElement = overview_rating_special.find_element(By.CSS_SELECTOR, 'div.r16onr0j')
+            rating_num_elements: List[WebElement] = rating_num_section.find_elements(By.CSS_SELECTOR, 'div')
+            special_rating_num: int = int(rating_num_elements[0].text)
+            rating_data['Rating_num'] = special_rating_num
 
             log.info('Special overview rating data collected')
             
-        elif overview_rating_normal:
-            overview_rating_normal = overview_rating_normal[0]
+        elif overview_rating_normal_section:
+            overview_rating_normal: WebElement = overview_rating_normal_section[0]
             utl.scroll_focus_element(driver, overview_rating_normal)            
             log.info('Normal rating element found')
 
-            rating_star = overview_rating_normal.find_element(By.CSS_SELECTOR, 'div.rmtgcc3')
-            clean_rating_star = utl.clean_text(rating_star.text, mode=3)
-            rating_data['Rating_star'] = clean_rating_star
+            rating_star_element: WebElement = overview_rating_normal.find_element(By.CSS_SELECTOR, 'div.rmtgcc3')
+            rating_star: str = utl.clean_text(rating_star_element.text, mode=3)
+            rating_data['Rating_star'] = float(rating_star)
 
-            rating_num = overview_rating_normal.find_element(By.CSS_SELECTOR, 'a')
-            clean_rating_num = utl.get_info_from_string(rating_num.text, mode='int')
-            rating_data['Rating_num'] = clean_rating_num
+            rating_num_element: WebElement = overview_rating_normal.find_element(By.CSS_SELECTOR, 'a')
+            normal_rating_num: str | int | None = utl.get_info_from_string(rating_num_element.text, mode='int')
+            if isinstance(normal_rating_num, int):
+                rating_data['Rating_num'] = normal_rating_num
             
-            log.info('Normal overview rating data collected')
+            log.info('Normal overview rating data collected') 
 
 
         # detail data
@@ -242,6 +249,7 @@ def rating_info(driver):
         #     log.info(f'Rating: {category_rating}')
         #     lg.log_divider()
 
+
         utl.print_pretty_dict(rating_data)
         return rating_data
 
@@ -251,51 +259,59 @@ def rating_info(driver):
 
 
 
-def host_info(driver):
+def host_info(driver: WebDriver) -> Dict[str, Any]:
 
     lg.log_divider('Host info')
+
+    host_data: Dict[str, Any] = {
+        'Host_name': None,  # Optional[str]
+        'Host_title': None,  # Optional[str]
+        'Host_rating_star': None,  # Optional[float]
+        'Host_rating_num': None,  # Optional[int]
+        'Host_exp': None,  # Optional[str]
+        'Host_link': None,  # Optional[str]
+    }
     
     try:
-        host_data = {
-            'Host_name': None,
-            'Host_title': None,
-            'Host_rating_num': None,
-            'Host_rating_star': None,
-            'Host_exp': None,
-            'Host_link': None,
-        }
 
-        host_section = driver.find_element(By.CSS_SELECTOR, 'div.c1h2ee1b')
+        host_section: WebElement = driver.find_element(By.CSS_SELECTOR, 'div.c1h2ee1b')
         utl.scroll_focus_element(driver, host_section)
 
-        host_name = host_section.find_element(By.CSS_SELECTOR, 'span.t1gpcl1t').text
+        host_name: str = host_section.find_element(By.CSS_SELECTOR, 'span.t1gpcl1t').text
         host_data['Host_name'] = host_name
 
-        host_title_element = host_section.find_elements(By.CSS_SELECTOR, 'span.s1h3l0w7')
-        host_title = host_title_element[0].text
+        host_title_element: List[WebElement] = host_section.find_elements(By.CSS_SELECTOR, 'span.s1h3l0w7')
+        host_title: str = host_title_element[0].text
         if host_title != 'Host':
             host_data['Host_title'] = host_title
 
-        host_detail_section = host_section.find_element(By.CSS_SELECTOR, 'div.s13au5n7')
 
-        host_rating_num = host_detail_section.find_element(By.CSS_SELECTOR, 'span[data-testid="Đánh giá-stat-heading"]')
-        clean_host_rating_num1 = utl.clean_text(host_rating_num.text, mode=4)
-        clean_host_rating_num2 = utl.get_info_from_string(clean_host_rating_num1, mode='int')
-        host_data['Host_rating_num'] = clean_host_rating_num2
+        host_detail_section: WebElement = host_section.find_element(By.CSS_SELECTOR, 'div.s13au5n7')
 
-        host_rating_star = host_detail_section.find_element(By.CSS_SELECTOR, 'div.rz5w5y3')
-        clean_host_rating_star = utl.clean_text(host_rating_star.text, mode=3)
-        host_data['Host_rating_star'] = clean_host_rating_star
 
-        host_exp = host_detail_section.find_elements(By.CSS_SELECTOR, 'span.a8jt5op')
-        if len(host_exp) ==3:
-            host_exp_element = host_exp[2]
-            clean_host_exp = utl.get_info_from_string(host_exp_element.text, mode='exp')
-            host_data['Host_exp'] = clean_host_exp
+        host_rating_star: WebElement = host_detail_section.find_element(By.CSS_SELECTOR, 'div.rz5w5y3')
+        clean_host_rating_star: str = utl.clean_text(host_rating_star.text, mode=3)
+        host_data['Host_rating_star'] = float(clean_host_rating_star)
 
-        host_avatar = driver.find_element(By.CSS_SELECTOR, 'a[aria-label="Xem Hồ sơ đầy đủ của Chủ nhà/Người tổ chức"]')
-        host_link = host_avatar.get_attribute('href')
-        host_data['Host_link'] = host_link
+        host_rating_num: WebElement = host_detail_section.find_element(By.CSS_SELECTOR, 'span[data-testid="Đánh giá-stat-heading"]')
+        clean_host_rating_num1: str = utl.clean_text(host_rating_num.text, mode=4)
+        clean_host_rating_num2: str | int | None = utl.get_info_from_string(clean_host_rating_num1, mode='int')
+        if isinstance(clean_host_rating_num2, int):
+            host_data['Host_rating_num'] = clean_host_rating_num2
+
+
+        host_exp: List[WebElement] = host_detail_section.find_elements(By.CSS_SELECTOR, 'span.a8jt5op')
+        if len(host_exp) == 3:
+            host_exp_element: WebElement = host_exp[2]
+            clean_host_exp: str | int | None = utl.get_info_from_string(host_exp_element.text, mode='exp')
+            if isinstance(clean_host_exp, str):
+                host_data['Host_exp'] = str(clean_host_exp)
+
+        host_avatar: WebElement = driver.find_element(By.CSS_SELECTOR, 'a[aria-label="Xem Hồ sơ đầy đủ của Chủ nhà/Người tổ chức"]')
+        host_link: str | None = host_avatar.get_attribute('href')
+        if isinstance(host_link, str):
+            host_data['Host_link'] = host_link
+
 
         utl.print_pretty_dict(host_data)
         return host_data
@@ -354,18 +370,17 @@ def host_info(driver):
 
 
 
-def book_rate_info(driver, wait_time, month_data):
+def book_rate_info(driver: WebDriver, wait_time: int, month_data: List[int]) -> Dict[str, Any]:
 
     lg.log_divider('Book rate info')
 
+    book_rate_data: Dict[str, Any] = {
+        'This_month_booked_rate': None,  # Optional[float]
+        'Next_1_month_booked_rate': None,  # Optional[float]
+        'Next_3_month_booked_rate': None,  # Optional[float]
+    }
+
     try:
-        book_rate_data = {
-            'This_month_booked_rate': None,
-            # 'Last_1_month_booked_rate': None,
-            # 'Last_3_month_booked_rate': None,
-            'Next_1_month_booked_rate': None,
-            'Next_3_month_booked_rate': None,         
-        }
 
         book_section = driver.find_element(By.CSS_SELECTOR, 'div[data-section-id="BOOK_IT_SIDEBAR"]')
         utl.scroll_focus_element(driver, book_section)
@@ -424,6 +439,7 @@ def book_rate_info(driver, wait_time, month_data):
 
     except Exception as e:
         lg.log_detail_error(e)
+        return book_rate_data 
 
 
 
@@ -466,7 +482,7 @@ def detail_booking_cal(driver, wait_time, target_month):
 
                 # log.info(month_name.text)
 
-                clean_month_name = utl.get_info_from_string(month_name.text, 'month')
+                clean_month_name = utl.get_info_from_string(month_name.text, mode='month')
                 month_pair.append(clean_month_name)
             
             # log.info(f'Target month: {target_month}')

@@ -19,8 +19,8 @@ class PropertyDetail(BaseModel):
 
     # rating_data
     Rating_title: Optional[str] = None
-    Rating_num: Optional[int] = None
     Rating_star: Optional[float] = None
+    Rating_num: Optional[int] = None
 
 
     # host_data 

@@ -77,23 +77,28 @@ def scrape_p1(main_website_url,
     driver, wait = start_driver()
 
     if driver != None and wait != None:
-        scr1.go_to_website(driver, wait, wait_time, main_website_url, view='main_page')
+        pass
+    else:
+        log.error(f"An error in 'if driver'")
+        return ''
 
-        scr1.search_location(driver, wait_time, location)
-        scr1.search_date(driver, wait_time)
-        scr1.search_guest(driver, wait_time, num_guest)
-        scr1.press_search(driver)
+    scr1.go_to_website(driver, wait, wait_time, main_website_url, view='main_page')
 
-        link_list = scr1.view_page_get_all_link(driver, wait, wait_time, num_property)
-        
-        if link_list:
-            link_df = fop.list_dict_to_df(link_list, index='ID')
-            link_csv_path = fop.df_to_csv(link_df, name=f'{file_name}_link')
-        else:
-            log.error(f"link_list is empty: {link_list}")
-            link_csv_path = ''
+    scr1.search_location(driver, wait_time, location)
+    scr1.search_date(driver, wait_time)
+    scr1.search_guest(driver, wait_time, num_guest)
+    scr1.press_search(driver)
 
-        brws.close_browser(driver)
+    link_list = scr1.view_page_get_all_link(driver, wait, wait_time, num_property)
+    
+    if link_list:
+        link_df = fop.list_dict_to_df(link_list, index='ID')
+        link_csv_path = fop.df_to_csv(link_df, name=f'{file_name}_link')
+    else:
+        log.error(f"link_list is empty: {link_list}")
+        link_csv_path = ''
+
+    brws.close_browser(driver)
 
     return link_csv_path
 
@@ -105,8 +110,9 @@ def scrape_p2(property_link_csv_path: str,
             file_name: str, collect_host_data: bool=False, collect_booking_rate: bool=False
     ) -> str:
 
-    driver: WebDriver | None = start_driver()[0]
-    wait: WebDriverWait | None = start_driver()[1]
+    driver: WebDriver | None = None
+    wait: WebDriverWait | None = None
+    driver, wait = start_driver()
 
     if driver != None and wait != None:
         pass
@@ -127,48 +133,45 @@ def scrape_p2(property_link_csv_path: str,
 
         property_detail_data: Dict[str, Any] = {
             # overview_data
-            'ID': index,
-            'Scrape_result': None,
-
-            'Guest_num': None,
-            'Bed_num': None,
-            'Bath_num': None,
-            'Location': None,
-
+            'ID': index,  # Hashable
+            'Scrape_result': None,  # ScrapeResult
+            'Guest_num': None,  # Optional[int]
+            'Bed_num': None,  # Optional[int]
+            'Bath_num': None,  # Optional[int]
+            'Location': None,  # Optional[str]
+            
             # rating_data
-            'Rating_title':None,
-            'Rating_num': None,
-            'Rating_star': None,
-
+            'Rating_title': None,  # Optional[str]
+            'Rating_star': None,  # Optional[float]
+            'Rating_num': None,  # Optional[int]
+            
             # host_data
-            'Host_name': None,
-            'Host_title': None,
-            'Host_rating_star': None,
-            'Host_rating_num': None,
-            'Host_exp': None,
-            'Host_link': None,
-
+            'Host_name': None,  # Optional[str]
+            'Host_title': None,  # Optional[str]
+            'Host_rating_star': None,  # Optional[float]
+            'Host_rating_num': None,  # Optional[int]
+            'Host_exp': None,  # Optional[str]
+            'Host_link': None,  # Optional[str]
+            
             # booking_rate_data
-            'This_month_booked_rate': None,
-            'Next_1_month_booked_rate': None,
-            'Next_3_month_booked_rate': None, 
+            'This_month_booked_rate': None,  # Optional[float]
+            'Next_1_month_booked_rate': None,  # Optional[float]
+            'Next_3_month_booked_rate': None,  # Optional[float]
         } 
 
-        print(f'Scraping property #{index} - {row["Name"]}')
+        log.info(f'Scraping property #{index} - {row["Name"]}')
         
         scr1.go_to_website(driver, wait, wait_time, row['Link'], view='detail_page')
 
         try:
-            property_detail_data['Scrape_status'] = 'Success'
-            
-            overview_data = scr2.overview_info(driver, wait)
+            overview_data: Dict[str, Any] = scr2.overview_info(driver, wait)
             property_detail_data.update(overview_data)
     
-            rating_data = scr2.rating_info(driver)
+            rating_data: Dict[str, Any] = scr2.rating_info(driver)
             property_detail_data.update(rating_data)
 
             if collect_host_data:
-                host_data = scr2.host_info(driver)
+                host_data: Dict[str, Any] = scr2.host_info(driver)
                 property_detail_data.update(host_data)
 
             if collect_booking_rate:
@@ -176,6 +179,7 @@ def scrape_p2(property_link_csv_path: str,
                 book_rate_data = scr2.book_rate_info(driver, wait_time, month_data)
                 property_detail_data.update(book_rate_data)
 
+            property_detail_data['Scrape_status'] = 'Success'
 
         except Exception as e:
             lg.log_detail_error(e)

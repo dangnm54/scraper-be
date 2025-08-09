@@ -4,7 +4,7 @@ import logging
 import unicodedata
 import random
 import string
-from typing import Optional
+from typing import Optional, List
 
 try:
     from scraper.tool.config import wait_time
@@ -21,14 +21,12 @@ except ImportError:
 log = logging.getLogger(__name__)
 
 
-def get_info_from_string(string: str, mode: str='int') -> str | int | None:
+def get_info_from_string(string: str, mode: str) -> str | int | None:
+
     try:
-        word_list = string.split()
+        word_list: List[str] = string.split()
         target_word: str | int | None = ''
 
-        
-            
-            
         match mode:
             case 'int':
                 for word in word_list:
@@ -71,11 +69,12 @@ def get_info_from_string(string: str, mode: str='int') -> str | int | None:
 
 
 def clean_text(string: str, mode: int) -> str:
+    
     try:
         match mode:
             case 1:
                 nfd_string: str = unicodedata.normalize('NFD', string)
-                clean_string: str = ''.join(char for char in nfd_string if unicodedata.category(char) != 'Mn')
+                clean_text: str = ''.join(char for char in nfd_string if unicodedata.category(char) != 'Mn')
 
                 replacements = {
                     'đ': 'd', 'Đ': 'D',
@@ -88,23 +87,23 @@ def clean_text(string: str, mode: int) -> str:
                 }
 
                 for vn_key, en_value in replacements.items():
-                    clean_string = clean_string.replace(vn_key, en_value).lower()
+                    clean_text = clean_text.replace(vn_key, en_value).lower()
             
             case 2:
-                clean_string: str = string.strip('"').strip(' · ').lower()
+                clean_text: str = string.strip('"').strip(' · ').lower()
             case 3:
-                clean_string: str = str(string.replace(',','.'))
+                clean_text: str = (string.replace(',','.'))
             case 4:
-                clean_string: str = string.replace('.','')
+                clean_text: str = string.replace('.','')
             case 5:
-                clean_string: str = string.split('?')[0]
+                clean_text: str = string.split('?')[0]
 
-
-        return clean_string
+        return clean_text
     
     except Exception as e:
         lg.log_detail_error(e)
         return ''
+
 
 
 

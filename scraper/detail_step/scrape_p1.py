@@ -249,7 +249,9 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                 
                 property_info['ID'] = utl.generate_random_id()
                 property_info['Name'] = name
-                property_info['Link'] = clean_link
+                if isinstance(clean_link, str):
+                    property_info['Link'] = clean_link
+                    
                 link_list.append(property_info)
                 
                 log.info(property_info)
