@@ -125,11 +125,13 @@ def scrape_p2(property_link_csv_path: str,
     link_df: pd.DataFrame = fop.csv_to_df(property_link_csv_path, index='ID', mode=1)
     detail_list: List[PropertyDetail] = []
 
+    cnt = 1
 
     for index, row in link_df.iterrows():
         # print(f'{index} | {row["Name"]} | {row["Link"]}')
 
-        # if index < 8:
+        # if cnt < 3:
+        #     cnt += 1
         #     continue
 
         property_detail_data: Dict[str, Any] = {
@@ -176,8 +178,7 @@ def scrape_p2(property_link_csv_path: str,
                 property_detail_data.update(host_data)
 
             if collect_booking_rate:
-                month_data: Dict[str, Any] = ipt.get_date_for_book_data()
-                book_rate_data: Dict[str, Any] = scr2.book_rate_info(driver, wait_time, month_data)
+                book_rate_data: Dict[str, Any] = scr2.book_rate_info(driver, wait_time)
                 property_detail_data.update(book_rate_data)
 
         except Exception as e:
@@ -187,12 +188,13 @@ def scrape_p2(property_link_csv_path: str,
         scrape_result: ScrapeResult = scr2.get_scrape_result(property_detail_data)
         property_detail_data['Scrape_result'] = scrape_result
 
+        lg.log_divider()
+
         utl.print_pretty_dict(property_detail_data)
         detail_instance: PropertyDetail = PropertyDetail(**property_detail_data)
         detail_list.append(detail_instance)
 
-        # if index == 1:
-        #     break
+        lg.log_divider()
 
     brws.close_browser(driver)  
 
@@ -264,15 +266,11 @@ def run_full_flow(
 
     link_csv_path: str = scrape_p1(main_website_url, file_name, location, num_guest, num_property)
     log.info(f"Phase 1 (link scraping) completed. File saved to: {link_csv_path}")
-    # link_csv_path: str = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_230725.csv'
+    # link_csv_path: str = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_080825.csv'
 
-    # full_csv_path: str = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
-    # log.info(f"Phase 2 (detail scraping) completed. File saved to: {full_csv_path}")
-    # full_csv_path: str = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\D3_full_03_06_final.csv'
+    full_csv_path: str = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
+    log.info(f"Phase 2 (detail scraping) completed. File saved to: {full_csv_path}")
     
-    # cal_data = calculate_data(full_csv_path)
-    # draw_dashboard(full_csv_path, cal_data)
-
 
     return {
         "detail": "scraping process completed"
@@ -285,16 +283,16 @@ def run_full_flow(
 
 
 run_full_flow(
-    file_name = 'HoTay',
-    location = 'Ho Tay, hanoi',
+    file_name = 'PhoCo',
+    location = 'Pho Co, hanoi',
     num_guest = 2,
     num_property = 3,
-    # collect_host_data = True,
-    # collect_booking_rate = True
+    collect_host_data = True,
+    collect_booking_rate = True
 )
 
 
 
 # start_driver()
 
-# print(f'\nLog file saved to: {log_file_path}\n')
+print(f'\nLog file saved to: {log_file_path}\n')

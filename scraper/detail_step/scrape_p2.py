@@ -13,10 +13,12 @@ try:
     import scraper.tool.utils as utl
     import scraper.tool.log_op as lg
     from scraper.type.data import ScrapeResult
+    import scraper.tool.get_ipt as ipt
 except ImportError:
     import tool.utils as utl
     import tool.log_op as lg
     from type.data import ScrapeResult
+    import tool.get_ipt as ipt
 
 
 # -----------------------------------------------------------------------------------
@@ -178,7 +180,9 @@ def rating_info(driver: WebDriver) -> Dict[str, Any]:
     try:
 
         # overview data
-        overview_rating_special_section: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, 'div[data-section-id="GUEST_FAVORITE_BANNER"]')
+        overview_rating_special_section: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, 'div.l57as01')
+        if not overview_rating_special_section:
+            overview_rating_special_section = driver.find_elements(By.CSS_SELECTOR, 'div.mreautf')
         overview_rating_normal_section: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, 'div.rgr5sph')
 
         if overview_rating_special_section:
@@ -369,7 +373,7 @@ def host_info(driver: WebDriver) -> Dict[str, Any]:
 
 
 
-def book_rate_info(driver: WebDriver, wait_time: float, month_data: Dict[str, Any]) -> Dict[str, Any]:
+def book_rate_info(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
 
     lg.log_divider('Book rate info')
 
@@ -378,6 +382,8 @@ def book_rate_info(driver: WebDriver, wait_time: float, month_data: Dict[str, An
         'Next_1_month_booked_rate': None,  # Optional[float]
         'Next_3_month_booked_rate': None,  # Optional[float]
     }
+
+    month_data: Dict[str, Any] = ipt.get_date_for_book_data()
 
     try:
 
@@ -390,24 +396,23 @@ def book_rate_info(driver: WebDriver, wait_time: float, month_data: Dict[str, An
 
         log.info('Open calender')
         time.sleep(wait_time)
+        lg.log_divider()
 
         # month_data struc
         # month_data: Dict[str, Any] = {
         #     'This_month': 0, # int
-        #     'Next_1m_month': 0, # int
-        #     'Next_3m_month': [], # List[int]
+        #     'Next_1_month': 0, # int
+        #     'Next_3_month': [], # List[int]
         # }        
 
         for key, month in month_data.items():
-            log.info(f'\n_____Checking month <{month}>_____')
-            # month = month_data[0]
 
             book_rate: float | None = None
 
             if type(month) == int:
                 # continue
                 target_month: int = month
-                log.info(f'Target month: {target_month}')
+                log.info(f'_____Target month: {target_month}_____')
 
                 tot_date: int = 0
                 booked_date: int = 0
@@ -418,13 +423,16 @@ def book_rate_info(driver: WebDriver, wait_time: float, month_data: Dict[str, An
 
             elif type(month) == list:
                 target_month_range: List[int] = month
-                log.info(f'Target month_list: {target_month_range}')
+                log.info(f'_____Target month_list: {target_month_range}_____')
 
                 all_tot_date: int = 0
                 all_booked_date: int = 0
                 
                 for target_month in target_month_range:
-                    log.info(f'Single target month: {target_month}')
+
+                    lg.log_divider()
+
+                    log.info(f'___Single target month: {target_month}___')
 
                     single_tot_date: int = 0
                     single_booked_date: int = 0
@@ -438,9 +446,12 @@ def book_rate_info(driver: WebDriver, wait_time: float, month_data: Dict[str, An
 
             inloop_key: str = f'{key}_booked_rate'
             for key_otp in book_rate_data.keys():
+                # log.info(f'inloop_key: {inloop_key} | key_otp: {key_otp} | book_rate: {book_rate}')
                 if inloop_key == key_otp:
                     book_rate_data[key_otp] = book_rate
                     break
+
+            lg.log_divider()
 
         utl.print_pretty_dict(book_rate_data)
         return book_rate_data
@@ -453,13 +464,11 @@ def book_rate_info(driver: WebDriver, wait_time: float, month_data: Dict[str, An
 
 def final_stage_book_cal(booked_date: int, tot_date: int) -> float | None:
 
-    lg.log_divider()
-
     book_rate: float | None = None
 
     try:
         book_rate = float(booked_date / tot_date * 100)
-        log.info(f'{booked_date} / {tot_date} = {book_rate:.2f}%')
+        log.info(f'Total booked-rate: {booked_date} / {tot_date} = {book_rate:.2f}%')
     except ZeroDivisionError:
         book_rate = None
         log.info('No data to calculate book_rate')
@@ -469,8 +478,6 @@ def final_stage_book_cal(booked_date: int, tot_date: int) -> float | None:
 
 
 def detail_booking_cal(driver: WebDriver, wait_time: float, target_month: int) -> Tuple[int, int]:
-
-    lg.log_divider()
 
     try:
         max_try: int = 12
@@ -493,8 +500,8 @@ def detail_booking_cal(driver: WebDriver, wait_time: float, target_month: int) -
                 if isinstance(clean_month_name, int):
                     month_pair.append(clean_month_name)
             
-            # log.info(f'Target month: {target_month}')
-            # log.info(f'Current month_pair: {month_pair}')
+            log.info(f'Target month: {target_month}')
+            log.info(f'Current month_pair: {month_pair}')
 
             if target_month in month_pair:
                 log.info('At the right calendar view')
@@ -536,11 +543,22 @@ def detail_booking_cal(driver: WebDriver, wait_time: float, target_month: int) -
 
 def get_scrape_result(property_detail_data: Dict[str, Any]) -> "ScrapeResult":
 
+    lg.log_divider('Get scrape result')
+
     value_list: List[Any] = [value for value in property_detail_data.values()]
 
+    none_count: int = value_list.count(None) - 1
+    total_count: int = len(value_list) - 1
+
+    result: "ScrapeResult" = 'Failed'
+
     if all(value is None for value in value_list):
-        return 'Failed'
+        result = 'Failed'
     elif not all(value is None for value in value_list) and None in value_list:
-        return 'Partial'
+        result = 'Partial'
     else:
-        return 'Success'
+        result = 'Success'
+
+    log.info(f'Missing data (exclude result field): {none_count} / {total_count} -> Scraping result: {result}')
+
+    return result

@@ -100,7 +100,7 @@ def log_divider(ipt_message: str = '') -> None:
     if ipt_message:
         message = f'\n\n{"="*30} {ipt_message}\n'
     else:
-        message = f'\n{"-"*60}\n'
+        message = f'\n{"-"*20}\n'
     
     # same root logger created earlier (if any)
     root_logger = logging.getLogger()
@@ -119,6 +119,7 @@ def log_detail_error(e: Exception) -> None:
         # get full traceback
         full_traceback = traceback.format_exc()
         message = f"Full traceback:\n{full_traceback}"
+
 
         # # get 3 lastest level of error
         # traceback_info = traceback.extract_tb(exc_traceback)
