@@ -33,10 +33,10 @@ def overview_info(driver: WebDriver, wait: WebDriverWait) -> Dict[str, Any]:
     lg.log_divider('Overview info')
     
     overview_data: Dict[str, Any] = {
-        'Guest_num': None,  # Optional[int]
-        'Bed_num': None,  # Optional[int]
-        'Bath_num': None,  # Optional[int]
-        'Location': None  # Optional[str]
+        'guest_num': None,  # Optional[int]
+        'bed_num': None,  # Optional[int]
+        'bath_num': None,  # Optional[int]
+        'location': None  # Optional[str]
     }
 
     try:
@@ -172,9 +172,9 @@ def rating_info(driver: WebDriver) -> Dict[str, Any]:
     lg.log_divider('Rating info')
 
     rating_data: Dict[str, Any] = {
-        'Rating_title': None,  # Optional[str]
-        'Rating_star': None,  # Optional[float]
-        'Rating_num': None,  # Optional[int]
+        'rating_title': None,  # Optional[str]
+        'rating_star': None,  # Optional[float]
+        'rating_num': None,  # Optional[int]
     }
 
     try:
@@ -378,9 +378,9 @@ def book_rate_info(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
     lg.log_divider('Book rate info')
 
     book_rate_data: Dict[str, Any] = {
-        'This_month_booked_rate': None,  # Optional[float]
-        'Next_1_month_booked_rate': None,  # Optional[float]
-        'Next_3_month_booked_rate': None,  # Optional[float]
+        'this_month_booked_rate': None,  # Optional[float]
+        'next_1_month_booked_rate': None,  # Optional[float]
+        'next_3_month_booked_rate': None,  # Optional[float]
     }
 
     month_data: Dict[str, Any] = ipt.get_date_for_book_data()
@@ -400,9 +400,9 @@ def book_rate_info(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
 
         # month_data struc
         # month_data: Dict[str, Any] = {
-        #     'This_month': 0, # int
-        #     'Next_1_month': 0, # int
-        #     'Next_3_month': [], # List[int]
+        #     'this_month': 0, # int
+        #     'next_1_month': 0, # int
+        #     'next_3_month': [], # List[int]
         # }        
 
         for key, month in month_data.items():

@@ -128,7 +128,7 @@ def scrape_p2(property_link_csv_path: str,
     cnt = 1
 
     for index, row in link_df.iterrows():
-        # print(f'{index} | {row["Name"]} | {row["Link"]}')
+        # print(f'{index} | {row["name"]} | {row["link"]}')
 
         # if cnt < 3:
         #     cnt += 1
@@ -136,35 +136,35 @@ def scrape_p2(property_link_csv_path: str,
 
         property_detail_data: Dict[str, Any] = {
             # overview_data
-            'ID': index,  # Hashable
-            'Scrape_result': None,  # ScrapeResult
-            'Guest_num': None,  # Optional[int]
-            'Bed_num': None,  # Optional[int]
-            'Bath_num': None,  # Optional[int]
-            'Location': None,  # Optional[str]
+            'id': index,  # str
+            'scrape_result': None,  # ScrapeResult
+            'guest_num': None,  # Optional[int]
+            'bed_num': None,  # Optional[int]
+            'bath_num': None,  # Optional[int]
+            'location': None,  # Optional[str]
             
             # rating_data
-            'Rating_title': None,  # Optional[str]
-            'Rating_star': None,  # Optional[float]
-            'Rating_num': None,  # Optional[int]
+            'rating_title': None,  # Optional[str]
+            'rating_star': None,  # Optional[float]
+            'rating_num': None,  # Optional[int]
             
             # host_data
-            'Host_name': None,  # Optional[str]
-            'Host_title': None,  # Optional[str]
-            'Host_rating_star': None,  # Optional[float]
-            'Host_rating_num': None,  # Optional[int]
-            'Host_exp': None,  # Optional[str]
-            'Host_link': None,  # Optional[str]
+            'host_name': None,  # Optional[str]
+            'host_title': None,  # Optional[str]
+            'host_rating_star': None,  # Optional[float]
+            'host_rating_num': None,  # Optional[int]
+            'host_exp': None,  # Optional[str]
+            'host_link': None,  # Optional[str]
             
             # booking_rate_data
-            'This_month_booked_rate': None,  # Optional[float]
-            'Next_1_month_booked_rate': None,  # Optional[float]
-            'Next_3_month_booked_rate': None,  # Optional[float]
+            'this_month_booked_rate': None,  # Optional[float]
+            'next_1_month_booked_rate': None,  # Optional[float]
+            'next_3_month_booked_rate': None,  # Optional[float]
         } 
 
-        log.info(f'Scraping property: {index} - {row["Name"]}')
+        log.info(f'Scraping property: {index} - {row["name"]}')
         
-        scr1.go_to_website(driver, wait, wait_time, row['Link'], view='detail_page')
+        scr1.go_to_website(driver, wait, wait_time, row['link'], view='detail_page')
 
         try:
             overview_data: Dict[str, Any] = scr2.overview_info(driver, wait)
@@ -186,7 +186,7 @@ def scrape_p2(property_link_csv_path: str,
 
 
         scrape_result: ScrapeResult = scr2.get_scrape_result(property_detail_data)
-        property_detail_data['Scrape_result'] = scrape_result
+        property_detail_data['scrape_result'] = scrape_result
 
         lg.log_divider()
 

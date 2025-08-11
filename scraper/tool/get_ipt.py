@@ -57,9 +57,9 @@ def get_date_for_book_data() -> Dict[str, Any]:
         log.info('--Month info--')
 
         month_data: Dict[str, Any] = {
-            'This_month': None, # int
-            'Next_1_month': None, # int
-            'Next_3_month': None, # List[int]
+            'this_month': None, # int
+            'next_1_month': None, # int
+            'next_3_month': None, # List[int]
         }
         
         today_date: date = datetime.now().date()
@@ -67,9 +67,9 @@ def get_date_for_book_data() -> Dict[str, Any]:
         next_1m_month: int = today_month + 1
         next_3m_month: List[int] = [next_1m_month, next_1m_month + 1, next_1m_month + 2]
 
-        month_data['This_month'] = today_month
-        month_data['Next_1_month'] = next_1m_month
-        month_data['Next_3_month'] = next_3m_month
+        month_data['this_month'] = today_month
+        month_data['next_1_month'] = next_1m_month
+        month_data['next_3_month'] = next_3m_month
 
         log.info(f'Month data: {month_data}')
 

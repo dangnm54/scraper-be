@@ -1,4 +1,4 @@
-from typing import Hashable, Literal,Optional, List
+from typing import Literal,Optional, List
 from pydantic import BaseModel
 
 
@@ -9,33 +9,33 @@ ScrapeResult = Literal['Success', 'Failed', 'Partial']
 class PropertyDetail(BaseModel):
 
     # overview_data 
-    ID: Hashable
-    Scrape_result: ScrapeResult
-    Guest_num: Optional[int] = None
-    Bed_num: Optional[int] = None
-    Bath_num: Optional[int] = None
-    Location: Optional[str] = None
+    id: str
+    scrape_result: ScrapeResult
+    guest_num: Optional[int] = None
+    bed_num: Optional[int] = None
+    bath_num: Optional[int] = None
+    location: Optional[str] = None
 
 
     # rating_data
-    Rating_title: Optional[str] = None
-    Rating_star: Optional[float] = None
-    Rating_num: Optional[int] = None
+    rating_title: Optional[str] = None
+    rating_star: Optional[float] = None
+    rating_num: Optional[int] = None
 
 
     # host_data 
-    Host_name: Optional[str] = None
-    Host_title: Optional[str] = None
-    Host_rating_star: Optional[float] = None
-    Host_rating_num: Optional[int] = None
-    Host_exp: Optional[str] = None
-    Host_link: Optional[str] = None
+    host_name: Optional[str] = None
+    host_title: Optional[str] = None
+    host_rating_star: Optional[float] = None
+    host_rating_num: Optional[int] = None
+    host_exp: Optional[str] = None
+    host_link: Optional[str] = None
 
 
     # booking_rate_data 
-    This_month_booked_rate: Optional[float] = None
-    Next_1_month_booked_rate: Optional[float] = None
-    Next_3_month_booked_rate: Optional[float] = None
+    this_month_booked_rate: Optional[float] = None
+    next_1_month_booked_rate: Optional[float] = None
+    next_3_month_booked_rate: Optional[float] = None
 
 
     # deffered -------------------------------------------------------

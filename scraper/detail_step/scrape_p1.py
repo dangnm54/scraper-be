@@ -232,9 +232,9 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                 utl.scroll_focus_element(driver, property)
 
                 property_info: Dict[str, str] = {
-                    'ID': '',
-                    'Name': '',
-                    'Link': ''
+                    'id': '',
+                    'name': '',
+                    'link': ''
                 }
 
                 name_element: WebElement = property.find_element(By.CSS_SELECTOR,'span[data-testid="listing-card-name"]')
@@ -247,10 +247,10 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                 else:
                     clean_link = ''
                 
-                property_info['ID'] = utl.generate_random_id()
-                property_info['Name'] = name
+                property_info['id'] = utl.generate_random_id()
+                property_info['name'] = name
                 if isinstance(clean_link, str):
-                    property_info['Link'] = clean_link
+                    property_info['link'] = clean_link
                     
                 link_list.append(property_info)
                 

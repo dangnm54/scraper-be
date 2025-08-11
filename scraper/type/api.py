@@ -1,4 +1,4 @@
-from typing import Dict, List, Any, Hashable
+from typing import Dict, List, Any
 from pydantic import BaseModel
 
 
@@ -24,10 +24,9 @@ class FileMetadata(BaseModel):
 
 
 
-# pandas creates dictionaries with Hashable keys
 class FileDetail(BaseModel):
     detail: str
-    data: List[Dict[Hashable, Any]] | None
+    data: List[Dict[str, Any]] | None
 
 
 

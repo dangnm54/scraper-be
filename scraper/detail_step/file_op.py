@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 from fastapi import HTTPException
-from typing import Dict, List, Any, Hashable
+from typing import Dict, List, Any, cast
 
 try:
    import scraper.tool.log_op as lg
@@ -137,10 +137,13 @@ def get_file_detail(file_id: int) -> FileDetail:
 
    # update all value to friendliest Python type to easily convert to JSON
    detail_df = detail_df.convert_dtypes()
+
+   # remove 'ID' as index, so 'ID' can be included in dict
+   detail_df.reset_index(inplace=True)
    
    # orient -> dictate the struc of dict
    # 'records' -> 'list of dict' structure 
-   detail_dict: List[Dict[Hashable, Any]] = detail_df.to_dict(orient='records') 
+   detail_dict: List[Dict[str, Any]] = cast(List[Dict[str, Any]], detail_df.to_dict(orient='records'))
 
    return FileDetail(
       detail = f'[file-detail api] Content for {file_name} fetched successfully',
@@ -161,7 +164,6 @@ def list_dict_to_df(list_dict: List[Dict[str, Any]] | List[PropertyDetail], inde
             tempt_dict.append(item.model_dump())
       
       list_dict = tempt_dict
-   
    
    df: pd.DataFrame = pd.DataFrame(list_dict)
    df.set_index(index, inplace=True)
