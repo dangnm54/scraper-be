@@ -93,7 +93,7 @@ def scrape_p1(main_website_url,
     link_list = scr1.view_page_get_all_link(driver, wait, wait_time, num_property)
     
     if link_list:
-        link_df = fop.list_dict_to_df(link_list, index='ID')
+        link_df = fop.list_dict_to_df(link_list, index='id')
         link_csv_path = fop.df_to_csv(link_df, name=f'{file_name}_link')
     else:
         log.error(f"link_list is empty: {link_list}")
@@ -122,7 +122,7 @@ def scrape_p2(property_link_csv_path: str,
         return ''
 
 
-    link_df: pd.DataFrame = fop.csv_to_df(property_link_csv_path, index='ID', mode=1)
+    link_df: pd.DataFrame = fop.csv_to_df(property_link_csv_path, index='id', mode=1)
     detail_list: List[PropertyDetail] = []
 
     cnt = 1
@@ -198,7 +198,7 @@ def scrape_p2(property_link_csv_path: str,
 
     brws.close_browser(driver)  
 
-    detail_df = fop.list_dict_to_df(detail_list, index='ID') 
+    detail_df = fop.list_dict_to_df(detail_list, index='id') 
     full_df: pd.DataFrame = fop.merge_df(link_df, detail_df)
     full_csv_path: str = fop.df_to_csv(full_df, name=f'{file_name}_full')
 
@@ -210,7 +210,7 @@ def scrape_p2(property_link_csv_path: str,
 
 def calculate_data(csv_path):
 
-    full_df = fop.csv_to_df(csv_path, index='ID', mode=2)
+    full_df = fop.csv_to_df(csv_path, index='id', mode=2)
 
     cnt_rating_cate_df = cal.cnt_rating_categories(full_df)
 
@@ -222,7 +222,7 @@ def calculate_data(csv_path):
 
 def draw_dashboard(csv_path, cal_data):
     
-    full_df = fop.csv_to_df(csv_path, index='ID', mode=2)
+    full_df = fop.csv_to_df(csv_path, index='id', mode=2)
 
     fig, axes = plt.subplots(2, 3, figsize=(15, 10))
     axes_list = axes.flatten()

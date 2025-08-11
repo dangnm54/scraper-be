@@ -129,7 +129,7 @@ def get_file_detail(file_id: int) -> FileDetail:
    file_name, file_path = get_file_path(file_id)
 
    # make dataframe from file path
-   detail_df: pd.DataFrame = csv_to_df(file_path, index='ID', mode=2)
+   detail_df: pd.DataFrame = csv_to_df(file_path, index='id', mode=2)
 
    # Replace all inf/-inf, null-like (eg: NaN, None, NaT) values with None (which becomes null in JSON)
    detail_df = detail_df.replace([np.inf, -np.inf], None)
@@ -222,14 +222,14 @@ def csv_to_df(csv_path: str, index: str, mode: int) -> pd.DataFrame:
                'Next_1_month_booked_rate': float,
                'Next_3_month_booked_rate': float, 
                })
-      case 3:
-         # for api json response
-         df: pd.DataFrame = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig', 
-               dtype={
-               'This_month_booked_rate': str,
-               'Next_1_month_booked_rate': str,
-               'Next_3_month_booked_rate': str, 
-               })
+      # case 3:
+      #    # for api json response
+      #    df: pd.DataFrame = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig', 
+      #          dtype={
+      #          'This_month_booked_rate': str,
+      #          'Next_1_month_booked_rate': str,
+      #          'Next_3_month_booked_rate': str, 
+      #          })
    
    log.info(f'Dataframe created from file: {csv_path}')
    return df

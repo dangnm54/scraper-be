@@ -1,6 +1,6 @@
 import time
 import logging
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any, List, Tuple, cast
 
 from tqdm import tqdm
 from selenium.webdriver.common.by import By
@@ -49,9 +49,9 @@ def overview_info(driver: WebDriver, wait: WebDriverWait) -> Dict[str, Any]:
             clean_info1: str = utl.clean_text(info.text, mode=2)
             clean_info2: str = utl.clean_text(clean_info1, mode=1)
 
-            num: str | int | None = utl.get_info_from_string(clean_info2, mode='int')
+            num: int = cast(int, utl.get_info_from_string(clean_info2, mode='int'))
 
-            if isinstance(num, int):
+            if num:
                 if 'khach' in clean_info2:
                     overview_data['Guest_num'] = num
                 if 'giuong' in clean_info2:
@@ -67,9 +67,8 @@ def overview_info(driver: WebDriver, wait: WebDriverWait) -> Dict[str, Any]:
         location: str | None = location_element.get_attribute('href')
         
         if location:
-            clean_location: str | int | None = utl.get_info_from_string(location, mode='coordinate')
-            if isinstance(clean_location, str):
-                overview_data['Location'] = clean_location
+            clean_location: str = cast(str, utl.get_info_from_string(location, mode='coordinate'))
+            overview_data['Location'] = clean_location
         
         utl.print_pretty_dict(overview_data)
         return overview_data
@@ -216,9 +215,8 @@ def rating_info(driver: WebDriver) -> Dict[str, Any]:
             rating_data['Rating_star'] = float(rating_star)
 
             rating_num_element: WebElement = overview_rating_normal.find_element(By.CSS_SELECTOR, 'a')
-            normal_rating_num: str | int | None = utl.get_info_from_string(rating_num_element.text, mode='int')
-            if isinstance(normal_rating_num, int):
-                rating_data['Rating_num'] = normal_rating_num
+            normal_rating_num: int = cast(int, utl.get_info_from_string(rating_num_element.text, mode='int'))
+            rating_data['Rating_num'] = normal_rating_num
             
             log.info('Normal overview rating data collected') 
 
@@ -298,17 +296,15 @@ def host_info(driver: WebDriver) -> Dict[str, Any]:
 
         host_rating_num: WebElement = host_detail_section.find_element(By.CSS_SELECTOR, 'span[data-testid="Đánh giá-stat-heading"]')
         clean_host_rating_num1: str = utl.clean_text(host_rating_num.text, mode=4)
-        clean_host_rating_num2: str | int | None = utl.get_info_from_string(clean_host_rating_num1, mode='int')
-        if isinstance(clean_host_rating_num2, int):
-            host_data['Host_rating_num'] = clean_host_rating_num2
+        clean_host_rating_num2: int = cast(int, utl.get_info_from_string(clean_host_rating_num1, mode='int'))
+        host_data['Host_rating_num'] = clean_host_rating_num2
 
 
         host_exp: List[WebElement] = host_detail_section.find_elements(By.CSS_SELECTOR, 'span.a8jt5op')
         if len(host_exp) == 3:
             host_exp_element: WebElement = host_exp[2]
-            clean_host_exp: str | int | None = utl.get_info_from_string(host_exp_element.text, mode='exp')
-            if isinstance(clean_host_exp, str):
-                host_data['Host_exp'] = str(clean_host_exp)
+            clean_host_exp: str = cast(str, utl.get_info_from_string(host_exp_element.text, mode='exp'))
+            host_data['Host_exp'] = clean_host_exp
 
         host_avatar: WebElement = driver.find_element(By.CSS_SELECTOR, 'a[aria-label="Xem Hồ sơ đầy đủ của Chủ nhà/Người tổ chức"]')
         host_link: str | None = host_avatar.get_attribute('href')
@@ -496,9 +492,8 @@ def detail_booking_cal(driver: WebDriver, wait_time: float, target_month: int) -
 
             for month_box in month_sides:
                 month_name: WebElement = month_box.find_element(By.CSS_SELECTOR, 'h3')
-                clean_month_name: str | int | None = utl.get_info_from_string(month_name.text, mode='month')
-                if isinstance(clean_month_name, int):
-                    month_pair.append(clean_month_name)
+                clean_month_name: int = cast(int, utl.get_info_from_string(month_name.text, mode='month'))
+                month_pair.append(clean_month_name)
             
             log.info(f'Target month: {target_month}')
             log.info(f'Current month_pair: {month_pair}')
