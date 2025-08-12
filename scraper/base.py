@@ -93,7 +93,7 @@ def scrape_p1(main_website_url,
     link_list = scr1.view_page_get_all_link(driver, wait, wait_time, num_property)
     
     if link_list:
-        link_df = fop.list_dict_to_df(link_list, index='id')
+        link_df = fop.list_dict_to_df(link_list, index='prop_code')
         link_csv_path = fop.df_to_csv(link_df, name=f'{file_name}_link')
     else:
         log.error(f"link_list is empty: {link_list}")
@@ -122,7 +122,7 @@ def scrape_p2(property_link_csv_path: str,
         return ''
 
 
-    link_df: pd.DataFrame = fop.csv_to_df(property_link_csv_path, index='id', mode=1)
+    link_df: pd.DataFrame = fop.csv_to_df(property_link_csv_path, index='prop_code', mode=1)
     detail_list: List[PropertyDetail] = []
 
     cnt = 1
@@ -136,7 +136,10 @@ def scrape_p2(property_link_csv_path: str,
 
         property_detail_data: Dict[str, Any] = {
             # overview_data
-            'id': index,  # str
+            'prop_code': index,  # str
+            'name': row['name'],  # str
+            'link': row['link'],  # str
+
             'scrape_result': None,  # ScrapeResult
             'guest_num': None,  # Optional[int]
             'bed_num': None,  # Optional[int]
@@ -190,7 +193,7 @@ def scrape_p2(property_link_csv_path: str,
 
         lg.log_divider()
 
-        utl.print_pretty_dict(property_detail_data)
+        utl.print_pretty_dict(property_detail_data) 
         detail_instance: PropertyDetail = PropertyDetail(**property_detail_data)
         detail_list.append(detail_instance)
 
@@ -198,9 +201,12 @@ def scrape_p2(property_link_csv_path: str,
 
     brws.close_browser(driver)  
 
-    detail_df = fop.list_dict_to_df(detail_list, index='id') 
-    full_df: pd.DataFrame = fop.merge_df(link_df, detail_df)
-    full_csv_path: str = fop.df_to_csv(full_df, name=f'{file_name}_full')
+    if detail_list:
+        detail_dict_list: List[Dict[str, Any]] = [property.model_dump() for property in detail_list]
+        full_df: pd.DataFrame = fop.list_dict_to_df(detail_dict_list, index='prop_code') 
+        full_csv_path: str = fop.df_to_csv(full_df, name=f'{file_name}_full')
+    else:
+        full_csv_path: str = ''
 
     return full_csv_path
 
@@ -210,7 +216,7 @@ def scrape_p2(property_link_csv_path: str,
 
 def calculate_data(csv_path):
 
-    full_df = fop.csv_to_df(csv_path, index='id', mode=2)
+    full_df = fop.csv_to_df(csv_path, index='prop_code', mode=2)
 
     cnt_rating_cate_df = cal.cnt_rating_categories(full_df)
 
@@ -222,7 +228,7 @@ def calculate_data(csv_path):
 
 def draw_dashboard(csv_path, cal_data):
     
-    full_df = fop.csv_to_df(csv_path, index='id', mode=2)
+    full_df = fop.csv_to_df(csv_path, index='prop_code', mode=2)
 
     fig, axes = plt.subplots(2, 3, figsize=(15, 10))
     axes_list = axes.flatten()

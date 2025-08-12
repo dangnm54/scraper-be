@@ -1,15 +1,17 @@
 from typing import Literal,Optional, List
-from pydantic import BaseModel
-
+from pydantic import BaseModel, Field
+from uuid import UUID, uuid4
 
 
 ScrapeResult = Literal['Success', 'Failed', 'Partial']
 
 
 class PropertyDetail(BaseModel):
-
-    # overview_data 
-    id: str
+    # overview_data
+    id: UUID = Field(default_factory=uuid4)
+    prop_code: str
+    name: str
+    link: str
     scrape_result: ScrapeResult
     guest_num: Optional[int] = None
     bed_num: Optional[int] = None
@@ -36,6 +38,7 @@ class PropertyDetail(BaseModel):
     this_month_booked_rate: Optional[float] = None
     next_1_month_booked_rate: Optional[float] = None
     next_3_month_booked_rate: Optional[float] = None
+
 
 
     # deffered -------------------------------------------------------

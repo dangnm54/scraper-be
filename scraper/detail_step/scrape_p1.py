@@ -232,7 +232,7 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                 utl.scroll_focus_element(driver, property)
 
                 property_info: Dict[str, str] = {
-                    'id': '',
+                    'prop_code': '',
                     'name': '',
                     'link': ''
                 }
@@ -247,7 +247,7 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                 else:
                     clean_link = ''
                 
-                property_info['id'] = utl.generate_random_id()
+                property_info['prop_code'] = utl.generate_random_id()
                 property_info['name'] = name
                 if isinstance(clean_link, str):
                     property_info['link'] = clean_link

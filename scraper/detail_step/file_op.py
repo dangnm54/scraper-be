@@ -129,7 +129,7 @@ def get_file_detail(file_id: int) -> FileDetail:
    file_name, file_path = get_file_path(file_id)
 
    # make dataframe from file path
-   detail_df: pd.DataFrame = csv_to_df(file_path, index='id', mode=2)
+   detail_df: pd.DataFrame = csv_to_df(file_path, index='prop_code', mode=2)
 
    # Replace all inf/-inf, null-like (eg: NaN, None, NaT) values with None (which becomes null in JSON)
    detail_df = detail_df.replace([np.inf, -np.inf], None)
@@ -152,7 +152,7 @@ def get_file_detail(file_id: int) -> FileDetail:
 
 
 
-def list_dict_to_df(list_dict: List[Dict[str, Any]] | List[PropertyDetail], index:str='ID') -> pd.DataFrame:
+def list_dict_to_df(list_dict: List[Dict[str, Any]] | List[PropertyDetail], index:str='prop_code') -> pd.DataFrame:
    
    if isinstance(list_dict[0], PropertyDetail):
 
@@ -170,15 +170,6 @@ def list_dict_to_df(list_dict: List[Dict[str, Any]] | List[PropertyDetail], inde
 
    log.info('List_of_dict -> Dataframe successful')
    return df
-
-
-
-def merge_df(df1: pd.DataFrame, df2: pd.DataFrame) -> pd.DataFrame:
-
-   merged_df: pd.DataFrame = df1.merge(df2, left_index=True, right_index=True, how='left')
-   log.info(f'Successfully merge 2 Dataframe')
-   
-   return merged_df
 
 
 
@@ -234,4 +225,12 @@ def csv_to_df(csv_path: str, index: str, mode: int) -> pd.DataFrame:
    log.info(f'Dataframe created from file: {csv_path}')
    return df
 
+
+
+# def merge_df(df1: pd.DataFrame, df2: pd.DataFrame) -> pd.DataFrame:
+
+   merged_df: pd.DataFrame = df1.merge(df2, left_index=True, right_index=True, how='left')
+   log.info(f'Successfully merge 2 Dataframe')
+   
+   return merged_df
 
