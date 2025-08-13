@@ -17,6 +17,37 @@ from scraper.base import run_full_flow
 from scraper.type.api import ScraperSettings, FileMetadata, FileDetail
 
 
+from dotenv import load_dotenv
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.engine import Engine
+
+
+
+# ------------------------------------------------------------------------------------------------
+
+# load .env file
+load_dotenv()
+
+# get connection string from .env file
+DATABASE_URL: str | None = os.getenv('DATABASE_URL')
+
+if DATABASE_URL:
+    # 'engine' -> core component connects your app to database.
+    engine: Engine = create_engine(DATABASE_URL)
+
+    # 'SessionLocal' -> a factory that create new database session whenever you need one.
+    SessionLocal: sessionmaker = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_db():
+    db: Session = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+
 # ------------------------------------------------------------------------------------------------
 
 
