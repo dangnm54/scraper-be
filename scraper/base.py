@@ -130,15 +130,15 @@ def scrape_p2(property_link_csv_path: str,
     for index, row in link_df.iterrows():
         # print(f'{index} | {row["name"]} | {row["link"]}')
 
-        # if cnt < 3:
-        #     cnt += 1
-        #     continue
+        if cnt < 3:
+            cnt += 1
+            continue
 
         property_detail_data: Dict[str, Any] = {
             # overview_data
             'prop_code': index,  # str
-            'name': row['name'],  # str
-            'link': row['link'],  # str
+            'prop_name': row['prop_name'],  # str
+            'prop_link': row['prop_link'],  # str
 
             'scrape_result': None,  # ScrapeResult
             'guest_num': None,  # Optional[int]
@@ -165,9 +165,9 @@ def scrape_p2(property_link_csv_path: str,
             'next_3_month_booked_rate': None,  # Optional[float]
         } 
 
-        log.info(f'Scraping property: {index} - {row["name"]}')
+        log.info(f'Scraping property: {index} - {row["prop_name"]}')
         
-        scr1.go_to_website(driver, wait, wait_time, row['link'], view='detail_page')
+        scr1.go_to_website(driver, wait, wait_time, row['prop_link'], view='detail_page')
 
         try:
             overview_data: Dict[str, Any] = scr2.overview_info(driver, wait)
@@ -196,6 +196,9 @@ def scrape_p2(property_link_csv_path: str,
         utl.print_pretty_dict(property_detail_data) 
         detail_instance: PropertyDetail = PropertyDetail(**property_detail_data)
         detail_list.append(detail_instance)
+
+
+
 
         lg.log_divider()
 
@@ -270,9 +273,9 @@ def run_full_flow(
     """)
 
 
-    link_csv_path: str = scrape_p1(main_website_url, file_name, location, num_guest, num_property)
-    log.info(f"Phase 1 (link scraping) completed. File saved to: {link_csv_path}")
-    # link_csv_path: str = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\HoTay_link_080825.csv'
+    # link_csv_path: str = scrape_p1(main_website_url, file_name, location, num_guest, num_property)
+    # log.info(f"Phase 1 (link scraping) completed. File saved to: {link_csv_path}")
+    link_csv_path: str = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\PhoCo_link_130825.csv'
 
     full_csv_path: str = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
     log.info(f"Phase 2 (detail scraping) completed. File saved to: {full_csv_path}")

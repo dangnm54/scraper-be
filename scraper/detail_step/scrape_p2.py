@@ -53,11 +53,11 @@ def overview_info(driver: WebDriver, wait: WebDriverWait) -> Dict[str, Any]:
 
             if num:
                 if 'khach' in clean_info2:
-                    overview_data['Guest_num'] = num
+                    overview_data['guest_num'] = num
                 if 'giuong' in clean_info2:
-                    overview_data['Bed_num'] = num
+                    overview_data['bed_num'] = num
                 if 'tam' in clean_info2:
-                    overview_data['Bath_num'] = num
+                    overview_data['bath_num'] = num
 
         location_section: WebElement = driver.find_element(By.CSS_SELECTOR, 'div[data-section-id="LOCATION_DEFAULT"]')
         utl.scroll_focus_element(driver, location_section)
@@ -68,7 +68,7 @@ def overview_info(driver: WebDriver, wait: WebDriverWait) -> Dict[str, Any]:
         
         if location:
             clean_location: str = cast(str, utl.get_info_from_string(location, mode='coordinate'))
-            overview_data['Location'] = clean_location
+            overview_data['location'] = clean_location
         
         utl.print_pretty_dict(overview_data)
         return overview_data
@@ -191,17 +191,17 @@ def rating_info(driver: WebDriver) -> Dict[str, Any]:
             
             rating_title: WebElement = overview_rating_special.find_element(By.CSS_SELECTOR, 'div.lbjrbi0')
             clean_rating_title: str = rating_title.text.replace('\n',' ')
-            rating_data['Rating_title'] = clean_rating_title
+            rating_data['rating_title'] = clean_rating_title
 
             rating_star_section: WebElement = overview_rating_special.find_element(By.CSS_SELECTOR, 'div.a8jhwcl')
             rating_star_elements: List[WebElement] = rating_star_section.find_elements(By.CSS_SELECTOR, 'div')
             rating_star: str = utl.clean_text(rating_star_elements[0].text, mode=3)
-            rating_data['Rating_star'] = float(rating_star)
+            rating_data['rating_star'] = float(rating_star)
 
             rating_num_section: WebElement = overview_rating_special.find_element(By.CSS_SELECTOR, 'div.r16onr0j')
             rating_num_elements: List[WebElement] = rating_num_section.find_elements(By.CSS_SELECTOR, 'div')
             special_rating_num: int = int(rating_num_elements[0].text)
-            rating_data['Rating_num'] = special_rating_num
+            rating_data['rating_num'] = special_rating_num
 
             log.info('Special overview rating data collected')
             
@@ -212,11 +212,11 @@ def rating_info(driver: WebDriver) -> Dict[str, Any]:
 
             rating_star_element: WebElement = overview_rating_normal.find_element(By.CSS_SELECTOR, 'div.rmtgcc3')
             rating_star: str = utl.clean_text(rating_star_element.text, mode=3)
-            rating_data['Rating_star'] = float(rating_star)
+            rating_data['rating_star'] = float(rating_star)
 
             rating_num_element: WebElement = overview_rating_normal.find_element(By.CSS_SELECTOR, 'a')
             normal_rating_num: int = cast(int, utl.get_info_from_string(rating_num_element.text, mode='int'))
-            rating_data['Rating_num'] = normal_rating_num
+            rating_data['rating_num'] = normal_rating_num
             
             log.info('Normal overview rating data collected') 
 
@@ -265,12 +265,12 @@ def host_info(driver: WebDriver) -> Dict[str, Any]:
     lg.log_divider('Host info')
 
     host_data: Dict[str, Any] = {
-        'Host_name': None,  # Optional[str]
-        'Host_title': None,  # Optional[str]
-        'Host_rating_star': None,  # Optional[float]
-        'Host_rating_num': None,  # Optional[int]
-        'Host_exp': None,  # Optional[str]
-        'Host_link': None,  # Optional[str]
+        'host_name': None,  # Optional[str]
+        'host_title': None,  # Optional[str]
+        'host_rating_star': None,  # Optional[float]
+        'host_rating_num': None,  # Optional[int]
+        'host_exp': None,  # Optional[str]
+        'host_link': None,  # Optional[str]
     }
     
     try:
@@ -279,12 +279,12 @@ def host_info(driver: WebDriver) -> Dict[str, Any]:
         utl.scroll_focus_element(driver, host_section)
 
         host_name: str = host_section.find_element(By.CSS_SELECTOR, 'span.t1gpcl1t').text
-        host_data['Host_name'] = host_name
+        host_data['host_name'] = host_name
 
         host_title_element: List[WebElement] = host_section.find_elements(By.CSS_SELECTOR, 'span.s1h3l0w7')
         host_title: str = host_title_element[0].text
         if host_title != 'Host':
-            host_data['Host_title'] = host_title
+            host_data['host_title'] = host_title
 
 
         host_detail_section: WebElement = host_section.find_element(By.CSS_SELECTOR, 'div.s13au5n7')
@@ -292,24 +292,24 @@ def host_info(driver: WebDriver) -> Dict[str, Any]:
 
         host_rating_star: WebElement = host_detail_section.find_element(By.CSS_SELECTOR, 'div.rz5w5y3')
         clean_host_rating_star: str = utl.clean_text(host_rating_star.text, mode=3)
-        host_data['Host_rating_star'] = float(clean_host_rating_star)
+        host_data['host_rating_star'] = float(clean_host_rating_star)
 
         host_rating_num: WebElement = host_detail_section.find_element(By.CSS_SELECTOR, 'span[data-testid="Đánh giá-stat-heading"]')
         clean_host_rating_num1: str = utl.clean_text(host_rating_num.text, mode=4)
         clean_host_rating_num2: int = cast(int, utl.get_info_from_string(clean_host_rating_num1, mode='int'))
-        host_data['Host_rating_num'] = clean_host_rating_num2
+        host_data['host_rating_num'] = clean_host_rating_num2
 
 
         host_exp: List[WebElement] = host_detail_section.find_elements(By.CSS_SELECTOR, 'span.a8jt5op')
         if len(host_exp) == 3:
             host_exp_element: WebElement = host_exp[2]
             clean_host_exp: str = cast(str, utl.get_info_from_string(host_exp_element.text, mode='exp'))
-            host_data['Host_exp'] = clean_host_exp
+            host_data['host_exp'] = clean_host_exp
 
         host_avatar: WebElement = driver.find_element(By.CSS_SELECTOR, 'a[aria-label="Xem Hồ sơ đầy đủ của Chủ nhà/Người tổ chức"]')
         host_link: str | None = host_avatar.get_attribute('href')
         if isinstance(host_link, str):
-            host_data['Host_link'] = host_link
+            host_data['host_link'] = host_link
 
 
         utl.print_pretty_dict(host_data)
@@ -540,10 +540,10 @@ def get_scrape_result(property_detail_data: Dict[str, Any]) -> "ScrapeResult":
 
     lg.log_divider('Get scrape result')
 
-    value_list: List[Any] = [value for value in property_detail_data.values()]
+    value_list: List[Any] = [v for k, v in property_detail_data.items() if k != 'scrape_result']
 
-    none_count: int = value_list.count(None) - 1
-    total_count: int = len(value_list) - 1
+    none_count: int = value_list.count(None)
+    total_count: int = len(value_list)
 
     result: "ScrapeResult" = 'Failed'
 

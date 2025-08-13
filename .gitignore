@@ -2,3 +2,4 @@ venv/
 data/
 context.txt
 note/
+.env

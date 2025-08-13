@@ -10,8 +10,8 @@ class PropertyDetail(BaseModel):
     # overview_data
     id: UUID = Field(default_factory=uuid4)
     prop_code: str
-    name: str
-    link: str
+    prop_name: str
+    prop_link: str
     scrape_result: ScrapeResult
     guest_num: Optional[int] = None
     bed_num: Optional[int] = None

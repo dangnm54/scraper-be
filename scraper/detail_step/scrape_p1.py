@@ -233,8 +233,8 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
 
                 property_info: Dict[str, str] = {
                     'prop_code': '',
-                    'name': '',
-                    'link': ''
+                    'prop_name': '',
+                    'prop_link': ''
                 }
 
                 name_element: WebElement = property.find_element(By.CSS_SELECTOR,'span[data-testid="listing-card-name"]')
@@ -248,9 +248,9 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                     clean_link = ''
                 
                 property_info['prop_code'] = utl.generate_random_id()
-                property_info['name'] = name
+                property_info['prop_name'] = name
                 if isinstance(clean_link, str):
-                    property_info['link'] = clean_link
+                    property_info['prop_link'] = clean_link
                     
                 link_list.append(property_info)
                 
