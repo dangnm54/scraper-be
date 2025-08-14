@@ -2,10 +2,55 @@ from typing import Literal,Optional, List
 from pydantic import BaseModel, Field
 from uuid import UUID, uuid4
 
+from sqlalchemy import Column, Integer, String, Float, DateTime
+from sqlalchemy.dialects.postgresql import UUID as PG_UUID
+from sqlalchemy.sql import func
+from .__init__ import Base  # Import the Base we just created
+
+
+# ------------------------------------------------------------------------------------------------
+
+
+# SQLAlchemy model
+# This class represents 'properties' table in Supabase
+class PropertyDB(Base):
+    __tablename__ = "properties"
+
+    # columns definition for database table
+    id = Column(PG_UUID(as_uuid=True), primary_key=True, default=uuid4)
+    prop_code = Column(String, index=True)
+    prop_name = Column(String)
+    prop_link = Column(String)
+    scrape_result = Column(String)
+
+    guest_num = Column(Integer)
+    bed_num = Column(Integer)
+    bath_num = Column(Integer)
+    location = Column(String)
+
+    rating_title = Column(String)
+    rating_star = Column(Float)
+    rating_num = Column(Integer)
+
+    host_name = Column(String)
+    host_title = Column(String)
+    host_rating_star = Column(Float)
+    host_rating_num = Column(Integer)
+    host_exp = Column(String)
+    host_link = Column(String)
+    
+    this_month_booked_rate = Column(Float)
+    next_1_month_booked_rate = Column(Float)
+    next_3_month_booked_rate = Column(Float)
+
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    session_id = Column(PG_UUID(as_uuid=True), index=True, default=uuid4)
+
+
 
 ScrapeResult = Literal['Success', 'Failed', 'Partial']
 
-
+# Pydantic model for API input/output
 class PropertyDetail(BaseModel):
     # overview_data
     id: UUID = Field(default_factory=uuid4)
@@ -13,6 +58,7 @@ class PropertyDetail(BaseModel):
     prop_name: str
     prop_link: str
     scrape_result: ScrapeResult
+
     guest_num: Optional[int] = None
     bed_num: Optional[int] = None
     bath_num: Optional[int] = None
@@ -38,6 +84,11 @@ class PropertyDetail(BaseModel):
     this_month_booked_rate: Optional[float] = None
     next_1_month_booked_rate: Optional[float] = None
     next_3_month_booked_rate: Optional[float] = None
+
+
+    # tells Pydantic to work with SQLAlchemy objects
+    class Config:
+        from_attributes = True
 
 
 

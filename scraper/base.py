@@ -21,12 +21,14 @@ import scraper.detail_step.calculation as cal
 import scraper.detail_step.dashboard as dshb
 import scraper.tool.log_op as lg
 import scraper.tool.utils as utl
-import scraper.tool.get_ipt as ipt
+
 from scraper.tool.config import proxy_user, proxy_password, proxy_ip, proxy_port
 from scraper.tool.config import driver_path, wait_time
 from scraper.tool.config import main_website_url, ip_website_url
-from scraper.type.data import PropertyDetail, ScrapeResult
 
+from scraper.type.data import PropertyDetail, ScrapeResult, PropertyDB
+from sqlalchemy.orm import Session
+from uuid import UUID, uuid4
 
 
 
@@ -253,6 +255,8 @@ def draw_dashboard(csv_path, cal_data):
 
 
 def run_full_flow(
+        db: Session,
+        session_id: UUID,
         file_name: str,
         location: str,
         num_guest: int,
@@ -277,13 +281,30 @@ def run_full_flow(
     # log.info(f"Phase 1 (link scraping) completed. File saved to: {link_csv_path}")
     link_csv_path: str = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\PhoCo_link_130825.csv'
 
-    full_csv_path: str = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
-    log.info(f"Phase 2 (detail scraping) completed. File saved to: {full_csv_path}")
+    # full_csv_path: str = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
+    # log.info(f"Phase 2 (detail scraping) completed. File saved to: {full_csv_path}")
+    return {"detail": "scraping process completed"}
     
 
-    return {
-        "detail": "scraping process completed"
-    }
+
+
+    detail_list: List[PropertyDetail] = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
+
+    if detail_list:
+        for detail_instance in detail_list:
+            try:
+                db_property: PropertyDB = PropertyDB(**detail_instance.model_dump(), session_id=session_id)
+                db.add(db_property)
+            except Exception as e:
+                lg.log_detail_error(e)
+            
+            db.commit()
+            log.info(f"Scraping completed. {len(detail_list)} properties saved to database.")
+            return {"detail": f"scraping completed with {len(detail_list)} properties"}
+        
+    else:
+        log.error("Scraping completed but no properties found")
+        return {"detail": "scraping process completed but no properties found"}
 
 
 
@@ -291,14 +312,14 @@ def run_full_flow(
 
 
 
-run_full_flow(
-    file_name = 'PhoCo',
-    location = 'Pho Co, hanoi',
-    num_guest = 2,
-    num_property = 3,
-    collect_host_data = True,
-    collect_booking_rate = True
-)
+# run_full_flow(
+#     file_name = 'PhoCo',
+#     location = 'Pho Co, hanoi',
+#     num_guest = 2,
+#     num_property = 3,
+#     collect_host_data = True,
+#     collect_booking_rate = True
+# )
 
 
 

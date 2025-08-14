@@ -1,6 +1,7 @@
 import os
 import logging
 import asyncio
+from uuid import UUID, uuid4
 from typing import Dict, List
 from datetime import datetime
 from starlette.responses import StreamingResponse
@@ -22,6 +23,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.engine import Engine
 
+from scraper.type.data import PropertyDetail, PropertyDB
+from scraper.tool.log_op import log_detail_error
+from sqlalchemy.orm import Session
+from fastapi import Depends
 
 
 # ------------------------------------------------------------------------------------------------
@@ -39,6 +44,7 @@ if DATABASE_URL:
     # 'SessionLocal' -> a factory that create new database session whenever you need one.
     SessionLocal: sessionmaker = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+
 def get_db():
     db: Session = SessionLocal()
     try:
@@ -46,6 +52,18 @@ def get_db():
     finally:
         db.close()
 
+
+def save_to_db(db: Session, property_detail: PropertyDetail, created_at: datetime, session_id: UUID):
+    # Create a new PropertyDB instance from the PropertyDetail data
+    db_property: PropertyDB = PropertyDB(
+        **property_detail.model_dump(), 
+        created_at=created_at, 
+        session_id=session_id
+    )
+    
+    db.add(db_property)
+    db.commit()
+    db.refresh(db_property)
 
 
 # ------------------------------------------------------------------------------------------------
@@ -131,7 +149,7 @@ def read_root() -> Dict[str, str]:
 
 
 @app.post("/api/run")
-async def run_scraper_api(fe_input: ScraperSettings) -> Dict[str, str]:
+async def run_scraper_api(fe_input: ScraperSettings, db: Session = Depends(get_db)) -> Dict[str, str]:
     """
     - input: data required from Fe
     - output: file in data folder
@@ -149,12 +167,19 @@ async def run_scraper_api(fe_input: ScraperSettings) -> Dict[str, str]:
 
     log.info(f"api called: /api/run | fe_input={fe_input.model_dump()}")
 
+
+    session_id: UUID = uuid4()
+    log.info(f"New scraping session started with ID: {session_id}")
+
+
     try:
         
         # Run the synchronous, blocking function in a separate thread
         # This allows the main event loop to remain unblocked and stream logs
         result: Dict[str, str] = await asyncio.to_thread(
             run_full_flow,
+                db,
+                session_id,
                 file_name = fe_input.file_name,
                 location = fe_input.location,
                 num_guest = fe_input.num_guest,
