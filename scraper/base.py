@@ -13,7 +13,7 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 
 # When running from root directory (FastAPI)
-import scraper.detail_step.file_op as fop
+import scraper.tool.file_op as fop
 import scraper.detail_step.browser as brws
 import scraper.detail_step.scrape_p1 as scr1
 import scraper.detail_step.scrape_p2 as scr2
@@ -256,7 +256,6 @@ def draw_dashboard(csv_path, cal_data):
 
 def run_full_flow(
         db: Session,
-        session_id: UUID,
         file_name: str,
         location: str,
         num_guest: int,
@@ -276,6 +275,11 @@ def run_full_flow(
     - Collect booking rate: {collect_booking_rate}
     """)
 
+    session_id: UUID = uuid4()
+    log.info(f"New scraping session started with ID: {session_id}")
+
+    # session_name:
+
 
     # link_csv_path: str = scrape_p1(main_website_url, file_name, location, num_guest, num_property)
     # log.info(f"Phase 1 (link scraping) completed. File saved to: {link_csv_path}")
@@ -293,14 +297,18 @@ def run_full_flow(
     if detail_list:
         for detail_instance in detail_list:
             try:
-                db_property: PropertyDB = PropertyDB(**detail_instance.model_dump(), session_id=session_id)
+                db_property: PropertyDB = PropertyDB(
+                    **detail_instance.model_dump(), 
+                    session_id=session_id,
+                    session_name=file_name
+                )
                 db.add(db_property)
             except Exception as e:
                 lg.log_detail_error(e)
             
-            db.commit()
-            log.info(f"Scraping completed. {len(detail_list)} properties saved to database.")
-            return {"detail": f"scraping completed with {len(detail_list)} properties"}
+        db.commit()
+        log.info(f"Scraping completed. {len(detail_list)} properties saved to database.")
+        return {"detail": f"scraping completed with {len(detail_list)} properties"}
         
     else:
         log.error("Scraping completed but no properties found")
