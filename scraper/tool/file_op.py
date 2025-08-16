@@ -209,17 +209,17 @@ def csv_to_df(csv_path: str, index: str, mode: int) -> pd.DataFrame:
          # for calculation
          df: pd.DataFrame = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig', 
                dtype={
-               'This_month_booked_rate': float,
-               'Next_1_month_booked_rate': float,
-               'Next_3_month_booked_rate': float, 
+               'this_month_booked_rate': float,
+               'next_1_month_booked_rate': float,
+               'next_3_month_booked_rate': float, 
                })
       # case 3:
       #    # for api json response
       #    df: pd.DataFrame = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig', 
       #          dtype={
-      #          'This_month_booked_rate': str,
-      #          'Next_1_month_booked_rate': str,
-      #          'Next_3_month_booked_rate': str, 
+      #          'this_month_booked_rate': str,
+      #          'next_1_month_booked_rate': str,
+      #          'next_3_month_booked_rate': str, 
       #          })
    
    log.info(f'Dataframe created from file: {csv_path}')

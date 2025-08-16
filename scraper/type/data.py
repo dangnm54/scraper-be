@@ -121,7 +121,7 @@ class PropertyDetail(BaseModel):
 
     # ___booking_rate_data___
         # Last_1_month_booked_rate: Optional[float] = None
-        # Last_3_month_booked_rate: Optional[float] = None    
+        # Last_3_month_booked_rate: Optional[float] = None
 
 
 

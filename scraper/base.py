@@ -3,7 +3,7 @@ import os
 import logging
 import pandas as pd
 import matplotlib.pyplot as plt
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Tuple, Literal
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.edge.options import Options as EdgeOptions
@@ -21,6 +21,7 @@ import scraper.detail_step.calculation as cal
 import scraper.detail_step.dashboard as dshb
 import scraper.tool.log_op as lg
 import scraper.tool.utils as utl
+import scraper.tool.db_op as dbop
 
 from scraper.tool.config import proxy_user, proxy_password, proxy_ip, proxy_port
 from scraper.tool.config import driver_path, wait_time
@@ -110,24 +111,26 @@ def scrape_p1(main_website_url,
 
 
 def scrape_p2(property_link_csv_path: str,
-            file_name: str, collect_host_data: bool=False, collect_booking_rate: bool=False
-    ) -> str:
+            file_name: str, collect_host_data: bool=False, collect_booking_rate: bool=False,
+    ) -> List[PropertyDetail]:
 
     driver: WebDriver | None = None
     wait: WebDriverWait | None = None
     driver, wait = start_driver()
 
-    if driver != None and wait != None:
+
+    if driver and wait:
         pass
     else:
         log.error(f"An error in 'if driver'")
-        return ''
+        return []
 
 
     link_df: pd.DataFrame = fop.csv_to_df(property_link_csv_path, index='prop_code', mode=1)
     detail_list: List[PropertyDetail] = []
 
     cnt = 1
+
 
     for index, row in link_df.iterrows():
         # print(f'{index} | {row["name"]} | {row["link"]}')
@@ -199,23 +202,13 @@ def scrape_p2(property_link_csv_path: str,
         detail_instance: PropertyDetail = PropertyDetail(**property_detail_data)
         detail_list.append(detail_instance)
 
-
-
+        log.info(f"Finish scraping {len(detail_list)} properties")
 
         lg.log_divider()
 
     brws.close_browser(driver)  
 
-    if detail_list:
-        detail_dict_list: List[Dict[str, Any]] = [property.model_dump() for property in detail_list]
-        full_df: pd.DataFrame = fop.list_dict_to_df(detail_dict_list, index='prop_code') 
-        full_csv_path: str = fop.df_to_csv(full_df, name=f'{file_name}_full')
-    else:
-        full_csv_path: str = ''
-
-    return full_csv_path
-
-
+    return detail_list
 
 
 
@@ -261,7 +254,8 @@ def run_full_flow(
         num_guest: int,
         num_property: int,
         collect_host_data: bool = False,
-        collect_booking_rate: bool = False
+        collect_booking_rate: bool = False,
+        mode: Literal['csv', 'db'] = 'csv'
     ) -> Dict[str, str]:
 
     lg.log_divider('Start full flow')
@@ -285,34 +279,27 @@ def run_full_flow(
     # log.info(f"Phase 1 (link scraping) completed. File saved to: {link_csv_path}")
     link_csv_path: str = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\PhoCo_link_130825.csv'
 
-    # full_csv_path: str = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
-    # log.info(f"Phase 2 (detail scraping) completed. File saved to: {full_csv_path}")
-    return {"detail": "scraping process completed"}
-    
+    detail_property_list: List[PropertyDetail] = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
 
+    log.info(f'Start saving data | destination: {mode}')
 
+    try:
+        if mode == 'db':
+            dbop.save_data_to_db(detail_property_list, db, session_id, file_name)
 
-    detail_list: List[PropertyDetail] = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
-
-    if detail_list:
-        for detail_instance in detail_list:
-            try:
-                db_property: PropertyDB = PropertyDB(
-                    **detail_instance.model_dump(), 
-                    session_id=session_id,
-                    session_name=file_name
-                )
-                db.add(db_property)
-            except Exception as e:
-                lg.log_detail_error(e)
-            
-        db.commit()
-        log.info(f"Scraping completed. {len(detail_list)} properties saved to database.")
-        return {"detail": f"scraping completed with {len(detail_list)} properties"}
+        elif mode == 'csv':
+            detail_dict_list: List[Dict[str, Any]] = [property.model_dump() for property in detail_property_list]
+            full_df: pd.DataFrame = fop.list_dict_to_df(detail_dict_list, index='prop_code') 
+            full_csv_path: str = fop.df_to_csv(full_df, name=f'{file_name}_full')
+            log.info(f"Phase 2 (detail scraping) completed. File saved to: {full_csv_path}")
         
-    else:
-        log.error("Scraping completed but no properties found")
-        return {"detail": "scraping process completed but no properties found"}
+        log.info(f"detail: Complete saving data")
+    
+    except Exception as e:
+        log.error(f"detail: Error in saving data: {e}")
+        
+
+    return {f"detail": "Complete scraping process"}
 
 
 
