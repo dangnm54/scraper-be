@@ -275,7 +275,7 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                     lg.log_detail_error(e)
                     break
 
-        log.info(f'{property_count} properties scraped')
+        log.info(f'{property_count} properties (basic info) scraped')
         return link_list
 
     except Exception as e:

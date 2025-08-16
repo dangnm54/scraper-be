@@ -72,37 +72,65 @@ def start_driver() -> Tuple[WebDriver | None, WebDriverWait | None]:
 
 
 
-def scrape_p1(main_website_url, 
-            file_name: str, location: str, num_guest: int, num_property: int
-    ) -> str:
+def scrape_p1(db: Session,main_website_url, 
+            file_name: str, location: str, num_guest: int, num_property: int,
+    ) -> List[PropertyDB]:
     
     driver: WebDriver | None = None
     wait: WebDriverWait | None = None
     driver, wait = start_driver()
 
-    if driver != None and wait != None:
+    if driver and wait:
         pass
     else:
         log.error(f"An error in 'if driver'")
-        return ''
+        return []
+
 
     scr1.go_to_website(driver, wait, wait_time, main_website_url, view='main_page')
-
     scr1.search_location(driver, wait_time, location)
     scr1.search_date(driver, wait_time)
     scr1.search_guest(driver, wait_time, num_guest)
     scr1.press_search(driver)
 
-    link_list = scr1.view_page_get_all_link(driver, wait, wait_time, num_property)
-    
-    if link_list:
-        link_df = fop.list_dict_to_df(link_list, index='prop_code')
-        link_csv_path = fop.df_to_csv(link_df, name=f'{file_name}_link')
-    else:
-        log.error(f"link_list is empty: {link_list}")
-        link_csv_path = ''
+    link_list: List[Dict[str, str]] = scr1.view_page_get_all_link(driver, wait, wait_time, num_property)
 
     brws.close_browser(driver)
+    
+    if not link_list:
+        log.error(f"link_list is empty: {link_list}")
+        link_csv_path = []
+
+    
+    link_list_db: List[PropertyDB] = []
+    for prop in link_list:
+        prop_row = (PropertyDB(
+            prop_code=prop['prop_code'],
+            prop_name=prop['prop_name'],
+            prop_link=prop['prop_link']
+        ))
+        db.add(prop_row)
+        link_list_db.append(prop_row)
+
+    
+    db.commit()
+    log.info(f'Saved {len(link_list_db)} properties (basic info) to database')
+
+
+    # update prop object in Python with data created by db after during the commit (like timestamp)
+    for prop in link_list_db:
+        db.refresh(prop)
+
+
+    return link_list_db
+
+
+    link_df = fop.list_dict_to_df(link_list, index='prop_code')
+    link_csv_path = fop.df_to_csv(link_df, name=f'{file_name}_link')
+    
+
+
+    
 
     return link_csv_path
 
@@ -117,7 +145,6 @@ def scrape_p2(property_link_csv_path: str,
     driver: WebDriver | None = None
     wait: WebDriverWait | None = None
     driver, wait = start_driver()
-
 
     if driver and wait:
         pass
@@ -275,9 +302,9 @@ def run_full_flow(
     # session_name:
 
 
-    # link_csv_path: str = scrape_p1(main_website_url, file_name, location, num_guest, num_property)
+    link_list_db: List[PropertyDB] = scrape_p1(db, main_website_url, file_name, location, num_guest, num_property)
     # log.info(f"Phase 1 (link scraping) completed. File saved to: {link_csv_path}")
-    link_csv_path: str = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\PhoCo_link_130825.csv'
+    # link_csv_path: str = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\PhoCo_link_130825.csv'
 
     detail_property_list: List[PropertyDetail] = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
 
@@ -306,15 +333,26 @@ def run_full_flow(
 # -----------------------------------------------------------------------------------
 
 
+if __name__ == "__main__":
+    db_session: Session | None = dbop.create_db_session()
 
-# run_full_flow(
-#     file_name = 'PhoCo',
-#     location = 'Pho Co, hanoi',
-#     num_guest = 2,
-#     num_property = 3,
-#     collect_host_data = True,
-#     collect_booking_rate = True
-# )
+    if db_session:
+        try: 
+            run_full_flow(
+                db = db_session,
+                file_name = 'PhoCo',
+                location = 'Pho Co, hanoi',
+                num_guest = 2,
+                num_property = 3,
+                collect_host_data = True,
+                collect_booking_rate = True
+            )
+        finally:
+            log.info("Closing database session for direct file run.")
+            db_session.close()
+
+    else:  
+        log.error("Could not create database session.")
 
 
 
