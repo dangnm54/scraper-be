@@ -72,8 +72,8 @@ def start_driver() -> Tuple[WebDriver | None, WebDriverWait | None]:
 
 
 
-def scrape_p1(db: Session,main_website_url, 
-            file_name: str, location: str, num_guest: int, num_property: int,
+def scrape_p1(db: Session, session_id: UUID, session_name: str, main_website_url: str, 
+            location: str, num_guest: int, num_property: int,
     ) -> List[PropertyDB]:
     
     driver: WebDriver | None = None
@@ -104,12 +104,14 @@ def scrape_p1(db: Session,main_website_url,
     
     link_list_db: List[PropertyDB] = []
     for prop in link_list:
-        prop_row = (PropertyDB(
-            prop_code=prop['prop_code'],
-            prop_name=prop['prop_name'],
-            prop_link=prop['prop_link']
+        prop_row: PropertyDB = (PropertyDB(
+            session_id = session_id,
+            session_name = session_name,
+            prop_code = prop['prop_code'],
+            prop_name = prop['prop_name'],
+            prop_link = prop['prop_link']
         ))
-        db.add(prop_row)
+        db.add(prop_row) # add object to the session -> session track and know which python object is linked to which db object
         link_list_db.append(prop_row)
 
     
@@ -121,26 +123,15 @@ def scrape_p1(db: Session,main_website_url,
     for prop in link_list_db:
         db.refresh(prop)
 
-
     return link_list_db
 
 
-    link_df = fop.list_dict_to_df(link_list, index='prop_code')
-    link_csv_path = fop.df_to_csv(link_df, name=f'{file_name}_link')
-    
-
-
-    
-
-    return link_csv_path
 
 
 
-
-
-def scrape_p2(property_link_csv_path: str,
-            file_name: str, collect_host_data: bool=False, collect_booking_rate: bool=False,
-    ) -> List[PropertyDetail]:
+def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
+            collect_host_data: bool=False, collect_booking_rate: bool=False,
+    ) -> List[PropertyDB]:
 
     driver: WebDriver | None = None
     wait: WebDriverWait | None = None
@@ -152,90 +143,71 @@ def scrape_p2(property_link_csv_path: str,
         log.error(f"An error in 'if driver'")
         return []
 
+    for prop in detail_list_db:
+        # print(f'{prop.prop_code} | {prop.prop_name} | {prop.prop_link}')
 
-    link_df: pd.DataFrame = fop.csv_to_df(property_link_csv_path, index='prop_code', mode=1)
-    detail_list: List[PropertyDetail] = []
-
-    cnt = 1
-
-
-    for index, row in link_df.iterrows():
-        # print(f'{index} | {row["name"]} | {row["link"]}')
-
-        if cnt < 3:
-            cnt += 1
-            continue
-
-        property_detail_data: Dict[str, Any] = {
-            # overview_data
-            'prop_code': index,  # str
-            'prop_name': row['prop_name'],  # str
-            'prop_link': row['prop_link'],  # str
-
-            'scrape_result': None,  # ScrapeResult
-            'guest_num': None,  # Optional[int]
-            'bed_num': None,  # Optional[int]
-            'bath_num': None,  # Optional[int]
-            'location': None,  # Optional[str]
-            
-            # rating_data
-            'rating_title': None,  # Optional[str]
-            'rating_star': None,  # Optional[float]
-            'rating_num': None,  # Optional[int]
-            
-            # host_data
-            'host_name': None,  # Optional[str]
-            'host_title': None,  # Optional[str]
-            'host_rating_star': None,  # Optional[float]
-            'host_rating_num': None,  # Optional[int]
-            'host_exp': None,  # Optional[str]
-            'host_link': None,  # Optional[str]
-            
-            # booking_rate_data
-            'this_month_booked_rate': None,  # Optional[float]
-            'next_1_month_booked_rate': None,  # Optional[float]
-            'next_3_month_booked_rate': None,  # Optional[float]
-        } 
-
-        log.info(f'Scraping property: {index} - {row["prop_name"]}')
+        log.info(f'Scraping property: {prop.prop_code} - {prop.prop_name}')
         
-        scr1.go_to_website(driver, wait, wait_time, row['prop_link'], view='detail_page')
+        property_link: str = str(prop.prop_link)
+
+        scr1.go_to_website(driver, wait, wait_time, property_link, view='detail_page')
 
         try:
             overview_data: Dict[str, Any] = scr2.overview_info(driver, wait)
-            property_detail_data.update(overview_data)
-    
             rating_data: Dict[str, Any] = scr2.rating_info(driver)
-            property_detail_data.update(rating_data)
+
+            prop.guest_num = overview_data['guest_num']
+            prop.bed_num = overview_data['bed_num']
+            prop.bath_num = overview_data['bath_num']
+            prop.location = overview_data['location']
+            
+            prop.rating_title = rating_data['rating_title']
+            prop.rating_star = rating_data['rating_star']
+            prop.rating_num = rating_data['rating_num']
+
 
             if collect_host_data:
                 host_data: Dict[str, Any] = scr2.host_info(driver)
-                property_detail_data.update(host_data)
+
+                prop.host_name = host_data['host_name']
+                prop.host_title = host_data['host_title']
+                prop.host_rating_star = host_data['host_rating_star']
+                prop.host_rating_num = host_data['host_rating_num']
+                prop.host_exp = host_data['host_exp']
+                prop.host_link = host_data['host_link']
+
 
             if collect_booking_rate:
                 book_rate_data: Dict[str, Any] = scr2.book_rate_info(driver, wait_time)
-                property_detail_data.update(book_rate_data)
+
+                prop.this_month_booked_rate = book_rate_data['this_month_booked_rate']
+                prop.next_1_month_booked_rate = book_rate_data['next_1_month_booked_rate']
+                prop.next_3_month_booked_rate = book_rate_data['next_3_month_booked_rate']
+            
+
+            scrape_result: ScrapeResult = scr2.get_scrape_result(prop)
+            setattr(prop, 'scrape_result', str(scrape_result)) 
+
+            log.info(f'Complete scraping property {prop.prop_code} - {prop.prop_name} | result: {scrape_result}')
 
         except Exception as e:
             lg.log_detail_error(e)
+            log.error(f'Error in scraping property detail -> skip property {prop.prop_code} - {prop.prop_name}')
 
-
-        scrape_result: ScrapeResult = scr2.get_scrape_result(property_detail_data)
-        property_detail_data['scrape_result'] = scrape_result
-
-        lg.log_divider()
-
-        utl.print_pretty_dict(property_detail_data) 
-        detail_instance: PropertyDetail = PropertyDetail(**property_detail_data)
-        detail_list.append(detail_instance)
-
-        log.info(f"Finish scraping {len(detail_list)} properties")
+        db.commit()
+        log.info(f'Saved property {prop.prop_code} (detail info) to database')
 
         lg.log_divider()
 
-    brws.close_browser(driver)  
+        # utl.print_pretty_dict(property_detail_data)
 
-    return detail_list
+    log.info(f"Finish scraping {len(detail_list_db)} properties")
+    brws.close_browser(driver)
+    lg.log_divider()
+    
+    return detail_list_db
+
+
 
 
 
@@ -281,8 +253,7 @@ def run_full_flow(
         num_guest: int,
         num_property: int,
         collect_host_data: bool = False,
-        collect_booking_rate: bool = False,
-        mode: Literal['csv', 'db'] = 'csv'
+        collect_booking_rate: bool = False
     ) -> Dict[str, str]:
 
     lg.log_divider('Start full flow')
@@ -297,35 +268,22 @@ def run_full_flow(
     """)
 
     session_id: UUID = uuid4()
-    log.info(f"New scraping session started with ID: {session_id}")
+    session_name: str = dbop.get_session_name(db, file_name)
+    log.info(f"New scraping session <{session_name}> started | ID: {session_id}")
 
-    # session_name:
+
+    link_list_db: List[PropertyDB] = scrape_p1(db, session_id, session_name, main_website_url, location, num_guest, num_property)
+    log.info(f"Phase 1 (link scraping) completed.")
 
 
-    link_list_db: List[PropertyDB] = scrape_p1(db, main_website_url, file_name, location, num_guest, num_property)
-    # log.info(f"Phase 1 (link scraping) completed. File saved to: {link_csv_path}")
-    # link_csv_path: str = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data\PhoCo_link_130825.csv'
-
-    detail_property_list: List[PropertyDetail] = scrape_p2(link_csv_path, file_name, collect_host_data, collect_booking_rate)
-
-    log.info(f'Start saving data | destination: {mode}')
-
-    try:
-        if mode == 'db':
-            dbop.save_data_to_db(detail_property_list, db, session_id, file_name)
-
-        elif mode == 'csv':
-            detail_dict_list: List[Dict[str, Any]] = [property.model_dump() for property in detail_property_list]
-            full_df: pd.DataFrame = fop.list_dict_to_df(detail_dict_list, index='prop_code') 
-            full_csv_path: str = fop.df_to_csv(full_df, name=f'{file_name}_full')
-            log.info(f"Phase 2 (detail scraping) completed. File saved to: {full_csv_path}")
-        
-        log.info(f"detail: Complete saving data")
+    if not link_list_db:
+        log.error(f"Phase 1 didn't find any properties -> Stop scraping process")
+        return {f"detail": "Phase 1 found no properties"}
     
-    except Exception as e:
-        log.error(f"detail: Error in saving data: {e}")
-        
 
+    detail_property_list: List[PropertyDB] = scrape_p2(db, link_list_db, collect_host_data, collect_booking_rate)
+    log.info(f"Phase 2 (detail scraping) completed.")
+    
     return {f"detail": "Complete scraping process"}
 
 

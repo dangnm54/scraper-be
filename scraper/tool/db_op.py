@@ -93,15 +93,13 @@ def get_session_name(db: Session, base_name: str) -> str:
     base_session_name = f'{base_name}_{current_time}'
     
     # Query database to find all session names that start with base name
-    # We also use 'func.count' to check how many exist
+    #  '.count' -> check how many exist
     query = db.query(PropertyDB).filter(PropertyDB.session_name.like(f'{base_session_name}%'))
     count = query.count()
 
-    # If no matching names are found, use the base name
     if count == 0:
         return base_session_name
     else:
-        # If names already exist, create a new name with an incremented counter
         return f'{base_session_name} ({count})'
 
 

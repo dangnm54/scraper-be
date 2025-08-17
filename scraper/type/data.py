@@ -18,9 +18,15 @@ class PropertyDB(Base):
 
     # columns definition for database table
     id = Column(PG_UUID(as_uuid=True), primary_key=True, default=uuid4)
+    
+    session_id = Column(PG_UUID(as_uuid=True), index=True, default=uuid4)
+    session_name = Column(String)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    
     prop_code = Column(String, index=True)
     prop_name = Column(String)
     prop_link = Column(String)
+
     scrape_result = Column(String)
 
     guest_num = Column(Integer)
@@ -42,10 +48,6 @@ class PropertyDB(Base):
     this_month_booked_rate = Column(Float)
     next_1_month_booked_rate = Column(Float)
     next_3_month_booked_rate = Column(Float)
-
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-    session_id = Column(PG_UUID(as_uuid=True), index=True, default=uuid4)
-    session_name = Column(String)
 
 
 
