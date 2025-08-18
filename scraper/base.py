@@ -20,7 +20,6 @@ import scraper.detail_step.scrape_p2 as scr2
 import scraper.detail_step.calculation as cal
 import scraper.detail_step.dashboard as dshb
 import scraper.tool.log_op as lg
-import scraper.tool.utils as utl
 import scraper.tool.db_op as dbop
 
 from scraper.tool.config import proxy_user, proxy_password, proxy_ip, proxy_port

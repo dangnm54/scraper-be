@@ -209,3 +209,20 @@ async def sse_logs(request:Request):
         # StreamingResponse -> FastAPI response class, designed for responsed where content generated overtime
         # when called event_generator() -> return a generator object that StreamingResponse can iterate over to get data
     return StreamingResponse(event_generator(), media_type="text/event-stream")
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ______________________________________________________________________________
+
+    - sửa result
+    - sửa print_pretty_dict

@@ -42,7 +42,9 @@ else:
     SessionLocal = None
 
 
+
 # -----------------------------------------------------------------------------------
+
 
 
 def get_db() -> Generator[Session | None, None, None]:
@@ -55,7 +57,6 @@ def get_db() -> Generator[Session | None, None, None]:
         yield None
         return
 
-
     db: Session = SessionLocal()
     log.info(f"Database session established for FastAPI request: {db}")
 
@@ -64,6 +65,8 @@ def get_db() -> Generator[Session | None, None, None]:
     finally:
         log.info("Closing database session for FastAPI request.")
         db.close()
+
+
 
 
 
@@ -80,6 +83,8 @@ def create_db_session() -> Session | None:
     
     # SessionLocal() -> create a new database session and return it to caller
     return SessionLocal()
+
+
 
 
 
@@ -101,6 +106,8 @@ def get_session_name(db: Session, base_name: str) -> str:
         return base_session_name
     else:
         return f'{base_session_name} ({count})'
+
+
 
 
 
