@@ -254,7 +254,7 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                     
                 link_list.append(property_info)
                 
-                log.info(property_info)
+                utl.print_pretty_dict(property_info)
 
                 property_count += 1
 

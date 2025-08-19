@@ -21,6 +21,7 @@ import scraper.detail_step.calculation as cal
 import scraper.detail_step.dashboard as dshb
 import scraper.tool.log_op as lg
 import scraper.tool.db_op as dbop
+import scraper.tool.utils as utl
 
 from scraper.tool.config import proxy_user, proxy_password, proxy_ip, proxy_port
 from scraper.tool.config import driver_path, wait_time
@@ -98,29 +99,29 @@ def scrape_p1(db: Session, session_id: UUID, session_name: str, main_website_url
     
     if not link_list:
         log.error(f"link_list is empty: {link_list}")
-        link_csv_path = []
-
+        return []
     
     link_list_db: List[PropertyDB] = []
-    for prop in link_list:
-        prop_row: PropertyDB = (PropertyDB(
+    for property in link_list:
+        prop: PropertyDB = (PropertyDB(
             session_id = session_id,
             session_name = session_name,
-            prop_code = prop['prop_code'],
-            prop_name = prop['prop_name'],
-            prop_link = prop['prop_link']
+            prop_code = property['prop_code'],
+            prop_name = property['prop_name'],
+            prop_link = property['prop_link']
         ))
-        db.add(prop_row) # add object to the session -> session track and know which python object is linked to which db object
-        link_list_db.append(prop_row)
+        
+        # db.add(prop) # add object to the session -> session track and know which python object is linked to which db object
+        # db.commit()
+        # log.info(f'Saved property <{prop.prop_code}> (basic info) to database')
+        
+        link_list_db.append(prop)
 
-    
-    db.commit()
-    log.info(f'Saved {len(link_list_db)} properties (basic info) to database')
-
+    log.info(f'Finish saving {len(link_list_db)} properties (basic info) to database')
 
     # update prop object in Python with data created by db after during the commit (like timestamp)
-    for prop in link_list_db:
-        db.refresh(prop)
+    # for prop in link_list_db:
+    #     db.refresh(prop)
 
     return link_list_db
 
@@ -184,23 +185,26 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
                 prop.next_3_month_booked_rate = book_rate_data['next_3_month_booked_rate']
             
 
-            scrape_result: ScrapeResult = scr2.get_scrape_result(prop)
-            setattr(prop, 'scrape_result', str(scrape_result)) 
+            # scrape_result: ScrapeResult = scr2.get_scrape_result(prop)
+            # setattr(prop, 'scrape_result', str(scrape_result)) 
 
-            log.info(f'Complete scraping property {prop.prop_code} - {prop.prop_name} | result: {scrape_result}')
+            # log.info(f'Complete scraping property {prop.prop_code} - {prop.prop_name} | result: {scrape_result}')
 
         except Exception as e:
             lg.log_detail_error(e)
             log.error(f'Error in scraping property detail -> skip property {prop.prop_code} - {prop.prop_name}')
 
-        db.commit()
-        log.info(f'Saved property {prop.prop_code} (detail info) to database')
+        # db.commit()
+        # log.info(f'Saved property <{prop.prop_code}> (detail info) to database')
 
         lg.log_divider()
 
-        # utl.print_pretty_dict(property_detail_data)
+        utl.print_pretty_dict(prop)
 
-    log.info(f"Finish scraping {len(detail_list_db)} properties")
+
+    log.info(f'Finish saving {len(detail_list_db)} properties (detail info) to database')
+
+    log.info(f"Scraping process completed | {len(detail_list_db)} properties scraped")
     brws.close_browser(driver)
     lg.log_divider()
     
@@ -300,9 +304,9 @@ if __name__ == "__main__":
                 file_name = 'PhoCo',
                 location = 'Pho Co, hanoi',
                 num_guest = 2,
-                num_property = 3,
-                collect_host_data = True,
-                collect_booking_rate = True
+                num_property = 1,
+                # collect_host_data = True,
+                # collect_booking_rate = True
             )
         finally:
             log.info("Closing database session for direct file run.")

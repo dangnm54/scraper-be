@@ -4,17 +4,21 @@ import logging
 import unicodedata
 import random
 import string
+import datetime
+from uuid import UUID
 from typing import List, Dict, Any
 
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 
 try:
-    from scraper.tool.config import wait_time
     import scraper.tool.log_op as lg
+    from scraper.tool.config import wait_time
+    from scraper.type.data import PropertyDB
 except ImportError:
-    from config import wait_time
     import log_op as lg
+    from config import wait_time
+    from type.data import PropertyDB
 
 
 
@@ -115,8 +119,23 @@ def scroll_focus_element(driver: WebDriver, element: WebElement) -> None:
 
 
 
-def print_pretty_dict(dict: Dict[str, Any]) -> None:
-    log.info(json.dumps(dict, indent=4, ensure_ascii=False))
+def print_pretty_dict(data: Dict[str, Any] | PropertyDB) -> None:
+
+    dict_data: Dict[str, Any] = {}
+
+    if isinstance(data, PropertyDB):
+        for key, value in data.__dict__.items():
+            # Skip SQLAlchemy internal attributes
+            if not key.startswith('_'):
+                if isinstance(value, UUID) or isinstance(value, datetime.datetime):
+                    dict_data[key] = str(value)
+                else:
+                    dict_data[key] = value
+
+    else:
+        dict_data = data
+
+    log.info(json.dumps(dict_data, indent=4, ensure_ascii=False))
 
 
 
