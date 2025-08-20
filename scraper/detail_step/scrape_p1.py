@@ -255,7 +255,7 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                 else:
                     clean_link = ''
                 
-                prop_info['prop_code'] = utl.generate_random_id()
+                prop_info['prop_code'] = utl.generate_random_code()
                 prop_info['prop_name'] = name
                 prop_info['prop_link'] = clean_link
                     

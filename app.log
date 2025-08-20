@@ -1,161 +1,60 @@
-LOG RECORDED AT: 20-08-2025 09:05:38
-STARTED BY FILE: base.py
+LOG RECORDED AT: 20-08-2025 19:08:30
+STARTED BY FILE: core.py
 RUN METHOD: Directly in Terminal
 
 
-09:05:38 | INFO | db_op - create_db_session - 82 | Creating database session for direct file run.
-
-
-============================== Start full flow
-
-09:05:38 | INFO | base - run_full_flow - 272 | API Request Received:
-09:05:38 | INFO | base - run_full_flow - 273 |     
-    - Location: Pho Co, hanoi
-    - Number of guests: 2
-    - Number of properties: 1
-    - Collect host data: False
-    - Collect booking rate: False
-    
-09:05:39 | INFO | base - run_full_flow - 283 | New scraping session <PhoCo_200825> started | ID: e9f94bad-5435-4028-ae9e-8149b67b7b2f
 
 
 ============================== Create proxy helper extension
 
-09:05:39 | INFO | browser - crt_proxy_helper_extention - 37 | Created proxy_auth_extension
-09:05:39 | INFO | browser - crt_proxy_helper_extention - 63 | Created proxy_auth_extension\manifest.json
-09:05:39 | INFO | browser - crt_proxy_helper_extention - 104 | Created proxy_auth_extension\background.js
+19:08:30 | INFO | browser - crt_proxy_helper_extention - 37 | Created proxy_auth_extension
+19:08:30 | INFO | browser - crt_proxy_helper_extention - 63 | Created proxy_auth_extension\manifest.json
+19:08:30 | INFO | browser - crt_proxy_helper_extention - 104 | Created proxy_auth_extension\background.js
 
 
 ============================== Config basic driver setting
 
-09:05:39 | INFO | browser - config_basic_driver_setting - 121 | Configured basic settings
+19:08:30 | INFO | browser - config_basic_driver_setting - 121 | Configured basic settings
 
 
 ============================== Config advanced driver setting
 
-09:05:39 | INFO | browser - config_advanced_driver_setting - 131 | Configured minimal logging for selenium
-09:05:39 | INFO | browser - config_advanced_driver_setting - 137 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+19:08:30 | INFO | browser - config_advanced_driver_setting - 131 | Configured minimal logging for selenium
+19:08:30 | INFO | browser - config_advanced_driver_setting - 137 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
 
 
 ============================== Start browser
 
-09:05:40 | INFO | browser - start_browser - 154 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="fd8e86a6574da495846bdebdd1736b43")>> created
-09:05:40 | INFO | browser - start_browser - 157 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="fd8e86a6574da495846bdebdd1736b43")>> created
-09:05:40 | INFO | browser - start_browser - 174 | Secondary monitor found, open browser on secondary monitor
+19:08:31 | INFO | browser - start_browser - 154 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="7f3d52e13fadaf14478bd03e04d9aef0")>> created
+19:08:31 | INFO | browser - start_browser - 157 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="7f3d52e13fadaf14478bd03e04d9aef0")>> created
+19:08:31 | INFO | browser - start_browser - 182 | Only 1 monitor, maximizing browser
 
 
 ============================== Go to website
 
-09:05:42 | INFO | scrape_p1 - go_to_website - 33 | Go to website: https://www.airbnb.com.vn/homes
-09:05:47 | INFO | scrape_p1 - go_to_website - 48 | Found Ad pop-up
-09:05:47 | INFO | scrape_p1 - go_to_website - 51 | Close Ad pop-up
-09:05:53 | INFO | base - scrape_p1 - 93 | Search mode: none
+19:08:39 | INFO | step - go_to_website - 29 | Go to website: https://maps.google.com/
 
 
-============================== View page and get all link
+============================== Search
 
-09:05:53 | INFO | scrape_p1 - view_page_get_all_link - 221 | Ready to scrape 1 properties | Search-mode: none
-09:05:59 | INFO | utils - print_pretty_dict - 131 | {
-    "prop_code": "P-FL85VZ",
-    "prop_name": "Nơi ở tại Thành phố Hồ Chí Minh",
-    "prop_link": "https://www.airbnb.com.vn/rooms/917970165485722979"
+19:08:43 | INFO | step - search - 45 | Search element found
+19:08:43 | INFO | step - search - 48 | <Vĩnh yên, Vĩnh phúc> typed and ENTER
+19:08:47 | INFO | step - search - 53 | <vật liệu xây dựng> typed and ENTER
+
+
+============================== Scrape data
+
+19:08:51 | INFO | step - scrape_data - 67 | Ready to scrape 1 data
+19:08:55 | INFO | step - scrape_data - 96 | Data element clicked
+19:09:06 | INFO | step - scrape_data - 104 | Name found: Vật liệu xây dựng Long Cường
+19:09:10 | INFO | step - scrape_data - 110 | Address found: 8HHV+P39, Định Trung, Vĩnh Yên, Vĩnh Phúc, Vietnam
+19:09:10 | INFO | step - scrape_data - 120 | Phone found: None
+19:09:18 | INFO | step - scrape_data - 127 | Share button clicked
+19:09:18 | INFO | step - scrape_data - 131 | Link found: https://maps.app.goo.gl/PgRRAKaTuqwtX5rbA
+19:09:18 | INFO | utils - print_pretty_dict - 131 | {
+    "code": "P-UZY2RQ",
+    "name": "Vật liệu xây dựng Long Cường",
+    "address": "8HHV+P39, Định Trung, Vĩnh Yên, Vĩnh Phúc, Vietnam",
+    "phone": null,
+    "ggmap_link": "https://maps.app.goo.gl/PgRRAKaTuqwtX5rbA"
 }
-09:05:59 | INFO | scrape_p1 - view_page_get_all_link - 285 | 1 properties (basic info) scraped
-
-
-============================== Close browser
-
-09:06:01 | INFO | browser - close_browser - 202 | Close browser
-09:06:01 | INFO | base - scrape_p1 - 128 | Finish saving 1 properties (basic info) to database
-09:06:01 | INFO | base - run_full_flow - 287 | Phase 1 (link scraping) completed.
-
-
-============================== Create proxy helper extension
-
-09:06:01 | INFO | browser - crt_proxy_helper_extention - 37 | Created proxy_auth_extension
-09:06:01 | INFO | browser - crt_proxy_helper_extention - 63 | Created proxy_auth_extension\manifest.json
-09:06:01 | INFO | browser - crt_proxy_helper_extention - 104 | Created proxy_auth_extension\background.js
-
-
-============================== Config basic driver setting
-
-09:06:01 | INFO | browser - config_basic_driver_setting - 121 | Configured basic settings
-
-
-============================== Config advanced driver setting
-
-09:06:01 | INFO | browser - config_advanced_driver_setting - 131 | Configured minimal logging for selenium
-09:06:01 | INFO | browser - config_advanced_driver_setting - 137 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
-
-
-============================== Start browser
-
-09:06:02 | INFO | browser - start_browser - 154 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="ff35b32bfa6b0cc74f4d6495e9513ad4")>> created
-09:06:02 | INFO | browser - start_browser - 157 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="ff35b32bfa6b0cc74f4d6495e9513ad4")>> created
-09:06:02 | INFO | browser - start_browser - 174 | Secondary monitor found, open browser on secondary monitor
-09:06:02 | INFO | base - scrape_p2 - 157 | Scraping property: P-FL85VZ - Nơi ở tại Thành phố Hồ Chí Minh
-
-
-============================== Go to website
-
-09:06:04 | INFO | scrape_p1 - go_to_website - 33 | Go to website: https://www.airbnb.com.vn/rooms/917970165485722979
-09:06:09 | INFO | scrape_p1 - go_to_website - 58 | Found Ad pop-up
-09:06:09 | INFO | scrape_p1 - go_to_website - 61 | Close Ad pop-up
-
-
-============================== Overview info
-
-09:06:16 | INFO | scrape_p2 - overview_info - 45 | Overview section found
-09:06:21 | INFO | utils - print_pretty_dict - 131 | {
-    "guest_num": 2,
-    "bed_num": 1,
-    "bath_num": 1,
-    "location": "10.77961,106.70628"
-}
-
-
-============================== Rating info
-
-09:06:27 | INFO | scrape_p2 - rating_info - 190 | Special rating element found
-09:06:27 | INFO | scrape_p2 - rating_info - 206 | Special overview rating data collected
-09:06:27 | INFO | utils - print_pretty_dict - 131 | {
-    "rating_title": "Được khách yêu thích",
-    "rating_star": 4.94,
-    "rating_num": 34
-}
-
-
-============================== Get scrape result
-
-09:06:27 | INFO | scrape_p2 - get_scrape_result - 558 | Missing data (exclude result field): 0 / 12 -> Scraping result: Success
-09:06:27 | INFO | base - scrape_p2 - 199 | Complete scraping property P-FL85VZ - Nơi ở tại Thành phố Hồ Chí Minh | result: Success
-
---------------------
-
-09:06:27 | INFO | utils - print_pretty_dict - 131 | {
-    "session_id": "e9f94bad-5435-4028-ae9e-8149b67b7b2f",
-    "session_name": "PhoCo_200825",
-    "prop_code": "P-FL85VZ",
-    "prop_name": "Nơi ở tại Thành phố Hồ Chí Minh",
-    "prop_link": "https://www.airbnb.com.vn/rooms/917970165485722979",
-    "guest_num": 2,
-    "bed_num": 1,
-    "bath_num": 1,
-    "location": "10.77961,106.70628",
-    "rating_title": "Được khách yêu thích",
-    "rating_star": 4.94,
-    "rating_num": 34,
-    "scrape_result": "Success"
-}
-09:06:27 | INFO | base - scrape_p2 - 213 | Finish saving 1 properties (detail info) to database
-09:06:27 | INFO | base - scrape_p2 - 215 | Scraping process completed | 1 properties scraped
-
-
-============================== Close browser
-
-09:06:29 | INFO | browser - close_browser - 202 | Close browser
-
---------------------
-
-09:06:29 | INFO | base - run_full_flow - 296 | Phase 2 (detail scraping) completed.
-09:06:29 | INFO | base - <module> - 320 | Closing database session for direct file run.

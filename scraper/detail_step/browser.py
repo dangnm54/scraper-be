@@ -180,8 +180,8 @@ def start_browser(driver_path_ipt: str, option_ipt: EdgeOptions) -> Tuple[WebDri
 
         else:
             log.info(f'Only 1 monitor, maximizing browser')
-            driver.set_window_rect(x=960, y=10, width=960, height=1010)
-
+            # driver.set_window_rect(x=960, y=10, width=960, height=1010)
+            driver.set_window_rect(x=10, y=10, width=1900, height=1010)
 
         return driver, wait
 

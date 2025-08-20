@@ -19,9 +19,10 @@ ip_website_url: str = 'https://nordvpn.com/what-is-my-ip/'
 # ip_website_url: str = 'https://youtube.com'
 
 
-# ___Wait random 
+# ___Wait random: 2.5 - 5.5s
 wait_time: float = random.uniform(1, 3) + random.uniform(2, 5) - random.uniform(0.1, 0.5)
 # print(wait_time)
+
 
 
 

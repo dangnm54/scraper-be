@@ -148,9 +148,9 @@ def obj_to_dict(obj: Any) -> Dict[str, Any]:
 
 
 
-def generate_random_id() -> str:
+def generate_random_code() -> str:
     """
-    Generate a random ID in format P-XXXXXX
+    Generate a random code in format P-XXXXXX
     X is a random uppercase letter or number
     """
 
