@@ -224,6 +224,6 @@ async def sse_logs(request:Request):
 
 ______________________________________________________________________________
 
-- scrape_p1 mode to quickly get property on homepage without search
-- sửa scrape_result
-- sửa lỗi created_at
+
+- gg map link: https://maps.google.com/?q=LATITUDE,LONGITUDE
+- sửa lỗi created_at: 

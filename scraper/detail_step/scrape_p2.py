@@ -12,12 +12,12 @@ from selenium.webdriver.support.ui import WebDriverWait
 try:
     import scraper.tool.utils as utl
     import scraper.tool.log_op as lg
-    from scraper.type.data import ScrapeResult
+    from scraper.type.data import ScrapeResult, PropertyDB
     import scraper.tool.get_ipt as ipt
 except ImportError:
     import tool.utils as utl
     import tool.log_op as lg
-    from type.data import ScrapeResult
+    from type.data import ScrapeResult, PropertyDB
     import tool.get_ipt as ipt
 
 
@@ -536,11 +536,12 @@ def detail_booking_cal(driver: WebDriver, wait_time: float, target_month: int) -
     
 
 
-def get_scrape_result(property_detail_data: Dict[str, Any]) -> "ScrapeResult":
+def get_scrape_result(property_detail_data: PropertyDB) -> "ScrapeResult":
 
     lg.log_divider('Get scrape result')
 
-    value_list: List[Any] = [v for k, v in property_detail_data.items() if k != 'scrape_result']
+    property_detail_dict: Dict[str, Any] = utl.obj_to_dict(property_detail_data)
+    value_list: List[Any] = [v for k, v in property_detail_dict.items() if k != 'scrape_result']
 
     none_count: int = value_list.count(None)
     total_count: int = len(value_list)

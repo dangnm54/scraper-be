@@ -121,21 +121,30 @@ def scroll_focus_element(driver: WebDriver, element: WebElement) -> None:
 
 def print_pretty_dict(data: Dict[str, Any] | PropertyDB) -> None:
 
-    dict_data: Dict[str, Any] = {}
+    dict: Dict[str, Any] = {}
 
     if isinstance(data, PropertyDB):
-        for key, value in data.__dict__.items():
+        dict = obj_to_dict(data)
+    else:
+        dict = data
+
+    log.info(json.dumps(dict, indent=4, ensure_ascii=False))
+
+
+
+def obj_to_dict(obj: Any) -> Dict[str, Any]:
+
+    dict: Dict[str, Any] = {}
+
+    if isinstance(obj, PropertyDB):
+        for key, value in obj.__dict__.items():
             # Skip SQLAlchemy internal attributes
             if not key.startswith('_'):
-                if isinstance(value, UUID) or isinstance(value, datetime.datetime):
-                    dict_data[key] = str(value)
+                if isinstance(value, UUID | datetime.datetime) or isinstance(value, datetime.datetime):
+                    dict[key] = str(value)
                 else:
-                    dict_data[key] = value
-
-    else:
-        dict_data = data
-
-    log.info(json.dumps(dict_data, indent=4, ensure_ascii=False))
+                    dict[key] = value
+    return dict
 
 
 
@@ -149,5 +158,6 @@ def generate_random_id() -> str:
     random_id: str = ''.join(random.choice(char_list) for _ in range(6))
     
     return f"P-{random_id}"
+
 
 

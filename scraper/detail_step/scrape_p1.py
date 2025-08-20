@@ -7,7 +7,7 @@ except ImportError:
 
 import time
 import logging
-from typing import List, Dict
+from typing import List, Dict, Literal
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -210,7 +210,7 @@ def press_search(driver: WebDriver) -> None:
 
 
 
-def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: float, num_property: int) -> List[Dict[str, str]]:
+def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: float, num_property: int, search: Literal['apply', 'none']) -> List[Dict[str, str]]:
     
     lg.log_divider('View page and get all link')
 
@@ -218,28 +218,36 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
         link_list: List[Dict[str, str]] = []
         property_count: int = 0 
 
-        log.info(f'Ready to scrape {num_property} properties')
+        log.info(f'Ready to scrape {num_property} properties | Search-mode: {search}')
+
+        match search:
+            case 'none':
+                property_lists: List[WebElement] = driver.find_elements(By.CSS_SELECTOR,'div.c1r8sk5a')
+
+            case 'apply':
+                wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR,'div.cy5jw6o')))
+                time.sleep(wait_time)
+                property_lists: List[WebElement] = driver.find_elements(By.CSS_SELECTOR,'div.cfutgp0')
 
         while property_count < num_property:
-            wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR,'div.cy5jw6o')))
-            time.sleep(wait_time)
-
-            property_section: WebElement = driver.find_element(By.CSS_SELECTOR,'div.gsgwcjk')
-            property_lists: List[WebElement] = property_section.find_elements(By.CSS_SELECTOR,'div.c965t3n')
 
             for property in property_lists:
 
                 utl.scroll_focus_element(driver, property)
 
-                property_info: Dict[str, str] = {
+                prop_info: Dict[str, str] = {
                     'prop_code': '',
                     'prop_name': '',
                     'prop_link': ''
                 }
 
-                name_element: WebElement = property.find_element(By.CSS_SELECTOR,'span[data-testid="listing-card-name"]')
+                match search:
+                    case 'none':
+                        name_element: WebElement = property.find_element(By.CSS_SELECTOR,'div[data-testid="listing-card-title"]')
+                    case 'apply':
+                        name_element: WebElement = property.find_element(By.CSS_SELECTOR,'span[data-testid="listing-card-name"]')
                 name: str = name_element.text 
-
+                
                 link_element: WebElement = property.find_element(By.CSS_SELECTOR,'div[data-testid="card-container"] > a')
                 link: str | None = link_element.get_attribute('href')
                 if link:
@@ -247,14 +255,13 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                 else:
                     clean_link = ''
                 
-                property_info['prop_code'] = utl.generate_random_id()
-                property_info['prop_name'] = name
-                if isinstance(clean_link, str):
-                    property_info['prop_link'] = clean_link
+                prop_info['prop_code'] = utl.generate_random_id()
+                prop_info['prop_name'] = name
+                prop_info['prop_link'] = clean_link
                     
-                link_list.append(property_info)
+                link_list.append(prop_info)
                 
-                utl.print_pretty_dict(property_info)
+                utl.print_pretty_dict(prop_info)
 
                 property_count += 1
 

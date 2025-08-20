@@ -86,14 +86,22 @@ def scrape_p1(db: Session, session_id: UUID, session_name: str, main_website_url
         log.error(f"An error in 'if driver'")
         return []
 
-
     scr1.go_to_website(driver, wait, wait_time, main_website_url, view='main_page')
-    scr1.search_location(driver, wait_time, location)
-    scr1.search_date(driver, wait_time)
-    scr1.search_guest(driver, wait_time, num_guest)
-    scr1.press_search(driver)
 
-    link_list: List[Dict[str, str]] = scr1.view_page_get_all_link(driver, wait, wait_time, num_property)
+
+    search: Literal['apply', 'none'] = 'none'
+    log.info(f'Search mode: {search}')
+
+    match search:
+        case 'none':
+            pass
+        case 'apply':
+            scr1.search_location(driver, wait_time, location)
+            scr1.search_date(driver, wait_time)
+            scr1.search_guest(driver, wait_time, num_guest)
+            scr1.press_search(driver)
+
+    link_list: List[Dict[str, str]] = scr1.view_page_get_all_link(driver, wait, wait_time, num_property, search)
 
     brws.close_browser(driver)
     
@@ -185,10 +193,10 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
                 prop.next_3_month_booked_rate = book_rate_data['next_3_month_booked_rate']
             
 
-            # scrape_result: ScrapeResult = scr2.get_scrape_result(prop)
-            # setattr(prop, 'scrape_result', str(scrape_result)) 
+            scrape_result: ScrapeResult = scr2.get_scrape_result(prop)
+            setattr(prop, 'scrape_result', str(scrape_result)) 
 
-            # log.info(f'Complete scraping property {prop.prop_code} - {prop.prop_name} | result: {scrape_result}')
+            log.info(f'Complete scraping property {prop.prop_code} - {prop.prop_name} | result: {scrape_result}')
 
         except Exception as e:
             lg.log_detail_error(e)
