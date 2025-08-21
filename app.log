@@ -1,4 +1,4 @@
-LOG RECORDED AT: 20-08-2025 19:08:30
+LOG RECORDED AT: 21-08-2025 15:58:59
 STARTED BY FILE: core.py
 RUN METHOD: Directly in Terminal
 
@@ -7,54 +7,83 @@ RUN METHOD: Directly in Terminal
 
 ============================== Create proxy helper extension
 
-19:08:30 | INFO | browser - crt_proxy_helper_extention - 37 | Created proxy_auth_extension
-19:08:30 | INFO | browser - crt_proxy_helper_extention - 63 | Created proxy_auth_extension\manifest.json
-19:08:30 | INFO | browser - crt_proxy_helper_extention - 104 | Created proxy_auth_extension\background.js
+15:58:59 | INFO | browser - crt_proxy_helper_extention - 37 | Created proxy_auth_extension
+15:58:59 | INFO | browser - crt_proxy_helper_extention - 63 | Created proxy_auth_extension\manifest.json
+15:58:59 | INFO | browser - crt_proxy_helper_extention - 104 | Created proxy_auth_extension\background.js
 
 
 ============================== Config basic driver setting
 
-19:08:30 | INFO | browser - config_basic_driver_setting - 121 | Configured basic settings
+15:58:59 | INFO | browser - config_basic_driver_setting - 121 | Configured basic settings
 
 
 ============================== Config advanced driver setting
 
-19:08:30 | INFO | browser - config_advanced_driver_setting - 131 | Configured minimal logging for selenium
-19:08:30 | INFO | browser - config_advanced_driver_setting - 137 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+15:58:59 | INFO | browser - config_advanced_driver_setting - 131 | Configured minimal logging for selenium
+15:58:59 | INFO | browser - config_advanced_driver_setting - 137 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
 
 
 ============================== Start browser
 
-19:08:31 | INFO | browser - start_browser - 154 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="7f3d52e13fadaf14478bd03e04d9aef0")>> created
-19:08:31 | INFO | browser - start_browser - 157 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="7f3d52e13fadaf14478bd03e04d9aef0")>> created
-19:08:31 | INFO | browser - start_browser - 182 | Only 1 monitor, maximizing browser
+15:59:00 | INFO | browser - start_browser - 154 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="4e5c8836b812535d70026849a8227051")>> created
+15:59:00 | INFO | browser - start_browser - 157 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="4e5c8836b812535d70026849a8227051")>> created
+15:59:00 | INFO | browser - start_browser - 174 | Secondary monitor found, open browser on secondary monitor
 
 
 ============================== Go to website
 
-19:08:39 | INFO | step - go_to_website - 29 | Go to website: https://maps.google.com/
+15:59:02 | INFO | step - go_to_website - 32 | Go to website: https://maps.google.com/
 
 
 ============================== Search
 
-19:08:43 | INFO | step - search - 45 | Search element found
-19:08:43 | INFO | step - search - 48 | <Vĩnh yên, Vĩnh phúc> typed and ENTER
-19:08:47 | INFO | step - search - 53 | <vật liệu xây dựng> typed and ENTER
+15:59:09 | INFO | step - search - 48 | Search element found
+15:59:09 | INFO | step - search - 51 | <Vĩnh yên, Vĩnh phúc> typed and ENTER
+15:59:16 | INFO | step - search - 57 | <vật liệu xây dựng> typed and ENTER
 
 
 ============================== Scrape data
 
-19:08:51 | INFO | step - scrape_data - 67 | Ready to scrape 1 data
-19:08:55 | INFO | step - scrape_data - 96 | Data element clicked
-19:09:06 | INFO | step - scrape_data - 104 | Name found: Vật liệu xây dựng Long Cường
-19:09:10 | INFO | step - scrape_data - 110 | Address found: 8HHV+P39, Định Trung, Vĩnh Yên, Vĩnh Phúc, Vietnam
-19:09:10 | INFO | step - scrape_data - 120 | Phone found: None
-19:09:18 | INFO | step - scrape_data - 127 | Share button clicked
-19:09:18 | INFO | step - scrape_data - 131 | Link found: https://maps.app.goo.gl/PgRRAKaTuqwtX5rbA
-19:09:18 | INFO | utils - print_pretty_dict - 131 | {
-    "code": "P-UZY2RQ",
-    "name": "Vật liệu xây dựng Long Cường",
-    "address": "8HHV+P39, Định Trung, Vĩnh Yên, Vĩnh Phúc, Vietnam",
-    "phone": null,
-    "ggmap_link": "https://maps.app.goo.gl/PgRRAKaTuqwtX5rbA"
+15:59:23 | INFO | step - scrape_data - 71 | Ready to scrape 2 data
+15:59:23 | INFO | step - scrape_data - 84 | Found 5 data
+15:59:23 | INFO | step - scrape_data - 87 | last_len: 0 | new_len: 5
+
+--------------------
+
+15:59:23 | INFO | step - scrape_data - 98 | Scraping data #0
+15:59:30 | INFO | step - scrape_data - 111 | Data element clicked
+15:59:36 | INFO | step - scrape_data - 120 | Name: Cửa Hàng Vật Liệu Xây Dựng Thọ Hoa
+15:59:43 | INFO | step - scrape_data - 127 | Address: Ngã 5 Gốc Vừng, xóm Vẽn, Vĩnh Yên, Vĩnh Phúc, Vietnam
+15:59:50 | INFO | step - scrape_data - 138 | Phone: +84 972 572 016
+16:00:04 | INFO | step - scrape_data - 146 | Share button clicked
+16:00:04 | INFO | step - scrape_data - 150 | Link: https://maps.app.goo.gl/fYBaWfXEaNQJkbB6A
+16:00:04 | INFO | step - scrape_data - 154 | Close share modal
+16:00:04 | INFO | utils - print_pretty_dict - 131 | {
+    "code": "P-150GX3",
+    "name": "Cửa Hàng Vật Liệu Xây Dựng Thọ Hoa",
+    "address": "Ngã 5 Gốc Vừng, xóm Vẽn, Vĩnh Yên, Vĩnh Phúc, Vietnam",
+    "phone": "+84 972 572 016",
+    "ggmap_link": "https://maps.app.goo.gl/fYBaWfXEaNQJkbB6A"
 }
+16:00:04 | INFO | step - scrape_data - 167 | Data num: 1 | Data collected: 1 | Total data needed: 2
+
+--------------------
+
+16:00:04 | INFO | step - scrape_data - 98 | Scraping data #1
+16:00:11 | INFO | step - scrape_data - 111 | Data element clicked
+16:00:18 | INFO | step - scrape_data - 120 | Name: Cty vật liệu xây dựng Minh Hà
+16:00:25 | INFO | step - scrape_data - 127 | Address: 13s4 khu đô thị, Chùa Hà Trần Phú, Định Trung, Vĩnh Yên, Vĩnh Phúc, Vietnam
+16:00:31 | INFO | step - scrape_data - 138 | Phone: +84 862 767 288
+16:00:45 | INFO | step - scrape_data - 146 | Share button clicked
+16:00:45 | INFO | step - scrape_data - 150 | Link: https://maps.app.goo.gl/R9hCKk9d7Hm2YXWw8
+16:00:45 | INFO | step - scrape_data - 154 | Close share modal
+16:00:45 | INFO | utils - print_pretty_dict - 131 | {
+    "code": "P-FXLMMX",
+    "name": "Cty vật liệu xây dựng Minh Hà",
+    "address": "13s4 khu đô thị, Chùa Hà Trần Phú, Định Trung, Vĩnh Yên, Vĩnh Phúc, Vietnam",
+    "phone": "+84 862 767 288",
+    "ggmap_link": "https://maps.app.goo.gl/R9hCKk9d7Hm2YXWw8"
+}
+16:00:45 | INFO | step - scrape_data - 167 | Data num: 2 | Data collected: 2 | Total data needed: 2
+16:00:45 | INFO | step - scrape_data - 175 | Scraping completed | Data collected: 2
+16:00:45 | INFO | step - list_dict_to_csv - 211 | File saved to: C:\Users\ADMIN\Pictures\vp_vlxd_210825.csv

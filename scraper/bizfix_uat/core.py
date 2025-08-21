@@ -1,6 +1,7 @@
 import sys
 import os
 import logging
+import csv
 from typing import Tuple, List, Dict
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
@@ -25,7 +26,7 @@ log = logging.getLogger(__name__)
 web_url = 'https://maps.google.com/'
 location_ipt = 'Vĩnh yên, Vĩnh phúc'
 industry_ipt = 'vật liệu xây dựng'
-num_data = 1
+num_data = 2
 
 
 # -----------------------------------------------------------------------------------
@@ -52,7 +53,7 @@ def start_driver() -> Tuple[WebDriver | None, WebDriverWait | None]:
 
 
 
-def scrape_p1(wait_time: float, web_url: str):
+def scrape_p1(wait_time: float, web_url: str) -> str:
     
     driver: WebDriver | None = None
     wait: WebDriverWait | None = None
@@ -62,12 +63,16 @@ def scrape_p1(wait_time: float, web_url: str):
         pass
     else:
         log.error(f"An error in 'if driver'")
-        return []
+        return ''
     
 
     step.go_to_website(driver, wait_time, web_url)
     step.search(driver, wait_time, location_ipt, industry_ipt)
     client_list: List[Dict[str, str | None]] = step.scrape_data(driver, wait_time, num_data)
+
+    file_path: str = step.list_dict_to_csv(client_list, 'vp_vlxd')
+
+    return file_path
 
 
 
