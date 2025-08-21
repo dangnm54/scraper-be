@@ -77,5 +77,4 @@ def scrape_p1(wait_time: float, web_url: str) -> str:
 
 
 
-
 scrape_p1(wait_time, web_url)
