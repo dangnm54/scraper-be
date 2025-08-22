@@ -33,6 +33,7 @@ class PropertyDB(Base):
     bed_num = Column(Integer)
     bath_num = Column(Integer)
     location = Column(String)
+    ggmap_link = Column(String)
 
     rating_title = Column(String)
     rating_star = Column(Float)

@@ -1,3 +1,5 @@
+import sys
+import os
 import json
 import time
 import logging
@@ -10,6 +12,8 @@ from typing import List, Dict, Any
 
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
 try:
     import scraper.tool.log_op as lg
@@ -58,8 +62,11 @@ def get_info_from_string(string: str, mode: str) -> str | int | None:
                 for word in word_list:
                     if '@' in word:
                         raw_coordinate = word
-                coordinate_point_list = raw_coordinate.strip('@').strip('z').split(',')
-                target_word = ','.join(coordinate_point_list[0:2])
+                coordinate_axis_list = raw_coordinate.strip('@').strip('z').split(',')
+                target_word = ','.join(coordinate_axis_list[0:2])  # stop before position #2
+
+            case 'ggmap_link':
+                target_word = f'https://maps.google.com/?q={string}'
 
             case 'month':
                 for word in word_list:

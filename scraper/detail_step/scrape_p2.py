@@ -36,7 +36,8 @@ def overview_info(driver: WebDriver, wait: WebDriverWait) -> Dict[str, Any]:
         'guest_num': None,  # Optional[int]
         'bed_num': None,  # Optional[int]
         'bath_num': None,  # Optional[int]
-        'location': None  # Optional[str]
+        'location': None,  # Optional[str]
+        'ggmap_link': None,  # Optional[str]
     }
 
     try:
@@ -69,6 +70,9 @@ def overview_info(driver: WebDriver, wait: WebDriverWait) -> Dict[str, Any]:
         if location:
             clean_location: str = cast(str, utl.get_info_from_string(location, mode='coordinate'))
             overview_data['location'] = clean_location
+
+            ggmap_link: str = cast(str, utl.get_info_from_string(clean_location, mode='ggmap_link'))
+            overview_data['ggmap_link'] = ggmap_link
         
         utl.print_pretty_dict(overview_data)
         return overview_data

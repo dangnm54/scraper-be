@@ -168,6 +168,7 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
             prop.bed_num = overview_data['bed_num']
             prop.bath_num = overview_data['bath_num']
             prop.location = overview_data['location']
+            prop.ggmap_link = overview_data['ggmap_link']
             
             prop.rating_title = rating_data['rating_title']
             prop.rating_star = rating_data['rating_star']
