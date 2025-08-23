@@ -70,25 +70,28 @@ def scrape_data(driver: WebDriver, wait_time: float, num_data: int) -> List[Dict
 
     log.info(f'Ready to scrape {num_data} data')
 
+    client_data_list: List[Dict[str, str | None]] = []
+
+    cnt = 0
+    last_len = 0
+
     try:
         result_section: WebElement = driver.find_element(By.CSS_SELECTOR, 'div.m6QErb.DxyBCb[role="feed"]')
-        
-        client_data_list: List[Dict[str, str | None]] = []
-
-        cnt = 0
-        last_len = 0
 
         while cnt < num_data:
 
             result_list: List[WebElement] = result_section.find_elements(By.CSS_SELECTOR, 'div.Nv2PK')
-            log.info(f'Found {len(result_list)} data')
+            log.info(f'last_len: {last_len} | new_len: {len(result_list)}')
 
+            new_data: int = len(result_list) - last_len
+
+            lg.log_divider()
             if len(result_list) > last_len:
-                log.info(f'last_len: {last_len} | new_len: {len(result_list)}')
+                log.info(f'{new_data} new data found -> keep scraping')
                 last_len = len(result_list)
                 pass
             else:
-                log.info('No new data found -> stop scraping')
+                log.info(f'{new_data} new data found -> stop scraping')
                 break
             
 
@@ -105,61 +108,66 @@ def scrape_data(driver: WebDriver, wait_time: float, num_data: int) -> List[Dict
                     'ggmap_link': None
                 }
 
-                utl.scroll_focus_element(driver, client)
+                try:
 
-                client.click()
-                log.info('Data element clicked')
-                time.sleep(wait_time)
+                    utl.scroll_focus_element(driver, client)
 
-                detail_section: WebElement = driver.find_element(By.CSS_SELECTOR, 'div.bJzME.Hu9e2e')
+                    client.click()
+                    log.info('Data element clicked')
+                    time.sleep(wait_time)
 
-                # ----------------------------------------------------------
+                    detail_section: WebElement = driver.find_element(By.CSS_SELECTOR, 'div.bJzME.Hu9e2e')
 
-                name_element: WebElement = detail_section.find_element(By.CSS_SELECTOR, 'h1.DUwDvf')
-                name: str = name_element.text
-                log.info(f'Name: {name}')
+                    # ----------------------------------------------------------
 
-                # ----------------------------------------------------------
+                    name_element: WebElement = detail_section.find_element(By.CSS_SELECTOR, 'h1.DUwDvf')
+                    name: str = name_element.text
+                    log.info(f'Name: {name}')
+                    client_data['name'] = name
 
-                address_element: WebElement = detail_section.find_element(By.CSS_SELECTOR, 'button.CsEnBe[data-tooltip="Copy address"]')
-                utl.scroll_focus_element(driver, address_element)
-                address: str = address_element.find_element(By.CSS_SELECTOR, 'div.Io6YTe').text
-                log.info(f'Address: {address}')
+                    # ----------------------------------------------------------
 
-                # ----------------------------------------------------------
+                    address_element: WebElement = detail_section.find_element(By.CSS_SELECTOR, 'button.CsEnBe[data-tooltip="Copy address"]')
+                    utl.scroll_focus_element(driver, address_element)
+                    address: str = address_element.find_element(By.CSS_SELECTOR, 'div.Io6YTe').text
+                    log.info(f'Address: {address}')
+                    client_data['address'] = address
 
-                phone_element: List[WebElement] = detail_section.find_elements(By.CSS_SELECTOR, 'button.CsEnBe[data-tooltip="Copy phone number"]')
-                if phone_element:
-                    utl.scroll_focus_element(driver, phone_element[0])
-                    phone_num: WebElement = phone_element[0].find_element(By.CSS_SELECTOR, 'div.Io6YTe')
-                    phone: str | None = phone_num.text
-                else:
-                    phone = None
-                log.info(f'Phone: {phone}')
+                    # ----------------------------------------------------------
 
-                # ----------------------------------------------------------
+                    phone_element: List[WebElement] = detail_section.find_elements(By.CSS_SELECTOR, 'button.CsEnBe[data-tooltip="Copy phone number"]')
+                    if phone_element:
+                        utl.scroll_focus_element(driver, phone_element[0])
+                        phone_num: WebElement = phone_element[0].find_element(By.CSS_SELECTOR, 'div.Io6YTe')
+                        phone: str | None = phone_num.text
+                    else:
+                        phone = None
+                    log.info(f'Phone: {phone}')
+                    client_data['phone'] = phone
 
-                share_button: WebElement = detail_section.find_element(By.CSS_SELECTOR, 'button.g88MCb[data-value="Share"]')
-                utl.scroll_focus_element(driver, share_button)
-                share_button.click()
-                time.sleep(wait_time)
-                log.info('Share button clicked')
+                    # ----------------------------------------------------------
 
-                link_element: WebElement = driver.find_element(By.CSS_SELECTOR, 'input.vrsrZe')
-                link: str | None = link_element.get_attribute('value')
-                log.info(f'Link: {link}')
+                    share_button: WebElement = detail_section.find_element(By.CSS_SELECTOR, 'button.g88MCb[data-value="Share"]')
+                    utl.scroll_focus_element(driver, share_button)
+                    share_button.click()
+                    time.sleep(wait_time)
+                    log.info('Share button clicked')
 
-                close_button: WebElement = driver.find_element(By.CSS_SELECTOR, 'button.OyzoZb')
-                close_button.click()
-                log.info('Close share modal')
+                    link_element: WebElement = driver.find_element(By.CSS_SELECTOR, 'input.vrsrZe')
+                    link: str | None = link_element.get_attribute('value')
+                    log.info(f'Link: {link}')
 
-                # ----------------------------------------------------------
+                    close_button: WebElement = driver.find_element(By.CSS_SELECTOR, 'button.OyzoZb')
+                    close_button.click()
+                    log.info('Close share modal')
+                    client_data['ggmap_link'] = link
 
-                client_data['name'] = name
-                client_data['address'] = address
-                client_data['phone'] = phone
-                client_data['ggmap_link'] = link
+                    
+                except Exception as e:
+                    lg.log_detail_error(e)
+                    log.info(f'Error scraping data #{cnt} -> Skip to next data')
 
+                    
                 utl.print_pretty_dict(client_data)
                 client_data_list.append(client_data)
 
@@ -168,6 +176,8 @@ def scrape_data(driver: WebDriver, wait_time: float, num_data: int) -> List[Dict
                 
                 if cnt == num_data:
                     break
+                else:
+                    continue
 
             if cnt == num_data:
                 break
@@ -178,7 +188,7 @@ def scrape_data(driver: WebDriver, wait_time: float, num_data: int) -> List[Dict
 
     except Exception as e:
         lg.log_detail_error(e)
-        return []
+        return client_data_list
 
 
 

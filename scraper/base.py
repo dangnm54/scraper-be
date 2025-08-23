@@ -74,6 +74,7 @@ def start_driver() -> Tuple[WebDriver | None, WebDriverWait | None]:
 
 def scrape_p1(db: Session, session_id: UUID, session_name: str, main_website_url: str, 
             location: str, num_guest: int, num_property: int,
+            save_db: bool = False
     ) -> List[PropertyDB]:
     
     driver: WebDriver | None = None
@@ -119,17 +120,19 @@ def scrape_p1(db: Session, session_id: UUID, session_name: str, main_website_url
             prop_link = property['prop_link']
         ))
         
-        # db.add(prop) # add object to the session -> session track and know which python object is linked to which db object
-        # db.commit()
-        # log.info(f'Saved property <{prop.prop_code}> (basic info) to database')
+        if save_db:
+            db.add(prop) # add object to session -> session track and know which python object is linked to which db object until session closed
+            db.commit()
+            log.info(f'Saved property <{prop.prop_code}> (basic info) to database')
         
         link_list_db.append(prop)
 
     log.info(f'Finish saving {len(link_list_db)} properties (basic info) to database')
 
-    # update prop object in Python with data created by db after during the commit (like timestamp)
-    # for prop in link_list_db:
-    #     db.refresh(prop)
+    if save_db:
+        # update prop object in Python with data created by db after during the commit (like timestamp)
+        for prop in link_list_db:
+            db.refresh(prop)
 
     return link_list_db
 
@@ -139,6 +142,7 @@ def scrape_p1(db: Session, session_id: UUID, session_name: str, main_website_url
 
 def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
             collect_host_data: bool=False, collect_booking_rate: bool=False,
+            save_db: bool = False
     ) -> List[PropertyDB]:
 
     driver: WebDriver | None = None
@@ -152,12 +156,10 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
         return []
 
     for prop in detail_list_db:
-        # print(f'{prop.prop_code} | {prop.prop_name} | {prop.prop_link}')
 
         log.info(f'Scraping property: {prop.prop_code} - {prop.prop_name}')
-        
-        property_link: str = str(prop.prop_link)
 
+        property_link: str = str(prop.prop_link)
         scr1.go_to_website(driver, wait, wait_time, property_link, view='detail_page')
 
         try:
@@ -203,16 +205,15 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
             lg.log_detail_error(e)
             log.error(f'Error in scraping property detail -> skip property {prop.prop_code} - {prop.prop_name}')
 
-        # db.commit()
-        # log.info(f'Saved property <{prop.prop_code}> (detail info) to database')
+        if save_db:
+            db.commit()
+            log.info(f'Saved property <{prop.prop_code}> (detail info) to database')
 
         lg.log_divider()
-
         utl.print_pretty_dict(prop)
 
-
+    lg.log_divider()
     log.info(f'Finish saving {len(detail_list_db)} properties (detail info) to database')
-
     log.info(f"Scraping process completed | {len(detail_list_db)} properties scraped")
     brws.close_browser(driver)
     lg.log_divider()
@@ -260,12 +261,10 @@ def draw_dashboard(csv_path, cal_data):
 
 def run_full_flow(
         db: Session,
-        file_name: str,
-        location: str,
-        num_guest: int,
-        num_property: int,
+        file_name: str, location: str, num_guest: int, num_property: int,
         collect_host_data: bool = False,
-        collect_booking_rate: bool = False
+        collect_booking_rate: bool = False,
+        save_db: bool = False
     ) -> Dict[str, str]:
 
     lg.log_divider('Start full flow')
@@ -284,17 +283,17 @@ def run_full_flow(
     log.info(f"New scraping session <{session_name}> started | ID: {session_id}")
 
 
-    link_list_db: List[PropertyDB] = scrape_p1(db, session_id, session_name, main_website_url, location, num_guest, num_property)
+    link_list_db: List[PropertyDB] = scrape_p1(db, session_id, session_name, main_website_url, location, num_guest, num_property, save_db)
     log.info(f"Phase 1 (link scraping) completed.")
 
 
-    if not link_list_db:
-        log.error(f"Phase 1 didn't find any properties -> Stop scraping process")
-        return {f"detail": "Phase 1 found no properties"}
+    # if not link_list_db:
+    #     log.error(f"Phase 1 didn't find any properties -> Stop scraping process")
+    #     return {f"detail": "Phase 1 found no properties"}
     
 
-    detail_property_list: List[PropertyDB] = scrape_p2(db, link_list_db, collect_host_data, collect_booking_rate)
-    log.info(f"Phase 2 (detail scraping) completed.")
+    # detail_property_list: List[PropertyDB] = scrape_p2(db, link_list_db, collect_host_data, collect_booking_rate, save_db)
+    # log.info(f"Phase 2 (detail scraping) completed.")
     
     return {f"detail": "Complete scraping process"}
 
@@ -315,7 +314,8 @@ if __name__ == "__main__":
                 num_guest = 2,
                 num_property = 1,
                 # collect_host_data = True,
-                # collect_booking_rate = True
+                # collect_booking_rate = True,
+                save_db = True
             )
         finally:
             log.info("Closing database session for direct file run.")

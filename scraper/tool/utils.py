@@ -143,14 +143,21 @@ def obj_to_dict(obj: Any) -> Dict[str, Any]:
 
     dict: Dict[str, Any] = {}
 
-    if isinstance(obj, PropertyDB):
-        for key, value in obj.__dict__.items():
-            # Skip SQLAlchemy internal attributes
-            if not key.startswith('_'):
-                if isinstance(value, UUID | datetime.datetime) or isinstance(value, datetime.datetime):
-                    dict[key] = str(value)
-                else:
-                    dict[key] = value
+    if not isinstance(obj, PropertyDB):
+        log.info('Data is not <PropertyDB> object -> skip convert')
+        return dict
+
+    ordered_keys: List[str] = [col.name for col in obj.__table__.columns]
+
+    for key in ordered_keys:
+        value: Any = getattr(obj, key, None)
+        if isinstance(value, (UUID, datetime.datetime)):
+            dict[key] = str(value)
+        else:
+            dict[key] = value
+            
+    log.info(f'Success convert <PropertyDB> object -> <Dict> object')
+
     return dict
 
 

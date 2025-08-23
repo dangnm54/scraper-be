@@ -21,7 +21,7 @@ class PropertyDB(Base):
     
     session_id = Column(PG_UUID(as_uuid=True), index=True, default=uuid4)
     session_name = Column(String)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    created_at = Column(DateTime(timezone=True))
     
     prop_code = Column(String, index=True)
     prop_name = Column(String)

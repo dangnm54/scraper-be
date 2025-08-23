@@ -26,7 +26,8 @@ log = logging.getLogger(__name__)
 web_url = 'https://maps.google.com/'
 location_ipt = 'Vĩnh yên, Vĩnh phúc'
 industry_ipt = 'vật liệu xây dựng'
-num_data = 2
+num_data = 500
+
 
 
 # -----------------------------------------------------------------------------------
