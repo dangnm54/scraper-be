@@ -287,13 +287,13 @@ def run_full_flow(
     log.info(f"Phase 1 (link scraping) completed.")
 
 
-    # if not link_list_db:
-    #     log.error(f"Phase 1 didn't find any properties -> Stop scraping process")
-    #     return {f"detail": "Phase 1 found no properties"}
+    if not link_list_db:
+        log.error(f"Phase 1 didn't find any properties -> Stop scraping process")
+        return {f"detail": "Phase 1 found no properties"}
     
 
-    # detail_property_list: List[PropertyDB] = scrape_p2(db, link_list_db, collect_host_data, collect_booking_rate, save_db)
-    # log.info(f"Phase 2 (detail scraping) completed.")
+    detail_property_list: List[PropertyDB] = scrape_p2(db, link_list_db, collect_host_data, collect_booking_rate, save_db)
+    log.info(f"Phase 2 (detail scraping) completed.")
     
     return {f"detail": "Complete scraping process"}
 
@@ -313,8 +313,8 @@ if __name__ == "__main__":
                 location = 'Pho Co, hanoi',
                 num_guest = 2,
                 num_property = 1,
-                # collect_host_data = True,
-                # collect_booking_rate = True,
+                collect_host_data = True,
+                collect_booking_rate = True,
                 save_db = True
             )
         finally:

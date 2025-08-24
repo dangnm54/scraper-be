@@ -1,67 +1,262 @@
-LOG RECORDED AT: 23-08-2025 10:04:56
+LOG RECORDED AT: 24-08-2025 13:44:30
 STARTED BY FILE: base.py
 RUN METHOD: Directly in Terminal
 
 
-10:04:56 | INFO | db_op - create_db_session - 82 | Creating database session for direct file run.
+13:44:30 | INFO | db_op - create_db_session - 82 | Creating database session for direct file run.
 
 
 ============================== Start full flow
 
-10:04:56 | INFO | base - run_full_flow - 272 | API Request Received:
-10:04:56 | INFO | base - run_full_flow - 273 |     
+13:44:30 | INFO | base - run_full_flow - 272 | API Request Received:
+13:44:30 | INFO | base - run_full_flow - 273 |     
     - Location: Pho Co, hanoi
     - Number of guests: 2
     - Number of properties: 1
-    - Collect host data: False
-    - Collect booking rate: False
+    - Collect host data: True
+    - Collect booking rate: True
     
-10:04:57 | INFO | base - run_full_flow - 283 | New scraping session <PhoCo_230825 (2)> started | ID: 945288ad-0603-4ce1-8dff-d0d45c049e37
+13:44:31 | INFO | base - run_full_flow - 283 | New scraping session <PhoCo_240825 (2)> started | ID: 273a2608-13e1-4a4c-9c2c-6609f65d8510
 
 
 ============================== Create proxy helper extension
 
-10:04:57 | INFO | browser - crt_proxy_helper_extention - 37 | Created proxy_auth_extension
-10:04:57 | INFO | browser - crt_proxy_helper_extention - 63 | Created proxy_auth_extension\manifest.json
-10:04:57 | INFO | browser - crt_proxy_helper_extention - 104 | Created proxy_auth_extension\background.js
+13:44:31 | INFO | browser - crt_proxy_helper_extention - 37 | Created proxy_auth_extension
+13:44:31 | INFO | browser - crt_proxy_helper_extention - 63 | Created proxy_auth_extension\manifest.json
+13:44:31 | INFO | browser - crt_proxy_helper_extention - 104 | Created proxy_auth_extension\background.js
 
 
 ============================== Config basic driver setting
 
-10:04:57 | INFO | browser - config_basic_driver_setting - 121 | Configured basic settings
+13:44:31 | INFO | browser - config_basic_driver_setting - 121 | Configured basic settings
 
 
 ============================== Config advanced driver setting
 
-10:04:57 | INFO | browser - config_advanced_driver_setting - 131 | Configured minimal logging for selenium
-10:04:57 | INFO | browser - config_advanced_driver_setting - 137 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+13:44:31 | INFO | browser - config_advanced_driver_setting - 131 | Configured minimal logging for selenium
+13:44:31 | INFO | browser - config_advanced_driver_setting - 137 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
 
 
 ============================== Start browser
 
-10:04:59 | INFO | browser - start_browser - 154 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="9a54005200891cd87b96b9c6766b0813")>> created
-10:04:59 | INFO | browser - start_browser - 157 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="9a54005200891cd87b96b9c6766b0813")>> created
-10:04:59 | INFO | browser - start_browser - 174 | Secondary monitor found, open browser on secondary monitor
+13:44:32 | INFO | browser - start_browser - 154 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="d67be6c6a19286ae6e46d6b9b1ece9ed")>> created
+13:44:32 | INFO | browser - start_browser - 157 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="d67be6c6a19286ae6e46d6b9b1ece9ed")>> created
+13:44:32 | INFO | browser - start_browser - 174 | Secondary monitor found, open browser on secondary monitor
 
 
 ============================== Go to website
 
-10:05:00 | INFO | scrape_p1 - go_to_website - 33 | Go to website: https://www.airbnb.com.vn/homes
-10:05:12 | INFO | base - scrape_p1 - 94 | Search mode: none
+13:44:36 | INFO | scrape_p1 - go_to_website - 33 | Go to website: https://www.airbnb.com.vn/homes
+13:44:46 | INFO | base - scrape_p1 - 94 | Search mode: none
 
 
 ============================== View page and get all link
 
-10:05:12 | INFO | scrape_p1 - view_page_get_all_link - 221 | Ready to scrape 1 properties | Search-mode: none
-10:05:18 | INFO | utils - print_pretty_dict - 138 | {
-    "prop_code": "P-MCS60K",
-    "prop_name": "Căn hộ tại Thành phố Hồ Chí Minh",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1386690223982968237"
+13:44:46 | INFO | scrape_p1 - view_page_get_all_link - 221 | Ready to scrape 1 properties | Search-mode: none
+13:44:51 | INFO | utils - print_pretty_dict - 138 | {
+    "prop_code": "P-57LKEO",
+    "prop_name": "Phòng chung tại Thành phố Hồ Chí Minh",
+    "prop_link": "https://www.airbnb.com.vn/rooms/772784515702828834"
 }
-10:05:18 | INFO | scrape_p1 - view_page_get_all_link - 285 | 1 properties (basic info) scraped
+13:44:51 | INFO | scrape_p1 - view_page_get_all_link - 285 | 1 properties (basic info) scraped
 
 
 ============================== Close browser
 
-10:05:21 | INFO | browser - close_browser - 203 | Close browser
-10:05:21 | INFO | base - <module> - 321 | Closing database session for direct file run.
+13:44:53 | INFO | browser - close_browser - 203 | Close browser
+13:44:53 | INFO | base - scrape_p1 - 126 | Saved property <P-57LKEO> (basic info) to database
+13:44:53 | INFO | base - scrape_p1 - 130 | Finish saving 1 properties (basic info) to database
+13:44:53 | INFO | base - run_full_flow - 287 | Phase 1 (link scraping) completed.
+
+
+============================== Create proxy helper extension
+
+13:44:53 | INFO | browser - crt_proxy_helper_extention - 37 | Created proxy_auth_extension
+13:44:53 | INFO | browser - crt_proxy_helper_extention - 63 | Created proxy_auth_extension\manifest.json
+13:44:53 | INFO | browser - crt_proxy_helper_extention - 104 | Created proxy_auth_extension\background.js
+
+
+============================== Config basic driver setting
+
+13:44:53 | INFO | browser - config_basic_driver_setting - 121 | Configured basic settings
+
+
+============================== Config advanced driver setting
+
+13:44:53 | INFO | browser - config_advanced_driver_setting - 131 | Configured minimal logging for selenium
+13:44:53 | INFO | browser - config_advanced_driver_setting - 137 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+
+
+============================== Start browser
+
+13:44:54 | INFO | browser - start_browser - 154 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="01ca6245d47cfcf4e6351e911b5fe488")>> created
+13:44:54 | INFO | browser - start_browser - 157 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="01ca6245d47cfcf4e6351e911b5fe488")>> created
+13:44:54 | INFO | browser - start_browser - 174 | Secondary monitor found, open browser on secondary monitor
+13:44:55 | INFO | base - scrape_p2 - 160 | Scraping property: P-57LKEO - Phòng chung tại Thành phố Hồ Chí Minh
+
+
+============================== Go to website
+
+13:44:56 | INFO | scrape_p1 - go_to_website - 33 | Go to website: https://www.airbnb.com.vn/rooms/772784515702828834
+13:45:01 | INFO | scrape_p1 - go_to_website - 58 | Found Ad pop-up
+13:45:01 | INFO | scrape_p1 - go_to_website - 61 | Close Ad pop-up
+
+
+============================== Overview info
+
+13:45:07 | INFO | scrape_p2 - overview_info - 46 | Overview section found
+13:45:12 | INFO | utils - print_pretty_dict - 138 | {
+    "guest_num": null,
+    "bed_num": 6,
+    "bath_num": null,
+    "location": "10.7667,106.6908",
+    "ggmap_link": "https://maps.google.com/?q=10.7667,106.6908"
+}
+
+
+============================== Rating info
+
+13:45:16 | INFO | scrape_p2 - rating_info - 194 | Special rating element found
+13:45:16 | INFO | scrape_p2 - rating_info - 210 | Special overview rating data collected
+13:45:16 | INFO | utils - print_pretty_dict - 138 | {
+    "rating_title": "Được khách yêu thích",
+    "rating_star": 4.85,
+    "rating_num": 89
+}
+
+
+============================== Host info
+
+13:45:21 | INFO | utils - print_pretty_dict - 138 | {
+    "host_name": "Mochi",
+    "host_title": "Chủ nhà siêu cấp",
+    "host_rating_star": 4.82,
+    "host_rating_num": 652,
+    "host_exp": "6 nam",
+    "host_link": "https://www.airbnb.com.vn/users/show/300005495"
+}
+
+
+============================== Book rate info
+
+13:45:21 | INFO | get_ipt - get_date_for_book_data - 57 | --Month info--
+13:45:21 | INFO | get_ipt - get_date_for_book_data - 74 | Month data: {'this_month': 8, 'next_1_month': 9, 'next_3_month': [9, 10, 11]}
+13:45:26 | INFO | scrape_p2 - book_rate_info - 392 | Book time section found
+13:45:26 | INFO | scrape_p2 - book_rate_info - 397 | Open calender
+
+--------------------
+
+13:45:31 | INFO | scrape_p2 - book_rate_info - 415 | _____Target month: 8_____
+13:45:31 | INFO | scrape_p2 - detail_booking_cal - 487 | Try #1
+13:45:32 | INFO | scrape_p2 - detail_booking_cal - 502 | Target month: 8
+13:45:32 | INFO | scrape_p2 - detail_booking_cal - 503 | Current month_pair: [8, 9]
+13:45:32 | INFO | scrape_p2 - detail_booking_cal - 506 | At the right calendar view
+13:45:36 | INFO | scrape_p2 - final_stage_book_cal - 471 | Total booked-rate: 23 / 31 = 74.19%
+
+--------------------
+
+13:45:36 | INFO | scrape_p2 - book_rate_info - 415 | _____Target month: 9_____
+13:45:36 | INFO | scrape_p2 - detail_booking_cal - 487 | Try #1
+13:45:37 | INFO | scrape_p2 - detail_booking_cal - 502 | Target month: 9
+13:45:37 | INFO | scrape_p2 - detail_booking_cal - 503 | Current month_pair: [8, 9]
+13:45:37 | INFO | scrape_p2 - detail_booking_cal - 506 | At the right calendar view
+13:45:41 | INFO | scrape_p2 - final_stage_book_cal - 471 | Total booked-rate: 8 / 30 = 26.67%
+
+--------------------
+
+13:45:41 | INFO | scrape_p2 - book_rate_info - 426 | _____Target month_list: [9, 10, 11]_____
+
+--------------------
+
+13:45:41 | INFO | scrape_p2 - book_rate_info - 435 | ___Single target month: 9___
+13:45:41 | INFO | scrape_p2 - detail_booking_cal - 487 | Try #1
+13:45:42 | INFO | scrape_p2 - detail_booking_cal - 502 | Target month: 9
+13:45:42 | INFO | scrape_p2 - detail_booking_cal - 503 | Current month_pair: [8, 9]
+13:45:42 | INFO | scrape_p2 - detail_booking_cal - 506 | At the right calendar view
+
+--------------------
+
+13:45:46 | INFO | scrape_p2 - book_rate_info - 435 | ___Single target month: 10___
+13:45:46 | INFO | scrape_p2 - detail_booking_cal - 487 | Try #1
+13:45:46 | INFO | scrape_p2 - detail_booking_cal - 502 | Target month: 10
+13:45:46 | INFO | scrape_p2 - detail_booking_cal - 503 | Current month_pair: [8, 9]
+13:45:47 | INFO | scrape_p2 - detail_booking_cal - 532 | Wrong calendar view -> next_month_button clicked
+13:45:51 | INFO | scrape_p2 - detail_booking_cal - 487 | Try #2
+13:45:51 | INFO | scrape_p2 - detail_booking_cal - 502 | Target month: 10
+13:45:51 | INFO | scrape_p2 - detail_booking_cal - 503 | Current month_pair: [9, 10]
+13:45:51 | INFO | scrape_p2 - detail_booking_cal - 506 | At the right calendar view
+
+--------------------
+
+13:45:56 | INFO | scrape_p2 - book_rate_info - 435 | ___Single target month: 11___
+13:45:56 | INFO | scrape_p2 - detail_booking_cal - 487 | Try #1
+13:45:57 | INFO | scrape_p2 - detail_booking_cal - 502 | Target month: 11
+13:45:57 | INFO | scrape_p2 - detail_booking_cal - 503 | Current month_pair: [9, 10]
+13:45:57 | INFO | scrape_p2 - detail_booking_cal - 532 | Wrong calendar view -> next_month_button clicked
+13:46:01 | INFO | scrape_p2 - detail_booking_cal - 487 | Try #2
+13:46:02 | INFO | scrape_p2 - detail_booking_cal - 502 | Target month: 11
+13:46:02 | INFO | scrape_p2 - detail_booking_cal - 503 | Current month_pair: [10, 11]
+13:46:02 | INFO | scrape_p2 - detail_booking_cal - 506 | At the right calendar view
+13:46:06 | INFO | scrape_p2 - final_stage_book_cal - 471 | Total booked-rate: 11 / 91 = 12.09%
+
+--------------------
+
+13:46:06 | INFO | utils - print_pretty_dict - 138 | {
+    "this_month_booked_rate": 74.19354838709677,
+    "next_1_month_booked_rate": 26.666666666666668,
+    "next_3_month_booked_rate": 12.087912087912088
+}
+
+
+============================== Get scrape result
+
+13:46:06 | INFO | utils - obj_to_dict - 159 | Success convert <PropertyDB> object -> <Dict> object
+13:46:06 | INFO | scrape_p2 - get_scrape_result - 562 | Missing data (exclude result field): 2 / 24 -> Scraping result: Partial
+13:46:06 | INFO | base - scrape_p2 - 202 | Complete scraping property P-57LKEO - Phòng chung tại Thành phố Hồ Chí Minh | result: Partial
+13:46:07 | INFO | base - scrape_p2 - 210 | Saved property <P-57LKEO> (detail info) to database
+
+--------------------
+
+13:46:07 | INFO | utils - obj_to_dict - 159 | Success convert <PropertyDB> object -> <Dict> object
+13:46:07 | INFO | utils - print_pretty_dict - 138 | {
+    "id": "79f153d1-4cd2-4251-b663-d3bc0be8691f",
+    "session_id": "273a2608-13e1-4a4c-9c2c-6609f65d8510",
+    "session_name": "PhoCo_240825 (2)",
+    "created_at": "2025-08-24 06:44:32.548221+00:00",
+    "prop_code": "P-57LKEO",
+    "prop_name": "Phòng chung tại Thành phố Hồ Chí Minh",
+    "prop_link": "https://www.airbnb.com.vn/rooms/772784515702828834",
+    "scrape_result": "Partial",
+    "guest_num": null,
+    "bed_num": 6,
+    "bath_num": null,
+    "location": "10.7667,106.6908",
+    "ggmap_link": "https://maps.google.com/?q=10.7667,106.6908",
+    "rating_title": "Được khách yêu thích",
+    "rating_star": 4.85,
+    "rating_num": 89,
+    "host_name": "Mochi",
+    "host_title": "Chủ nhà siêu cấp",
+    "host_rating_star": 4.82,
+    "host_rating_num": 652,
+    "host_exp": "6 nam",
+    "host_link": "https://www.airbnb.com.vn/users/show/300005495",
+    "this_month_booked_rate": 74.1936,
+    "next_1_month_booked_rate": 26.6667,
+    "next_3_month_booked_rate": 12.0879
+}
+
+--------------------
+
+13:46:07 | INFO | base - scrape_p2 - 216 | Finish saving 1 properties (detail info) to database
+13:46:07 | INFO | base - scrape_p2 - 217 | Scraping process completed | 1 properties scraped
+
+
+============================== Close browser
+
+13:46:09 | INFO | browser - close_browser - 203 | Close browser
+
+--------------------
+
+13:46:09 | INFO | base - run_full_flow - 296 | Phase 2 (detail scraping) completed.
+13:46:09 | INFO | base - <module> - 321 | Closing database session for direct file run.

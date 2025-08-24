@@ -123,9 +123,6 @@ async def run_scraper_api(fe_input: ScraperSettings, db: Session = Depends(get_d
 
     log.info(f"api called: /api/run | fe_input={fe_input.model_dump()}")
 
-    if not db:
-        return {"detail": "Database connection not established."}
-
     try:        
         # Run the synchronous, blocking function in a separate thread
         # This allows the main event loop to remain unblocked and stream logs

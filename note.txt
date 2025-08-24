@@ -215,14 +215,13 @@ async def sse_logs(request:Request):
 
 
 
+___________api list integrate db
+- file-list
+- file-detail
+- file-download
 
 
 
 
 
 
-
-______________________________________________________________________________
-
-
-- sửa lỗi created_at: 
