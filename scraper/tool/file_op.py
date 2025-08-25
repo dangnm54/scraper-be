@@ -3,6 +3,7 @@ import logging
 import numpy as np
 import pandas as pd
 from datetime import datetime
+import pytz
 from typing import Dict, List, Any, cast
 
 import scraper.tool.log_op as lg
@@ -32,6 +33,7 @@ def get_file_list(db: Session) -> List[FileMetadata]:
    lg.log_divider('Get session list')
    
    file_list: List[FileMetadata] = []
+   vietnam_tz = pytz.timezone('Asia/Ho_Chi_Minh')
 
    session_data = (
       db.query(
@@ -40,16 +42,19 @@ def get_file_list(db: Session) -> List[FileMetadata]:
          func.min(PropertyDB.created_at).label('date_created'),
          func.count(PropertyDB.id).label('item_count')
       )
-      .group_by(PropertyDB.session_id)
-      .order_by(func.min(PropertyDB.created_at))
+      .group_by(PropertyDB.session_id, PropertyDB.session_name)
+      .order_by(func.min(PropertyDB.created_at).desc())
       .all()
    )
 
    for file_id, file_name, date_created, item_count in session_data:
+
+      local_date_created = date_created.astimezone(vietnam_tz)
+
       file_list.append(FileMetadata(
          id = str(file_id),
          file_name = file_name,
-         date_created = date_created.strftime('%Y-%m-%d'),
+         date_created = local_date_created.strftime('%Y-%m-%d'),
          item_count = item_count
       ))
 
