@@ -160,7 +160,7 @@ async def get_file_list_api(db: Session | None = Depends(get_db)) -> List[FileMe
         raise HTTPException(status_code=500, detail="Database session not found")
 
     try:
-        file_list: List[FileMetadata] = fop.get_file_metadata_list(db)
+        file_list: List[FileMetadata] = fop.get_file_list(db)
         return file_list
         
     except Exception as e:

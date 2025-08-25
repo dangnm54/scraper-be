@@ -22,7 +22,7 @@ from sqlalchemy.sql import func
 log = logging.getLogger(__name__)
 
 
-def get_file_metadata_list(db: Session) -> List[FileMetadata]:
+def get_file_list(db: Session) -> List[FileMetadata]:
    """
    input: None
    output: list of file metadata
@@ -57,13 +57,13 @@ def get_file_metadata_list(db: Session) -> List[FileMetadata]:
 
 
 
-def get_file_path(file_id: int) -> Dict[str, str]:
+def get_file_path(file_id: int, db: Session) -> Dict[str, str]:
 
    lg.log_divider('Get file path')
 
    log.info(f"Received file_id: {file_id}")
 
-   file_metadata_list: List[FileMetadata] = get_file_metadata_list()
+   file_metadata_list: List[FileMetadata] = get_file_list(db)
    file_path: str = ''
    file_name: str = ''
 
