@@ -16,11 +16,10 @@ class ScraperSettings(BaseModel):
 
 
 class FileMetadata(BaseModel):
-    id: int
+    id: str
     file_name: str
     date_created: str
     item_count: int
-    path: str
 
 
 

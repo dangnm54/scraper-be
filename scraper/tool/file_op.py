@@ -3,20 +3,18 @@ import logging
 import numpy as np
 import pandas as pd
 from datetime import datetime
-from fastapi import HTTPException
 from typing import Dict, List, Any, cast
 
-try:
-   import scraper.tool.log_op as lg
-   from scraper.tool.config import data_folder_path
-   from scraper.type.api import FileDetail, FileMetadata
-   from scraper.type.data import PropertyDetail
-except ImportError:
-   import tool.log_op as lg
-   from tool.config import data_folder_path
-   from type.api import FileDetail, FileMetadata
-   from type.data import PropertyDetail
+import scraper.tool.log_op as lg
+import scraper.tool.db_op as dbop
 
+from scraper.tool.config import data_folder_path
+from scraper.type.api import FileDetail, FileMetadata
+from scraper.type.data import PropertyDB, PropertyDetail
+
+from fastapi import HTTPException
+from sqlalchemy.orm import Session
+from sqlalchemy.sql import func
 
 # -----------------------------------------------------------------------------------
 
@@ -24,57 +22,36 @@ except ImportError:
 log = logging.getLogger(__name__)
 
 
-def get_file_metadata_list() -> List[FileMetadata]:
+def get_file_metadata_list(db: Session) -> List[FileMetadata]:
    """
    input: None
    output: list of file metadata
-   Scans 'data' folder and return list of file metadata
+   Scans database and return list of session (= 'file')
    """
    
-   lg.log_divider('Get file metadata list')
+   lg.log_divider('Get session list')
    
-   data_path: str = data_folder_path
    file_list: List[FileMetadata] = []
-   file_id: int = 1
-   file_date: str = ''
 
-   if not os.path.exists(data_path):
-      return []
+   session_data = (
+      db.query(
+         PropertyDB.session_id.label('file_id'),
+         PropertyDB.session_name.label('file_name'),
+         func.min(PropertyDB.created_at).label('date_created'),
+         func.count(PropertyDB.id).label('item_count')
+      )
+      .group_by(PropertyDB.session_id)
+      .order_by(func.min(PropertyDB.created_at))
+      .all()
+   )
 
-   for file_name in os.listdir(data_path):
-      if file_name.endswith(".csv") and "full" in file_name.lower():
-         file_path: str = os.path.join(data_path, file_name)
-
-         # get file date
-         try:
-               timestamp: float = os.path.getmtime(file_path) # get modification time
-               file_date = datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d')
-         except Exception:
-               file_date = 'Unknown date'
-               
-         # get item count
-         item_count: int = 0
-         try:
-               with open(file_path, 'r', encoding='utf-8') as f:
-                  item_count = sum(1 for line in f) - 1 # Subtract 1 for header row
-                  if item_count < 0: item_count = 0
-         except Exception:
-               item_count = 0
-
-         file_list.append(FileMetadata(
-               id = file_id,
-               file_name = file_name,
-               date_created = file_date,
-               item_count = item_count,
-               path = file_path
-         ))
-         file_id += 1
-
-         log.info(f'file_path: {file_path}')
-
-   # Sort by date created (newest first)
-      # lambda is shorthand mini function to get date_created value of each file
-   file_list.sort(key=lambda file: file.date_created, reverse=True)
+   for file_id, file_name, date_created, item_count in session_data:
+      file_list.append(FileMetadata(
+         id = str(file_id),
+         file_name = file_name,
+         date_created = date_created.strftime('%Y-%m-%d'),
+         item_count = item_count
+      ))
 
    return file_list
 

@@ -105,7 +105,7 @@ def read_root() -> Dict[str, str]:
 
 
 @app.post("/api/run")
-async def run_scraper_api(fe_input: ScraperSettings, db: Session = Depends(get_db)) -> Dict[str, str]:
+async def run_scraper_api(fe_input: ScraperSettings, db: Session | None = Depends(get_db)) -> Dict[str, str]:
     """
     - input: data required from Fe
     - output: file in data folder
@@ -113,6 +113,10 @@ async def run_scraper_api(fe_input: ScraperSettings, db: Session = Depends(get_d
         - trigger scraping process
         - log will be sent via SSE stream
     """
+
+    if not db:
+        log.error("Database session not found")
+        raise HTTPException(status_code=500, detail="Database session not found")
 
     # .get_running_loop -> get reference to the current event loop (main thread)
     if not sse_handler.loop:
@@ -149,9 +153,14 @@ async def run_scraper_api(fe_input: ScraperSettings, db: Session = Depends(get_d
 
 
 @app.get("/api/data/file-list", response_model=List[FileMetadata])
-async def get_file_list_api() -> List[FileMetadata]:
+async def get_file_list_api(db: Session | None = Depends(get_db)) -> List[FileMetadata]:
+    
+    if not db:
+        log.error("Database session not found")
+        raise HTTPException(status_code=500, detail="Database session not found")
+
     try:
-        file_list: List[FileMetadata] = fop.get_file_metadata_list()
+        file_list: List[FileMetadata] = fop.get_file_metadata_list(db)
         return file_list
         
     except Exception as e:
