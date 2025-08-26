@@ -25,7 +25,7 @@ class FileMetadata(BaseModel):
 
 class FileDetail(BaseModel):
     detail: str
-    data: List[Dict[str, Any]] | None
+    data: List[Dict[str, Any]]
 
 
 

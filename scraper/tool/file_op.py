@@ -5,6 +5,7 @@ import pandas as pd
 from datetime import datetime
 import pytz
 from typing import Dict, List, Any, cast
+import uuid
 
 import scraper.tool.log_op as lg
 import scraper.tool.db_op as dbop
@@ -16,6 +17,7 @@ from scraper.type.data import PropertyDB, PropertyDetail
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
+from sqlalchemy.orm import load_only
 
 # -----------------------------------------------------------------------------------
 
@@ -92,7 +94,7 @@ def get_file_path(file_id: int, db: Session) -> Dict[str, str]:
 
 
 
-def get_file_detail(file_id: int) -> FileDetail:
+def get_file_detail(file_id: str, db: Session) -> FileDetail:
    """
    input: file_id
    output: detail of file (list of dict)
@@ -102,34 +104,32 @@ def get_file_detail(file_id: int) -> FileDetail:
       - turn dataframe to list of dict
    """
 
-   lg.log_divider('Get file detail')
+   data: List[Dict[str, Any]] = []
 
-   log.info(f"Received file_id: {file_id}")
+   excluded_col_names: List[str] = [
+      "session_id",
+      "session_name",
+      "created_at"
+   ]
 
-   file_name: str = ''
-   file_path: str = ''
-   file_name, file_path = get_file_path(file_id)
+   included_col_names = [col for col in PropertyDB.__table__.columns.keys()
+                        if col not in excluded_col_names]
 
-   # make dataframe from file path
-   detail_df: pd.DataFrame = csv_to_df(file_path, index='prop_code', mode=2)
+   session_data = (
+      db.query(PropertyDB)
+      .options(load_only(*included_col_names))
+      .filter_by(session_id=uuid.UUID(file_id))
+      .all()
+   )
 
-   # Replace all inf/-inf, null-like (eg: NaN, None, NaT) values with None (which becomes null in JSON)
-   detail_df = detail_df.replace([np.inf, -np.inf], None)
-   detail_df = detail_df.where(pd.notnull(detail_df), None)
+   for row in session_data:
+      data.append(row.model_dump())
 
-   # update all value to friendliest Python type to easily convert to JSON
-   detail_df = detail_df.convert_dtypes()
-
-   # remove 'ID' as index, so 'ID' can be included in dict
-   detail_df.reset_index(inplace=True)
-   
-   # orient -> dictate the struc of dict
-   # 'records' -> 'list of dict' structure 
-   detail_dict: List[Dict[str, Any]] = cast(List[Dict[str, Any]], detail_df.to_dict(orient='records'))
+   file_name: str = db.query(PropertyDB.session_name).filter_by(session_id=uuid.UUID(file_id)).scalar()
 
    return FileDetail(
       detail = f'[file-detail api] Content for {file_name} fetched successfully',
-      data = detail_dict
+      data = data
    )
 
 

@@ -162,7 +162,10 @@ async def get_file_list_api(db: Session | None = Depends(get_db)) -> List[FileMe
     try:
         file_list: List[FileMetadata] = fop.get_file_list(db)
         return file_list
-        
+
+    except HTTPException as e:
+        raise e
+
     except Exception as e:
         lg.log_detail_error(e)
         return []
@@ -172,9 +175,14 @@ async def get_file_list_api(db: Session | None = Depends(get_db)) -> List[FileMe
 
 
 @app.get("/api/data/file-detail/{file_id}", response_model=FileDetail)
-async def get_file_detail_api(file_id: int) -> FileDetail:
+async def get_file_detail_api(file_id: str, db: Session | None = Depends(get_db)) -> FileDetail:
+    
+    if not db:
+        log.error("Database session not found")
+        raise HTTPException(status_code=500, detail="Database session not found")
+
     try:
-        file_detail: FileDetail = fop.get_file_detail(file_id)
+        file_detail: FileDetail = fop.get_file_detail(file_id, db)
         return file_detail
     
     except HTTPException as e:
