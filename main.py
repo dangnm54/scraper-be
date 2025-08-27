@@ -1,13 +1,14 @@
 import os
+import io
 import logging
 import asyncio
-from typing import Dict, List
+import pandas as pd
+from typing import Dict, List, Any
 from datetime import datetime
+
+
 from starlette.responses import StreamingResponse
-
-
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import FileResponse 
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -197,20 +198,41 @@ async def get_file_detail_api(file_id: str, db: Session | None = Depends(get_db)
 
 
 @app.get("/api/data/file-download/{file_id}")
-async def download_file_api(file_id: int) -> FileResponse:
+async def download_file_api(file_id: str, db: Session | None = Depends(get_db)) -> StreamingResponse:
+
+    if not db:
+        log.error("Database session not found")
+        raise HTTPException(status_code=500, detail="Database session not found")
+
     try:
-        file_name: str = ''
-        file_path: str = ''
-        file_name, file_path = fop.get_file_path(file_id)
+        file_detail: FileDetail = fop.get_file_detail(file_id, db)
+        file_name: str = file_detail.file_name
+        file_data: List[Dict[str, Any]] = file_detail.file_data
 
-        # check if file exist in server's file system
-        if not os.path.exists(file_path):
-            raise HTTPException(status_code=404, detail=f"File '{file_name}' not found on path '{file_path}'.")
 
-        return FileResponse(path=file_path, media_type='text/csv', filename=file_name)
+        # stream -> in-memory container to store csv data
+        # to_csv -> write csv data to stream
+        # index=True -> include index column in csv
+        file_df: pd.DataFrame = fop.list_dict_to_df(file_data)
+        stream = io.StringIO()
+        file_df.to_csv(stream, index=True, encoding='utf-8-sig')
+
+
+        # iter([stream.getvalue()]) -> create an iterator that yields the csv data
+        # media_type -> specify the media type of the response
+        # headers -> add headers to the response
+        response = StreamingResponse(
+            iter([stream.getvalue()]),
+            media_type="text/csv",
+            headers={"Content-Disposition": f"attachment; filename={file_name}"}
+        )
+
+        return response
+
 
     except HTTPException as e:
         raise e
+    
     except Exception as e:
         lg.log_detail_error(e)
         raise HTTPException(status_code=500, detail=f'[file-download api] Server error: {str(e)}')

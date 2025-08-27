@@ -64,44 +64,43 @@ def get_file_list(db: Session) -> List[FileMetadata]:
 
 
 
-def get_file_path(file_id: int, db: Session) -> Dict[str, str]:
+# def query_file_data(file_id: int, db: Session) -> Dict[str, str]:
 
-   lg.log_divider('Get file path')
+#    lg.log_divider('Get file path')
 
-   log.info(f"Received file_id: {file_id}")
+#    log.info(f"Received file_id: {file_id}")
 
-   file_metadata_list: List[FileMetadata] = get_file_list(db)
-   file_path: str = ''
-   file_name: str = ''
+#    file_metadata_list: List[FileMetadata] = get_file_list(db)
+#    file_path: str = ''
+#    file_name: str = ''
 
-   for item in file_metadata_list:
-      if item.id == file_id:
-         file_path = item.path
-         file_name = item.file_name
-         break
-   log.info(f"Found file_path: {file_path}")
-   log.info(f"Found file_name: {file_name}")
+#    for item in file_metadata_list:
+#       if item.id == file_id:
+#          file_path = item.path
+#          file_name = item.file_name
+#          break
+#    log.info(f"Found file_path: {file_path}")
+#    log.info(f"Found file_name: {file_name}")
 
-   # check if file exist in file_metadata_list
-   if not file_path:   
-      # file_path is None -> not None is true -> raise 404
-      raise HTTPException(status_code=404, detail=f"File ID {file_id} not found.")
+#    # check if file exist in file_metadata_list
+#    if not file_path:   
+#       # file_path is None -> not None is true -> raise 404
+#       raise HTTPException(status_code=404, detail=f"File ID {file_id} not found.")
    
-   return {
-      'file_name': file_name,
-      'file_path': file_path 
-   }
+#    return {
+#       'file_name': file_name,
+#       'file_path': file_path 
+#    }
 
 
 
 def get_file_detail(file_id: str, db: Session) -> FileDetail:
    """
    input: file_id
-   output: detail of file (list of dict)
-   operation:
-      - check path of file
-      - create dataframe from file 
-      - turn dataframe to list of dict
+   output: file data (list of dict)
+   operationL:
+      - query from db
+      - convert to list of dict
    """
 
    data: List[Dict[str, Any]] = []
@@ -129,7 +128,8 @@ def get_file_detail(file_id: str, db: Session) -> FileDetail:
 
    return FileDetail(
       detail = f'[file-detail api] Content for {file_name} fetched successfully',
-      data = data
+      file_name = file_name,
+      file_data = data
    )
 
 
