@@ -211,7 +211,6 @@ async def download_file_api(file_id: str, db: Session | None = Depends(get_db)) 
 
 
         # stream -> in-memory container to store csv data
-        # to_csv -> write csv data to stream
         # index=True -> include index column in csv
         file_df: pd.DataFrame = fop.list_dict_to_df(file_data)
         stream = io.StringIO()
@@ -219,8 +218,6 @@ async def download_file_api(file_id: str, db: Session | None = Depends(get_db)) 
 
 
         # iter([stream.getvalue()]) -> create an iterator that yields the csv data
-        # media_type -> specify the media type of the response
-        # headers -> add headers to the response
         response = StreamingResponse(
             iter([stream.getvalue()]),
             media_type="text/csv",

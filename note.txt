@@ -215,10 +215,15 @@ async def sse_logs(request:Request):
 
 
 
-___________api list integrate db
-- file-list
-- file-detail
-- file-download
+___________api response refactor
+
+- what is except HTTPException?
+- what if there'r 2 raise Exception in code, which one is executed?
+- where HTTPException shows on FE?
+- should build model for response?
+- how to catch diff error and show diff message?
+- api code is in 2 file, where and how I should catch error
+
 
 
 
