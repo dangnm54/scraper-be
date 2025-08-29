@@ -1,4 +1,4 @@
-from typing import Dict, List, Any
+from typing import Dict, List, Any, TypeVar, Generic
 from pydantic import BaseModel
 
 
@@ -29,4 +29,8 @@ class FileDetail(BaseModel):
     file_data: List[Dict[str, Any]]
 
 
-
+T = TypeVar('T')
+class ResponseBody(BaseModel, Generic[T]):
+    success: bool = True
+    mesage: str | None = None
+    data: T | None = None

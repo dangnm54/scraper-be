@@ -217,12 +217,12 @@ async def sse_logs(request:Request):
 
 ___________api response refactor
 
-- what is except HTTPException?
-- what if there'r 2 raise Exception in code, which one is executed?
-- where HTTPException shows on FE?
-- should build model for response?
-- how to catch diff error and show diff message?
-- api code is in 2 file, where and how I should catch error
+1 what is except HTTPException?
+2 what if there'r 2 raise Exception in code, which one is executed?, how is it excecuted?
+3 where HTTPException shows on FE?
+4 should build model for response?
+5 how to catch different error and show different messages when why code of an API is in 2 different files, eg in main.py and file_op.py?
+6 api code is in 2 file, where and how I should catch error
 
 
 

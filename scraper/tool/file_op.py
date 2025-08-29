@@ -94,11 +94,11 @@ def get_file_list(db: Session) -> List[FileMetadata]:
 
 
 
-def get_file_detail(file_id: str, db: Session) -> FileDetail:
+def get_file_detail(file_id: str, db: Session) -> FileDetail | None:
    """
    input: file_id
-   output: file data (list of dict)
-   operationL:
+   output: file data (list of dict) | None
+   operation:
       - query from db
       - convert to list of dict
    """
