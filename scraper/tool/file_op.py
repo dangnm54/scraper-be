@@ -100,10 +100,8 @@ def get_file_detail(file_id: str, db: Session) -> FileDetail | None:
    output: file data (list of dict) | None
    operation:
       - query from db
-      - convert to list of dict
+      - convert to FileDetail
    """
-
-   data: List[Dict[str, Any]] = []
 
    excluded_col_names: List[str] = [
       "session_id",
@@ -121,13 +119,16 @@ def get_file_detail(file_id: str, db: Session) -> FileDetail | None:
       .all()
    )
 
+
+   data: List[Dict[str, Any]] = []
+
    for row in session_data:
       data.append(row.model_dump())
+
 
    file_name: str = db.query(PropertyDB.session_name).filter_by(session_id=uuid.UUID(file_id)).scalar()
 
    return FileDetail(
-      detail = f'[file-detail api] Content for {file_name} fetched successfully',
       file_name = file_name,
       file_data = data
    )

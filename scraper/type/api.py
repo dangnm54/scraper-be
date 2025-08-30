@@ -24,13 +24,13 @@ class FileMetadata(BaseModel):
 
 
 class FileDetail(BaseModel):
-    detail: str
     file_name: str
     file_data: List[Dict[str, Any]]
+
 
 
 T = TypeVar('T')
 class ResponseBody(BaseModel, Generic[T]):
     success: bool = True
-    mesage: str | None = None
+    message: str | None = None
     data: T | None = None

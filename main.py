@@ -7,15 +7,17 @@ from typing import Dict, List, Any
 from datetime import datetime
 
 
-from starlette.responses import StreamingResponse
+
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.responses import JSONResponse
+from starlette.responses import StreamingResponse
 
 
 import scraper.tool.log_op as lg
 import scraper.tool.file_op as fop
 from scraper.base import run_full_flow
-from scraper.type.api import ScraperSettings, FileMetadata, FileDetail
+from scraper.type.api import ScraperSettings, FileMetadata, FileDetail, ResponseBody
 from scraper.tool.db_op import get_db
 
 
@@ -175,23 +177,46 @@ async def get_file_list_api(db: Session | None = Depends(get_db)) -> List[FileMe
 
 
 
-@app.get("/api/data/file-detail/{file_id}", response_model=FileDetail)
-async def get_file_detail_api(file_id: str, db: Session | None = Depends(get_db)) -> FileDetail:
+@app.get("/api/data/file-detail/{file_id}")
+async def get_file_detail_api(file_id: str, db: Session | None = Depends(get_db)) -> JSONResponse:
     
+    api_sig = '[file-detail api]'
+
     if not db:
         log.error("Database session not found")
-        raise HTTPException(status_code=500, detail="Database session not found")
+        error_resp = ResponseBody[FileDetail](
+            success = False,
+            message = f"{api_sig} Database session not found"
+        )
+        return JSONResponse(status_code=500, content=error_resp)
 
     try:
-        file_detail: FileDetail = fop.get_file_detail(file_id, db)
-        return file_detail
-    
-    except HTTPException as e:
-        raise e
+        file_detail: FileDetail | None = fop.get_file_detail(file_id, db)
+        
+        if not file_detail:
+            error_resp = ResponseBody[FileDetail](
+                success = False,
+                message = f"{api_sig} File ID #{file_id} not found"
+            )
+            return JSONResponse(status_code=404, content=error_resp)
+        
+
+        success_resp = ResponseBody[FileDetail](
+            success = True,
+            message = f"{api_sig} Fetch cotent for file <{file_detail.file_name}> #{file_id} successfully",
+            data = file_detail
+        )
+        return JSONResponse(status_code=200, content=success_resp)
+
 
     except Exception as e:
         lg.log_detail_error(e)
-        raise HTTPException(status_code=500, detail=f"[file-detail api] Server error: {str(e)}")        
+        error_resp = ResponseBody[FileDetail](
+            success = False,
+            message = f"{api_sig} Server error: {str(e)}"
+        )
+        return JSONResponse(status_code=500, content=error_resp)
+
 
 
 
