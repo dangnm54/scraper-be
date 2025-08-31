@@ -108,18 +108,24 @@ def read_root() -> Dict[str, str]:
 
 
 @app.post("/api/run")
-async def run_scraper_api(fe_input: ScraperSettings, db: Session | None = Depends(get_db)) -> Dict[str, str]:
+async def run_scraper_api(fe_input: ScraperSettings, db: Session | None = Depends(get_db)) -> JSONResponse:
     """
-    - input: data required from Fe
-    - output: file in data folder
-    - note:
+    - input: data required from FE
+    - output: file in database
+    - operation:
         - trigger scraping process
         - log will be sent via SSE stream
     """
 
+    api_sig = '[run-scraper api]'
+    
     if not db:
         log.error("Database session not found")
-        raise HTTPException(status_code=500, detail="Database session not found")
+        error_resp = ResponseBody[None](
+            success = False,
+            message = f"{api_sig} Database session not found"
+        )
+        return JSONResponse(status_code=500, content=error_resp)
 
     # .get_running_loop -> get reference to the current event loop (main thread)
     if not sse_handler.loop:
@@ -155,23 +161,45 @@ async def run_scraper_api(fe_input: ScraperSettings, db: Session | None = Depend
 
 
 
-@app.get("/api/data/file-list", response_model=List[FileMetadata])
-async def get_file_list_api(db: Session | None = Depends(get_db)) -> List[FileMetadata]:
+@app.get("/api/data/file-list")
+async def get_file_list_api(db: Session | None = Depends(get_db)) -> JSONResponse:
     
+    api_sig = '[file-list api]'
+
     if not db:
         log.error("Database session not found")
-        raise HTTPException(status_code=500, detail="Database session not found")
+        error_resp = ResponseBody[List[FileMetadata]](
+            success = False,
+            message = f"{api_sig} Database session not found"
+        )
+        return JSONResponse(status_code=500, content=error_resp)
 
     try:
         file_list: List[FileMetadata] = fop.get_file_list(db)
-        return file_list
 
-    except HTTPException as e:
-        raise e
+        if not file_list:
+            error_resp = ResponseBody[List[FileMetadata]](
+                success = False,
+                message = f"{api_sig} No file found on database"
+            )
+            return JSONResponse(status_code=404, content=error_resp)
+            
+
+        success_resp = ResponseBody[List[FileMetadata]](
+            success = True,
+            message = f"{api_sig} Fetch all {len(file_list)} files successfully",
+            data = file_list
+        )
+        return JSONResponse(status_code=200, content=success_resp)
+
 
     except Exception as e:
         lg.log_detail_error(e)
-        return []
+        error_resp = ResponseBody[List[FileMetadata]](
+            success = False,
+            message = f"{api_sig} Server error: {str(e)}"
+        )
+        return JSONResponse(status_code=500, content=error_resp)
 
 
 
@@ -191,9 +219,9 @@ async def get_file_detail_api(file_id: str, db: Session | None = Depends(get_db)
         return JSONResponse(status_code=500, content=error_resp)
 
     try:
-        file_detail: FileDetail | None = fop.get_file_detail(file_id, db)
+        file_detail: FileDetail = fop.get_file_detail(file_id, db)
         
-        if not file_detail:
+        if not file_detail.file_data:
             error_resp = ResponseBody[FileDetail](
                 success = False,
                 message = f"{api_sig} File ID #{file_id} not found"
@@ -223,24 +251,37 @@ async def get_file_detail_api(file_id: str, db: Session | None = Depends(get_db)
 
 
 @app.get("/api/data/file-download/{file_id}")
-async def download_file_api(file_id: str, db: Session | None = Depends(get_db)) -> StreamingResponse:
+async def download_file_api(file_id: str, db: Session | None = Depends(get_db)) -> StreamingResponse | JSONResponse:
+
+    api_sig = '[file-download api]'
 
     if not db:
         log.error("Database session not found")
-        raise HTTPException(status_code=500, detail="Database session not found")
+        error_resp = ResponseBody[None](
+            success = False,
+            message = f"{api_sig} Database session not found"
+        )
+        return JSONResponse(status_code=500, content=error_resp)
 
     try:
         file_detail: FileDetail = fop.get_file_detail(file_id, db)
+
+        if not file_detail.file_data:
+            error_resp = ResponseBody[None](
+                success = False,
+                message = f"{api_sig} File ID #{file_id} not found"
+            )
+            return JSONResponse(status_code=404, content=error_resp)
+
+
         file_name: str = file_detail.file_name
         file_data: List[Dict[str, Any]] = file_detail.file_data
-
 
         # stream -> in-memory container to store csv data
         # index=True -> include index column in csv
         file_df: pd.DataFrame = fop.list_dict_to_df(file_data)
         stream = io.StringIO()
         file_df.to_csv(stream, index=True, encoding='utf-8-sig')
-
 
         # iter([stream.getvalue()]) -> create an iterator that yields the csv data
         response = StreamingResponse(
@@ -251,15 +292,14 @@ async def download_file_api(file_id: str, db: Session | None = Depends(get_db)) 
 
         return response
 
-
-    except HTTPException as e:
-        raise e
     
     except Exception as e:
         lg.log_detail_error(e)
-        raise HTTPException(status_code=500, detail=f'[file-download api] Server error: {str(e)}')
-
-
+        error_resp = ResponseBody[None](
+            success = False,
+            message = f"{api_sig} Server error: {str(e)}"
+        )
+        return JSONResponse(status_code=500, content=error_resp)
 
 
 

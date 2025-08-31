@@ -14,7 +14,6 @@ from scraper.tool.config import data_folder_path
 from scraper.type.api import FileDetail, FileMetadata
 from scraper.type.data import PropertyDB, PropertyDetail
 
-from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
 from sqlalchemy.orm import load_only
@@ -28,14 +27,13 @@ log = logging.getLogger(__name__)
 def get_file_list(db: Session) -> List[FileMetadata]:
    """
    input: None
-   output: list of file metadata
-   Scans database and return list of session (= 'file')
+   output: list of file metadata | None
+   operation:
+      - query from db
+      - convert to list FileMetadata
    """
    
    lg.log_divider('Get session list')
-   
-   file_list: List[FileMetadata] = []
-   vietnam_tz = pytz.timezone('Asia/Ho_Chi_Minh')
 
    session_data = (
       db.query(
@@ -48,6 +46,10 @@ def get_file_list(db: Session) -> List[FileMetadata]:
       .order_by(func.min(PropertyDB.created_at).desc())
       .all()
    )
+
+
+   file_list: List[FileMetadata] = []
+   vietnam_tz = pytz.timezone('Asia/Ho_Chi_Minh')
 
    for file_id, file_name, date_created, item_count in session_data:
 
@@ -64,37 +66,7 @@ def get_file_list(db: Session) -> List[FileMetadata]:
 
 
 
-# def query_file_data(file_id: int, db: Session) -> Dict[str, str]:
-
-#    lg.log_divider('Get file path')
-
-#    log.info(f"Received file_id: {file_id}")
-
-#    file_metadata_list: List[FileMetadata] = get_file_list(db)
-#    file_path: str = ''
-#    file_name: str = ''
-
-#    for item in file_metadata_list:
-#       if item.id == file_id:
-#          file_path = item.path
-#          file_name = item.file_name
-#          break
-#    log.info(f"Found file_path: {file_path}")
-#    log.info(f"Found file_name: {file_name}")
-
-#    # check if file exist in file_metadata_list
-#    if not file_path:   
-#       # file_path is None -> not None is true -> raise 404
-#       raise HTTPException(status_code=404, detail=f"File ID {file_id} not found.")
-   
-#    return {
-#       'file_name': file_name,
-#       'file_path': file_path 
-#    }
-
-
-
-def get_file_detail(file_id: str, db: Session) -> FileDetail | None:
+def get_file_detail(file_id: str, db: Session) -> FileDetail:
    """
    input: file_id
    output: file data (list of dict) | None
@@ -119,18 +91,16 @@ def get_file_detail(file_id: str, db: Session) -> FileDetail | None:
       .all()
    )
 
+   file_data: List[Dict[str, Any]] = []
 
-   data: List[Dict[str, Any]] = []
-
-   for row in session_data:
-      data.append(row.model_dump())
-
+   for value in session_data:
+      file_data.append(value.model_dump())
 
    file_name: str = db.query(PropertyDB.session_name).filter_by(session_id=uuid.UUID(file_id)).scalar()
 
    return FileDetail(
       file_name = file_name,
-      file_data = data
+      file_data = file_data
    )
 
 
