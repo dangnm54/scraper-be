@@ -34,3 +34,5 @@ class ResponseBody(BaseModel, Generic[T]):
     success: bool = True
     message: str | None = None
     data: T | None = None
+
+

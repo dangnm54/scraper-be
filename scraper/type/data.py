@@ -1,6 +1,7 @@
 from typing import Literal,Optional, List
 from pydantic import BaseModel, Field
 from uuid import UUID, uuid4
+from enum import Enum
 
 from sqlalchemy import Column, Integer, String, Float, DateTime
 from sqlalchemy.dialects.postgresql import UUID as PG_UUID
@@ -9,6 +10,11 @@ from .__init__ import Base  # Import the Base we just created
 
 
 # ------------------------------------------------------------------------------------------------
+
+class ScrapeStatus(Enum):
+    success = 'finish both scrape_p1 and scrape_p2'
+    failed = 'failed in scrape_p1'
+    partial = 'finish only scrape_p1, failed in scrape_p2'
 
 
 # SQLAlchemy model

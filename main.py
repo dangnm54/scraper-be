@@ -18,6 +18,7 @@ import scraper.tool.log_op as lg
 import scraper.tool.file_op as fop
 from scraper.base import run_full_flow
 from scraper.type.api import ScraperSettings, FileMetadata, FileDetail, ResponseBody
+from scraper.type.data import ScrapeStatus
 from scraper.tool.db_op import get_db
 
 
@@ -139,7 +140,7 @@ async def run_scraper_api(fe_input: ScraperSettings, db: Session | None = Depend
     try:        
         # Run the synchronous, blocking function in a separate thread
         # This allows the main event loop to remain unblocked and stream logs
-        result: Dict[str, str] = await asyncio.to_thread(
+        scrape_status: ScrapeStatus = await asyncio.to_thread(
             run_full_flow,
                 db,
                 file_name = fe_input.file_name,
@@ -150,14 +151,29 @@ async def run_scraper_api(fe_input: ScraperSettings, db: Session | None = Depend
                 collect_booking_rate = fe_input.collect_booking_rate
         )
 
-        return result
+        if scrape_status == ScrapeStatus.success:
+            resp = ResponseBody[None](
+                success = True,
+                message = f"{api_sig} {scrape_status.value}"
+            )
+        else:
+            resp = ResponseBody[None](
+                success = False,
+                message = f"{api_sig} {scrape_status.value}"
+            )
+        return JSONResponse(status_code=200, content=resp)
+
+
 
     except Exception as e:
         lg.log_detail_error(e)
         await FE_log_stream.put('--- Scraping failed: {e} ---')
-        raise HTTPException(status_code=500, detail=f"[run-scraper api] Server error: {str(e)}")
 
-
+        error_resp = ResponseBody[List[FileMetadata]](
+            success = False,
+            message = f"{api_sig} Server error: {str(e)}"
+        )
+        return JSONResponse(status_code=500, content=error_resp)
 
 
 
