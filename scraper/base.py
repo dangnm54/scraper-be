@@ -294,7 +294,6 @@ def run_full_flow(
     if not link_list_db:
         log.error(f"Phase 1 didn't find any properties -> Stop scraping process")
         return ScrapeStatus.failed
-    
 
     scrape_status: ScrapeStatus = scrape_p2(db, link_list_db, collect_host_data, collect_booking_rate, save_db)
     log.info(f"Phase 2 (detail scraping) completed.")
@@ -306,30 +305,30 @@ def run_full_flow(
 # -----------------------------------------------------------------------------------
 
 
-if __name__ == "__main__":
-    db_session: Session | None = dbop.create_db_session()
+# if __name__ == "__main__":
+#     db_session: Session | None = dbop.create_db_session()
 
-    if db_session:
-        try: 
-            run_full_flow(
-                db = db_session,
-                file_name = 'PhoCo',
-                location = 'Pho Co, hanoi',
-                num_guest = 2,
-                num_property = 1,
-                collect_host_data = True,
-                collect_booking_rate = True,
-                save_db = True
-            )
-        finally:
-            log.info("Closing database session for direct file run.")
-            db_session.close()
+#     if db_session:
+#         try: 
+#             run_full_flow(
+#                 db = db_session,
+#                 file_name = 'PhoCo',
+#                 location = 'Pho Co, hanoi',
+#                 num_guest = 2,
+#                 num_property = 1,
+#                 collect_host_data = True,
+#                 collect_booking_rate = True,
+#                 save_db = True
+#             )
+#         finally:
+#             log.info("Closing database session for direct file run.")
+#             db_session.close()
 
-    else:  
-        log.error("Could not create database session.")
+#     else:  
+#         log.error("Could not create database session.")
 
 
 
-# start_driver()
+# # start_driver()
 
-print(f'\nLog file saved to: {log_file_path}\n')
+# print(f'\nLog file saved to: {log_file_path}\n')

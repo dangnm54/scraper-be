@@ -151,18 +151,17 @@ async def run_scraper_api(fe_input: ScraperSettings, db: Session | None = Depend
                 collect_booking_rate = fe_input.collect_booking_rate
         )
 
-        if scrape_status == ScrapeStatus.success:
+        if scrape_status in [ScrapeStatus.success, ScrapeStatus.partial]:
             resp = ResponseBody[None](
                 success = True,
                 message = f"{api_sig} {scrape_status.value}"
             )
-        else:
+        elif scrape_status == ScrapeStatus.failed:
             resp = ResponseBody[None](
                 success = False,
                 message = f"{api_sig} {scrape_status.value}"
             )
         return JSONResponse(status_code=200, content=resp)
-
 
 
     except Exception as e:
@@ -174,6 +173,8 @@ async def run_scraper_api(fe_input: ScraperSettings, db: Session | None = Depend
             message = f"{api_sig} Server error: {str(e)}"
         )
         return JSONResponse(status_code=500, content=error_resp)
+
+
 
 
 
@@ -265,8 +266,7 @@ async def get_file_detail_api(file_id: str, db: Session | None = Depends(get_db)
 
 
 
-
-@app.get("/api/data/file-download/{file_id}")
+@app.get("/api/data/file-download/{file_id}", response_model=None)
 async def download_file_api(file_id: str, db: Session | None = Depends(get_db)) -> StreamingResponse | JSONResponse:
 
     api_sig = '[file-download api]'
@@ -316,6 +316,8 @@ async def download_file_api(file_id: str, db: Session | None = Depends(get_db)) 
             message = f"{api_sig} Server error: {str(e)}"
         )
         return JSONResponse(status_code=500, content=error_resp)
+
+
 
 
 
