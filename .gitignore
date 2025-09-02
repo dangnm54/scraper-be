@@ -3,3 +3,4 @@ data/
 context.txt
 note/
 .env
+__pycache__/
