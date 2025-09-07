@@ -151,19 +151,14 @@ async def run_scraper_api(fe_input: ScraperSettings, db: Session | None = Depend
                 collect_booking_rate = fe_input.collect_booking_rate
         )
 
-        if scrape_status in [ScrapeStatus.success, ScrapeStatus.partial]:
-            resp = ResponseBody[None](
-                success = True,
-                message = f"{api_sig} {scrape_status.value}"
-            )
-        elif scrape_status == ScrapeStatus.failed:
-            resp = ResponseBody[None](
-                success = False,
-                message = f"{api_sig} {scrape_status.value}"
-            )
+        resp = ResponseBody[None](
+            success = True,
+            message = f"{api_sig} Finish scraping process",
+            data = scrape_status.value
+        )
         return JSONResponse(status_code=200, content=resp)
-
-
+        
+        
     except Exception as e:
         lg.log_detail_error(e)
         await FE_log_stream.put('--- Scraping failed: {e} ---')
