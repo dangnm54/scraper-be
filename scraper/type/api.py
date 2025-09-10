@@ -18,8 +18,8 @@ class ScraperSettings(BaseModel):
 class FileMetadata(BaseModel):
     id: str
     file_name: str
-    date_created: str
     item_count: int
+    date_created: str
 
 
 
@@ -32,7 +32,7 @@ class FileDetail(BaseModel):
 T = TypeVar('T')
 class ResponseBody(BaseModel, Generic[T]):
     success: bool = True
-    message: str | None = None
+    message: str
     data: T | None = None
 
 

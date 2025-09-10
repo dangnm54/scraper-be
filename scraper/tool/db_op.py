@@ -4,8 +4,7 @@ from datetime import datetime
 from typing import List, Generator
 from uuid import UUID
 
-from scraper.type.data import PropertyDB
-from scraper.type.data import PropertyDetail
+from scraper.type.data import PropertyDB, PropertyDetail
 import scraper.tool.log_op as lg
 
 from dotenv import load_dotenv

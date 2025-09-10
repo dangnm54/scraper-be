@@ -61,6 +61,8 @@ class PropertyDB(Base):
 
 ScrapeResult = Literal['Success', 'Failed', 'Partial']
 
+
+
 # Pydantic model for API input/output
 class PropertyDetail(BaseModel):
     # overview_data

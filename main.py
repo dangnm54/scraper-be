@@ -151,10 +151,10 @@ async def run_scraper_api(fe_input: ScraperSettings, db: Session | None = Depend
                 collect_booking_rate = fe_input.collect_booking_rate
         )
 
-        resp = ResponseBody[None](
+        resp = ResponseBody[str](
             success = True,
             message = f"{api_sig} Finish scraping process",
-            data = scrape_status.value
+            data: str = scrape_status.value
         )
         return JSONResponse(status_code=200, content=resp)
         
@@ -196,11 +196,11 @@ async def get_file_list_api(db: Session | None = Depends(get_db)) -> JSONRespons
             )
             return JSONResponse(status_code=404, content=error_resp)
             
-
+    
         success_resp = ResponseBody[List[FileMetadata]](
             success = True,
             message = f"{api_sig} Fetch all {len(file_list)} files successfully",
-            data = file_list
+            data: List[FileMetadata] = file_list
         )
         return JSONResponse(status_code=200, content=success_resp)
 

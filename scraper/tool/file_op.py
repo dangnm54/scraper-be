@@ -39,8 +39,8 @@ def get_file_list(db: Session) -> List[FileMetadata]:
       db.query(
          PropertyDB.session_id.label('file_id'),
          PropertyDB.session_name.label('file_name'),
-         func.min(PropertyDB.created_at).label('date_created'),
-         func.count(PropertyDB.id).label('item_count')
+         func.count(PropertyDB.id).label('item_count'),
+         func.min(PropertyDB.created_at).label('date_created')
       )
       .group_by(PropertyDB.session_id, PropertyDB.session_name)
       .order_by(func.min(PropertyDB.created_at).desc())
@@ -51,15 +51,15 @@ def get_file_list(db: Session) -> List[FileMetadata]:
    file_list: List[FileMetadata] = []
    vietnam_tz = pytz.timezone('Asia/Ho_Chi_Minh')
 
-   for file_id, file_name, date_created, item_count in session_data:
+   for file_id, file_name, item_count, date_created in session_data:
 
       local_date_created = date_created.astimezone(vietnam_tz)
 
       file_list.append(FileMetadata(
          id = str(file_id),
          file_name = file_name,
-         date_created = local_date_created.strftime('%Y-%m-%d'),
-         item_count = item_count
+         item_count = item_count,
+         date_created = local_date_created.strftime('%H:%M %d-%m-%Y')
       ))
 
    return file_list
@@ -94,7 +94,11 @@ def get_file_detail(file_id: str, db: Session) -> FileDetail:
    file_data: List[Dict[str, Any]] = []
 
    for value in session_data:
-      file_data.append(value.model_dump())
+      data = value.model_dump()
+      for k, v in data.items()
+         if isinstance(v, uuid.UUID)
+            data[k] = str(v)
+      file_data.append(data)
 
    file_name: str = db.query(PropertyDB.session_name).filter_by(session_id=uuid.UUID(file_id)).scalar()
 
