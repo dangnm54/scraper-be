@@ -109,18 +109,18 @@ def get_file_detail(file_id: str, db: Session) -> FileDetail:
 
 
 
-def list_dict_to_df(list_dict: List[Dict[str, Any]] | List[PropertyDetail], index:str='prop_code') -> pd.DataFrame:
+def list_dict_to_df(list_dict: List[Dict[str, Any]], index:str='prop_code') -> pd.DataFrame:
    
-   if isinstance(list_dict[0], PropertyDetail):
+   # if isinstance(list_dict[0], PropertyDetail):
 
-      tempt_dict: List[Dict[str, Any]] = []
+   #    tempt_dict: List[Dict[str, Any]] = []
       
-      for item in list_dict:
-         if isinstance(item, PropertyDetail):
-            # turn PropertyDetail instance to dict
-            tempt_dict.append(item.model_dump())
+   #    for item in list_dict:
+   #       if isinstance(item, PropertyDetail):
+   #          # turn PropertyDetail instance to dict
+   #          tempt_dict.append(item.model_dump())
       
-      list_dict = tempt_dict
+   #    list_dict = tempt_dict
    
    df: pd.DataFrame = pd.DataFrame(list_dict)
    df.set_index(index, inplace=True)

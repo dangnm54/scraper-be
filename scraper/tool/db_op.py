@@ -110,29 +110,29 @@ def get_session_name(db: Session, base_name: str) -> str:
 
 
 
-def save_data_to_db(
-        detail_list: List[PropertyDetail], 
-        db: Session, session_id: UUID, file_name: str,
-    ) -> None:
+# def save_data_to_db(
+#         detail_list: List[PropertyDetail], 
+#         db: Session, session_id: UUID, file_name: str,
+#     ) -> None:
     
-    log.info(f"Saving data to db")
+#     log.info(f"Saving data to db")
 
-    if detail_list:
+#     if detail_list:
             
-        for detail_instance in detail_list:
-            try:
-                db_property: PropertyDB = PropertyDB(
-                    **detail_instance.model_dump(), 
-                    session_id = session_id,
-                    session_name = file_name
-                )
-                db.add(db_property)
+#         for detail_instance in detail_list:
+#             try:
+#                 db_property: PropertyDB = PropertyDB(
+#                     **detail_instance.model_dump(), 
+#                     session_id = session_id,
+#                     session_name = file_name
+#                 )
+#                 db.add(db_property)
 
-            except Exception as e:
-                lg.log_detail_error(e)
+#             except Exception as e:
+#                 lg.log_detail_error(e)
         
-        db.commit()
-        log.info(f"{len(detail_list)} properties saved to database.")
+#         db.commit()
+#         log.info(f"{len(detail_list)} properties saved to database.")
 
-    else:
-        log.info("No properties found to save to database")
+#     else:
+#         log.info("No properties found to save to database")

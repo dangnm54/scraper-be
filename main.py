@@ -244,7 +244,7 @@ async def get_file_detail_api(file_id: str, db: Session | None = Depends(get_db)
         success_resp = ResponseBody[FileDetail](
             success = True,
             message = f"{api_sig} Fetch cotent for file <{file_detail.file_name}> #{file_id} successfully",
-            data = file_detail
+            data: FileDetail = file_detail
         )
         return JSONResponse(status_code=200, content=success_resp)
 
