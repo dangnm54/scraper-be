@@ -126,7 +126,7 @@ async def run_scraper_api(fe_input: ScraperSettings, db: Session | None = Depend
             success = False,
             message = f"{api_sig} Database session not found"
         )
-        return JSONResponse(status_code=500, content=error_resp)
+        return JSONResponse(status_code=500, content=error_resp.model_dump())
 
     # .get_running_loop -> get reference to the current event loop (main thread)
     if not sse_handler.loop:
@@ -154,7 +154,7 @@ async def run_scraper_api(fe_input: ScraperSettings, db: Session | None = Depend
         resp = ResponseBody[str](
             success = True,
             message = f"{api_sig} Finish scraping process",
-            data: str = scrape_status.value
+            data = scrape_status.value
         )
         return JSONResponse(status_code=200, content=resp)
         
@@ -167,7 +167,7 @@ async def run_scraper_api(fe_input: ScraperSettings, db: Session | None = Depend
             success = False,
             message = f"{api_sig} Server error: {str(e)}"
         )
-        return JSONResponse(status_code=500, content=error_resp)
+        return JSONResponse(status_code=500, content=error_resp.model_dump())
 
 
 
@@ -184,7 +184,7 @@ async def get_file_list_api(db: Session | None = Depends(get_db)) -> JSONRespons
             success = False,
             message = f"{api_sig} Database session not found"
         )
-        return JSONResponse(status_code=500, content=error_resp)
+        return JSONResponse(status_code=500, content=error_resp.model_dump())
 
     try:
         file_list: List[FileMetadata] = fop.get_file_list(db)
@@ -194,15 +194,15 @@ async def get_file_list_api(db: Session | None = Depends(get_db)) -> JSONRespons
                 success = False,
                 message = f"{api_sig} No file found on database"
             )
-            return JSONResponse(status_code=404, content=error_resp)
+            return JSONResponse(status_code=404, content=error_resp.model_dump())
             
     
         success_resp = ResponseBody[List[FileMetadata]](
             success = True,
             message = f"{api_sig} Fetch all {len(file_list)} files successfully",
-            data: List[FileMetadata] = file_list
+            data = file_list
         )
-        return JSONResponse(status_code=200, content=success_resp)
+        return JSONResponse(status_code=200, content=success_resp.model_dump())
 
 
     except Exception as e:
@@ -211,7 +211,7 @@ async def get_file_list_api(db: Session | None = Depends(get_db)) -> JSONRespons
             success = False,
             message = f"{api_sig} Server error: {str(e)}"
         )
-        return JSONResponse(status_code=500, content=error_resp)
+        return JSONResponse(status_code=500, content=error_resp.model_dump())
 
 
 
@@ -228,7 +228,7 @@ async def get_file_detail_api(file_id: str, db: Session | None = Depends(get_db)
             success = False,
             message = f"{api_sig} Database session not found"
         )
-        return JSONResponse(status_code=500, content=error_resp)
+        return JSONResponse(status_code=500, content=error_resp.model_dump())
 
     try:
         file_detail: FileDetail = fop.get_file_detail(file_id, db)
@@ -238,15 +238,15 @@ async def get_file_detail_api(file_id: str, db: Session | None = Depends(get_db)
                 success = False,
                 message = f"{api_sig} File ID #{file_id} not found"
             )
-            return JSONResponse(status_code=404, content=error_resp)
+            return JSONResponse(status_code=404, content=error_resp.model_dump())
         
 
         success_resp = ResponseBody[FileDetail](
             success = True,
-            message = f"{api_sig} Fetch cotent for file <{file_detail.file_name}> #{file_id} successfully",
-            data: FileDetail = file_detail
+            message = f"{api_sig} Fetch content for file <{file_detail.file_name}> #{file_id} successfully",
+            data = file_detail
         )
-        return JSONResponse(status_code=200, content=success_resp)
+        return JSONResponse(status_code=200, content=success_resp.model_dump())
 
 
     except Exception as e:
@@ -255,7 +255,7 @@ async def get_file_detail_api(file_id: str, db: Session | None = Depends(get_db)
             success = False,
             message = f"{api_sig} Server error: {str(e)}"
         )
-        return JSONResponse(status_code=500, content=error_resp)
+        return JSONResponse(status_code=500, content=error_resp.model_dump())
 
 
 
@@ -272,7 +272,7 @@ async def download_file_api(file_id: str, db: Session | None = Depends(get_db)) 
             success = False,
             message = f"{api_sig} Database session not found"
         )
-        return JSONResponse(status_code=500, content=error_resp)
+        return JSONResponse(status_code=500, content=error_resp.model_dump())
 
     try:
         file_detail: FileDetail = fop.get_file_detail(file_id, db)
@@ -282,12 +282,11 @@ async def download_file_api(file_id: str, db: Session | None = Depends(get_db)) 
                 success = False,
                 message = f"{api_sig} File ID #{file_id} not found"
             )
-            return JSONResponse(status_code=404, content=error_resp)
-
+            return JSONResponse(status_code=404, content=error_resp.model_dump())
 
         file_name: str = file_detail.file_name
         file_data: List[Dict[str, Any]] = file_detail.file_data
-
+    
         # stream -> in-memory container to store csv data
         # index=True -> include index column in csv
         file_df: pd.DataFrame = fop.list_dict_to_df(file_data)
@@ -297,7 +296,7 @@ async def download_file_api(file_id: str, db: Session | None = Depends(get_db)) 
         # iter([stream.getvalue()]) -> create an iterator that yields the csv data
         response = StreamingResponse(
             iter([stream.getvalue()]),
-            media_type="text/csv",
+            media_type="text/csv; charset=utf-8",
             headers={"Content-Disposition": f"attachment; filename={file_name}"}
         )
 
@@ -310,7 +309,7 @@ async def download_file_api(file_id: str, db: Session | None = Depends(get_db)) 
             success = False,
             message = f"{api_sig} Server error: {str(e)}"
         )
-        return JSONResponse(status_code=500, content=error_resp)
+        return JSONResponse(status_code=500, content=error_resp.model_dump())
 
 
 

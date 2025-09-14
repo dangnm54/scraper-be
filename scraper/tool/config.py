@@ -1,10 +1,10 @@
 import random
 
 # ___Proxy authen data
-proxy_user: str = "VN43221"
-proxy_password: str = "lLdQ8l4T"
-proxy_ip: str = "14.225.63.224"
-proxy_port: str = "41142"
+proxy_user: str = "xkNPjzrIminhd"
+proxy_password: str = "kTJnaMBA"
+proxy_ip: str = "160.25.77.92"
+proxy_port: str = "8539"
 
 
 # ___Path

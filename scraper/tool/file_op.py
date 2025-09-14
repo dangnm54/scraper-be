@@ -12,7 +12,7 @@ import scraper.tool.db_op as dbop
 
 from scraper.tool.config import data_folder_path
 from scraper.type.api import FileDetail, FileMetadata
-from scraper.type.data import PropertyDB, PropertyDetail
+from scraper.type.data import PropertyDB
 
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
@@ -75,30 +75,36 @@ def get_file_detail(file_id: str, db: Session) -> FileDetail:
       - convert to FileDetail
    """
 
-   excluded_col_names: List[str] = [
+   excluded_cols_names: List[str] = [
       "session_id",
       "session_name",
       "created_at"
    ]
 
-   included_col_names = [col for col in PropertyDB.__table__.columns.keys()
-                        if col not in excluded_col_names]
+   included_cols_names = [col for col in PropertyDB.__table__.columns.keys()
+                        if col not in excluded_cols_names]
+
+   included_cols = [getattr(PropertyDB, col) for col in included_cols_names]
 
    session_data = (
       db.query(PropertyDB)
-      .options(load_only(*included_col_names))
+      .options(load_only(*included_cols))
       .filter_by(session_id=uuid.UUID(file_id))
       .all()
    )
 
    file_data: List[Dict[str, Any]] = []
 
-   for value in session_data:
-      data = value.model_dump()
-      for k, v in data.items()
-         if isinstance(v, uuid.UUID)
-            data[k] = str(v)
-      file_data.append(data)
+   for data in session_data:
+
+      data_row = {}
+      for col in included_cols_names:
+         data_row[col] = getattr(data, col)
+
+      for k, v in data_row.items():
+         if isinstance(v, uuid.UUID):
+            data_row[k] = str(v)
+      file_data.append(data_row)
 
    file_name: str = db.query(PropertyDB.session_name).filter_by(session_id=uuid.UUID(file_id)).scalar()
 

@@ -1,5 +1,18 @@
-LOG RECORDED AT: 02-09-2025 20:03:30
+LOG RECORDED AT: 14-09-2025 20:53:57
 STARTED BY FILE: __main__.py
 RUN METHOD: Server started (uvicorn)
 
 
+20:54:09 | INFO | db_op - get_db - 60 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x000001B7D949A3B0>
+
+
+============================== Get session list
+
+20:54:10 | INFO | db_op - get_db - 65 | Closing database session for FastAPI request.
+20:54:12 | INFO | db_op - get_db - 60 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x000001B7D41256C0>
+20:54:12 | INFO | db_op - get_db - 60 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x000001B7D94EEF20>
+20:54:12 | INFO | db_op - get_db - 65 | Closing database session for FastAPI request.
+20:54:12 | INFO | db_op - get_db - 65 | Closing database session for FastAPI request.
+20:54:17 | INFO | db_op - get_db - 60 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x000001B7D94EF9D0>
+20:54:17 | INFO | file_op - list_dict_to_df - 134 | List_of_dict -> Dataframe successful
+20:54:17 | INFO | db_op - get_db - 65 | Closing database session for FastAPI request.
