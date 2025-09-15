@@ -285,18 +285,27 @@ async def download_file_api(file_id: str, db: Session | None = Depends(get_db)) 
             return JSONResponse(status_code=404, content=error_resp.model_dump())
 
         file_name: str = file_detail.file_name
-        file_data: List[Dict[str, Any]] = file_detail.file_data
-    
-        # stream -> in-memory container to store csv data
-        # index=True -> include index column in csv
+        file_data: List[Dict[str, Any]] = file_detail.file_data     
         file_df: pd.DataFrame = fop.list_dict_to_df(file_data)
-        stream = io.StringIO()
-        file_df.to_csv(stream, index=True, encoding='utf-8-sig')
+        file_df = file_df.reset_index()
+
+        # crt in-memory binary buffer (temporary storage) to later hold the Excel file data
+        output = io.BytesIO()
+
+        # write df to in-memory buffer as Excel file
+            # index=True -> include index column in csv
+            # use 'openpyxl' library to write Excel file in .xlsx format
+        file_df.to_excel(output, index=False, engine='openpyxl')
+
+        # when write data to a buffer, the internal pointer move to the end of data
+        # if want to read data from the start -> move pointer back to the beginning
+        # seek(0) -> reset pointer to buffer's beginning -> python later read data from the start
+        output.seek(0)
 
         # iter([stream.getvalue()]) -> create an iterator that yields the csv data
         response = StreamingResponse(
-            iter([stream.getvalue()]),
-            media_type="text/csv; charset=utf-8",
+            output,
+            media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             headers={"Content-Disposition": f"attachment; filename={file_name}"}
         )
 

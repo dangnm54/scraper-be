@@ -229,34 +229,29 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
 
 
 
-def calculate_data(csv_path):
-
-    full_df = fop.csv_to_df(csv_path, index='prop_code', mode=2)
-
-    cnt_rating_cate_df = cal.cnt_rating_categories(full_df)
-
-    return cnt_rating_cate_df
+# def calculate_data(csv_path):
+#     full_df = fop.csv_to_df(csv_path, index='prop_code', mode=2)
+#     cnt_rating_cate_df = cal.cnt_rating_categories(full_df)
+#     return cnt_rating_cate_df
 
 
 
-
-
-def draw_dashboard(csv_path, cal_data):
+# def draw_dashboard(csv_path, cal_data):
     
-    full_df = fop.csv_to_df(csv_path, index='prop_code', mode=2)
+#     full_df = fop.csv_to_df(csv_path, index='prop_code', mode=2)
 
-    fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-    axes_list = axes.flatten()
+#     fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+#     axes_list = axes.flatten()
 
-    dshb.util_num_rating_star(axes_list[0], full_df)
-    dshb.rating_category_ratio(axes_list[1], cal_data)
-    dshb.rating_num_rating_star(axes_list[2], full_df)
-    dshb.this_month_BR_rating_star(axes_list[3], full_df)
-    dshb.next_1month_BR_rating_star(axes_list[4], full_df)
-    dshb.next_3month_BR_rating_star(axes_list[5], full_df)
+#     dshb.util_num_rating_star(axes_list[0], full_df)
+#     dshb.rating_category_ratio(axes_list[1], cal_data)
+#     dshb.rating_num_rating_star(axes_list[2], full_df)
+#     dshb.this_month_BR_rating_star(axes_list[3], full_df)
+#     dshb.next_1month_BR_rating_star(axes_list[4], full_df)
+#     dshb.next_3month_BR_rating_star(axes_list[5], full_df)
 
-    plt.tight_layout()
-    plt.show()
+#     plt.tight_layout()
+#     plt.show()
 
 
 

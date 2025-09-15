@@ -136,64 +136,66 @@ def list_dict_to_df(list_dict: List[Dict[str, Any]], index:str='prop_code') -> p
 
 
 
-def df_to_csv(df: pd.DataFrame, name: str) -> str:
-   folder_name: str = data_folder_path
 
-   # make file name
-   current_time: str = datetime.now().strftime('%d%m%y')
-   base_csv_name: str = f'{name}_{current_time}.csv'
+
+# def df_to_csv(df: pd.DataFrame, name: str) -> str:
+#    folder_name: str = data_folder_path
+
+#    # make file name
+#    current_time: str = datetime.now().strftime('%d%m%y')
+#    base_csv_name: str = f'{name}_{current_time}.csv'
    
-   counter: int = 1
-   csv_name: str = base_csv_name
-   while os.path.exists(os.path.join(folder_name, csv_name)):
-      name_without_ext: str = base_csv_name.replace('.csv', '')
-      csv_name: str = f'{name_without_ext} ({counter}).csv'
-      counter += 1
+#    counter: int = 1
+#    csv_name: str = base_csv_name
+#    while os.path.exists(os.path.join(folder_name, csv_name)):
+#       name_without_ext: str = base_csv_name.replace('.csv', '')
+#       csv_name: str = f'{name_without_ext} ({counter}).csv'
+#       counter += 1
 
-   full_csv_path: str = os.path.join(folder_name, csv_name)
-   os.makedirs(folder_name, exist_ok=True) #crt folder if not exist
+#    full_csv_path: str = os.path.join(folder_name, csv_name)
+#    os.makedirs(folder_name, exist_ok=True) #crt folder if not exist
    
-   # convert to csv
-   try:
-      df.to_csv(full_csv_path, index=True, encoding='utf-8-sig')
-      log.info(f'Dataframe saved to file: {full_csv_path}')
-   except Exception as e:
-      lg.log_detail_error(e)
+#    # convert to csv
+#    try:
+#       df.to_csv(full_csv_path, index=True, encoding='utf-8-sig')
+#       log.info(f'Dataframe saved to file: {full_csv_path}')
+#    except Exception as e:
+#       lg.log_detail_error(e)
 
-   return full_csv_path
+#    return full_csv_path
 
 
 
-def csv_to_df(csv_path: str, index: str, mode: int) -> pd.DataFrame:
-   match mode:
-      case 1:
-         df: pd.DataFrame = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig')
-      case 2:
-         # for calculation
-         df: pd.DataFrame = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig', 
-               dtype={
-               'this_month_booked_rate': float,
-               'next_1_month_booked_rate': float,
-               'next_3_month_booked_rate': float, 
-               })
-      # case 3:
-      #    # for api json response
-      #    df: pd.DataFrame = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig', 
-      #          dtype={
-      #          'this_month_booked_rate': str,
-      #          'next_1_month_booked_rate': str,
-      #          'next_3_month_booked_rate': str, 
-      #          })
+# def csv_to_df(csv_path: str, index: str, mode: int) -> pd.DataFrame:
+#    match mode:
+#       case 1:
+#          df: pd.DataFrame = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig')
+#       case 2:
+#          # for calculation
+#          df: pd.DataFrame = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig', 
+#                dtype={
+#                'this_month_booked_rate': float,
+#                'next_1_month_booked_rate': float,
+#                'next_3_month_booked_rate': float, 
+#                })
+#       # case 3:
+#       #    # for api json response
+#       #    df: pd.DataFrame = pd.read_csv(csv_path, index_col=index, encoding='utf-8-sig', 
+#       #          dtype={
+#       #          'this_month_booked_rate': str,
+#       #          'next_1_month_booked_rate': str,
+#       #          'next_3_month_booked_rate': str, 
+#       #          })
    
-   log.info(f'Dataframe created from file: {csv_path}')
-   return df
+#    log.info(f'Dataframe created from file: {csv_path}')
+#    return df
 
 
 
 # def merge_df(df1: pd.DataFrame, df2: pd.DataFrame) -> pd.DataFrame:
 
-   merged_df: pd.DataFrame = df1.merge(df2, left_index=True, right_index=True, how='left')
-   log.info(f'Successfully merge 2 Dataframe')
+#    merged_df: pd.DataFrame = df1.merge(df2, left_index=True, right_index=True, how='left')
+#    log.info(f'Successfully merge 2 Dataframe')
    
-   return merged_df
+#    return merged_df
 
