@@ -153,10 +153,10 @@ async def run_scraper_api(fe_input: ScraperSettings, db: Session | None = Depend
 
         resp = ResponseBody[str](
             success = True,
-            message = f"{api_sig} Finish scraping process",
+            message = f"{api_sig} Finish both parts of scraping process",
             data = scrape_status.value
         )
-        return JSONResponse(status_code=200, content=resp)
+        return JSONResponse(status_code=200, content=resp.model_dump())
         
         
     except Exception as e:

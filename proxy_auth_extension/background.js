@@ -4,8 +4,8 @@
     rules: {
         singleProxy: {
         scheme: "http",
-        host: "14.225.63.224",
-        port: parseInt(41142)
+        host: "160.25.77.92",
+        port: parseInt(8539)
         },
         bypassList: ["localhost"]
     }
@@ -16,8 +16,8 @@
     function callbackFn(details) {
         return {
             authCredentials: {
-                username: "VN43221",
-                password: "lLdQ8l4T"
+                username: "xkNPjzrIminhd",
+                password: "kTJnaMBA"
             }
         };
     }
