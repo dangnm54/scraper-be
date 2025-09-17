@@ -100,7 +100,7 @@ app.add_middleware(
 # ------------------------------------------------------------------------------------------------
 
 
-@app.get("/")
+@app.get("/api/test")
 def read_root() -> Dict[str, str]:
     return {"message": "Seeing this output means BE is running ok hhehe"}
 
