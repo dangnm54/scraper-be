@@ -7,12 +7,12 @@ import pytz
 from typing import Dict, List, Any, cast
 import uuid
 
-import scraper.tool.log_op as lg
-import scraper.tool.db_op as dbop
+import app.tool.log_op as lg
+import app.tool.db_op as dbop
 
-from scraper.tool.config import data_folder_path
-from scraper.type.api import FileDetail, FileMetadata
-from scraper.type.data import PropertyDB
+from app.tool.config import data_folder_path
+from app.type.api import FileDetail, FileMetadata
+from app.type.data import PropertyDB
 
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import func

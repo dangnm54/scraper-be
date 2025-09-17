@@ -4,8 +4,8 @@ from datetime import datetime
 from typing import List, Generator
 from uuid import UUID
 
-from scraper.type.data import PropertyDB
-import scraper.tool.log_op as lg
+from app.type.data import PropertyDB
+import app.tool.log_op as lg
 
 from dotenv import load_dotenv
 from sqlalchemy.orm import Session

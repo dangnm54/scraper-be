@@ -14,12 +14,12 @@ from starlette.responses import JSONResponse
 from starlette.responses import StreamingResponse
 
 
-import scraper.tool.log_op as lg
-import scraper.tool.file_op as fop
-from scraper.base import run_full_flow
-from scraper.type.api import ScraperSettings, FileMetadata, FileDetail, ResponseBody
-from scraper.type.data import ScrapeStatus
-from scraper.tool.db_op import get_db
+import app.tool.log_op as lg
+import app.tool.file_op as fop
+from app.base import run_full_flow
+from app.type.api import ScraperSettings, FileMetadata, FileDetail, ResponseBody
+from app.type.data import ScrapeStatus
+from app.tool.db_op import get_db
 
 
 from sqlalchemy.orm import Session

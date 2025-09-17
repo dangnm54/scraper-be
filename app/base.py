@@ -13,21 +13,21 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 
 # When running from root directory (FastAPI)
-import scraper.tool.file_op as fop
-import scraper.detail_step.browser as brws
-import scraper.detail_step.scrape_p1 as scr1
-import scraper.detail_step.scrape_p2 as scr2
-import scraper.detail_step.calculation as cal
-import scraper.detail_step.dashboard as dshb
-import scraper.tool.log_op as lg
-import scraper.tool.db_op as dbop
-import scraper.tool.utils as utl
+import app.tool.file_op as fop
+import app.detail_step.browser as brws
+import app.detail_step.scrape_p1 as scr1
+import app.detail_step.scrape_p2 as scr2
+import app.detail_step.calculation as cal
+import app.detail_step.dashboard as dshb
+import app.tool.log_op as lg
+import app.tool.db_op as dbop
+import app.tool.utils as utl
 
-from scraper.tool.config import proxy_user, proxy_password, proxy_ip, proxy_port
-from scraper.tool.config import driver_path, wait_time
-from scraper.tool.config import main_website_url, ip_website_url
+from app.tool.config import proxy_user, proxy_password, proxy_ip, proxy_port
+from app.tool.config import driver_path, wait_time
+from app.tool.config import main_website_url, ip_website_url
 
-from scraper.type.data import ScrapeResult, PropertyDB, ScrapeStatus
+from app.type.data import ScrapeResult, PropertyDB, ScrapeStatus
 from sqlalchemy.orm import Session
 from uuid import UUID, uuid4
 

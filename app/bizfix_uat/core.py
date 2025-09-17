@@ -10,10 +10,10 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.edge.options import Options as EdgeOptions
 
-from scraper.tool import log_op as lg
-import scraper.detail_step.browser as brws
-import scraper.bizfix_uat.step as step
-from scraper.tool.config import wait_time, driver_path, proxy_user, proxy_password, proxy_ip, proxy_port
+from app.tool import log_op as lg
+import app.detail_step.browser as brws
+import app.bizfix_uat.function as step
+from app.tool.config import wait_time, driver_path, proxy_user, proxy_password, proxy_ip, proxy_port
 
 
 # -----------------------------------------------------------------------------------

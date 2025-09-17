@@ -3,8 +3,8 @@ from typing import Dict, Any, List
 from datetime import date, datetime, timedelta
 
 try:
-    import scraper.tool.log_op as lg
-    import scraper.tool.utils as utl
+    import app.tool.log_op as lg
+    import app.tool.utils as utl
 except ImportError:
     import tool.log_op as lg
     import tool.utils as utl

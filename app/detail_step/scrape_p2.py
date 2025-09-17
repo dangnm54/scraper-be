@@ -10,10 +10,10 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 
 try:
-    import scraper.tool.utils as utl
-    import scraper.tool.log_op as lg
-    from scraper.type.data import ScrapeResult, PropertyDB
-    import scraper.tool.get_ipt as ipt
+    import app.tool.utils as utl
+    import app.tool.log_op as lg
+    from app.type.data import ScrapeResult, PropertyDB
+    import app.tool.get_ipt as ipt
 except ImportError:
     import tool.utils as utl
     import tool.log_op as lg

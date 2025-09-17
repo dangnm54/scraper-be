@@ -1,5 +1,5 @@
 try:
-    import scraper.tool.utils as utl
+    import app.tool.utils as utl
 except ImportError:
     import tool.utils as utl
 

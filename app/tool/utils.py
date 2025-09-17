@@ -16,9 +16,9 @@ from selenium.webdriver.remote.webelement import WebElement
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
 try:
-    import scraper.tool.log_op as lg
-    from scraper.tool.config import wait_time
-    from scraper.type.data import PropertyDB
+    import app.tool.log_op as lg
+    from app.tool.config import wait_time
+    from app.type.data import PropertyDB
 except ImportError:
     import log_op as lg
     from config import wait_time

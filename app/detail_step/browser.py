@@ -12,8 +12,8 @@ from selenium.webdriver.edge.service import Service as EdgeService
 
 
 try:
-    import scraper.tool.utils as utl
-    import scraper.tool.log_op as lg
+    import app.tool.utils as utl
+    import app.tool.log_op as lg
 except ImportError:
     import tool.utils as utl
     import tool.log_op as lg
