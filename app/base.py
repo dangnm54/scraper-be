@@ -27,7 +27,7 @@ from app.tool.config import proxy_user, proxy_password, proxy_ip, proxy_port
 from app.tool.config import driver_path, wait_time
 from app.tool.config import main_website_url, ip_website_url
 
-from app.type.data import ScrapeResult, PropertyDB, ScrapeStatus
+from app.type.data import ScrapeResult, ScrapeStatus, PropertyDB, BrowserMode
 from sqlalchemy.orm import Session
 from uuid import UUID, uuid4
 
@@ -48,16 +48,18 @@ log = logging.getLogger(__name__)
 
 def start_driver() -> Tuple[WebDriver | None, WebDriverWait | None]:
 
+    browser_mode: BrowserMode = 'headless'
+    log.info(f'Starting driver in <{browser_mode}> mode')
+
     extension_dir: str = brws.crt_proxy_helper_extention(proxy_user, proxy_password, proxy_ip, proxy_port)
-    options_1: EdgeOptions = brws.config_basic_driver_setting()
+    options_1: EdgeOptions = brws.config_basic_driver_setting(browser_mode)
     options_2: EdgeOptions | None = brws.config_advanced_driver_setting(extension_dir, options_1)
     
+    driver: WebDriver | None = None
+    wait: WebDriverWait | None = None
 
     if options_2 != None:
-        driver: WebDriver | None = None
-        wait: WebDriverWait | None = None
-        driver, wait = brws.start_browser(driver_path, options_2)
-
+        driver, wait = brws.start_browser(driver_path, options_2, browser_mode)
 
     if driver != None and wait != None:
         # scr1.go_to_website(driver, wait, wait_time, ip_website_url)
@@ -84,7 +86,7 @@ def scrape_p1(db: Session, session_id: UUID, session_name: str, main_website_url
     if driver and wait:
         pass
     else:
-        log.error(f"An error in 'if driver'")
+        log.error(f"Failed to start driver and create wait object")
         return []
 
     scr1.go_to_website(driver, wait, wait_time, main_website_url, view='main_page')
@@ -152,79 +154,90 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
     if driver and wait:
         pass
     else:
-        log.error(f"An error in 'if driver'")
+        log.error(f"Failed to start driver and create wait object")
         return ScrapeStatus.partial
 
-    try:
-        for prop in detail_list_db:
+    scraped_prop_cnt: int = 0
+    saved_prop_cnt: int = 0
 
-            log.info(f'Scraping property: {prop.prop_code} - {prop.prop_name}')
+    for prop in detail_list_db:
 
-            property_link: str = str(prop.prop_link)
+        lg.log_divider()
+        log.info(f'Scraping property: {prop.prop_code} - {prop.prop_name}')
+        property_link: str = str(prop.prop_link)
+
+        try:
             scr1.go_to_website(driver, wait, wait_time, property_link, view='detail_page')
+        except Exception as e:
+            lg.log_detail_error(e)
+            log.error(f'Error to access page of property <{prop.prop_code}> -> skip to next property')
+            continue
 
+
+        try:
+            overview_data: Dict[str, Any] = scr2.overview_info(driver, wait)
+            rating_data: Dict[str, Any] = scr2.rating_info(driver)
+
+            prop.guest_num = overview_data['guest_num']
+            prop.bed_num = overview_data['bed_num']
+            prop.bath_num = overview_data['bath_num']
+            prop.location = overview_data['location']
+            prop.ggmap_link = overview_data['ggmap_link']
+            
+            prop.rating_title = rating_data['rating_title']
+            prop.rating_star = rating_data['rating_star']
+            prop.rating_num = rating_data['rating_num']
+
+            if collect_host_data:
+                host_data: Dict[str, Any] = scr2.host_info(driver)
+
+                prop.host_name = host_data['host_name']
+                prop.host_title = host_data['host_title']
+                prop.host_rating_star = host_data['host_rating_star']
+                prop.host_rating_num = host_data['host_rating_num']
+                prop.host_exp = host_data['host_exp']
+                prop.host_link = host_data['host_link']
+
+            if collect_booking_rate:
+                book_rate_data: Dict[str, Any] = scr2.book_rate_info(driver, wait_time)
+
+                prop.this_month_booked_rate = book_rate_data['this_month_booked_rate']
+                prop.next_1_month_booked_rate = book_rate_data['next_1_month_booked_rate']
+                prop.next_3_month_booked_rate = book_rate_data['next_3_month_booked_rate']
+            
+
+            scrape_result: ScrapeResult = scr2.get_scrape_result(prop)
+            setattr(prop, 'scrape_result', str(scrape_result)) 
+            log.info(f'Complete scraping data for property #{prop.prop_code} | result: {scrape_result}')
+            scraped_prop_cnt += 1
+
+        except Exception as e:
+            lg.log_detail_error(e)
+            log.error(f'Error to scrape all data of property <{prop.prop_code}> -> save already-scraped data to database')
+
+
+        if save_db:
             try:
-                overview_data: Dict[str, Any] = scr2.overview_info(driver, wait)
-                rating_data: Dict[str, Any] = scr2.rating_info(driver)
-
-                prop.guest_num = overview_data['guest_num']
-                prop.bed_num = overview_data['bed_num']
-                prop.bath_num = overview_data['bath_num']
-                prop.location = overview_data['location']
-                prop.ggmap_link = overview_data['ggmap_link']
-                
-                prop.rating_title = rating_data['rating_title']
-                prop.rating_star = rating_data['rating_star']
-                prop.rating_num = rating_data['rating_num']
-
-
-                if collect_host_data:
-                    host_data: Dict[str, Any] = scr2.host_info(driver)
-
-                    prop.host_name = host_data['host_name']
-                    prop.host_title = host_data['host_title']
-                    prop.host_rating_star = host_data['host_rating_star']
-                    prop.host_rating_num = host_data['host_rating_num']
-                    prop.host_exp = host_data['host_exp']
-                    prop.host_link = host_data['host_link']
-
-
-                if collect_booking_rate:
-                    book_rate_data: Dict[str, Any] = scr2.book_rate_info(driver, wait_time)
-
-                    prop.this_month_booked_rate = book_rate_data['this_month_booked_rate']
-                    prop.next_1_month_booked_rate = book_rate_data['next_1_month_booked_rate']
-                    prop.next_3_month_booked_rate = book_rate_data['next_3_month_booked_rate']
-                
-
-                scrape_result: ScrapeResult = scr2.get_scrape_result(prop)
-                setattr(prop, 'scrape_result', str(scrape_result)) 
-
-                log.info(f'Complete scraping property {prop.prop_code} - {prop.prop_name} | result: {scrape_result}')
-
-            except Exception as e:
-                lg.log_detail_error(e)
-                log.error(f'Error in scraping property detail -> skip property {prop.prop_code} - {prop.prop_name}')
-
-            if save_db:
                 db.commit()
                 log.info(f'Saved property <{prop.prop_code}> (detail info) to database')
-
-            lg.log_divider()
-            utl.print_pretty_dict(prop)
+                saved_prop_cnt += 1
+            except Exception as e:
+                lg.log_detail_error(e)
+                log.error(f'Error to save property <{prop.prop_code}> (detail info) to database')
+                # clean up failed transaction (eg: failed commit)
+                db.rollback()
 
         lg.log_divider()
-        log.info(f'Finish saving {len(detail_list_db)} properties (detail info) to database')
-        log.info(f"Scraping process completed | {len(detail_list_db)} properties scraped")
-        brws.close_browser(driver)
-        lg.log_divider()
+        utl.print_pretty_dict(prop)
 
-        return ScrapeStatus.success
+
+    log.info(f"Scraping process completed | {scraped_prop_cnt} properties scraped")
+    log.info(f'Finish saving {saved_prop_cnt} properties (detail info) to database')
     
-    except Exception as e:
-        lg.log_detail_error(e)
-        log.error(f'Error in scraping property detail -> skip property {prop.prop_code} - {prop.prop_name}')
-        return ScrapeStatus.partial
+    brws.close_browser(driver)
+    lg.log_divider()
+
+    return ScrapeStatus.success
 
 
 

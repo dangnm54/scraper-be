@@ -3,13 +3,14 @@ import io
 import logging
 import asyncio
 import pandas as pd
-from typing import Dict, List, Any
+from typing import Dict, List, Any, cast
 from datetime import datetime
 
 
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from pandas.core.generic import WriteExcelBuffer
 from starlette.responses import JSONResponse
 from starlette.responses import StreamingResponse
 
@@ -293,16 +294,11 @@ async def download_file_api(file_id: str, db: Session | None = Depends(get_db)) 
         output = io.BytesIO()
 
         # write df to in-memory buffer as Excel file
-            # index=True -> include index column in csv
-            # use 'openpyxl' library to write Excel file in .xlsx format
-        file_df.to_excel(output, index=False, engine='openpyxl')
+        file_df.to_excel(cast(WriteExcelBuffer, output), index=False, engine='openpyxl')
 
-        # when write data to a buffer, the internal pointer move to the end of data
-        # if want to read data from the start -> move pointer back to the beginning
         # seek(0) -> reset pointer to buffer's beginning -> python later read data from the start
         output.seek(0)
 
-        # iter([stream.getvalue()]) -> create an iterator that yields the csv data
         response = StreamingResponse(
             output,
             media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -390,3 +386,10 @@ async def sse_logs(request:Request, debug:bool=False) -> StreamingResponse:
         # when called event_generator() -> return a generator object that StreamingResponse can iterate over to get data
     return StreamingResponse(event_generator(), media_type="text/event-stream")
 
+
+
+
+
+
+
+# move all configurable to config file: save_db option, search_mode, browser_mode
