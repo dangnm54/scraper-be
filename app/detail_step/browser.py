@@ -10,13 +10,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.webdriver.edge.service import Service as EdgeService
 
-
-try:
-    import app.tool.utils as utl
-    import app.tool.log_op as lg
-except ImportError:
-    import tool.utils as utl
-    import tool.log_op as lg
+import app.tool.utils as utl
+import app.tool.log_op as lg
+from app.type.data import BrowserMode
 
 
 # -----------------------------------------------------------------------------------
@@ -111,12 +107,20 @@ def crt_proxy_helper_extention(proxy_user: str, proxy_password: str, proxy_ip: s
 
 
 
-def config_basic_driver_setting() -> EdgeOptions:
+def config_basic_driver_setting(browser_mode: BrowserMode = 'local') -> EdgeOptions:
 
     lg.log_divider('Config basic driver setting')
 
     options: EdgeOptions = EdgeOptions()
+
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36 Edg/136.0.0.0") # Example Chrome User-Agent
+
+    if browser_mode == 'headless':
+        options.add_argument("--headless")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--disable-gpu")
+        options.add_argument("--window-size=1920,1080")
 
     log.info('Configured basic settings')
     return options
@@ -143,46 +147,51 @@ def config_advanced_driver_setting(extension_dir_ipt: str, options_ipt: EdgeOpti
 
 
 
-def start_browser(driver_path_ipt: str, option_ipt: EdgeOptions) -> Tuple[WebDriver | None, WebDriverWait | None]:
+def start_browser(driver_path_ipt: str, option_ipt: EdgeOptions, browser_mode: BrowserMode = 'local') -> Tuple[WebDriver | None, WebDriverWait | None]:
 
     lg.log_divider('Start browser')
 
     driver: WebDriver | None = None
     try:
-        service: EdgeService = EdgeService(executable_path = driver_path_ipt, log_output=os.devnull)
-        driver = webdriver.Edge(service = service, options = option_ipt)
+        match browser_mode:
+            case 'local':
+                service: EdgeService = EdgeService(executable_path = driver_path_ipt, log_output=os.devnull)
+                driver = webdriver.Edge(service = service, options = option_ipt)
+            case 'headless':
+                driver = webdriver.Edge(options = option_ipt)
         log.info(f'Edge browser started | Driver <{driver}> created')
+
 
         wait: WebDriverWait = WebDriverWait(driver,20)
         log.info(f'Wait <{wait}> created')
 
+        # # open browser in specific screen
+        if browser_mode == 'local':      
+            monitor_list: List[Monitor] = get_monitors()
+            log.debug(f'Detected {len(monitor_list)} monitors')
+                # screen laptop: 1920 x 1080
+                # screen monitor: 2560 x 1440
 
-        # open browser in specific screen
-        monitor_list: List[Monitor] = get_monitors()
-        log.debug(f'Detected {len(monitor_list)} monitors')
-            # screen laptop: 1920 x 1080
-            # screen monitor: 2560 x 1440
+            if len(monitor_list) > 1:
+                secondary_monitor: Monitor | None = None
+                for monitor in monitor_list:
+                    if not monitor.is_primary:
+                        secondary_monitor = monitor
+                        break
 
-        if len(monitor_list) > 1:
-            secondary_monitor: Monitor | None = None
-            for monitor in monitor_list:
-                if not monitor.is_primary:
-                    secondary_monitor = monitor
-                    break
+                if secondary_monitor:
+                    log.info(f'Secondary monitor found, open browser on secondary monitor')
+                    # driver.set_window_rect(x=-1920, y=180, width=1500, height=1010)  #monitor
+                    driver.set_window_rect(x=960, y=10, width=960, height=1010)   #laptop
+                    # driver.set_window_rect(x=-1920, y=180, width=1700, height=800)  #uat
+                else:
+                    log.info(f'Cannot identify clear secondary monitor, maximizing browser')
+                    driver.set_window_rect(x=960, y=10, width=960, height=1010)
 
-            if secondary_monitor:
-                log.info(f'Secondary monitor found, open browser on secondary monitor')
-                # driver.set_window_rect(x=-1920, y=180, width=1500, height=1010)
-                # driver.set_window_rect(x=960, y=10, width=960, height=1010)
-                driver.set_window_rect(x=-1920, y=180, width=1700, height=800)  #uat
             else:
-                log.info(f'Cannot identify clear secondary monitor, maximizing browser')
+                log.info(f'Only 1 monitor, maximizing browser')
                 driver.set_window_rect(x=960, y=10, width=960, height=1010)
-
-        else:
-            log.info(f'Only 1 monitor, maximizing browser')
-            # driver.set_window_rect(x=960, y=10, width=960, height=1010)
-            driver.set_window_rect(x=10, y=10, width=1900, height=1010)   #uat
+                # driver.set_window_rect(x=10, y=10, width=1900, height=1010)   #uat
 
         return driver, wait
 
