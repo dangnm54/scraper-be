@@ -1,36 +1,30 @@
 import sys
 import os
 import logging
-import pandas as pd
-import matplotlib.pyplot as plt
+from uuid import UUID, uuid4
+from dotenv import load_dotenv
+from sqlalchemy.orm import Session
 from typing import Any, Dict, List, Tuple, Literal
+
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.edge.options import Options as EdgeOptions
 
-
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-
 # When running from root directory (FastAPI)
-import app.tool.file_op as fop
 import app.detail_step.browser as brws
 import app.detail_step.scrape_p1 as scr1
 import app.detail_step.scrape_p2 as scr2
-import app.detail_step.calculation as cal
-import app.detail_step.dashboard as dshb
 import app.tool.log_op as lg
 import app.tool.db_op as dbop
 import app.tool.utils as utl
+from app.tool.config import wait_time
 
-from app.tool.config import proxy_user, proxy_password, proxy_ip, proxy_port
-from app.tool.config import driver_path, wait_time
+
 from app.tool.config import main_website_url, ip_website_url
 
 from app.type.data import ScrapeResult, ScrapeStatus, PropertyDB, BrowserMode
-from sqlalchemy.orm import Session
-from uuid import UUID, uuid4
-
 
 
 # -----------------------------------------------------------------------------------
@@ -42,8 +36,21 @@ if __name__ == "__main__":
 
 log = logging.getLogger(__name__)
 
+# load .env file for local use
+load_dotenv()
+
+# get connection string from .env file
+DATABASE_URL: str | None = os.getenv('DATABASE_URL')
+
+PROXY_USER: str | None = os.getenv('PROXY_USER')
+PROXY_PASSWORD: str | None = os.getenv('PROXY_PASSWORD')
+PROXY_IP: str | None = os.getenv('PROXY_IP')
+PROXY_PORT: str | None = os.getenv('PROXY_PORT')
+
+DRIVER_PATH: str | None = os.getenv('DRIVER_PATH')
 
 
+# -----------------------------------------------------------------------------------
 
 
 def start_driver() -> Tuple[WebDriver | None, WebDriverWait | None]:
@@ -51,15 +58,23 @@ def start_driver() -> Tuple[WebDriver | None, WebDriverWait | None]:
     browser_mode: BrowserMode = 'headless'
     log.info(f'Starting driver in <{browser_mode}> mode')
 
-    extension_dir: str = brws.crt_proxy_helper_extention(proxy_user, proxy_password, proxy_ip, proxy_port)
+
+    extension_dir: str | None = None
+    if PROXY_USER and PROXY_PASSWORD and PROXY_IP and PROXY_PORT:
+        extension_dir = brws.crt_proxy_helper_extention(PROXY_USER, PROXY_PASSWORD, PROXY_IP, PROXY_PORT)
+        log.info(f"Proxy information found in.env -> driver will use proxy")
+    else:
+        log.warning(f"Proxy information missing in .env -> driver will not use proxy")
+
+    
     options_1: EdgeOptions = brws.config_basic_driver_setting(browser_mode)
-    options_2: EdgeOptions | None = brws.config_advanced_driver_setting(extension_dir, options_1)
+    options_2: EdgeOptions = brws.config_proxy_driver_setting(extension_dir, options_1)
     
     driver: WebDriver | None = None
     wait: WebDriverWait | None = None
 
-    if options_2 != None:
-        driver, wait = brws.start_browser(driver_path, options_2, browser_mode)
+    if DRIVER_PATH:
+        driver, wait = brws.start_browser(DRIVER_PATH, options_2, browser_mode)
 
     if driver != None and wait != None:
         # scr1.go_to_website(driver, wait, wait_time, ip_website_url)
@@ -294,7 +309,6 @@ def run_full_flow(
     session_id: UUID = uuid4()
     session_name: str = dbop.get_session_name(db, file_name)
     log.info(f"New scraping session <{session_name}> started | ID: {session_id}")
-
 
     link_list_db: List[PropertyDB] = scrape_p1(db, session_id, session_name, main_website_url, location, num_guest, num_property, save_db)
     log.info(f"Phase 1 (link scraping) completed.")

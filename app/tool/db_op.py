@@ -20,9 +20,6 @@ from sqlalchemy import create_engine
 log = logging.getLogger(__name__)
 
 
-# load .env file
-load_dotenv()
-
 # get connection string from .env file
 DATABASE_URL: str | None = os.getenv('DATABASE_URL')
 

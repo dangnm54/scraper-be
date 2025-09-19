@@ -1,27 +1,14 @@
+
 import random
 
-# ___Proxy authen data
-proxy_user: str = "xkNPjzrIminhd"
-proxy_password: str = "kTJnaMBA"
-proxy_ip: str = "160.25.77.92"
-proxy_port: str = "8539"
+
+# wait time: 2.5 - 5.5s
+wait_time: float = random.uniform(1, 3) + random.uniform(2, 5) - random.uniform(0.1, 0.5)
 
 
-# ___Path
-driver_path: str = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\scraper\tool\msedgedriver.exe'
-data_folder_path: str = r'C:\Users\ADMIN\Pictures\scraper\scraper-be\data'
-
-
-
-# ___Website links
+# website links
 main_website_url: str = 'https://www.airbnb.com.vn/homes'
 ip_website_url: str = 'https://nordvpn.com/what-is-my-ip/'
-# ip_website_url: str = 'https://youtube.com'
-
-
-# ___Wait random: 2.5 - 5.5s
-wait_time: float = random.uniform(1, 3) + random.uniform(2, 5) - random.uniform(0.1, 0.5)
-# print(wait_time)
 
 
 

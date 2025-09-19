@@ -10,7 +10,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.webdriver.edge.service import Service as EdgeService
 
-import app.tool.utils as utl
 import app.tool.log_op as lg
 from app.type.data import BrowserMode
 
@@ -127,7 +126,7 @@ def config_basic_driver_setting(browser_mode: BrowserMode = 'local') -> EdgeOpti
 
 
 
-def config_advanced_driver_setting(extension_dir_ipt: str, options_ipt: EdgeOptions) -> EdgeOptions | None:
+def config_proxy_driver_setting(extension_dir_ipt: str | None, options_ipt: EdgeOptions) -> EdgeOptions:
 
     lg.log_divider('Config advanced driver setting')
 
@@ -135,15 +134,22 @@ def config_advanced_driver_setting(extension_dir_ipt: str, options_ipt: EdgeOpti
     log.info(f'Configured minimal logging for selenium')
 
     options: EdgeOptions = options_ipt
+
+    if not extension_dir_ipt:
+        log.warning(f'No proxy extension provided -> driver will not use proxy')
+        return options
+
     absolute_extension_dir: str = os.path.abspath(extension_dir_ipt)
+
     try:
         options.add_argument(f'--load-extension={absolute_extension_dir}')
         log.info(f'Configured Edge to load proxy helper extension from: {absolute_extension_dir}')
         return options
+
     except Exception as e:
         log.error(f'Error loading Proxy Helper Extension | Absolute_extension_dir: {absolute_extension_dir}')
         lg.log_detail_error(e)
-        return None
+        return options
 
 
 

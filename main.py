@@ -6,28 +6,30 @@ import pandas as pd
 from typing import Dict, List, Any, cast
 from datetime import datetime
 
-
-
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pandas.core.generic import WriteExcelBuffer
 from starlette.responses import JSONResponse
 from starlette.responses import StreamingResponse
 
-
 import app.tool.log_op as lg
 import app.tool.file_op as fop
 from app.base import run_full_flow
-from app.type.api import ScraperSettings, FileMetadata, FileDetail, ResponseBody
-from app.type.data import ScrapeStatus
 from app.tool.db_op import get_db
 
+from app.type.api import ScraperSettings, FileMetadata, FileDetail, ResponseBody
+from app.type.data import ScrapeStatus
 
 from sqlalchemy.orm import Session
 from fastapi import Depends
+from dotenv import load_dotenv
 
 
 # ------------------------------------------------------------------------------------------------
+
+
+# load .env file for server use
+load_dotenv()
 
 
 lg.setup_logging_for_file_directly_run()
