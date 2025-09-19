@@ -22,9 +22,9 @@ import app.tool.utils as utl
 from app.tool.config import wait_time
 
 
-from app.tool.config import main_website_url, ip_website_url
+from app.tool.config import main_website_url, ip_website_url, search_mode, browser_mode, save_db
 
-from app.type.data import ScrapeResult, ScrapeStatus, PropertyDB, BrowserMode
+from app.type.data import ScrapeResult, ScrapeStatus, PropertyDB
 
 
 # -----------------------------------------------------------------------------------
@@ -39,9 +39,6 @@ log = logging.getLogger(__name__)
 
 # -----------------------------------------------------------------------------------
 
-
-browser_mode: BrowserMode = 'headless'
-log.info(f'Starting driver in <{browser_mode}> mode')
 
 # load .env file for local use
 load_dotenv()
@@ -62,9 +59,7 @@ DRIVER_PATH: str | None = os.getenv('DRIVER_PATH')
 
 def start_driver() -> Tuple[WebDriver | None, WebDriverWait | None]:
 
-    browser_mode: BrowserMode = 'headless'
     log.info(f'Starting driver in <{browser_mode}> mode')
-
 
     extension_dir: str | None = None
     if PROXY_USER and PROXY_PASSWORD and PROXY_IP and PROXY_PORT:
@@ -113,11 +108,9 @@ def scrape_p1(db: Session, session_id: UUID, session_name: str, main_website_url
 
     scr1.go_to_website(driver, wait, wait_time, main_website_url, view='main_page')
 
+    log.info(f'Search mode: {search_mode}')
 
-    search: Literal['apply', 'none'] = 'none'
-    log.info(f'Search mode: {search}')
-
-    match search:
+    match search_mode:
         case 'none':
             pass
         case 'apply':
@@ -126,7 +119,7 @@ def scrape_p1(db: Session, session_id: UUID, session_name: str, main_website_url
             scr1.search_guest(driver, wait_time, num_guest)
             scr1.press_search(driver)
 
-    link_list: List[Dict[str, str]] = scr1.view_page_get_all_link(driver, wait, wait_time, num_property, search)
+    link_list: List[Dict[str, str]] = scr1.view_page_get_all_link(driver, wait, wait_time, num_property, search_mode)
 
     brws.close_browser(driver)
     
@@ -298,8 +291,7 @@ def run_full_flow(
         db: Session,
         file_name: str, location: str, num_guest: int, num_property: int,
         collect_host_data: bool = False,
-        collect_booking_rate: bool = False,
-        save_db: bool = False
+        collect_booking_rate: bool = False
     ) -> ScrapeStatus:
 
     lg.log_divider('Start full flow')
@@ -346,8 +338,7 @@ def run_full_flow(
 #                 num_guest = 2,
 #                 num_property = 1,
 #                 collect_host_data = True,
-#                 collect_booking_rate = True,
-#                 save_db = True
+#                 collect_booking_rate = True
 #             )
 #         finally:
 #             log.info("Closing database session for direct file run.")

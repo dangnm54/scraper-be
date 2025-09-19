@@ -68,6 +68,8 @@ class PropertyDB(Base):
 BrowserMode = Literal['local', 'headless']
 
 
+SearchMode = Literal['apply', 'none']
+
 # # Pydantic model for API input/output
 # class PropertyDetail(BaseModel):
 #     # overview_data
