@@ -392,6 +392,4 @@ async def sse_logs(request:Request, debug:bool=False) -> StreamingResponse:
 
 
 
-
-
 # move all configurable to config file: save_db option, search_mode, browser_mode

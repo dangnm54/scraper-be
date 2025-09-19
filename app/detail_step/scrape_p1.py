@@ -56,7 +56,7 @@ def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, webs
             ad_element2: WebElement = driver.find_element(By.CSS_SELECTOR, 'div[aria-label="Dịch trên"]')
             if EC.visibility_of(ad_element2):
                 log.info('Found Ad pop-up')
-                ok_button: WebElement = ad_element2.find_element(By.CSS_SELECTOR, 'button[aria-label="Đóng"]')
+                ok_button = ad_element2.find_element(By.CSS_SELECTOR, 'button[aria-label="Đóng"]')
                 ok_button.click()
                 log.info('Close Ad pop-up')
         except:
@@ -222,16 +222,16 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
 
         match search:
             case 'none':
-                property_lists: List[WebElement] = driver.find_elements(By.CSS_SELECTOR,'div.c1r8sk5a')
+                prop_list: List[WebElement] = driver.find_elements(By.CSS_SELECTOR,'div.c1r8sk5a')
 
             case 'apply':
                 wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR,'div.cy5jw6o')))
                 time.sleep(wait_time)
-                property_lists: List[WebElement] = driver.find_elements(By.CSS_SELECTOR,'div.cfutgp0')
+                prop_list = driver.find_elements(By.CSS_SELECTOR,'div.cfutgp0')
 
         while property_count < num_property:
 
-            for property in property_lists:
+            for property in prop_list:
 
                 utl.scroll_focus_element(driver, property)
 
@@ -245,7 +245,7 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                     case 'none':
                         name_element: WebElement = property.find_element(By.CSS_SELECTOR,'div[data-testid="listing-card-title"]')
                     case 'apply':
-                        name_element: WebElement = property.find_element(By.CSS_SELECTOR,'span[data-testid="listing-card-name"]')
+                        name_element = property.find_element(By.CSS_SELECTOR,'span[data-testid="listing-card-name"]')
                 name: str = name_element.text 
                 
                 link_element: WebElement = property.find_element(By.CSS_SELECTOR,'div[data-testid="card-container"] > a')

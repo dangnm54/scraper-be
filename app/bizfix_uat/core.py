@@ -2,6 +2,7 @@ import sys
 import os
 import logging
 import csv
+from dotenv import load_dotenv
 from typing import Tuple, List, Dict
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
@@ -13,8 +14,8 @@ from selenium.webdriver.edge.options import Options as EdgeOptions
 from app.tool import log_op as lg
 import app.detail_step.browser as brws
 import app.bizfix_uat.function as step
-from app.tool.config import wait_time, driver_path, proxy_user, proxy_password, proxy_ip, proxy_port
-
+from app.tool.config import wait_time
+from app.type.data import BrowserMode
 
 # -----------------------------------------------------------------------------------
 
@@ -33,22 +34,48 @@ num_data = 500
 # -----------------------------------------------------------------------------------
 
 
+# load .env file for local use
+load_dotenv()
+
+# get connection string from .env file
+DATABASE_URL: str | None = os.getenv('DATABASE_URL')
+
+PROXY_USER: str | None = os.getenv('PROXY_USER')
+PROXY_PASSWORD: str | None = os.getenv('PROXY_PASSWORD')
+PROXY_IP: str | None = os.getenv('PROXY_IP')
+PROXY_PORT: str | None = os.getenv('PROXY_PORT')
+
+DRIVER_PATH: str | None = os.getenv('DRIVER_PATH')
+
+# -----------------------------------------------------------------------------------
+
+
 def start_driver() -> Tuple[WebDriver | None, WebDriverWait | None]:
 
-    extension_dir: str = brws.crt_proxy_helper_extention(proxy_user, proxy_password, proxy_ip, proxy_port)
-    options_1: EdgeOptions = brws.config_basic_driver_setting()
-    options_2: EdgeOptions | None = brws.config_advanced_driver_setting(extension_dir, options_1)
+    browser_mode: BrowserMode = 'local'
+    log.info(f'Starting driver in <{browser_mode}> mode')
+
+
+    extension_dir: str | None = None
+    if PROXY_USER and PROXY_PASSWORD and PROXY_IP and PROXY_PORT:
+        extension_dir = brws.crt_proxy_helper_extention(PROXY_USER, PROXY_PASSWORD, PROXY_IP, PROXY_PORT)
+        log.info(f"Proxy information found in.env -> driver will use proxy")
+    else:
+        log.warning(f"Proxy information missing in .env -> driver will not use proxy")
+
     
+    options_1: EdgeOptions = brws.config_basic_driver_setting(browser_mode)
+    options_2: EdgeOptions = brws.config_proxy_driver_setting(extension_dir, options_1)
+    
+    driver: WebDriver | None = None
+    wait: WebDriverWait | None = None
 
-    if options_2 != None:
-        driver: WebDriver | None = None
-        wait: WebDriverWait | None = None
-        driver, wait = brws.start_browser(driver_path, options_2)
+    if DRIVER_PATH:
+        driver, wait = brws.start_browser(DRIVER_PATH, options_2, browser_mode)
 
-    if driver is None and wait is None:
-        log.error(f"Cannot create driver and wait")
 
     return driver, wait
+
 
 
 

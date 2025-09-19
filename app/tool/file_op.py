@@ -10,7 +10,6 @@ import uuid
 import app.tool.log_op as lg
 import app.tool.db_op as dbop
 
-from app.tool.config import data_folder_path
 from app.type.api import FileDetail, FileMetadata
 from app.type.data import PropertyDB
 
@@ -18,10 +17,16 @@ from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
 from sqlalchemy.orm import load_only
 
+
 # -----------------------------------------------------------------------------------
 
 
 log = logging.getLogger(__name__)
+
+DATA_FOLDER_PATH: str | None = os.getenv('DATA_FOLDER_PATH')
+
+
+# -----------------------------------------------------------------------------------
 
 
 def get_file_list(db: Session) -> List[FileMetadata]:
@@ -139,7 +144,7 @@ def list_dict_to_df(list_dict: List[Dict[str, Any]], index:str='prop_code') -> p
 
 
 # def df_to_csv(df: pd.DataFrame, name: str) -> str:
-#    folder_name: str = data_folder_path
+#    folder_name: str = DATA_FOLDER_PATH
 
 #    # make file name
 #    current_time: str = datetime.now().strftime('%d%m%y')

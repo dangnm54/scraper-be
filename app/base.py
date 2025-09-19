@@ -36,6 +36,13 @@ if __name__ == "__main__":
 
 log = logging.getLogger(__name__)
 
+
+# -----------------------------------------------------------------------------------
+
+
+browser_mode: BrowserMode = 'headless'
+log.info(f'Starting driver in <{browser_mode}> mode')
+
 # load .env file for local use
 load_dotenv()
 

@@ -215,7 +215,7 @@ def rating_info(driver: WebDriver) -> Dict[str, Any]:
             log.info('Normal rating element found')
 
             rating_star_element: WebElement = overview_rating_normal.find_element(By.CSS_SELECTOR, 'div.rmtgcc3')
-            rating_star: str = utl.clean_text(rating_star_element.text, mode=3)
+            rating_star = utl.clean_text(rating_star_element.text, mode=3)
             rating_data['rating_star'] = float(rating_star)
 
             rating_num_element: WebElement = overview_rating_normal.find_element(By.CSS_SELECTOR, 'a')

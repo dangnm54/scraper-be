@@ -167,46 +167,48 @@ def start_browser(driver_path_ipt: str, option_ipt: EdgeOptions, browser_mode: B
                 driver = webdriver.Edge(options = option_ipt)
         log.info(f'Edge browser started | Driver <{driver}> created')
 
-
-        wait: WebDriverWait = WebDriverWait(driver,20)
-        log.info(f'Wait <{wait}> created')
-
-        # # open browser in specific screen
-        if browser_mode == 'local':      
-            monitor_list: List[Monitor] = get_monitors()
-            log.debug(f'Detected {len(monitor_list)} monitors')
-                # screen laptop: 1920 x 1080
-                # screen monitor: 2560 x 1440
-
-            if len(monitor_list) > 1:
-                secondary_monitor: Monitor | None = None
-                for monitor in monitor_list:
-                    if not monitor.is_primary:
-                        secondary_monitor = monitor
-                        break
-
-                if secondary_monitor:
-                    log.info(f'Secondary monitor found, open browser on secondary monitor')
-                    # driver.set_window_rect(x=-1920, y=180, width=1500, height=1010)  #monitor
-                    driver.set_window_rect(x=960, y=10, width=960, height=1010)   #laptop
-                    # driver.set_window_rect(x=-1920, y=180, width=1700, height=800)  #uat
-                else:
-                    log.info(f'Cannot identify clear secondary monitor, maximizing browser')
-                    driver.set_window_rect(x=960, y=10, width=960, height=1010)
-
-            else:
-                log.info(f'Only 1 monitor, maximizing browser')
-                driver.set_window_rect(x=960, y=10, width=960, height=1010)
-                # driver.set_window_rect(x=10, y=10, width=1900, height=1010)   #uat
-
-        return driver, wait
-
-
     except Exception as e:
         log.error(f'Error starting Edge browser with the specified path')
-        log.error('Please check driver_path and Edge browser / driver version')
+        log.error('Please check driver_path and Edge browser-driver version')
         lg.log_detail_error(e)
         return None, None
+
+
+    wait: WebDriverWait = WebDriverWait(driver,20)
+    log.info(f'Wait <{wait}> created')
+
+    # # open browser in specific screen
+    if browser_mode == 'local':      
+        monitor_list: List[Monitor] = get_monitors()
+        log.debug(f'Detected {len(monitor_list)} monitors')
+            # screen laptop: 1920 x 1080
+            # screen monitor: 2560 x 1440
+
+        if len(monitor_list) > 1:
+            secondary_monitor: Monitor | None = None
+            for monitor in monitor_list:
+                if not monitor.is_primary:
+                    secondary_monitor = monitor
+                    break
+
+            if secondary_monitor:
+                log.info(f'Secondary monitor found, open browser on secondary monitor')
+                # driver.set_window_rect(x=-1920, y=180, width=1500, height=1010)  #monitor
+                driver.set_window_rect(x=960, y=10, width=960, height=1010)   #laptop
+                # driver.set_window_rect(x=-1920, y=180, width=1700, height=800)  #uat
+            else:
+                log.info(f'Cannot identify clear secondary monitor, maximizing browser')
+                driver.set_window_rect(x=960, y=10, width=960, height=1010)
+
+        else:
+            log.info(f'Only 1 monitor, maximizing browser')
+            driver.set_window_rect(x=960, y=10, width=960, height=1010)
+            # driver.set_window_rect(x=10, y=10, width=1900, height=1010)   #uat
+
+    return driver, wait
+
+
+
 
 
 
