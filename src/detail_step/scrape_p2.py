@@ -174,49 +174,89 @@ def rating_info(driver: WebDriver) -> Dict[str, Any]:
         'rating_num': None,  # Optional[int]
     }
 
+    css_configs = [
+        {
+            'type': 'special',
+            'section': 'div.l57as01, div.mreautf',
+            'title': 'div.lbjrbi0',
+            'star': 'div.a8jhwcl',
+            'rating_num': 'div.r16onr0j'
+        },
+        {
+            'type': 'normal',
+            'section': 'div.rgr5sph',
+            'title': None,
+            'star': 'div.rmtgcc3',
+            'rating_num': 'a'
+        }
+    ]
+
     try:
 
+        rating_section: WebElement | None = None
+        config_type: Dict[str, Any] | None = None
+
+        for config in css_configs:
+            section: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, config['section'])
+            if section:
+                rating_section = section[0]
+                config_type = config
+                break
+
+        if rating_section and config_type:
+            utl.scroll_focus_element(driver, rating_section)
+            log.info(f'{config_type["type"].capitalize()} rating element found')
+
+            rating_title: WebElement = rating_section.find_element(By.CSS_SELECTOR, config_type['title'])
+            clean_title: str = rating_title.text.replace('\n',' ')
+
+        
+
+
+
+
+
         # overview data
-        overview_rating_special_section: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, 'div.l57as01')
-        if not overview_rating_special_section:
-            overview_rating_special_section = driver.find_elements(By.CSS_SELECTOR, 'div.mreautf')
-        overview_rating_normal_section: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, 'div.rgr5sph')
+        # overview_rating_special_section: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, 'div.l57as01')
+        # if not overview_rating_special_section:
+        #     overview_rating_special_section = driver.find_elements(By.CSS_SELECTOR, 'div.mreautf')
+        # overview_rating_normal_section: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, 'div.rgr5sph')
 
-        if overview_rating_special_section:
-            overview_rating_special: WebElement = overview_rating_special_section[0]
-            utl.scroll_focus_element(driver, overview_rating_special)            
-            log.info('Special rating element found')
+        # if overview_rating_special_section:
+                # overview_rating_special: WebElement = overview_rating_special_section[0]
+                # utl.scroll_focus_element(driver, overview_rating_special)            
+                # log.info('Special rating element found')
             
-            rating_title: WebElement = overview_rating_special.find_element(By.CSS_SELECTOR, 'div.lbjrbi0')
-            clean_rating_title: str = rating_title.text.replace('\n',' ')
-            rating_data['rating_title'] = clean_rating_title
+            # rating_title: WebElement = overview_rating_special.find_element(By.CSS_SELECTOR, 'div.lbjrbi0')
+            # clean_rating_title: str = rating_title.text.replace('\n',' ')
+            # rating_data['rating_title'] = clean_rating_title
 
-            rating_star_section: WebElement = overview_rating_special.find_element(By.CSS_SELECTOR, 'div.a8jhwcl')
-            rating_star_elements: List[WebElement] = rating_star_section.find_elements(By.CSS_SELECTOR, 'div')
-            rating_star: str = utl.clean_text(rating_star_elements[0].text, mode=3)
-            rating_data['rating_star'] = float(rating_star)
+            # rating_star_section: WebElement = overview_rating_special.find_element(By.CSS_SELECTOR, 'div.a8jhwcl')
+            # rating_star_elements: List[WebElement] = rating_star_section.find_elements(By.CSS_SELECTOR, 'div')
+            # rating_star: str = utl.clean_text(rating_star_elements[0].text, mode=3)
+            # rating_data['rating_star'] = float(rating_star)
 
-            rating_num_section: WebElement = overview_rating_special.find_element(By.CSS_SELECTOR, 'div.r16onr0j')
-            rating_num_elements: List[WebElement] = rating_num_section.find_elements(By.CSS_SELECTOR, 'div')
-            special_rating_num: int = int(rating_num_elements[0].text)
-            rating_data['rating_num'] = special_rating_num
+            # rating_num_section: WebElement = overview_rating_special.find_element(By.CSS_SELECTOR, 'div.r16onr0j')
+            # rating_num_elements: List[WebElement] = rating_num_section.find_elements(By.CSS_SELECTOR, 'div')
+            # special_rating_num: int = int(rating_num_elements[0].text)
+            # rating_data['rating_num'] = special_rating_num
 
-            log.info('Special overview rating data collected')
+            # log.info('Special overview rating data collected')
             
-        elif overview_rating_normal_section:
-            overview_rating_normal: WebElement = overview_rating_normal_section[0]
-            utl.scroll_focus_element(driver, overview_rating_normal)            
-            log.info('Normal rating element found')
+        # elif overview_rating_normal_section:
+                # overview_rating_normal: WebElement = overview_rating_normal_section[0]
+                # utl.scroll_focus_element(driver, overview_rating_normal)            
+                # log.info('Normal rating element found')
 
-            rating_star_element: WebElement = overview_rating_normal.find_element(By.CSS_SELECTOR, 'div.rmtgcc3')
-            rating_star = utl.clean_text(rating_star_element.text, mode=3)
-            rating_data['rating_star'] = float(rating_star)
+            # rating_star_element: WebElement = overview_rating_normal.find_element(By.CSS_SELECTOR, 'div.rmtgcc3')
+            # rating_star = utl.clean_text(rating_star_element.text, mode=3)
+            # rating_data['rating_star'] = float(rating_star)
 
-            rating_num_element: WebElement = overview_rating_normal.find_element(By.CSS_SELECTOR, 'a')
-            normal_rating_num: int = cast(int, utl.get_info_from_string(rating_num_element.text, mode='int'))
-            rating_data['rating_num'] = normal_rating_num
+            # rating_num_element: WebElement = overview_rating_normal.find_element(By.CSS_SELECTOR, 'a')
+            # normal_rating_num: int = cast(int, utl.get_info_from_string(rating_num_element.text, mode='int'))
+            # rating_data['rating_num'] = normal_rating_num
             
-            log.info('Normal overview rating data collected') 
+            # log.info('Normal overview rating data collected') 
 
 
         # detail data

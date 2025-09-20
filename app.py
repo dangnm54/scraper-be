@@ -388,3 +388,13 @@ async def sse_logs(request:Request, debug:bool=False) -> StreamingResponse:
         # when called event_generator() -> return a generator object that StreamingResponse can iterate over to get data
     return StreamingResponse(event_generator(), media_type="text/event-stream")
 
+
+
+
+# refactor scrape_p# file -> cleaner code, no duplicate
+
+    # go_to_website
+    # rating
+
+
+# test and push Docker image
