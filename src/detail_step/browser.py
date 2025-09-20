@@ -10,8 +10,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.webdriver.edge.service import Service as EdgeService
 
-import app.tool.log_op as lg
-from app.type.data import BrowserMode
+import src.tool.log_op as lg
+from src.type.data import BrowserMode
 
 
 # -----------------------------------------------------------------------------------

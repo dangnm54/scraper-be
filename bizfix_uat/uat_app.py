@@ -5,17 +5,18 @@ import csv
 from dotenv import load_dotenv
 from typing import Tuple, List, Dict
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.edge.options import Options as EdgeOptions
 
-from app.tool import log_op as lg
-import app.detail_step.browser as brws
-import app.bizfix_uat.function as step
-from app.tool.config import wait_time
-from app.type.data import BrowserMode
+from src.tool import log_op as lg
+from src.tool.config import wait_time
+import src.detail_step.browser as brws
+from src.type.data import BrowserMode
+
+import bizfix_uat.uat_function as step
 
 # -----------------------------------------------------------------------------------
 

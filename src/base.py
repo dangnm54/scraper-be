@@ -13,18 +13,18 @@ from selenium.webdriver.edge.options import Options as EdgeOptions
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 # When running from root directory (FastAPI)
-import app.detail_step.browser as brws
-import app.detail_step.scrape_p1 as scr1
-import app.detail_step.scrape_p2 as scr2
-import app.tool.log_op as lg
-import app.tool.db_op as dbop
-import app.tool.utils as utl
-from app.tool.config import wait_time
+import src.detail_step.browser as brws
+import src.detail_step.scrape_p1 as scr1
+import src.detail_step.scrape_p2 as scr2
+import src.tool.log_op as lg
+import src.tool.db_op as dbop
+import src.tool.utils as utl
+from src.tool.config import wait_time
 
 
-from app.tool.config import main_website_url, ip_website_url, search_mode, browser_mode, save_db
+from src.tool.config import main_website_url, ip_website_url, search_mode, browser_mode, save_db
 
-from app.type.data import ScrapeResult, ScrapeStatus, PropertyDB
+from src.type.data import ScrapeResult, ScrapeStatus, PropertyDB
 
 
 # -----------------------------------------------------------------------------------

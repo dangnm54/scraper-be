@@ -1,8 +1,6 @@
-
 import random
-import os
 
-from app.type.data import BrowserMode, SearchMode
+from src.type.data import BrowserMode, SearchMode
 
 
 # -----------------------------------------------------------------------------------

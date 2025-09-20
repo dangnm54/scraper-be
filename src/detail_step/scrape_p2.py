@@ -9,17 +9,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 
-try:
-    import app.tool.utils as utl
-    import app.tool.log_op as lg
-    from app.type.data import ScrapeResult, PropertyDB
-    import app.tool.get_ipt as ipt
-except ImportError:
-    import tool.utils as utl
-    import tool.log_op as lg
-    from type.data import ScrapeResult, PropertyDB
-    import tool.get_ipt as ipt
 
+import src.tool.utils as utl
+import src.tool.log_op as lg
+from src.type.data import ScrapeResult, PropertyDB
+import src.tool.get_ipt as ipt
 
 # -----------------------------------------------------------------------------------
 

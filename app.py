@@ -12,13 +12,13 @@ from pandas.core.generic import WriteExcelBuffer
 from starlette.responses import JSONResponse
 from starlette.responses import StreamingResponse
 
-import app.tool.log_op as lg
-import app.tool.file_op as fop
-from app.base import run_full_flow
-from app.tool.db_op import get_db
+import src.tool.log_op as lg
+import src.tool.file_op as fop
+from src.base import run_full_flow
+from src.tool.db_op import get_db
 
-from app.type.api import ScraperSettings, FileMetadata, FileDetail, ResponseBody
-from app.type.data import ScrapeStatus
+from src.type.api import ScraperSettings, FileMetadata, FileDetail, ResponseBody
+from src.type.data import ScrapeStatus
 
 from sqlalchemy.orm import Session
 from fastapi import Depends
@@ -388,8 +388,3 @@ async def sse_logs(request:Request, debug:bool=False) -> StreamingResponse:
         # when called event_generator() -> return a generator object that StreamingResponse can iterate over to get data
     return StreamingResponse(event_generator(), media_type="text/event-stream")
 
-
-
-
-
-# move all configurable to config file: save_db option, search_mode, browser_mode

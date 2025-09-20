@@ -5,14 +5,13 @@ import logging
 from datetime import datetime
 from typing import List, Dict
 
-import app.tool.log_op as lg
-import app.tool.utils as utl
+import src.tool.log_op as lg
+import src.tool.utils as utl
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.support.ui import WebDriverWait
 
 
 # -----------------------------------------------------------------------------------
@@ -205,7 +204,7 @@ def list_dict_to_csv(client_list: List[Dict[str, str | None]], name: str) -> str
     csv_name: str = base_csv_name
     while os.path.exists(os.path.join(folder_name, csv_name)):
         name_without_ext: str = base_csv_name.replace('.csv', '')
-        csv_name: str = f'{name_without_ext} ({counter}).csv'
+        csv_name = f'{name_without_ext} ({counter}).csv'
         counter += 1
 
     full_csv_path: str = os.path.join(folder_name, csv_name)

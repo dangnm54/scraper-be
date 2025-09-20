@@ -1,10 +1,3 @@
-try:
-    import app.tool.utils as utl
-    import app.tool.log_op as lg
-except ImportError:
-    import tool.utils as utl
-    import tool.log_op as lg
-
 import time
 import logging
 from typing import List, Dict, Literal
@@ -15,6 +8,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
+
+import src.tool.utils as utl
+import src.tool.log_op as lg
 
 
 # -----------------------------------------------------------------------------------
