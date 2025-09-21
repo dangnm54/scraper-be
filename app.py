@@ -392,9 +392,7 @@ async def sse_logs(request:Request, debug:bool=False) -> StreamingResponse:
 
 
 # refactor scrape_p# file -> cleaner code, no duplicate
-
     # go_to_website
-    # rating
 
 
 # test and push Docker image
