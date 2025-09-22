@@ -1,6 +1,6 @@
 import random
 
-from src.type.data import BrowserMode, SearchMode
+from src.type.data import BrowserMode, SearchMode, LogErrorLevel
 
 
 # -----------------------------------------------------------------------------------
@@ -23,6 +23,8 @@ save_db: bool = False
 search_mode: SearchMode = 'none'
 
 browser_mode: BrowserMode = 'headless'
+
+log_error_level: LogErrorLevel = '3_level'
 
 
 

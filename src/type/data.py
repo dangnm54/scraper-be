@@ -70,6 +70,11 @@ BrowserMode = Literal['local', 'headless']
 
 SearchMode = Literal['apply', 'none']
 
+
+LogErrorLevel = Literal['full', '3_level']
+
+
+
 # # Pydantic model for API input/output
 # class PropertyDetail(BaseModel):
 #     # overview_data

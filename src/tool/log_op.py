@@ -4,6 +4,7 @@ import logging
 import traceback
 from datetime import datetime
 
+from src.tool.config import log_error_level
 
 # -----------------------------------------------------------------------------------
 
@@ -114,28 +115,32 @@ def log_detail_error(e: Exception) -> None:
     
     exc_type, exc_value, exc_traceback = sys.exc_info()
     
+    message = str(e)
+
     if exc_traceback:
 
-        # get full traceback
-        full_traceback = traceback.format_exc()
-        message = f"Full traceback:\n{full_traceback}"
+        match log_error_level:
+            case 'full':
+                full_traceback = traceback.format_exc()
+                message = f"Full traceback:\n{full_traceback}"
 
+            # get 3 lastest level of error
+            case '3_level':
+                traceback_info = traceback.extract_tb(exc_traceback)
+                traceback_level = 3
+                traceback_list = traceback_info[-traceback_level:]    # if requested level > actual list -> start from beginning of list
+            
+                error_list = [str(e)]
+                for i, frame in enumerate(traceback_list):
+                    short_file_name = os.path.basename(frame.filename)
+                    frame_info = f'- Error level #{i+1}: File <{short_file_name}> | Function <{frame.name}> | Line #{frame.lineno}: {frame.line}'
+                    error_list.append(frame_info)
 
-        # # get 3 lastest level of error
-        # traceback_info = traceback.extract_tb(exc_traceback)
-        # traceback_level = 3
-        # traceback_list = traceback_info[-traceback_level:]    # if requested level larger than actual list -> start from beginning of list
-    
-        # error_list = [str(e)]
-        # for i, frame in enumerate(traceback_list):
-        #     short_file_name = os.path.basename(frame.filename)
-        #     frame_info = f'- Error level #{i+1}: File <{short_file_name}> | Function <{frame.name}> | Line #{frame.lineno}: {frame.line}'
-        #     error_list.append(frame_info)
-
-        # message = '\n'.join(error_list)
+                message = '\n'.join(error_list)
 
     else:
-        message = str(e)
+        pass
+
 
     root_logger = logging.getLogger()
     root_logger.error(message)

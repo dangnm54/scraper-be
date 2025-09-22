@@ -1,6 +1,6 @@
 import time
 import logging
-from typing import List, Dict, Literal
+from typing import List, Dict, Literal, Any
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -37,25 +37,41 @@ def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, webs
             driver.refresh()
             time.sleep(wait_time)
 
-        #close ads if any
-        try:
-            ad_element1: WebElement = driver.find_element(By.CSS_SELECTOR, 'div.c1qme1pd')
-            if EC.visibility_of(ad_element1):
-                log.info('Found Ad pop-up')
-                ok_button: WebElement = ad_element1.find_element(By.CSS_SELECTOR, 'button')
-                ok_button.click()
-                log.info('Close Ad pop-up')
-        except:
-            pass
+
+        ad_css_configs = [
+            {
+                'type': 1,
+                'element': 'div.c1qme1pd',
+                'ok_button':'button'
+            },
+            {
+                'type': 2,
+                'element': 'div[aria-label="Dịch trên"]',
+                'ok_button':'button[aria-label="Đóng"]'
+            }
+        ]
 
         try:
-            ad_element2: WebElement = driver.find_element(By.CSS_SELECTOR, 'div[aria-label="Dịch trên"]')
-            if EC.visibility_of(ad_element2):
+            ad_element: WebElement | None = None
+            config_type: Dict[str, Any] | None = None
+
+            for config in ad_css_configs:
+                element: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, config['element'])
+                if element:
+                    ad_element = element[0]
+                    config_type = config
+                    break
+            
+            # need check all 3 b/c None.is_displayed() will crash
+            if ad_element and config_type and ad_element.is_displayed():
                 log.info('Found Ad pop-up')
-                ok_button = ad_element2.find_element(By.CSS_SELECTOR, 'button[aria-label="Đóng"]')
+                ok_button = ad_element.find_element(By.CSS_SELECTOR, config_type['ok_button'])
                 ok_button.click()
                 log.info('Close Ad pop-up')
-        except:
+
+        except Exception as e:
+            lg.log_detail_error(e)
+            log.error(f'Error to find and close Ad pop-up | {e}')
             pass
 
 
