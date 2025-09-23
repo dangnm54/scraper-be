@@ -4,10 +4,10 @@ from datetime import datetime
 from typing import List, Generator
 from uuid import UUID
 
-from app.type.data import PropertyDB
-import app.tool.log_op as lg
+from src.type.data import PropertyDB
+import src.tool.log_op as lg
 
-from dotenv import load_dotenv
+
 from sqlalchemy.orm import Session
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import sessionmaker
@@ -31,6 +31,8 @@ if DATABASE_URL:
 
     # 'SessionLocal' -> a factory that create new database session whenever you need one.
     SessionLocal: sessionmaker | None = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+    log.info(f'Create engine and SessionLocal for database connection')
 
 else:
     log.error("DATABASE_URL not found in .env file. Cannot connect to the database.")

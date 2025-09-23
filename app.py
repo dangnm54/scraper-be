@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 import os
 import io
 import logging
@@ -22,17 +25,14 @@ from src.type.data import ScrapeStatus
 
 from sqlalchemy.orm import Session
 from fastapi import Depends
-from dotenv import load_dotenv
 
 
 # ------------------------------------------------------------------------------------------------
 
 
-# load .env file for server use
-load_dotenv()
+if __name__ == "__main__":
+    log_file_path = lg.setup_logging_for_file_directly_run()
 
-
-lg.setup_logging_for_file_directly_run()
 
 log = logging.getLogger(__name__)
 

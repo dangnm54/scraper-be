@@ -16,9 +16,9 @@ from selenium.webdriver.remote.webelement import WebElement
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
 try:
-    import app.tool.log_op as lg
-    from app.tool.config import wait_time
-    from app.type.data import PropertyDB
+    import src.tool.log_op as lg
+    from src.tool.config import wait_time
+    from src.type.data import PropertyDB
 except ImportError:
     import log_op as lg
     from config import wait_time
@@ -59,6 +59,7 @@ def get_info_from_string(string: str, mode: str) -> str | int | None:
 
             case 'coordinate':
                 word_list = word_list[0].split('/')
+                raw_coordinate: str = ''
                 for word in word_list:
                     if '@' in word:
                         raw_coordinate = word
@@ -84,11 +85,12 @@ def get_info_from_string(string: str, mode: str) -> str | int | None:
 
 def clean_text(string: str, mode: int) -> str:
     
+    clean_text: str = ''
     try:
         match mode:
             case 1:
                 nfd_string: str = unicodedata.normalize('NFD', string)
-                clean_text: str = ''.join(char for char in nfd_string if unicodedata.category(char) != 'Mn')
+                clean_text = ''.join(char for char in nfd_string if unicodedata.category(char) != 'Mn')
 
                 replacements = {
                     'đ': 'd', 'Đ': 'D',
@@ -104,13 +106,13 @@ def clean_text(string: str, mode: int) -> str:
                     clean_text = clean_text.replace(vn_key, en_value).lower()
             
             case 2:
-                clean_text: str = string.strip('"').strip(' · ').lower()
+                clean_text = string.strip('"').strip(' · ').lower()
             case 3:
-                clean_text: str = (string.replace(',','.'))
+                clean_text = (string.replace(',','.'))
             case 4:
-                clean_text: str = string.replace('.','')
+                clean_text = string.replace('.','')
             case 5:
-                clean_text: str = string.split('?')[0]
+                clean_text = string.split('?')[0]
 
         return clean_text
     

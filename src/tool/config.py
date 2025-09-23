@@ -20,9 +20,9 @@ ip_website_url: str = 'https://nordvpn.com/what-is-my-ip/'
 
 save_db: bool = False
 
-search_mode: SearchMode = 'none'
+search_mode: SearchMode = 'apply'
 
-browser_mode: BrowserMode = 'headless'
+browser_mode: BrowserMode = 'local'
 
 log_error_level: LogErrorLevel = '3_level'
 

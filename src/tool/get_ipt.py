@@ -3,8 +3,8 @@ from typing import Dict, Any, List
 from datetime import date, datetime, timedelta
 
 try:
-    import app.tool.log_op as lg
-    import app.tool.utils as utl
+    import src.tool.log_op as lg
+    import src.tool.utils as utl
 except ImportError:
     import tool.log_op as lg
     import tool.utils as utl
@@ -15,9 +15,14 @@ except ImportError:
 
 # -----------------------------------------------------------------------------------
 
-# lg.setup_logging_for_file_directly_run()
+
+if __name__ == "__main__":
+    log_file_path = lg.setup_logging_for_file_directly_run()
 
 log = logging.getLogger(__name__)
+
+
+# -----------------------------------------------------------------------------------
 
 
 def get_basic_search_info() -> Dict[str, Any]:

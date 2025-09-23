@@ -1,8 +1,12 @@
+# load .env file for local use
+from dotenv import load_dotenv
+load_dotenv()
+
 import sys
 import os
 import logging
 from uuid import UUID, uuid4
-from dotenv import load_dotenv
+
 from sqlalchemy.orm import Session
 from typing import Any, Dict, List, Tuple, Literal
 
@@ -40,9 +44,6 @@ log = logging.getLogger(__name__)
 # -----------------------------------------------------------------------------------
 
 
-# load .env file for local use
-load_dotenv()
-
 # get connection string from .env file
 DATABASE_URL: str | None = os.getenv('DATABASE_URL')
 
@@ -52,6 +53,7 @@ PROXY_IP: str | None = os.getenv('PROXY_IP')
 PROXY_PORT: str | None = os.getenv('PROXY_PORT')
 
 DRIVER_PATH: str | None = os.getenv('DRIVER_PATH')
+LOG_FILE_PATH: str | None = os.getenv('LOG_FILE_PATH')
 
 
 # -----------------------------------------------------------------------------------
@@ -257,31 +259,6 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
 
 
 
-# def calculate_data(csv_path):
-#     full_df = fop.csv_to_df(csv_path, index='prop_code', mode=2)
-#     cnt_rating_cate_df = cal.cnt_rating_categories(full_df)
-#     return cnt_rating_cate_df
-
-
-
-# def draw_dashboard(csv_path, cal_data):
-    
-#     full_df = fop.csv_to_df(csv_path, index='prop_code', mode=2)
-
-#     fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-#     axes_list = axes.flatten()
-
-#     dshb.util_num_rating_star(axes_list[0], full_df)
-#     dshb.rating_category_ratio(axes_list[1], cal_data)
-#     dshb.rating_num_rating_star(axes_list[2], full_df)
-#     dshb.this_month_BR_rating_star(axes_list[3], full_df)
-#     dshb.next_1month_BR_rating_star(axes_list[4], full_df)
-#     dshb.next_3month_BR_rating_star(axes_list[5], full_df)
-
-#     plt.tight_layout()
-#     plt.show()
-
-
 
 # -----------------------------------------------------------------------------------
 
@@ -326,29 +303,67 @@ def run_full_flow(
 # -----------------------------------------------------------------------------------
 
 
-# if __name__ == "__main__":
-#     db_session: Session | None = dbop.create_db_session()
-
-#     if db_session:
-#         try: 
-#             run_full_flow(
-#                 db = db_session,
-#                 file_name = 'PhoCo',
-#                 location = 'Pho Co, hanoi',
-#                 num_guest = 2,
-#                 num_property = 1,
-#                 collect_host_data = True,
-#                 collect_booking_rate = True
-#             )
-#         finally:
-#             log.info("Closing database session for direct file run.")
-#             db_session.close()
-
-#     else:  
-#         log.error("Could not create database session.")
+if __name__ == "__main__":
+    db_session: Session | None = dbop.create_db_session()
 
 
+    log.info("""Config:
+    - save_db: {save_db}
+    - search_mode: {search_mode}
+    - browser_mode: {browser_mode}
+    - log_error_level: {log_error_level}
+    """)
 
-# # start_driver()
+    if db_session:
+        try: 
+            run_full_flow(
+                db = db_session,
+                file_name = 'PhoCo',
+                location = 'Pho Co, hanoi',
+                num_guest = 2,
+                num_property = 1,
+                # collect_host_data = True,
+                # collect_booking_rate = True
+            )
+        finally:
+            log.info("Closing database session for direct file run.")
+            db_session.close()
 
-# print(f'\nLog file saved to: {log_file_path}\n')
+    else:  
+        log.error("Could not create database session.")
+
+
+
+# start_driver()
+
+print(f'\nLog file saved to: {LOG_FILE_PATH}\n')
+
+
+
+
+
+
+# log info của mấy config kh đc
+
+# lỗi ở view_page_get_all_link (có ads ở trang này)
+
+"""
+
+============================== View page and get all link
+
+09:56:08 | INFO | scrape_p1 - view_page_get_all_link - 233 | Ready to scrape 1 properties | Search-mode: apply
+09:56:28 | ERROR | log_op - log_detail_error - 146 | Message: 
+
+- Error level #1: File <scrape_p1.py> | Function <view_page_get_all_link> | Line #240: wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR,'div.cy5jw6o')))
+- Error level #2: File <wait.py> | Function <until> | Line #138: raise TimeoutException(message, screen, stacktrace)
+
+
+============================== Close browser
+
+09:56:31 | INFO | browser - close_browser - 220 | Close browser
+09:56:31 | ERROR | base - scrape_p1 - 129 | link_list is empty: []
+09:56:31 | INFO | base - run_full_flow - 290 | Phase 1 (link scraping) completed.
+09:56:31 | ERROR | base - run_full_flow - 293 | Phase 1 didn't find any properties -> Stop scraping process
+09:56:31 | INFO | base - <module> - 329 | Closing database session for direct file run.
+
+"""
