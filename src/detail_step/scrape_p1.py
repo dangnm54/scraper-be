@@ -41,8 +41,8 @@ def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, webs
         ad_css_configs = [
             {
                 'type': 1,
-                'element': 'div.c1qme1pd',
-                'ok_button':'button'
+                'element': 'div[aria-label="Giờ đây bạn sẽ thấy một mức giá duy nhất cho chuyến đi của mình, đã bao gồm mọi khoản phí."]',
+                'ok_button':'button[aria-label="Đóng"]'
             },
             {
                 'type': 2,
@@ -60,12 +60,13 @@ def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, webs
                 if element:
                     ad_element = element[0]
                     config_type = config
+                    log.info('Found Ad pop-up')
                     break
             
             # need check all 3 b/c None.is_displayed() will crash
             if ad_element and config_type and ad_element.is_displayed():
-                log.info('Found Ad pop-up')
-                ok_button = ad_element.find_element(By.CSS_SELECTOR, config_type['ok_button'])
+                log.info('Found close button')
+                ok_button = driver.find_element(By.CSS_SELECTOR, config_type['ok_button'])
                 ok_button.click()
                 log.info('Close Ad pop-up')
 
@@ -147,7 +148,7 @@ def search_location(driver: WebDriver, wait_time: float, location_ipt: str) -> N
         location_input.send_keys(location_ipt, Keys.ENTER)
         
         log.info(f'<{location_ipt}> typed and ENTER')
-        time.sleep(wait_time)
+        # time.sleep(wait_time)
         
     except Exception as e:
         lg.log_detail_error(e)
@@ -169,7 +170,7 @@ def search_date(driver: WebDriver, wait_time: float) -> None:
         weekend_date_button.click()
         
         log.info('Flexible weekend button found and clicked')
-        time.sleep(wait_time)
+        # time.sleep(wait_time)
 
     except Exception as e:
         lg.log_detail_error(e)
@@ -199,7 +200,7 @@ def search_guest(driver: WebDriver, wait_time: float, num_guest: int) -> None:
             num_click += 1
 
         log.info(f'{num_guest} guests added')
-        time.sleep(wait_time)
+        # time.sleep(wait_time)
 
 
     except Exception as e:
@@ -229,13 +230,15 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
 
     ad_element: WebElement | None = None
     try:
-        ad_elements: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, 'div.d1jss5zu')
+        log.info('Check Ad pop-up')
+        ad_elements: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, 'div.c1xazqyf')
         if ad_elements:
-            ad_element = ad_elements[0]
+            ad_element = ad_elements[-1]
+            log.info('Found Ad pop-up')
     
         if ad_element and ad_element.is_displayed():
-            log.info('Found Ad pop-up')
-            ok_button = ad_element.find_element(By.CSS_SELECTOR, 'button[aria-label="Đóng"]')
+            ok_button = driver.find_element(By.CSS_SELECTOR, 'button[aria-label="Đóng"]')
+            log.info('Found close button')
             ok_button.click()
             log.info('Close Ad pop-up')
 
@@ -258,7 +261,7 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                     prop_list = driver.find_elements(By.CSS_SELECTOR,'div.c1r8sk5a')
 
                 case 'apply':
-                    wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR,'div.c965t3n')))
+                    wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR,'div.c965t3n')))
                     time.sleep(wait_time)
                     prop_list = driver.find_elements(By.CSS_SELECTOR,'div.cfutgp0')
         except Exception as e:

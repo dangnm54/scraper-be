@@ -76,8 +76,6 @@ LogErrorLevel = Literal['full', '3_level']
 
 ScrapePhase = Literal[1, 2]
 
-
-
 # # Pydantic model for API input/output
 # class PropertyDetail(BaseModel):
 #     # overview_data

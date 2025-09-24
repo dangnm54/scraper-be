@@ -30,8 +30,7 @@ from fastapi import Depends
 # ------------------------------------------------------------------------------------------------
 
 
-if __name__ == "__main__":
-    log_file_path = lg.setup_logging_for_file_directly_run()
+log_file_path = lg.setup_logging_for_file_directly_run()
 
 
 log = logging.getLogger(__name__)

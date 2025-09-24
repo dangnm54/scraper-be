@@ -1,100 +1,38 @@
-LOG RECORDED AT: 24-09-2025 09:09:10
-STARTED BY FILE: base.py
-RUN METHOD: Directly in Terminal
+LOG RECORDED AT: 24-09-2025 22:48:08
+STARTED BY FILE: __main__.py
+RUN METHOD: Server started (uvicorn)
 
 
-09:09:10 | INFO | db_op - create_db_session - 80 | Creating database session for direct file run.
-09:09:10 | INFO | base - <module> - 313 | Config:
-    - save_db: False
-    - search_mode: apply
-    - browser_mode: local
-    - log_error_level: 3_level
-    
+22:48:12 | INFO | db_op - get_db - 59 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x000002A175BF5180>
+22:48:12 | INFO | db_op - get_db - 59 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x000002A175BF5CC0>
+22:48:12 | INFO | db_op - get_db - 59 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x000002A175BF6020>
 
 
-============================== Start full flow
+============================== Get session list
 
-09:09:10 | INFO | base - run_full_flow - 276 | API Request Received:
-09:09:10 | INFO | base - run_full_flow - 277 |     
-    - Location: Pho Co, hanoi
-    - Number of guests: 2
-    - Number of properties: 1
-    - Collect host data: False
-    - Collect booking rate: False
-    
-09:09:12 | INFO | base - run_full_flow - 287 | New scraping session <PhoCo_240925> started | ID: be7890fd-12b8-42bb-824e-ae8f32e00f27
-09:09:12 | INFO | base - start_driver - 64 | Starting driver in <local> mode
-
-
-============================== Create proxy helper extension
-
-09:09:12 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
-09:09:12 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
-09:09:12 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
-09:09:12 | INFO | base - start_driver - 69 | Proxy information found in.env -> driver will use proxy
-
-
-============================== Config basic driver setting
-
-09:09:12 | INFO | browser - config_basic_driver_setting - 124 | Configured basic settings
+22:48:14 | INFO | db_op - get_db - 64 | Closing database session for FastAPI request.
+22:48:14 | INFO | db_op - get_db - 64 | Closing database session for FastAPI request.
+22:48:14 | INFO | db_op - get_db - 64 | Closing database session for FastAPI request.
+22:48:15 | INFO | db_op - get_db - 59 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x000002A175C4F340>
+22:48:16 | INFO | db_op - get_db - 64 | Closing database session for FastAPI request.
+22:48:23 | INFO | db_op - get_db - 59 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x000002A175B82FB0>
+22:48:23 | INFO | db_op - get_db - 64 | Closing database session for FastAPI request.
+22:48:24 | INFO | db_op - get_db - 59 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x000002A175B83160>
+22:48:24 | INFO | db_op - get_db - 64 | Closing database session for FastAPI request.
+22:48:25 | INFO | db_op - get_db - 59 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x000002A175B82D10>
+22:48:25 | INFO | db_op - get_db - 64 | Closing database session for FastAPI request.
+22:48:27 | INFO | db_op - get_db - 59 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x000002A175B831C0>
+22:48:27 | INFO | file_op - list_dict_to_df - 139 | List_of_dict -> Dataframe successful
+22:48:28 | INFO | db_op - get_db - 64 | Closing database session for FastAPI request.
+22:48:39 | INFO | db_op - get_db - 59 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x000002A175B82D10>
+22:48:39 | INFO | db_op - get_db - 64 | Closing database session for FastAPI request.
+22:48:49 | INFO | db_op - get_db - 59 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x000002A175B82E00>
 
 
-============================== Config advanced driver setting
+============================== Get session list
 
-09:09:12 | INFO | browser - config_proxy_driver_setting - 134 | Configured minimal logging for selenium
-09:09:12 | INFO | browser - config_proxy_driver_setting - 146 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
-
-
-============================== Start browser
-
-09:09:13 | INFO | browser - start_browser - 168 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="1791eb18fa95c25bc7feda296d5067a2")>> created
-09:09:13 | INFO | browser - start_browser - 178 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="1791eb18fa95c25bc7feda296d5067a2")>> created
-09:09:13 | INFO | browser - start_browser - 195 | Secondary monitor found, open browser on secondary monitor
-
-
-============================== Go to website
-
-09:09:14 | INFO | scrape_p1 - go_to_website - 29 | Go to website: https://www.airbnb.com.vn/homes
-09:09:22 | INFO | base - scrape_p1 - 113 | Search mode: apply
-
-
-============================== Search location
-
-09:09:22 | INFO | scrape_p1 - search_location - 143 | Location element found and clicked
-09:09:26 | INFO | scrape_p1 - search_location - 149 | <Pho Co, hanoi> typed and ENTER
-
-
-============================== Search date
-
-09:09:30 | INFO | scrape_p1 - search_date - 165 | Flexible time button found and clicked
-09:09:34 | INFO | scrape_p1 - search_date - 171 | Flexible weekend button found and clicked
-
-
-============================== Search guest
-
-09:09:38 | INFO | scrape_p1 - search_guest - 189 | Guest element found and clicked
-09:09:42 | INFO | scrape_p1 - search_guest - 201 | 2 guests added
-
-
-============================== Press search
-
-09:09:46 | INFO | scrape_p1 - press_search - 218 | Seach button founded and clicked
-
-
-============================== View page and get all link
-
-09:09:46 | INFO | scrape_p1 - view_page_get_all_link - 252 | Ready to scrape 1 properties | Search-mode: apply
-09:09:54 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-XP8LBQ",
-    "prop_name": "Khu phố cổ*Hoàn Kiếm*Phòng bình dân",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1180233416689827061"
-}
-09:09:54 | INFO | scrape_p1 - view_page_get_all_link - 323 | 1 properties (basic info) scraped
-
-
-============================== Close browser
-
-09:09:56 | INFO | browser - close_browser - 220 | Close browser
-09:09:56 | INFO | base - scrape_p1 - 149 | Finish saving 1 properties (basic info) to database
-09:09:56 | INFO | base - run_full_flow - 290 | Phase 1 (link scraping) completed.
-09:09:56 | INFO | base - <module> - 332 | Closing database session for direct file run.
+22:48:49 | INFO | db_op - get_db - 64 | Closing database session for FastAPI request.
+22:48:50 | INFO | db_op - get_db - 59 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x000002A176148DF0>
+22:48:50 | INFO | db_op - get_db - 59 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x000002A1761495D0>
+22:48:51 | INFO | db_op - get_db - 64 | Closing database session for FastAPI request.
+22:48:51 | INFO | db_op - get_db - 64 | Closing database session for FastAPI request.

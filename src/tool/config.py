@@ -20,12 +20,11 @@ ip_website_url: str = 'https://nordvpn.com/what-is-my-ip/'
 
 save_db: bool = False
 
-search_mode: SearchMode = 'apply'
+search_mode: SearchMode = 'none'
 
 browser_mode: BrowserMode = 'local'
 
 log_error_level: LogErrorLevel = '3_level'
 
-scrape_phase: int = 1
-
+scrape_phase: int = 2
 

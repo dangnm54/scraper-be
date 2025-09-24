@@ -146,10 +146,9 @@ def scrape_p1(db: Session, session_id: UUID, session_name: str, main_website_url
         
         link_list_db.append(prop)
 
+    log.info(f'Finish saving {len(link_list_db)} properties (basic info) to database')
 
-    if save_db:        
-        log.info(f'Finish saving {len(link_list_db)} properties (basic info) to database')
-
+    if save_db:
         # update prop object in Python with data created by db after during the commit (like timestamp)
         for prop in link_list_db:
             db.refresh(prop)
@@ -307,40 +306,40 @@ def run_full_flow(
 # -----------------------------------------------------------------------------------
 
 
-if __name__ == "__main__":
-    db_session: Session | None = dbop.create_db_session()
+# if __name__ == "__main__":
+#     db_session: Session | None = dbop.create_db_session()
 
 
-    log.info(f"""Config:
-    - save_db: {save_db}
-    - search_mode: {search_mode}
-    - browser_mode: {browser_mode}
-    - log_error_level: {log_error_level}
-    """)
+#     log.info(f"""Config:
+#     - save_db: {save_db}
+#     - search_mode: {search_mode}
+#     - browser_mode: {browser_mode}
+#     - log_error_level: {log_error_level}
+#     """)
 
-    if db_session:
-        try: 
-            run_full_flow(
-                db = db_session,
-                file_name = 'PhoCo',
-                location = 'Pho Co, hanoi',
-                num_guest = 2,
-                num_property = 1,
-                # collect_host_data = True,
-                # collect_booking_rate = True
-            )
-        finally:
-            log.info("Closing database session for direct file run.")
-            db_session.close()
+#     if db_session:
+#         try: 
+#             run_full_flow(
+#                 db = db_session,
+#                 file_name = 'PhoCo',
+#                 location = 'Pho Co, hanoi',
+#                 num_guest = 2,
+#                 num_property = 2,
+#                 collect_host_data = True,
+#                 collect_booking_rate = True
+#             )
+#         finally:
+#             log.info("Closing database session for direct file run.")
+#             db_session.close()
 
-    else:  
-        log.error("Could not create database session.")
+#     else:  
+#         log.error("Could not create database session.")
 
 
 
 # start_driver()
 
-print(f'\nLog file saved to: {LOG_FILE_PATH}\n')
+# print(f'\nLog file saved to: {LOG_FILE_PATH}\n')
 
 
 
