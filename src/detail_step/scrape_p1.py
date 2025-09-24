@@ -71,7 +71,7 @@ def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, webs
 
         except Exception as e:
             lg.log_detail_error(e)
-            log.error(f'Error to find and close Ad pop-up | {e}')
+            log.error(f'Error to locate and close Ad pop-up | {e}')
             pass
 
 
@@ -226,22 +226,48 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
     
     lg.log_divider('View page and get all link')
 
+
+    ad_element: WebElement | None = None
+    try:
+        ad_elements: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, 'div.d1jss5zu')
+        if ad_elements:
+            ad_element = ad_elements[0]
+    
+        if ad_element and ad_element.is_displayed():
+            log.info('Found Ad pop-up')
+            ok_button = ad_element.find_element(By.CSS_SELECTOR, 'button[aria-label="Đóng"]')
+            ok_button.click()
+            log.info('Close Ad pop-up')
+
+    except Exception as e:
+        lg.log_detail_error(e)
+        log.error(f'Error to locate and close Ad pop-up | {e}')
+        pass
+
+
     try:
         link_list: List[Dict[str, str]] = []
-        property_count: int = 0 
+        prop_cnt: int = 0 
 
         log.info(f'Ready to scrape {num_property} properties | Search-mode: {search}')
 
-        match search:
-            case 'none':
-                prop_list: List[WebElement] = driver.find_elements(By.CSS_SELECTOR,'div.c1r8sk5a')
+        prop_list: List[WebElement] = []
+        try:
+            match search:
+                case 'none':
+                    prop_list = driver.find_elements(By.CSS_SELECTOR,'div.c1r8sk5a')
 
-            case 'apply':
-                wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR,'div.cy5jw6o')))
-                time.sleep(wait_time)
-                prop_list = driver.find_elements(By.CSS_SELECTOR,'div.cfutgp0')
+                case 'apply':
+                    wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR,'div.c965t3n')))
+                    time.sleep(wait_time)
+                    prop_list = driver.find_elements(By.CSS_SELECTOR,'div.cfutgp0')
+        except Exception as e:
+            lg.log_detail_error(e)
+            log.error(f'Error to check visibility and locate property list | {e}')
+            return []
 
-        while property_count < num_property:
+
+        while prop_cnt < num_property:
 
             for property in prop_list:
 
@@ -275,12 +301,12 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                 
                 utl.print_pretty_dict(prop_info)
 
-                property_count += 1
+                prop_cnt += 1
 
-                if property_count == num_property:
+                if prop_cnt == num_property:
                     break
 
-            if property_count == num_property:
+            if prop_cnt == num_property:
                     break
             else:
                 try:
@@ -294,7 +320,7 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                     lg.log_detail_error(e)
                     break
 
-        log.info(f'{property_count} properties (basic info) scraped')
+        log.info(f'{prop_cnt} properties (basic info) scraped')
         return link_list
 
     except Exception as e:

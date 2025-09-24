@@ -26,6 +26,6 @@ browser_mode: BrowserMode = 'local'
 
 log_error_level: LogErrorLevel = '3_level'
 
-
+scrape_phase: int = 1
 
 

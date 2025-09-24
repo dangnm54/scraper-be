@@ -26,7 +26,7 @@ import src.tool.utils as utl
 from src.tool.config import wait_time
 
 
-from src.tool.config import main_website_url, ip_website_url, search_mode, browser_mode, save_db
+from src.tool.config import main_website_url, ip_website_url, search_mode, browser_mode, save_db, log_error_level, scrape_phase
 
 from src.type.data import ScrapeResult, ScrapeStatus, PropertyDB
 
@@ -146,9 +146,10 @@ def scrape_p1(db: Session, session_id: UUID, session_name: str, main_website_url
         
         link_list_db.append(prop)
 
-    log.info(f'Finish saving {len(link_list_db)} properties (basic info) to database')
 
-    if save_db:
+    if save_db:        
+        log.info(f'Finish saving {len(link_list_db)} properties (basic info) to database')
+
         # update prop object in Python with data created by db after during the commit (like timestamp)
         for prop in link_list_db:
             db.refresh(prop)
@@ -293,8 +294,11 @@ def run_full_flow(
         log.error(f"Phase 1 didn't find any properties -> Stop scraping process")
         return ScrapeStatus.failed
 
-    scrape_status: ScrapeStatus = scrape_p2(db, link_list_db, collect_host_data, collect_booking_rate, save_db)
-    log.info(f"Phase 2 (detail scraping) completed.")
+    if scrape_phase == 1:
+        scrape_status = ScrapeStatus.partial
+    else:
+        scrape_status: ScrapeStatus = scrape_p2(db, link_list_db, collect_host_data, collect_booking_rate, save_db)
+        log.info(f"Phase 2 (detail scraping) completed.")
     
     return scrape_status
 
@@ -307,7 +311,7 @@ if __name__ == "__main__":
     db_session: Session | None = dbop.create_db_session()
 
 
-    log.info("""Config:
+    log.info(f"""Config:
     - save_db: {save_db}
     - search_mode: {search_mode}
     - browser_mode: {browser_mode}
@@ -340,30 +344,3 @@ print(f'\nLog file saved to: {LOG_FILE_PATH}\n')
 
 
 
-
-
-
-# log info của mấy config kh đc
-
-# lỗi ở view_page_get_all_link (có ads ở trang này)
-
-"""
-
-============================== View page and get all link
-
-09:56:08 | INFO | scrape_p1 - view_page_get_all_link - 233 | Ready to scrape 1 properties | Search-mode: apply
-09:56:28 | ERROR | log_op - log_detail_error - 146 | Message: 
-
-- Error level #1: File <scrape_p1.py> | Function <view_page_get_all_link> | Line #240: wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR,'div.cy5jw6o')))
-- Error level #2: File <wait.py> | Function <until> | Line #138: raise TimeoutException(message, screen, stacktrace)
-
-
-============================== Close browser
-
-09:56:31 | INFO | browser - close_browser - 220 | Close browser
-09:56:31 | ERROR | base - scrape_p1 - 129 | link_list is empty: []
-09:56:31 | INFO | base - run_full_flow - 290 | Phase 1 (link scraping) completed.
-09:56:31 | ERROR | base - run_full_flow - 293 | Phase 1 didn't find any properties -> Stop scraping process
-09:56:31 | INFO | base - <module> - 329 | Closing database session for direct file run.
-
-"""
