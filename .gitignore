@@ -8,7 +8,8 @@ __pycache__
 *.pyo
 *.pyd
 
-# Local data files
+# Other files
+src/note/*
 /data
 
 # Log files
@@ -21,3 +22,4 @@ app.log
 # IDE / Editor specific
 .idea/
 .vscode/
+src/note/context.txt
