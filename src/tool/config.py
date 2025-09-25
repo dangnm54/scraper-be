@@ -22,7 +22,7 @@ save_db: bool = False
 
 search_mode: SearchMode = 'none'
 
-browser_mode: BrowserMode = 'local'
+browser_mode: BrowserMode = 'headless'
 
 log_error_level: LogErrorLevel = '3_level'
 

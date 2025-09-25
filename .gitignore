@@ -1,6 +1,23 @@
-venv/
-data/
-context.txt
-note/
+# Virtual environment
+/venv
+/.venv
+
+# Python cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Local data files
+/data
+
+# Log files
+*.log
+app.log
+
+# Env files with secrets
 .env
-__pycache__/
+
+# IDE / Editor specific
+.idea/
+.vscode/

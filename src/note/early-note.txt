@@ -1,0 +1,113 @@
+
+___Goal of my Airbnb scraper can do -------------------------------------------------------------------
+
+1/ Scrape a list of property for me
+- I only need to give variables of search filters
+- Then the scraper give me back the property list along with their info
+
+2/ Scrape data of property owner
+- give a list of profile link
+- then the scraper give me back the information of those property owner
+
+
+___Scrape property data -------------------------------------------------------------------
+
+- configure driver
+- start driver
+- go to Airbnb
+- find field for search data
+- input data for search field
+
+- loop
+    - download source
+    - extract data
+    - next page -> until get needed number
+
+- return list of 
+
+
+
+___Scrape phase -------------------------------------------------------------------
+
+- Phase 1: scrape overall
+    - go to website
+    - search
+    - load result page
+    - get name + link of detail page
+
+    -> 1 file
+
+- Phase 2: scrape detail
+    - go to detail page
+    - scrape info
+    - repeat
+
+    -> 1 file
+
+- Phase 3: Calculation
+
+- Phase 4: Draw graph
+
+
+
+___Data to track -------------------------------------------------------------------
+
+- Occupancy Rates: Check how often similar properties are booked
+- Average Daily Rate (price) (ADR)
+- Supply Trends: how many new Airbnb listings pop up in your area / segment
+- Guest Demographics & Preferences: Look at who’s booking
+- Seasonality: Identify high-demand months
+
+- Booking Rate: how many inquiries -> into bookings
+- Guest Reviews & Ratings: 
+- Length of Stay: Check average stay duration
+- Cancellation Rate: 
+- Revenue & Expenses: 
+- Competitor Performance: Compare your occupancy, ADR, and RevPAR (Occupancy Rate (%) × Average Daily Rate (ADR))
+
+
+
+___Graph to draw -------------------------------------------------------------------
+
+- util num / rating star (scatter)          
+- count# / rating star (pie)                -> cal
+- rating num / rating star (scatter)        
+- this month BR / rating star (scatter)
+- next 1 month BR / rating star (scatter)
+- next 3 month BR / rating star (scatter)
+
+
+
+___Bot CSKH -------------------------------------------------------------------
+
+
+Idea: Customer Support Automation for airbnb host
+
+___Context:
+- host usually have an excel file of FAQ and related answers
+- host usually marketing their property on multiple channel: facebook, messenger, tiktok, airbnb
+- they need to manually answer their potential clients
+
+
+___Function & Tech:
+- we have an webapp (runs on website) where host can
+   + connect to those 4 channels
+   + have a place to store all FAQ and answers
+
+- the app will automatically answer clients using
+   + AI to understand user's questions
+   + map those questions with store FAQ
+   + pick the suitable answers to answer the client
+   + doing all of that while maintaining related tone of voice
+   + signal to users (through phone / email / app) whenever the app don't know the answer to customers' questions
+
+- users can configure
+   + list of FAQ and answers
+   + tone of voice of AI
+   + information about their properties
+
+- a level lower / easier to make can be
+   + the app pre-type answer in the input box, users only needs to press sent
+   + or the app pre-sent the answer to the user, user only needs to press sent
+
+- the automation can ultilize the n8n open source to build it up

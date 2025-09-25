@@ -1,0 +1,38 @@
+# Git
+.git
+.gitignore
+
+
+# Docker
+.dockerignore
+Dockerfile
+
+
+# Virtual environment
+venv
+.venv
+
+
+# Python cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+
+# Data files
+data/
+
+
+# Log files
+*.log
+app.log
+
+
+# Env files
+.env
+
+
+# Other
+README.md
+Procfile

@@ -120,6 +120,9 @@ def config_basic_driver_setting(browser_mode: BrowserMode = 'local') -> EdgeOpti
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--disable-gpu")
         options.add_argument("--window-size=1920,1080")
+        options.add_argument("--disable-extensions")
+        options.add_argument("--start-maximized")
+        options.add_argument("--blink-settings=imagesEnabled=false") 
 
     log.info('Configured basic settings')
     return options
@@ -142,6 +145,7 @@ def config_proxy_driver_setting(extension_dir_ipt: str | None, options_ipt: Edge
     absolute_extension_dir: str = os.path.abspath(extension_dir_ipt)
 
     try:
+        options.add_argument("--ignore-certificate-errors")
         options.add_argument(f'--load-extension={absolute_extension_dir}')
         log.info(f'Configured Edge to load proxy helper extension from: {absolute_extension_dir}')
         return options
