@@ -3,14 +3,14 @@
 /.venv
 
 # Python cache
-__pycache__
+__pycache__/
 *.pyc
 *.pyo
 *.pyd
 
 # Other files
-src/note/*
-/data
+src/note/
+data/
 
 # Log files
 *.log
