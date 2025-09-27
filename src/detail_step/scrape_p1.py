@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException
 
 import src.tool.utils as utl
 import src.tool.log_op as lg
@@ -52,23 +53,35 @@ def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, webs
         ]
 
         try:
-            ad_element: WebElement | None = None
-            config_type: Dict[str, Any] | None = None
+            log.info('Check Ad pop-up')
 
-            for config in ad_css_configs:
-                element: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, config['element'])
-                if element:
-                    ad_element = element[0]
-                    config_type = config
-                    log.info('Found Ad pop-up')
-                    break
-            
-            # need check all 3 b/c None.is_displayed() will crash
-            if ad_element and config_type and ad_element.is_displayed():
+            all_element_css = ",".join([config['element'] for config in ad_css_configs])
+
+            ad_element: WebElement = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, all_element_css)))
+            log.info('Found Ad pop-up')
+
+            found_element_css = ad_element.get_attribute('aria-label')
+            found_config: Dict[str, Any] | None = None
+
+            if found_element_css:
+                log.info(f'Found element css: {found_element_css}')
+                for config in ad_css_configs:
+                    log.info(f'Element css: {found_element_css} | Element in config: {config["element"]}')
+                    if found_element_css in config['element']:
+                        found_config = config
+                        log.info(f'Found ad type <{config["type"]}>')
+                        break
+
+            if found_config:
+                ok_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, found_config['ok_button'])))
                 log.info('Found close button')
-                ok_button = driver.find_element(By.CSS_SELECTOR, config_type['ok_button'])
                 ok_button.click()
                 log.info('Close Ad pop-up')
+            else:
+                log.error('Cannot identify ad type')
+
+        except TimeoutException:
+            log.error(f'Found no Ad pop-up')
 
         except Exception as e:
             lg.log_detail_error(e)
@@ -148,7 +161,7 @@ def search_location(driver: WebDriver, wait_time: float, location_ipt: str) -> N
         location_input.send_keys(location_ipt, Keys.ENTER)
         
         log.info(f'<{location_ipt}> typed and ENTER')
-        # time.sleep(wait_time)
+        time.sleep(wait_time)
         
     except Exception as e:
         lg.log_detail_error(e)
@@ -170,7 +183,7 @@ def search_date(driver: WebDriver, wait_time: float) -> None:
         weekend_date_button.click()
         
         log.info('Flexible weekend button found and clicked')
-        # time.sleep(wait_time)
+        time.sleep(wait_time)
 
     except Exception as e:
         lg.log_detail_error(e)
@@ -200,7 +213,7 @@ def search_guest(driver: WebDriver, wait_time: float, num_guest: int) -> None:
             num_click += 1
 
         log.info(f'{num_guest} guests added')
-        # time.sleep(wait_time)
+        time.sleep(wait_time)
 
 
     except Exception as e:
@@ -227,20 +240,18 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
     
     lg.log_divider('View page and get all link')
 
-
-    ad_element: WebElement | None = None
     try:
         log.info('Check Ad pop-up')
-        ad_elements: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, 'div.c1xazqyf')
-        if ad_elements:
-            ad_element = ad_elements[-1]
-            log.info('Found Ad pop-up')
-    
-        if ad_element and ad_element.is_displayed():
-            ok_button = driver.find_element(By.CSS_SELECTOR, 'button[aria-label="Đóng"]')
-            log.info('Found close button')
-            ok_button.click()
-            log.info('Close Ad pop-up')
+        wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div.c1qme1pd')))
+        log.info('Found Ad pop-up')
+
+        ok_button: WebElement = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[aria-label="Đóng"]')))
+        log.info('Found close button')
+        ok_button.click()
+        log.info('Close Ad pop-up')
+
+    except TimeoutException:
+        log.info(f'Found no Ad pop-up')
 
     except Exception as e:
         lg.log_detail_error(e)

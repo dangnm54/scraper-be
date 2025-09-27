@@ -1,6 +1,5 @@
 # Virtual environment
-/venv
-/.venv
+venv/
 
 # Python cache
 __pycache__/
@@ -18,8 +17,3 @@ app.log
 
 # Env files with secrets
 .env
-
-# IDE / Editor specific
-.idea/
-.vscode/
-src/note/context.txt

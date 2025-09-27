@@ -6,8 +6,8 @@ from src.type.data import BrowserMode, SearchMode, LogErrorLevel
 # -----------------------------------------------------------------------------------
 
 
-# wait time: 2.5 - 5.5s
-wait_time: float = random.uniform(1, 3) + random.uniform(2, 5) - random.uniform(0.1, 0.5)
+# wait time: 2 - 4s
+wait_time: float = random.uniform(1, 2) + random.uniform(1, 2) - random.uniform(0.1, 0.5)
 
 
 # website links
@@ -22,9 +22,9 @@ save_db: bool = True
 
 search_mode: SearchMode = 'apply'
 
-browser_mode: BrowserMode = 'headless'
+browser_mode: BrowserMode = 'local'
 
 log_error_level: LogErrorLevel = '3_level'
 
-scrape_phase: int = 2
+scrape_phase: int = 1
 

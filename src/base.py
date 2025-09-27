@@ -306,34 +306,34 @@ def run_full_flow(
 # -----------------------------------------------------------------------------------
 
 
-# if __name__ == "__main__":
-#     db_session: Session | None = dbop.create_db_session()
+if __name__ == "__main__":
+    db_session: Session | None = dbop.create_db_session()
 
 
-#     log.info(f"""Config:
-#     - save_db: {save_db}
-#     - search_mode: {search_mode}
-#     - browser_mode: {browser_mode}
-#     - log_error_level: {log_error_level}
-#     """)
+    log.info(f"""Config:
+    - save_db: {save_db}
+    - search_mode: {search_mode}
+    - browser_mode: {browser_mode}
+    - log_error_level: {log_error_level}
+    """)
 
-#     if db_session:
-#         try: 
-#             run_full_flow(
-#                 db = db_session,
-#                 file_name = 'PhoCo',
-#                 location = 'Pho Co, hanoi',
-#                 num_guest = 2,
-#                 num_property = 2,
-#                 collect_host_data = True,
-#                 collect_booking_rate = True
-#             )
-#         finally:
-#             log.info("Closing database session for direct file run.")
-#             db_session.close()
+    if db_session:
+        try: 
+            run_full_flow(
+                db = db_session,
+                file_name = 'PhoCo',
+                location = 'Pho Co, hanoi',
+                num_guest = 2,
+                num_property = 2,
+                collect_host_data = True,
+                collect_booking_rate = True
+            )
+        finally:
+            log.info("Closing database session for direct file run.")
+            db_session.close()
 
-#     else:  
-#         log.error("Could not create database session.")
+    else:  
+        log.error("Could not create database session.")
 
 
 
