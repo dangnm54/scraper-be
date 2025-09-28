@@ -161,14 +161,9 @@ def start_browser(driver_path_ipt: str, option_ipt: EdgeOptions, browser_mode: B
 
     lg.log_divider('Start browser')
 
-    driver: WebDriver | None = None
     try:
-        match browser_mode:
-            case 'local':
-                service: EdgeService = EdgeService(executable_path = driver_path_ipt, log_output=os.devnull)
-                driver = webdriver.Edge(service = service, options = option_ipt)
-            case 'headless':
-                driver = webdriver.Edge(options = option_ipt)
+        service: EdgeService = EdgeService(executable_path = driver_path_ipt, log_output=os.devnull)
+        driver: WebDriver = webdriver.Edge(service = service, options = option_ipt)
         log.info(f'Edge browser started | Driver <{driver}> created')
 
     except Exception as e:

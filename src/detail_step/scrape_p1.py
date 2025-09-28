@@ -33,13 +33,14 @@ def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, webs
 
         try:
             driver.find_element(By.CSS_SELECTOR, 'body')
+            log.info('Page loaded properly')
         except:
             log.info('Page not loaded properly, refreshing...')
             driver.refresh()
             time.sleep(wait_time)
 
 
-        ad_css_configs = [
+        ad_css_configs: List[Dict[str, Any]] = [
             {
                 'type': 1,
                 'element': 'div[aria-label="Giờ đây bạn sẽ thấy một mức giá duy nhất cho chuyến đi của mình, đã bao gồm mọi khoản phí."]',
@@ -55,25 +56,23 @@ def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, webs
         try:
             log.info('Check Ad pop-up')
 
-            all_element_css = ",".join([config['element'] for config in ad_css_configs])
+            all_element_css: str = ",".join([config['element'] for config in ad_css_configs])
 
             ad_element: WebElement = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, all_element_css)))
             log.info('Found Ad pop-up')
 
-            found_element_css = ad_element.get_attribute('aria-label')
             found_config: Dict[str, Any] | None = None
 
-            if found_element_css:
-                log.info(f'Found element css: {found_element_css}')
-                for config in ad_css_configs:
-                    log.info(f'Element css: {found_element_css} | Element in config: {config["element"]}')
-                    if found_element_css in config['element']:
-                        found_config = config
-                        log.info(f'Found ad type <{config["type"]}>')
-                        break
+            for config in ad_css_configs:
+                config_elements: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, config['element'])
+                log.info(f'Check config | found_element: <{ad_element}> | current_elements: <{config_elements}>')
+                if ad_element in config_elements:
+                    found_config = config
+                    log.info(f'Found ad type <{config["type"]}>')
+                    break
 
             if found_config:
-                ok_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, found_config['ok_button'])))
+                ok_button: WebElement = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, found_config['ok_button'])))
                 log.info('Found close button')
                 ok_button.click()
                 log.info('Close Ad pop-up')

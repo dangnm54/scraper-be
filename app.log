@@ -1,111 +1,113 @@
-LOG RECORDED AT: 27-09-2025 19:43:42
+LOG RECORDED AT: 28-09-2025 22:09:55
 STARTED BY FILE: base.py
 RUN METHOD: Directly in Terminal
 
 
-19:43:42 | INFO | db_op - create_db_session - 80 | Creating database session for direct file run.
-19:43:42 | INFO | base - <module> - 313 | Config:
+22:09:55 | INFO | db_op - create_db_session - 80 | Creating database session for direct file run.
+22:09:55 | INFO | base - <module> - 313 | Config:
     - save_db: True
     - search_mode: apply
-    - browser_mode: local
+    - browser_mode: headless
     - log_error_level: 3_level
     
 
 
 ============================== Start full flow
 
-19:43:42 | INFO | base - run_full_flow - 276 | API Request Received:
-19:43:42 | INFO | base - run_full_flow - 277 |     
-    - Location: Pho Co, hanoi
+22:09:55 | INFO | base - run_full_flow - 276 | API Request Received:
+22:09:55 | INFO | base - run_full_flow - 277 |     
+    - Location: D1, HCM
     - Number of guests: 2
     - Number of properties: 2
     - Collect host data: True
     - Collect booking rate: True
     
-19:43:51 | INFO | base - run_full_flow - 287 | New scraping session <PhoCo_270925 (4)> started | ID: 1f12705b-3618-4106-921f-f1e64675cc58
-19:43:51 | INFO | base - start_driver - 64 | Starting driver in <local> mode
+22:09:56 | INFO | base - run_full_flow - 287 | New scraping session <D1_HCM_280925> started | ID: 2ff94f6d-45bd-4f72-9820-df4eb98f3e4f
+22:09:56 | INFO | base - start_driver - 64 | Starting driver in <headless> mode
 
 
 ============================== Create proxy helper extension
 
-19:43:51 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
-19:43:51 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
-19:43:51 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
-19:43:51 | INFO | base - start_driver - 69 | Proxy information found in.env -> driver will use proxy
+22:09:56 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
+22:09:56 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
+22:09:56 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
+22:09:56 | INFO | base - start_driver - 69 | Proxy information found in.env -> driver will use proxy
 
 
 ============================== Config basic driver setting
 
-19:43:51 | INFO | browser - config_basic_driver_setting - 127 | Configured basic settings
+22:09:56 | INFO | browser - config_basic_driver_setting - 127 | Configured basic settings
 
 
 ============================== Config advanced driver setting
 
-19:43:51 | INFO | browser - config_proxy_driver_setting - 137 | Configured minimal logging for selenium
-19:43:51 | INFO | browser - config_proxy_driver_setting - 150 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+22:09:56 | INFO | browser - config_proxy_driver_setting - 137 | Configured minimal logging for selenium
+22:09:56 | INFO | browser - config_proxy_driver_setting - 150 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
 
 
 ============================== Start browser
 
-19:43:52 | INFO | browser - start_browser - 172 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="ad55b6f19c186b06bf7d3133b312ce56")>> created
-19:43:52 | INFO | browser - start_browser - 182 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="ad55b6f19c186b06bf7d3133b312ce56")>> created
-19:43:52 | INFO | browser - start_browser - 208 | Only 1 monitor, maximizing browser
+22:09:58 | INFO | browser - start_browser - 167 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="a34b99650466649d19e849aa938bdcee")>> created
+22:09:58 | INFO | browser - start_browser - 177 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="a34b99650466649d19e849aa938bdcee")>> created
 
 
 ============================== Go to website
 
-19:43:59 | INFO | scrape_p1 - go_to_website - 30 | Go to website: https://www.airbnb.com.vn/homes
-19:44:07 | INFO | base - scrape_p1 - 113 | Search mode: apply
+22:10:04 | INFO | scrape_p1 - go_to_website - 30 | Go to website: https://www.airbnb.com.vn/homes
+22:10:07 | INFO | scrape_p1 - go_to_website - 36 | Page loaded properly
+22:10:07 | INFO | scrape_p1 - go_to_website - 57 | Check Ad pop-up
+22:10:28 | ERROR | scrape_p1 - go_to_website - 83 | Found no Ad pop-up
+22:10:31 | INFO | base - scrape_p1 - 113 | Search mode: apply
 
 
 ============================== Search location
 
-19:44:07 | INFO | scrape_p1 - search_location - 145 | Location element found and clicked
-19:44:10 | INFO | scrape_p1 - search_location - 151 | <Pho Co, hanoi> typed and ENTER
+22:10:32 | INFO | scrape_p1 - search_location - 156 | Location element found and clicked
+22:10:35 | INFO | scrape_p1 - search_location - 162 | <D1, HCM> typed and ENTER
 
 
 ============================== Search date
 
-19:44:14 | INFO | scrape_p1 - search_date - 167 | Flexible time button found and clicked
-19:44:17 | INFO | scrape_p1 - search_date - 173 | Flexible weekend button found and clicked
+22:10:39 | INFO | scrape_p1 - search_date - 178 | Flexible time button found and clicked
+22:10:43 | INFO | scrape_p1 - search_date - 184 | Flexible weekend button found and clicked
 
 
 ============================== Search guest
 
-19:44:21 | INFO | scrape_p1 - search_guest - 191 | Guest element found and clicked
-19:44:25 | INFO | scrape_p1 - search_guest - 203 | 2 guests added
+22:10:47 | INFO | scrape_p1 - search_guest - 202 | Guest element found and clicked
+22:10:51 | INFO | scrape_p1 - search_guest - 214 | 2 guests added
 
 
 ============================== Press search
 
-19:44:28 | INFO | scrape_p1 - press_search - 220 | Seach button founded and clicked
+22:10:55 | INFO | scrape_p1 - press_search - 231 | Seach button founded and clicked
 
 
 ============================== View page and get all link
 
-19:44:28 | INFO | scrape_p1 - view_page_get_all_link - 232 | Check Ad pop-up
-19:44:40 | INFO | scrape_p1 - view_page_get_all_link - 234 | Found Ad pop-up
-19:44:41 | INFO | scrape_p1 - view_page_get_all_link - 239 | Found close button
-19:44:41 | INFO | scrape_p1 - view_page_get_all_link - 241 | Close Ad pop-up
-19:44:41 | INFO | scrape_p1 - view_page_get_all_link - 256 | Ready to scrape 2 properties | Search-mode: apply
-19:44:53 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-IWMI1D",
-    "prop_name": "Khu phố cổ/Hướng nhìn ra thành phố /Cozie/ Netflix / Wahser 3",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1486825404766696019"
+22:10:55 | INFO | scrape_p1 - view_page_get_all_link - 243 | Check Ad pop-up
+22:10:56 | INFO | scrape_p1 - view_page_get_all_link - 245 | Found Ad pop-up
+22:10:57 | INFO | scrape_p1 - view_page_get_all_link - 248 | Found close button
+22:10:57 | INFO | scrape_p1 - view_page_get_all_link - 250 | Close Ad pop-up
+22:10:57 | INFO | scrape_p1 - view_page_get_all_link - 265 | Ready to scrape 2 properties | Search-mode: apply
+22:11:04 | INFO | utils - print_pretty_dict - 140 | {
+    "prop_code": "P-R6IOA4",
+    "prop_name": "Căn hộ Wabi-Sabi ban công rộng view Thành phố",
+    "prop_link": "https://www.airbnb.com.vn/rooms/1375846132691636590"
 }
-19:44:57 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-W05JVA",
-    "prop_name": "CozyCorner2*AiryBalcony*HomeCinema*FreeLaundry",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1151216889313926411"
+22:11:08 | INFO | utils - print_pretty_dict - 140 | {
+    "prop_code": "P-RXL7CO",
+    "prop_name": "A Room at The Park Residence",
+    "prop_link": "https://www.airbnb.com.vn/rooms/38274924"
 }
-19:44:57 | INFO | scrape_p1 - view_page_get_all_link - 327 | 2 properties (basic info) scraped
+22:11:08 | INFO | scrape_p1 - view_page_get_all_link - 336 | 2 properties (basic info) scraped
 
 
 ============================== Close browser
 
-19:44:59 | INFO | browser - close_browser - 224 | Close browser
-19:45:05 | INFO | base - scrape_p1 - 145 | Saved property <P-IWMI1D> (basic info) to database
-19:45:17 | INFO | base - scrape_p1 - 145 | Saved property <P-W05JVA> (basic info) to database
-19:45:17 | INFO | base - scrape_p1 - 149 | Finish saving 2 properties (basic info) to database
-19:45:18 | INFO | base - run_full_flow - 290 | Phase 1 (link scraping) completed.
-19:45:18 | INFO | base - <module> - 332 | Closing database session for direct file run.
+22:11:11 | INFO | browser - close_browser - 219 | Close browser
+22:11:11 | INFO | base - scrape_p1 - 145 | Saved property <P-R6IOA4> (basic info) to database
+22:11:12 | INFO | base - scrape_p1 - 145 | Saved property <P-RXL7CO> (basic info) to database
+22:11:12 | INFO | base - scrape_p1 - 149 | Finish saving 2 properties (basic info) to database
+22:11:12 | INFO | base - run_full_flow - 290 | Phase 1 (link scraping) completed.
+22:11:12 | INFO | base - <module> - 332 | Closing database session for direct file run.

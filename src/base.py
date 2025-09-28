@@ -8,7 +8,7 @@ import logging
 from uuid import UUID, uuid4
 
 from sqlalchemy.orm import Session
-from typing import Any, Dict, List, Tuple, Literal
+from typing import Any, Dict, List, Tuple, Literal, cast, get_args
 
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -26,9 +26,9 @@ import src.tool.utils as utl
 from src.tool.config import wait_time
 
 
-from src.tool.config import main_website_url, ip_website_url, search_mode, browser_mode, save_db, log_error_level, scrape_phase
+from src.tool.config import main_website_url, ip_website_url, search_mode, save_db, log_error_level, scrape_phase
 
-from src.type.data import ScrapeResult, ScrapeStatus, PropertyDB
+from src.type.data import ScrapeResult, ScrapeStatus, PropertyDB, BrowserMode
 
 
 # -----------------------------------------------------------------------------------
@@ -55,13 +55,20 @@ PROXY_PORT: str | None = os.getenv('PROXY_PORT')
 DRIVER_PATH: str | None = os.getenv('DRIVER_PATH')
 LOG_FILE_PATH: str | None = os.getenv('LOG_FILE_PATH')
 
+BROWSER_MODE_ENV: str = os.getenv('BROWSER_MODE', 'headless')
+
+if BROWSER_MODE_ENV in get_args(BrowserMode):
+    BROWSER_MODE = cast(BrowserMode, BROWSER_MODE_ENV)
+else:
+    BROWSER_MODE: BrowserMode = 'headless'
+
 
 # -----------------------------------------------------------------------------------
 
 
 def start_driver() -> Tuple[WebDriver | None, WebDriverWait | None]:
 
-    log.info(f'Starting driver in <{browser_mode}> mode')
+    log.info(f'Starting driver in <{BROWSER_MODE}> mode')
 
     extension_dir: str | None = None
     if PROXY_USER and PROXY_PASSWORD and PROXY_IP and PROXY_PORT:
@@ -71,14 +78,14 @@ def start_driver() -> Tuple[WebDriver | None, WebDriverWait | None]:
         log.warning(f"Proxy information missing in .env -> driver will not use proxy")
 
     
-    options_1: EdgeOptions = brws.config_basic_driver_setting(browser_mode)
+    options_1: EdgeOptions = brws.config_basic_driver_setting(BROWSER_MODE)
     options_2: EdgeOptions = brws.config_proxy_driver_setting(extension_dir, options_1)
     
     driver: WebDriver | None = None
     wait: WebDriverWait | None = None
 
     if DRIVER_PATH:
-        driver, wait = brws.start_browser(DRIVER_PATH, options_2, browser_mode)
+        driver, wait = brws.start_browser(DRIVER_PATH, options_2, BROWSER_MODE)
 
     if driver != None and wait != None:
         # scr1.go_to_website(driver, wait, wait_time, ip_website_url)
@@ -313,7 +320,7 @@ if __name__ == "__main__":
     log.info(f"""Config:
     - save_db: {save_db}
     - search_mode: {search_mode}
-    - browser_mode: {browser_mode}
+    - BROWSER_MODE: {BROWSER_MODE}
     - log_error_level: {log_error_level}
     """)
 
@@ -321,8 +328,8 @@ if __name__ == "__main__":
         try: 
             run_full_flow(
                 db = db_session,
-                file_name = 'PhoCo',
-                location = 'Pho Co, hanoi',
+                file_name = 'D1_HCM',
+                location = 'D1, HCM',
                 num_guest = 2,
                 num_property = 2,
                 collect_host_data = True,

@@ -17,3 +17,4 @@ app.log
 
 # Env files with secrets
 .env
+.env.*
