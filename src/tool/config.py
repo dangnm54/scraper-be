@@ -24,5 +24,5 @@ search_mode: SearchMode = 'apply'
 
 log_error_level: LogErrorLevel = '3_level'
 
-scrape_phase: int = 1
+scrape_phase: int = 2
 

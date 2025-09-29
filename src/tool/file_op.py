@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 import pytz
-from typing import Dict, List, Any, cast
+from typing import Dict, List, Any, cast, Tuple
 import uuid
 
 import src.tool.log_op as lg
@@ -13,6 +13,7 @@ import src.tool.db_op as dbop
 from src.type.api import FileDetail, FileMetadata
 from src.type.data import PropertyDB
 
+from sqlalchemy import Row
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
 from sqlalchemy.orm import load_only
@@ -111,7 +112,8 @@ def get_file_detail(file_id: str, db: Session) -> FileDetail:
             data_row[k] = str(v)
       file_data.append(data_row)
 
-   file_name: str = db.query(PropertyDB.session_name).filter_by(session_id=uuid.UUID(file_id)).scalar()
+   file_name_row: Row[Tuple[str]] | None = db.query(PropertyDB.session_name).filter_by(session_id=uuid.UUID(file_id)).first()
+   file_name: str = file_name_row[0] if file_name_row else ""
 
    return FileDetail(
       file_name = file_name,

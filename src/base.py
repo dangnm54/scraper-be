@@ -313,40 +313,41 @@ def run_full_flow(
 # -----------------------------------------------------------------------------------
 
 
-if __name__ == "__main__":
-    db_session: Session | None = dbop.create_db_session()
+# if __name__ == "__main__":
+#     db_session: Session | None = dbop.create_db_session()
 
 
-    log.info(f"""Config:
-    - save_db: {save_db}
-    - search_mode: {search_mode}
-    - BROWSER_MODE: {BROWSER_MODE}
-    - log_error_level: {log_error_level}
-    """)
+#     log.info(f"""Config:
+#     - save_db: {save_db}
+#     - search_mode: {search_mode}
+#     - BROWSER_MODE: {BROWSER_MODE}
+#     - log_error_level: {log_error_level}
+#     """)
 
-    if db_session:
-        try: 
-            run_full_flow(
-                db = db_session,
-                file_name = 'D1_HCM',
-                location = 'D1, HCM',
-                num_guest = 2,
-                num_property = 2,
-                collect_host_data = True,
-                collect_booking_rate = True
-            )
-        finally:
-            log.info("Closing database session for direct file run.")
-            db_session.close()
+#     if db_session:
+#         try: 
+#             run_full_flow(
+#                 db = db_session,
+#                 file_name = 'D3_HCM',
+#                 location = 'D3, HCM',
+#                 num_guest = 2,
+#                 num_property = 2,
+#                 collect_host_data = True,
+#                 collect_booking_rate = True
+#             )
+#         finally:
+#             log.info("Closing database session for direct file run.")
+#             db_session.close()
 
-    else:  
-        log.error("Could not create database session.")
+#     else:  
+#         log.error("Could not create database session.")
 
 
 
 # test
-    # be only
-    # docker with db connection
+        # be only => ok
+    # npm with db connection
+    # docker desktop with db connection
     # railway with db connection
 
 
