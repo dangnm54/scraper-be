@@ -1,5 +1,12 @@
-LOG RECORDED AT: 29-09-2025 23:21:14
+LOG RECORDED AT: 30-09-2025 14:13:13
 STARTED BY FILE: __main__.py
 RUN METHOD: Server started (uvicorn)
 
 
+14:13:13 | WARNING | app - <module> - 41 | DOCKER_DEBUG: DATABASE_URL = postgresql://postgres.pdoelhwblxaghyanzzqi:bewildersbeast54@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres
+14:13:32 | INFO | db_op - get_db - 59 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x000001CF96178130>
+
+
+============================== Get session list
+
+14:13:33 | INFO | db_op - get_db - 64 | Closing database session for FastAPI request.

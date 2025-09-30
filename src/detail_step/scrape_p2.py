@@ -54,10 +54,10 @@ def overview_info(driver: WebDriver, wait: WebDriverWait) -> Dict[str, Any]:
                 if 'tam' in clean_info2:
                     overview_data['bath_num'] = num
 
-        location_section: WebElement = driver.find_element(By.CSS_SELECTOR, 'div[data-section-id="LOCATION_DEFAULT"]')
-        utl.scroll_focus_element(driver, location_section)
-
         try:
+            location_section: WebElement = driver.find_element(By.CSS_SELECTOR, 'div[data-section-id="LOCATION_DEFAULT"]')
+            utl.scroll_focus_element(driver, location_section)
+
             wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'a[title="Báo cáo lỗi trong bản đồ đường hoặc hình ảnh đến Google"]')))
             location_element: WebElement = location_section.find_element(By.CSS_SELECTOR, 'a[title="Báo cáo lỗi trong bản đồ đường hoặc hình ảnh đến Google"]')
             location: str | None = location_element.get_attribute('href')

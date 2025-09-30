@@ -39,7 +39,7 @@ def get_file_list(db: Session) -> List[FileMetadata]:
       - convert to list FileMetadata
    """
    
-   lg.log_divider('Get session list')
+   lg.log_divider('Get file list')
 
    session_data = (
       db.query(
@@ -52,6 +52,8 @@ def get_file_list(db: Session) -> List[FileMetadata]:
       .order_by(func.min(PropertyDB.created_at).desc())
       .all()
    )
+
+   log.info(f"DOCKER_DEBUG: Database query returned {len(session_data)} sessions.")
 
 
    file_list: List[FileMetadata] = []
@@ -81,6 +83,8 @@ def get_file_detail(file_id: str, db: Session) -> FileDetail:
       - convert to FileDetail
    """
 
+   lg.log_divider('Get file detail')
+
    excluded_cols_names: List[str] = [
       "session_id",
       "session_name",
@@ -98,6 +102,8 @@ def get_file_detail(file_id: str, db: Session) -> FileDetail:
       .filter_by(session_id=uuid.UUID(file_id))
       .all()
    )
+
+   log.info(f"DOCKER_DEBUG: Database query returned {len(session_data)} data rows.")
 
    file_data: List[Dict[str, Any]] = []
 

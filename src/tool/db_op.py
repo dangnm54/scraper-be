@@ -27,7 +27,10 @@ DATABASE_URL: str | None = os.getenv('DATABASE_URL')
 # create 'engine' and 'SessionLocal' for all functions in this file
 if DATABASE_URL:
     # 'engine' -> core component connects your app to database.
-    engine: Engine | None= create_engine(DATABASE_URL)
+    engine: Engine | None= create_engine(
+        DATABASE_URL,
+        connect_args={"sslmode": "require"}
+    )
 
     # 'SessionLocal' -> a factory that create new database session whenever you need one.
     SessionLocal: sessionmaker | None = sessionmaker(autocommit=False, autoflush=False, bind=engine)

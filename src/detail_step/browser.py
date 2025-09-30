@@ -182,6 +182,7 @@ def start_browser(driver_path_ipt: str, option_ipt: EdgeOptions, browser_mode: B
         log.debug(f'Detected {len(monitor_list)} monitors')
             # screen laptop: 1920 x 1080
             # screen monitor: 2560 x 1440
+            # current position: monitor on top laptop vertical
 
         if len(monitor_list) > 1:
             secondary_monitor: Monitor | None = None
@@ -192,8 +193,8 @@ def start_browser(driver_path_ipt: str, option_ipt: EdgeOptions, browser_mode: B
 
             if secondary_monitor:
                 log.info(f'Secondary monitor found, open browser on secondary monitor')
-                driver.set_window_rect(x=-1920, y=180, width=1500, height=1010)  #monitor
-                # driver.set_window_rect(x=960, y=10, width=960, height=1010)   #laptop
+                # driver.set_window_rect(x=-1920, y=180, width=1500, height=1010)  #monitor
+                driver.set_window_rect(x=1550, y=1450, width=960, height=1010)   #laptop
                 # driver.set_window_rect(x=-1920, y=180, width=1700, height=800)  #uat
             else:
                 log.info(f'Cannot identify clear secondary monitor, maximizing browser')

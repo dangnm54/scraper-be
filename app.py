@@ -1,9 +1,18 @@
+import logging
+import src.tool.log_op as lg
+
+log_file_path = lg.setup_logging_for_file_directly_run()
+log = logging.getLogger(__name__)
+
+
+# -----------------------------------------------------------------------------------
+
+
 from dotenv import load_dotenv
 load_dotenv()
 
 import os
 import io
-import logging
 import asyncio
 import pandas as pd
 from typing import Dict, List, Any, cast
@@ -15,7 +24,6 @@ from pandas.core.generic import WriteExcelBuffer
 from starlette.responses import JSONResponse
 from starlette.responses import StreamingResponse
 
-import src.tool.log_op as lg
 import src.tool.file_op as fop
 from src.base import run_full_flow
 from src.tool.db_op import get_db
@@ -28,12 +36,6 @@ from fastapi import Depends
 
 
 # ------------------------------------------------------------------------------------------------
-
-
-log_file_path = lg.setup_logging_for_file_directly_run()
-
-
-log = logging.getLogger(__name__)
 
 
 class SSELogHandler(logging.Handler):
@@ -68,8 +70,8 @@ sse_handler.setFormatter(lg.LogFormat())
 sse_handler.setLevel(logging.INFO)
 
 root_logger: logging.Logger = logging.getLogger()
+root_logger.setLevel(logging.INFO)
 root_logger.addHandler(sse_handler)
-
 
 
 # ------------------------------------------------------------------------------------------------
