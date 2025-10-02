@@ -342,11 +342,3 @@ if test_local:
 
 
 
-# test
-        # be only => ok
-    # npm with db connection
-    # docker desktop with db connection
-    # railway with db connection
-
-
-

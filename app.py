@@ -70,7 +70,6 @@ sse_handler.setFormatter(lg.LogFormat())
 sse_handler.setLevel(logging.INFO)
 
 root_logger: logging.Logger = logging.getLogger()
-root_logger.setLevel(logging.INFO)
 root_logger.addHandler(sse_handler)
 
 
@@ -84,9 +83,9 @@ app = FastAPI()
 # configure CORS
 # list specific origins (FE) that allowed to talk to BE
 origins: List[str] = [
-    "http://localhost:5173",  
-    # eg: http://127.0.0.1:5173",      
-    # eg: "http://your-deployed-frontend.com"
+    "http://localhost:5173",
+    "https://scraper-fe-ten.vercel.app",
+    # eg: http://127.0.0.1:5173",
 ]
 
 
@@ -392,4 +391,3 @@ async def sse_logs(request:Request, debug:bool=False) -> StreamingResponse:
 
 
 
-# test and push Docker image
