@@ -10,7 +10,7 @@ import uuid
 import src.tool.log_op as lg
 import src.tool.db_op as dbop
 
-from src.type.api import FileDetail, FileMetadata
+from src.type.api import FileDetail, FileMetadata, DeleteAllResult
 from src.type.data import PropertyDB
 
 from sqlalchemy import Row
@@ -74,6 +74,8 @@ def get_file_list(db: Session) -> List[FileMetadata]:
 
 
 
+
+
 def get_file_detail(file_id: str, db: Session) -> FileDetail:
    """
    input: file_id
@@ -128,18 +130,43 @@ def get_file_detail(file_id: str, db: Session) -> FileDetail:
 
 
 
-def list_dict_to_df(list_dict: List[Dict[str, Any]], index:str='prop_code') -> pd.DataFrame:
-   
-   # if isinstance(list_dict[0], PropertyDetail):
 
-   #    tempt_dict: List[Dict[str, Any]] = []
+
+def delete_all_files(db: Session) -> DeleteAllResult:
+   try:
+
+      # scalar() -> get value of cell A1
+      # first() -> get first row
+      deleted_file_cnt: int | None = db.query(func.count(func.distinct(PropertyDB.session_id))).scalar()
+      log.info(f"{deleted_file_cnt} files found to delete from database")
       
-   #    for item in list_dict:
-   #       if isinstance(item, PropertyDetail):
-   #          # turn PropertyDetail instance to dict
-   #          tempt_dict.append(item.model_dump())
-      
-   #    list_dict = tempt_dict
+      if not deleted_file_cnt:
+         log.error("No files found to delete")
+         return DeleteAllResult(
+            deleted_file_cnt = 0,
+            deleted_row_cnt = 0
+         )
+
+      deleted_row_cnt: int =db.query(PropertyDB).delete()
+      db.commit()
+      log.info(f"Delete {deleted_file_cnt} files | {deleted_row_cnt} rows from database successfully")
+
+      return DeleteAllResult(
+         deleted_file_cnt = deleted_file_cnt,
+         deleted_row_cnt = deleted_row_cnt
+      )
+
+   except Exception as e:
+      db.rollback()
+      lg.log_detail_error(e)
+      log.error(f"Error to delete all files from database: {str(e)}")
+      raise e
+
+
+
+
+
+def list_dict_to_df(list_dict: List[Dict[str, Any]], index:str='prop_code') -> pd.DataFrame:
    
    df: pd.DataFrame = pd.DataFrame(list_dict)
    df.set_index(index, inplace=True)
@@ -152,30 +179,30 @@ def list_dict_to_df(list_dict: List[Dict[str, Any]], index:str='prop_code') -> p
 
 
 # def df_to_csv(df: pd.DataFrame, name: str) -> str:
-#    folder_name: str = DATA_FOLDER_PATH
+   folder_name: str = DATA_FOLDER_PATH
 
-#    # make file name
-#    current_time: str = datetime.now().strftime('%d%m%y')
-#    base_csv_name: str = f'{name}_{current_time}.csv'
+   # make file name
+   current_time: str = datetime.now().strftime('%d%m%y')
+   base_csv_name: str = f'{name}_{current_time}.csv'
    
-#    counter: int = 1
-#    csv_name: str = base_csv_name
-#    while os.path.exists(os.path.join(folder_name, csv_name)):
-#       name_without_ext: str = base_csv_name.replace('.csv', '')
-#       csv_name: str = f'{name_without_ext} ({counter}).csv'
-#       counter += 1
+   counter: int = 1
+   csv_name: str = base_csv_name
+   while os.path.exists(os.path.join(folder_name, csv_name)):
+      name_without_ext: str = base_csv_name.replace('.csv', '')
+      csv_name: str = f'{name_without_ext} ({counter}).csv'
+      counter += 1
 
-#    full_csv_path: str = os.path.join(folder_name, csv_name)
-#    os.makedirs(folder_name, exist_ok=True) #crt folder if not exist
+   full_csv_path: str = os.path.join(folder_name, csv_name)
+   os.makedirs(folder_name, exist_ok=True) #crt folder if not exist
    
-#    # convert to csv
-#    try:
-#       df.to_csv(full_csv_path, index=True, encoding='utf-8-sig')
-#       log.info(f'Dataframe saved to file: {full_csv_path}')
-#    except Exception as e:
-#       lg.log_detail_error(e)
+   # convert to csv
+   try:
+      df.to_csv(full_csv_path, index=True, encoding='utf-8-sig')
+      log.info(f'Dataframe saved to file: {full_csv_path}')
+   except Exception as e:
+      lg.log_detail_error(e)
 
-#    return full_csv_path
+   return full_csv_path
 
 
 

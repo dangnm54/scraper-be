@@ -28,7 +28,7 @@ import src.tool.file_op as fop
 from src.base import run_full_flow
 from src.tool.db_op import get_db
 
-from src.type.api import ScraperSettings, FileMetadata, FileDetail, ResponseBody
+from src.type.api import ScraperSettings, FileMetadata, FileDetail, ResponseBody, DeleteAllResult, DeleteAllInput
 from src.type.data import ScrapeStatus
 
 from sqlalchemy.orm import Session
@@ -391,3 +391,58 @@ async def sse_logs(request:Request, debug:bool=False) -> StreamingResponse:
 
 
 
+
+@app.post("/api/data/delete-all")
+async def delete_all_api(fe_input: DeleteAllInput, db: Session | None = Depends(get_db)) -> JSONResponse:
+    """
+    - input: none
+    - output: BE response
+    - operation: delete all files in database
+    """
+
+    api_sig = '[delete-all api]'
+
+    DELETE_ALL_PASSWORD: str | None = os.getenv('DELETE_ALL_PASSWORD')
+
+    if not DELETE_ALL_PASSWORD:
+        error_resp = ResponseBody[None](
+            success = False,
+            message = f"{api_sig} DELETE_ALL_PASSWORD not found in .env file to validate action"
+        )
+        return JSONResponse(status_code=500, content=error_resp.model_dump())
+    
+
+    if fe_input.password != DELETE_ALL_PASSWORD:
+        error_resp = ResponseBody[None](
+            success = False,
+            message = f"{api_sig} Invalid password"
+        )
+        return JSONResponse(status_code=401, content=error_resp.model_dump())
+    
+
+    if not db:
+        log.error("Database session not found")
+        error_resp = ResponseBody[None](
+            success = False,
+            message = f"{api_sig} Database session not found"
+        )
+        return JSONResponse(status_code=500, content=error_resp.model_dump())
+
+
+    try:
+        delete_result: DeleteAllResult = fop.delete_all_files(db)
+
+        success_resp = ResponseBody[None](
+            success = True,
+            message = f"{api_sig} Deleted ALL files successfully: ({delete_result.deleted_file_cnt} files | {delete_result.deleted_row_cnt} rows)"
+        )
+        return JSONResponse(status_code=200, content=success_resp.model_dump())
+
+    
+    except Exception as e:
+        lg.log_detail_error(e)
+        error_resp = ResponseBody[None](
+            success = False,
+            message = f"{api_sig} Server error: {str(e)}"
+        )
+        return JSONResponse(status_code=500, content=error_resp.model_dump())

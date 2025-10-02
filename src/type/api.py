@@ -29,10 +29,19 @@ class FileDetail(BaseModel):
 
 
 
+class DeleteAllInput(BaseModel):
+    password: str
+
+
+
+class DeleteAllResult(BaseModel):
+    deleted_file_cnt: int
+    deleted_row_cnt: int
+
+
+
 T = TypeVar('T')
 class ResponseBody(BaseModel, Generic[T]):
     success: bool = True
     message: str
     data: T | None = None
-
-
