@@ -115,14 +115,21 @@ def config_basic_driver_setting(browser_mode: BrowserMode = 'local') -> EdgeOpti
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36 Edg/136.0.0.0") # Example Chrome User-Agent
 
     if browser_mode == 'headless':
-        options.add_argument("--headless")
+        options.add_argument("--headless=new")  # Use new headless mode (more undetectable)
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--disable-gpu")
         options.add_argument("--window-size=1920,1080")
-        options.add_argument("--disable-extensions")
         options.add_argument("--start-maximized")
-        options.add_argument("--blink-settings=imagesEnabled=false") 
+        
+        # Anti-detection arguments
+        options.add_argument("--disable-blink-features=AutomationControlled")
+        options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        options.add_experimental_option('useAutomationExtension', False)
+        
+        # Enable these for better compatibility (removed images=false for maps)
+        options.add_argument("--disable-extensions")
+
 
     log.info('Configured basic settings')
     return options
@@ -164,6 +171,15 @@ def start_browser(driver_path_ipt: str, option_ipt: EdgeOptions, browser_mode: B
     try:
         service: EdgeService = EdgeService(executable_path = driver_path_ipt, log_output=os.devnull)
         driver: WebDriver = webdriver.Edge(service = service, options = option_ipt)
+
+        # make browser look like come from real Chrome / Edge browser
+        driver.execute_cdp_cmd('Network.setUserAgentOverride', {
+        "userAgent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36 Edg/136.0.0.0'
+        })
+    
+        # return 'undefined' instead of 'true' when airbnb check if webdriver is used
+        driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+
         log.info(f'Edge browser started | Driver <{driver}> created')
 
     except Exception as e:

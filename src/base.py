@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
 import logging
 import src.tool.log_op as lg
 
@@ -14,8 +18,7 @@ log = logging.getLogger(__name__)
 from dotenv import load_dotenv
 load_dotenv()
 
-import sys
-import os
+
 from uuid import UUID, uuid4
 
 from sqlalchemy.orm import Session
@@ -24,8 +27,6 @@ from typing import Any, Dict, List, Tuple, Literal, cast, get_args
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.edge.options import Options as EdgeOptions
-
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 # When running from root directory (FastAPI)
 import src.detail_step.browser as brws
@@ -326,12 +327,12 @@ if test_local:
             try: 
                 run_full_flow(
                     db = db_session,
-                    file_name = 'D9_HCM',
-                    location = 'D9, HCM',
+                    file_name = 'D12_HCM',
+                    location = 'D12, HCM',
                     num_guest = 2,
                     num_property = 2,
-                    collect_host_data = True,
-                    collect_booking_rate = True
+                    # collect_host_data = True,
+                    # collect_booking_rate = True
                 )
             finally:
                 log.info("Closing database session for direct file run.")

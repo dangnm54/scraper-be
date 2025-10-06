@@ -1,5 +1,6 @@
 import time
 import logging
+import re
 from typing import Dict, Any, List, Tuple, cast
 
 from tqdm import tqdm
@@ -58,17 +59,18 @@ def overview_info(driver: WebDriver, wait: WebDriverWait) -> Dict[str, Any]:
             location_section: WebElement = driver.find_element(By.CSS_SELECTOR, 'div[data-section-id="LOCATION_DEFAULT"]')
             utl.scroll_focus_element(driver, location_section)
 
-            wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'a[title="Báo cáo lỗi trong bản đồ đường hoặc hình ảnh đến Google"]')))
-            location_element: WebElement = location_section.find_element(By.CSS_SELECTOR, 'a[title="Báo cáo lỗi trong bản đồ đường hoặc hình ảnh đến Google"]')
+            wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a[href*="google.com/maps"]')))
+            location_element: WebElement = location_section.find_elements(By.CSS_SELECTOR, 'a[href*="google.com/maps"]')[1]
             location: str | None = location_element.get_attribute('href')
             
             if location:
                 clean_location: str = cast(str, utl.get_info_from_string(location, mode='coordinate'))
-                overview_data['location'] = clean_location
-
+                overview_data['location'] = clean_location        
+        
                 ggmap_link: str = cast(str, utl.get_info_from_string(clean_location, mode='ggmap_link'))
                 overview_data['ggmap_link'] = ggmap_link
-        
+
+
         except Exception as e:
             lg.log_detail_error(e)
             log.error('Error to scrape location data')
