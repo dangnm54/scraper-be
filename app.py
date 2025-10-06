@@ -161,7 +161,7 @@ async def run_scraper_api(fe_input: ScraperSettings, db: Session | None = Depend
         )
         return JSONResponse(status_code=200, content=resp.model_dump())
         
-        
+    
     except Exception as e:
         lg.log_detail_error(e)
         await FE_log_stream.put('--- Scraping failed: {e} ---')
@@ -432,9 +432,10 @@ async def delete_all_api(fe_input: DeleteAllInput, db: Session | None = Depends(
     try:
         delete_result: DeleteAllResult = fop.delete_all_files(db)
 
-        success_resp = ResponseBody[None](
+        success_resp = ResponseBody[DeleteAllResult](
             success = True,
-            message = f"{api_sig} Deleted ALL files successfully: ({delete_result.deleted_file_cnt} files | {delete_result.deleted_row_cnt} rows)"
+            message = f"{api_sig} Deleted ALL files successfully: ({delete_result.deleted_file_cnt} files | {delete_result.deleted_row_cnt} rows)",
+            data = delete_result
         )
         return JSONResponse(status_code=200, content=success_resp.model_dump())
 

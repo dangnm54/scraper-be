@@ -1,12 +1,368 @@
-LOG RECORDED AT: 30-09-2025 14:13:13
+LOG RECORDED AT: 06-10-2025 14:17:51
 STARTED BY FILE: __main__.py
 RUN METHOD: Server started (uvicorn)
 
 
-14:13:13 | WARNING | app - <module> - 41 | DOCKER_DEBUG: DATABASE_URL = postgresql://postgres.pdoelhwblxaghyanzzqi:bewildersbeast54@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres
-14:13:32 | INFO | db_op - get_db - 59 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x000001CF96178130>
+14:17:52 | INFO | db_op - <module> - 38 | Create engine and SessionLocal for database connection
+14:18:01 | INFO | db_op - get_db - 62 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x00000120BF77C7C0>
 
 
-============================== Get session list
+============================== Get file list
 
-14:13:33 | INFO | db_op - get_db - 64 | Closing database session for FastAPI request.
+14:18:02 | INFO | file_op - get_file_list - 56 | DOCKER_DEBUG: Database query returned 0 sessions.
+14:18:02 | INFO | db_op - get_db - 67 | Closing database session for FastAPI request.
+14:18:02 | INFO | db_op - get_db - 62 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x00000120BF7D0E80>
+
+
+============================== Get file list
+
+14:18:02 | INFO | file_op - get_file_list - 56 | DOCKER_DEBUG: Database query returned 0 sessions.
+14:18:02 | INFO | db_op - get_db - 67 | Closing database session for FastAPI request.
+14:18:08 | INFO | app - sse_logs - 332 | api called: /sse/log | debug=False
+14:18:08 | INFO | db_op - get_db - 62 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x00000120BF7D3FD0>
+
+
+============================== Scraping started at: 06-10-2025 14:18:09
+
+14:18:09 | INFO | app - run_scraper_api - 141 | api called: /api/run | fe_input={'file_name': 'D1_HCM', 'location': 'D1, hcm', 'num_guest': 2, 'num_property': 2, 'collect_host_data': False, 'collect_booking_rate': False}
+
+
+============================== Start full flow
+
+14:18:09 | INFO | base - run_full_flow - 281 | API Request Received:
+14:18:09 | INFO | base - run_full_flow - 282 |     
+    - Location: D1, hcm
+    - Number of guests: 2
+    - Number of properties: 2
+    - Collect host data: False
+    - Collect booking rate: False
+    
+14:18:09 | INFO | base - run_full_flow - 292 | New scraping session <D1_HCM_061025> started | ID: b35be53e-8e6f-4e6b-b5de-483872e02432
+14:18:09 | INFO | base - start_driver - 69 | Starting driver in <local> mode
+
+
+============================== Create proxy helper extension
+
+14:18:09 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
+14:18:09 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
+14:18:09 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
+14:18:09 | INFO | base - start_driver - 74 | Proxy information found in.env -> driver will use proxy
+
+
+============================== Config basic driver setting
+
+14:18:09 | INFO | browser - config_basic_driver_setting - 127 | Configured basic settings
+
+
+============================== Config advanced driver setting
+
+14:18:09 | INFO | browser - config_proxy_driver_setting - 137 | Configured minimal logging for selenium
+14:18:09 | INFO | browser - config_proxy_driver_setting - 150 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+
+
+============================== Start browser
+
+14:18:10 | INFO | browser - start_browser - 167 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="a63f83a24a0b4f8bf36c1dd43c2232ce")>> created
+14:18:10 | INFO | browser - start_browser - 177 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="a63f83a24a0b4f8bf36c1dd43c2232ce")>> created
+14:18:10 | INFO | browser - start_browser - 195 | Secondary monitor found, open browser on secondary monitor
+
+
+============================== Go to website
+
+14:18:12 | INFO | scrape_p1 - go_to_website - 30 | Go to website: https://www.airbnb.com.vn/homes
+14:18:14 | INFO | scrape_p1 - go_to_website - 36 | Page loaded properly
+14:18:14 | INFO | scrape_p1 - go_to_website - 57 | Check Ad pop-up
+14:18:35 | ERROR | scrape_p1 - go_to_website - 83 | Found no Ad pop-up
+14:18:37 | INFO | base - scrape_p1 - 118 | Search mode: apply
+
+
+============================== Search location
+
+14:18:38 | INFO | scrape_p1 - search_location - 156 | Location element found and clicked
+14:18:40 | INFO | scrape_p1 - search_location - 162 | <D1, hcm> typed and ENTER
+
+
+============================== Search date
+
+14:18:43 | INFO | scrape_p1 - search_date - 178 | Flexible time button found and clicked
+14:18:45 | INFO | scrape_p1 - search_date - 184 | Flexible weekend button found and clicked
+
+
+============================== Search guest
+
+14:18:48 | INFO | scrape_p1 - search_guest - 202 | Guest element found and clicked
+14:18:51 | INFO | scrape_p1 - search_guest - 214 | 2 guests added
+
+
+============================== Press search
+
+14:18:53 | INFO | scrape_p1 - press_search - 231 | Seach button founded and clicked
+
+
+============================== View page and get all link
+
+14:18:53 | INFO | scrape_p1 - view_page_get_all_link - 243 | Check Ad pop-up
+14:18:56 | INFO | scrape_p1 - view_page_get_all_link - 245 | Found Ad pop-up
+14:18:56 | INFO | scrape_p1 - view_page_get_all_link - 248 | Found close button
+14:18:56 | INFO | scrape_p1 - view_page_get_all_link - 250 | Close Ad pop-up
+14:18:56 | INFO | scrape_p1 - view_page_get_all_link - 265 | Ready to scrape 2 properties | Search-mode: apply
+14:19:01 | INFO | utils - print_pretty_dict - 140 | {
+    "prop_code": "P-N13T6W",
+    "prop_name": "Căn hộ Wabi-Sabi ban công rộng view Thành phố",
+    "prop_link": "https://www.airbnb.com.vn/rooms/1375846132691636590"
+}
+14:19:04 | INFO | utils - print_pretty_dict - 140 | {
+    "prop_code": "P-E3YHHU",
+    "prop_name": "Phòng ấm cúng trung tâm của Kolab (N6)",
+    "prop_link": "https://www.airbnb.com.vn/rooms/1482567370341890854"
+}
+14:19:04 | INFO | scrape_p1 - view_page_get_all_link - 336 | 2 properties (basic info) scraped
+
+
+============================== Close browser
+
+14:19:06 | INFO | browser - close_browser - 220 | Close browser
+14:19:06 | INFO | base - scrape_p1 - 150 | Saved property <P-N13T6W> (basic info) to database
+14:19:06 | INFO | base - scrape_p1 - 150 | Saved property <P-E3YHHU> (basic info) to database
+14:19:06 | INFO | base - scrape_p1 - 154 | Finish saving 2 properties (basic info) to database
+14:19:06 | INFO | base - run_full_flow - 295 | Phase 1 (link scraping) completed.
+14:19:06 | INFO | base - start_driver - 69 | Starting driver in <local> mode
+
+
+============================== Create proxy helper extension
+
+14:19:06 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
+14:19:06 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
+14:19:06 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
+14:19:06 | INFO | base - start_driver - 74 | Proxy information found in.env -> driver will use proxy
+
+
+============================== Config basic driver setting
+
+14:19:06 | INFO | browser - config_basic_driver_setting - 127 | Configured basic settings
+
+
+============================== Config advanced driver setting
+
+14:19:06 | INFO | browser - config_proxy_driver_setting - 137 | Configured minimal logging for selenium
+14:19:06 | INFO | browser - config_proxy_driver_setting - 150 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+
+
+============================== Start browser
+
+14:19:08 | INFO | browser - start_browser - 167 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="dcbc77f98493f15c1cd03c39f40e5885")>> created
+14:19:08 | INFO | browser - start_browser - 177 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="dcbc77f98493f15c1cd03c39f40e5885")>> created
+14:19:08 | INFO | browser - start_browser - 195 | Secondary monitor found, open browser on secondary monitor
+
+--------------------
+
+14:19:08 | INFO | base - scrape_p2 - 188 | Scraping property: P-N13T6W - Căn hộ Wabi-Sabi ban công rộng view Thành phố
+
+
+============================== Go to website
+
+14:19:12 | INFO | scrape_p1 - go_to_website - 30 | Go to website: https://www.airbnb.com.vn/rooms/1375846132691636590
+14:19:14 | INFO | scrape_p1 - go_to_website - 36 | Page loaded properly
+14:19:14 | INFO | scrape_p1 - go_to_website - 57 | Check Ad pop-up
+14:19:14 | INFO | scrape_p1 - go_to_website - 62 | Found Ad pop-up
+14:19:14 | INFO | scrape_p1 - go_to_website - 68 | Check config | found_element: <<selenium.webdriver.remote.webelement.WebElement (session="dcbc77f98493f15c1cd03c39f40e5885", element="f.6C241FFE105A6C68A1B5E52C2BC3C1C2.d.AF9B8A8A995CA36D97FF6706506CA753.e.36")>> | current_elements: <[]>
+14:19:14 | INFO | scrape_p1 - go_to_website - 68 | Check config | found_element: <<selenium.webdriver.remote.webelement.WebElement (session="dcbc77f98493f15c1cd03c39f40e5885", element="f.6C241FFE105A6C68A1B5E52C2BC3C1C2.d.AF9B8A8A995CA36D97FF6706506CA753.e.36")>> | current_elements: <[<selenium.webdriver.remote.webelement.WebElement (session="dcbc77f98493f15c1cd03c39f40e5885", element="f.6C241FFE105A6C68A1B5E52C2BC3C1C2.d.AF9B8A8A995CA36D97FF6706506CA753.e.36")>]>
+14:19:14 | INFO | scrape_p1 - go_to_website - 71 | Found ad type <2>
+14:19:14 | INFO | scrape_p1 - go_to_website - 76 | Found close button
+14:19:14 | INFO | scrape_p1 - go_to_website - 78 | Close Ad pop-up
+
+
+============================== Overview info
+
+14:19:17 | INFO | scrape_p2 - overview_info - 40 | Overview section found
+14:19:20 | INFO | utils - print_pretty_dict - 140 | {
+    "guest_num": 2,
+    "bed_num": 1,
+    "bath_num": 1,
+    "location": "10.7028518,106.715224",
+    "ggmap_link": "https://maps.google.com/?q=10.7028518,106.715224"
+}
+
+
+============================== Rating info
+
+14:19:23 | INFO | scrape_p2 - rating_info - 215 | Normal rating element found
+14:19:23 | INFO | scrape_p2 - rating_info - 230 | Normal rating data collected
+14:19:23 | INFO | utils - print_pretty_dict - 140 | {
+    "rating_title": null,
+    "rating_star": 5.0,
+    "rating_num": 3
+}
+
+
+============================== Get scrape result
+
+14:19:23 | INFO | utils - obj_to_dict - 161 | Success convert <PropertyDB> object -> <Dict> object
+14:19:23 | INFO | scrape_p2 - get_scrape_result - 568 | Missing data (exclude result field): 10 / 24 -> Scraping result: Partial
+14:19:23 | INFO | base - scrape_p2 - 233 | Complete scraping data for property #P-N13T6W | result: Partial
+14:19:23 | INFO | base - scrape_p2 - 244 | Saved property <P-N13T6W> (detail info) to database
+
+--------------------
+
+14:19:23 | INFO | utils - obj_to_dict - 161 | Success convert <PropertyDB> object -> <Dict> object
+14:19:23 | INFO | utils - print_pretty_dict - 140 | {
+    "id": "560b2a5a-7644-4136-8afd-4585a8defdda",
+    "session_id": "b35be53e-8e6f-4e6b-b5de-483872e02432",
+    "session_name": "D1_HCM_061025",
+    "created_at": "2025-10-06 07:18:11.142856+00:00",
+    "prop_code": "P-N13T6W",
+    "prop_name": "Căn hộ Wabi-Sabi ban công rộng view Thành phố",
+    "prop_link": "https://www.airbnb.com.vn/rooms/1375846132691636590",
+    "scrape_result": "Partial",
+    "guest_num": 2,
+    "bed_num": 1,
+    "bath_num": 1,
+    "location": "10.7028518,106.715224",
+    "ggmap_link": "https://maps.google.com/?q=10.7028518,106.715224",
+    "rating_title": null,
+    "rating_star": 5.0,
+    "rating_num": 3,
+    "host_name": null,
+    "host_title": null,
+    "host_rating_star": null,
+    "host_rating_num": null,
+    "host_exp": null,
+    "host_link": null,
+    "this_month_booked_rate": null,
+    "next_1_month_booked_rate": null,
+    "next_3_month_booked_rate": null
+}
+
+--------------------
+
+14:19:23 | INFO | base - scrape_p2 - 188 | Scraping property: P-E3YHHU - Phòng ấm cúng trung tâm của Kolab (N6)
+
+
+============================== Go to website
+
+14:19:24 | INFO | scrape_p1 - go_to_website - 30 | Go to website: https://www.airbnb.com.vn/rooms/1482567370341890854
+14:19:26 | INFO | scrape_p1 - go_to_website - 36 | Page loaded properly
+14:19:26 | INFO | scrape_p1 - go_to_website - 57 | Check Ad pop-up
+14:19:46 | ERROR | scrape_p1 - go_to_website - 83 | Found no Ad pop-up
+
+
+============================== Overview info
+
+14:19:49 | INFO | scrape_p2 - overview_info - 40 | Overview section found
+14:19:51 | INFO | utils - print_pretty_dict - 140 | {
+    "guest_num": null,
+    "bed_num": 1,
+    "bath_num": null,
+    "location": "10.7886,106.6912",
+    "ggmap_link": "https://maps.google.com/?q=10.7886,106.6912"
+}
+
+
+============================== Rating info
+
+14:19:54 | INFO | scrape_p2 - rating_info - 215 | Special rating element found
+14:19:54 | INFO | scrape_p2 - rating_info - 230 | Special rating data collected
+14:19:54 | INFO | utils - print_pretty_dict - 140 | {
+    "rating_title": "Được khách yêu thích",
+    "rating_star": 5.0,
+    "rating_num": 9
+}
+
+
+============================== Get scrape result
+
+14:19:54 | INFO | utils - obj_to_dict - 161 | Success convert <PropertyDB> object -> <Dict> object
+14:19:54 | INFO | scrape_p2 - get_scrape_result - 568 | Missing data (exclude result field): 11 / 24 -> Scraping result: Partial
+14:19:54 | INFO | base - scrape_p2 - 233 | Complete scraping data for property #P-E3YHHU | result: Partial
+14:19:54 | INFO | base - scrape_p2 - 244 | Saved property <P-E3YHHU> (detail info) to database
+
+--------------------
+
+14:19:54 | INFO | utils - obj_to_dict - 161 | Success convert <PropertyDB> object -> <Dict> object
+14:19:54 | INFO | utils - print_pretty_dict - 140 | {
+    "id": "5e14d6fd-f79e-4953-a406-c630f803bc4a",
+    "session_id": "b35be53e-8e6f-4e6b-b5de-483872e02432",
+    "session_name": "D1_HCM_061025",
+    "created_at": "2025-10-06 07:19:08.731394+00:00",
+    "prop_code": "P-E3YHHU",
+    "prop_name": "Phòng ấm cúng trung tâm của Kolab (N6)",
+    "prop_link": "https://www.airbnb.com.vn/rooms/1482567370341890854",
+    "scrape_result": "Partial",
+    "guest_num": null,
+    "bed_num": 1,
+    "bath_num": null,
+    "location": "10.7886,106.6912",
+    "ggmap_link": "https://maps.google.com/?q=10.7886,106.6912",
+    "rating_title": "Được khách yêu thích",
+    "rating_star": 5.0,
+    "rating_num": 9,
+    "host_name": null,
+    "host_title": null,
+    "host_rating_star": null,
+    "host_rating_num": null,
+    "host_exp": null,
+    "host_link": null,
+    "this_month_booked_rate": null,
+    "next_1_month_booked_rate": null,
+    "next_3_month_booked_rate": null
+}
+14:19:54 | INFO | base - scrape_p2 - 256 | Scraping process completed | 2 properties scraped
+14:19:54 | INFO | base - scrape_p2 - 257 | Finish saving 2 properties (detail info) to database
+
+
+============================== Close browser
+
+14:19:56 | INFO | browser - close_browser - 220 | Close browser
+
+--------------------
+
+14:19:56 | INFO | base - run_full_flow - 305 | Phase 2 (detail scraping) completed.
+14:19:56 | INFO | db_op - get_db - 67 | Closing database session for FastAPI request.
+14:21:20 | INFO | db_op - get_db - 62 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x00000120BF74F280>
+
+
+============================== Get file list
+
+14:21:20 | INFO | file_op - get_file_list - 56 | DOCKER_DEBUG: Database query returned 1 sessions.
+14:21:20 | INFO | db_op - get_db - 67 | Closing database session for FastAPI request.
+14:21:21 | INFO | db_op - get_db - 62 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x00000120BF8B1210>
+14:21:21 | INFO | db_op - get_db - 62 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x00000120BF7D2650>
+
+
+============================== Get file detail
+
+14:21:21 | INFO | file_op - get_file_detail - 108 | DOCKER_DEBUG: Database query returned 2 data rows.
+
+
+============================== Get file detail
+
+14:21:21 | INFO | file_op - get_file_detail - 108 | DOCKER_DEBUG: Database query returned 2 data rows.
+14:21:21 | INFO | db_op - get_db - 67 | Closing database session for FastAPI request.
+14:21:21 | INFO | db_op - get_db - 67 | Closing database session for FastAPI request.
+14:21:27 | INFO | db_op - get_db - 62 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x00000120BF7D3670>
+14:21:27 | INFO | db_op - get_db - 67 | Closing database session for FastAPI request.
+14:21:33 | INFO | db_op - get_db - 62 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x00000120BF7D06A0>
+14:21:34 | INFO | file_op - delete_all_files - 141 | 1 files found to delete from database
+14:21:34 | INFO | file_op - delete_all_files - 152 | Delete 1 files | 2 rows from database successfully
+14:21:34 | INFO | db_op - get_db - 67 | Closing database session for FastAPI request.
+14:21:34 | INFO | db_op - get_db - 62 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x00000120BF7D2650>
+
+
+============================== Get file list
+
+14:21:34 | INFO | file_op - get_file_list - 56 | DOCKER_DEBUG: Database query returned 0 sessions.
+14:21:34 | INFO | db_op - get_db - 67 | Closing database session for FastAPI request.
+14:21:38 | INFO | db_op - get_db - 62 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x00000120BF7D09A0>
+
+
+============================== Get file list
+
+14:21:39 | INFO | file_op - get_file_list - 56 | DOCKER_DEBUG: Database query returned 0 sessions.
+14:21:39 | INFO | db_op - get_db - 67 | Closing database session for FastAPI request.
+14:21:39 | INFO | db_op - get_db - 62 | Database session established for FastAPI request: <sqlalchemy.orm.session.Session object at 0x00000120BF74F790>
+
+
+============================== Get file list
+
+14:21:39 | INFO | file_op - get_file_list - 56 | DOCKER_DEBUG: Database query returned 0 sessions.
+14:21:39 | INFO | db_op - get_db - 67 | Closing database session for FastAPI request.
