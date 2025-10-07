@@ -36,3 +36,5 @@ app.log
 # Other
 README.md
 Procfile
+bizfix_uat/
+host_info/
