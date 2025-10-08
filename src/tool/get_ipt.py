@@ -1,25 +1,25 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+
 import logging
-from typing import Dict, Any, List
-from datetime import date, datetime, timedelta
-
-try:
-    import src.tool.log_op as lg
-    import src.tool.utils as utl
-except ImportError:
-    import tool.log_op as lg
-    import tool.utils as utl
-
-
-# from dateutil.relativedelta import relativedelta
-
-
-# -----------------------------------------------------------------------------------
-
+import src.tool.log_op as lg
 
 if __name__ == "__main__":
     log_file_path = lg.setup_logging_for_file_directly_run()
 
 log = logging.getLogger(__name__)
+
+
+# -----------------------------------------------------------------------------------
+
+
+from typing import Dict, Any, List
+from datetime import date, datetime, timedelta
+from dateutil.relativedelta import relativedelta
+
+import src.tool.log_op as lg
+import src.tool.utils as utl
 
 
 # -----------------------------------------------------------------------------------
@@ -68,16 +68,16 @@ def get_date_for_book_data() -> Dict[str, Any]:
         }
         
         today_date: date = datetime.now().date()
-        today_month: int = today_date.month
-        next_1m_month: int = today_month + 1
-        next_3m_month: List[int] = [next_1m_month, next_1m_month + 1, next_1m_month + 2]
+        next_1m_date: date = today_date + relativedelta(months=1)
+        next_2m_date: date = today_date + relativedelta(months=2)
+        next_3m_date: date = today_date + relativedelta(months=3)
 
-        month_data['this_month'] = today_month
-        month_data['next_1_month'] = next_1m_month
-        month_data['next_3_month'] = next_3m_month
+        month_data['this_month'] = int(today_date.month)
+        month_data['next_1_month'] = int(next_1m_date.month)
+        month_data['next_3_month'] = [int(next_1m_date.month), int(next_2m_date.month), int(next_3m_date.month)]
 
         log.info(f'Month data: {month_data}')
 
         return month_data
 
-
+print(get_date_for_book_data())

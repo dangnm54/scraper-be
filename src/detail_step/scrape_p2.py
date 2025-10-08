@@ -453,10 +453,10 @@ def book_rate_info(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
 
 
             inloop_key: str = f'{key}_booked_rate'
-            for key_otp in book_rate_data.keys():
-                # log.info(f'inloop_key: {inloop_key} | key_otp: {key_otp} | book_rate: {book_rate}')
-                if inloop_key == key_otp:
-                    book_rate_data[key_otp] = book_rate
+            for main_key in book_rate_data.keys():
+                # log.info(f'inloop_key: {inloop_key} | main_key: {main_key} | book_rate: {book_rate}')
+                if inloop_key == main_key:
+                    book_rate_data[main_key] = book_rate
                     break
 
             lg.log_divider()
@@ -524,21 +524,21 @@ def detail_booking_cal(driver: WebDriver, wait_time: float, target_month: int) -
                 return tot_date, booked_date
             
             else:
-                if target_month < month_pair[0]:
+                # if target_month < month_pair[0]:
 
-                    if last_month_button.is_enabled():
-                        last_month_button.click()
-                        log.info('Wrong calendar view -> last_month_button clicked')
-                        time.sleep(wait_time)
-                    else:
-                        log.info('No visible calender data -> stop scraping target_month data')
-                        lg.log_divider()
-                        return 0, 0
+                #     if last_month_button.is_enabled():
+                #         last_month_button.click()
+                #         log.info('Wrong calendar view -> last_month_button clicked')
+                #         time.sleep(wait_time)
+                #     else:
+                #         log.info('No visible calender data -> stop scraping target_month data')
+                #         lg.log_divider()
+                #         return 0, 0
 
-                elif target_month > month_pair[1]:
-                    next_month_button.click()
-                    log.info('Wrong calendar view -> next_month_button clicked')
-                    time.sleep(wait_time)
+                # elif target_month > month_pair[1]:
+                next_month_button.click()
+                log.info('Wrong calendar view -> next_month_button clicked')
+                time.sleep(wait_time)
         
         raise Exception('No visible calender data -> stop scraping target_month data')
 

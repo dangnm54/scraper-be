@@ -331,8 +331,8 @@ if test_local:
                     location = 'D12, HCM',
                     num_guest = 2,
                     num_property = 2,
-                    # collect_host_data = True,
-                    # collect_booking_rate = True
+                    collect_host_data = True,
+                    collect_booking_rate = True
                 )
             finally:
                 log.info("Closing database session for direct file run.")
