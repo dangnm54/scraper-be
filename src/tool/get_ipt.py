@@ -79,5 +79,3 @@ def get_date_for_book_data() -> Dict[str, Any]:
         log.info(f'Month data: {month_data}')
 
         return month_data
-
-print(get_date_for_book_data())

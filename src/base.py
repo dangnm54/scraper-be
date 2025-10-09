@@ -186,7 +186,7 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
     for prop in detail_list_db:
 
         lg.log_divider()
-        log.info(f'Scraping property: {prop.prop_code} - {prop.prop_name}')
+        log.info(f'Scraping property #{scraped_prop_cnt + 1}: {prop.prop_code} - {prop.prop_name}')
         property_link: str = str(prop.prop_link)
 
         try:
