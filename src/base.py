@@ -72,7 +72,7 @@ def start_driver() -> Tuple[WebDriver | None, WebDriverWait | None]:
     extension_dir: str | None = None
     if PROXY_USER and PROXY_PASSWORD and PROXY_IP and PROXY_PORT:
         extension_dir = brws.crt_proxy_helper_extention(PROXY_USER, PROXY_PASSWORD, PROXY_IP, PROXY_PORT)
-        log.info(f"Proxy information found in.env -> driver will use proxy")
+        log.info(f"Proxy information found in .env -> driver will use proxy")
     else:
         log.warning(f"Proxy information missing in .env -> driver will not use proxy")
 
