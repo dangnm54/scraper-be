@@ -214,12 +214,13 @@ def start_browser(driver_path_ipt: str, option_ipt: EdgeOptions, browser_mode: B
                 # driver.set_window_rect(x=-1920, y=180, width=1700, height=800)  #uat
             else:
                 log.info(f'Cannot identify clear secondary monitor, maximizing browser')
-                driver.set_window_rect(x=960, y=10, width=960, height=1010)
+                driver.set_window_rect(x=960, y=10, width=960, height=1010)     #laptop - normal 
 
         else:
             log.info(f'Only 1 monitor, maximizing browser')
-            driver.set_window_rect(x=960, y=10, width=960, height=1010)
+            # driver.set_window_rect(x=960, y=10, width=960, height=1010)
             # driver.set_window_rect(x=10, y=10, width=1900, height=1010)   #uat
+            driver.set_window_rect(x=10, y=10, width=1900, height=1010)     #laptop - host 
 
     return driver, wait
 

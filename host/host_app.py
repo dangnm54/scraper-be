@@ -33,6 +33,7 @@ from selenium.webdriver.edge.options import Options as EdgeOptions
 from src.tool.config import wait_time
 from src.type.data import BrowserMode
 from host.host_type import HostDetail
+import host.host_utils as hst_utl
 
 
 
@@ -52,13 +53,10 @@ PROXY_PORT: str | None = os.getenv('PROXY_PORT')
 DRIVER_PATH: str | None = os.getenv('DRIVER_PATH')
 LOG_FILE_PATH: str | None = os.getenv('LOG_FILE_PATH')
 
-BROWSER_MODE_ENV: str = os.getenv('BROWSER_MODE', 'headless')
+BROWSER_MODE_ENV: str = os.getenv('BROWSER_MODE', 'local')
 
 if BROWSER_MODE_ENV in get_args(BrowserMode):
     BROWSER_MODE = cast(BrowserMode, BROWSER_MODE_ENV)
-else:
-    BROWSER_MODE: BrowserMode = 'headless'
-
 
 
 # -----------------------------------------------------------------------------------
@@ -96,16 +94,30 @@ def start_driver() -> Tuple[WebDriver | None, WebDriverWait | None]:
 
 
 
-def collect_data(driver: WebDriver, wait: WebDriverWait, data_file_path: str):
+def collect_data(data_file_path: str):
+
+
+    driver: WebDriver | None = None
+    wait: WebDriverWait | None = None
+    driver, wait = start_driver()
+
+    if driver and wait:
+        pass
+    else:
+        log.error(f"Failed to start driver and create wait object")
+        return []
+
+    # --------------------------------
     
-    df: pd.DataFrame = pd.read_csv(data_file_path, encoding='utf-8-sig')
+    df: pd.DataFrame = pd.read_excel(data_file_path)
 
     scraped_host_cnt: int = 0
     saved_host_cnt: int = 0
 
     for idx, host in df.iterrows():
 
-        host_name: str = str(["name"])
+        scraped_host_cnt += 1
+        host_name: str = str(host["name"])
         host_link: str = str(host["link"])
 
         lg.log_divider()
@@ -124,27 +136,31 @@ def collect_data(driver: WebDriver, wait: WebDriverWait, data_file_path: str):
             link = host_link,   # str
 
             title = None,   # str | None
-            rating_star = None,   # float | None
             rating_num = None,   # int | None
+            rating_star = None,   # float | None
             exp_time = None,   # str | None
 
             prop_num = None,   # int | None
-            avg_prop_rv_star = None,   # float | None
             avg_prop_rv_num = None,   # float | None
+            avg_prop_rv_star = None,   # float | None
         )
 
         try:
 
             overview_data: Dict[str, Any] = dtl.overview_data(driver)
-
             for key, value in overview_data.items():
                 setattr(host_detail, key, value)
 
-            prop_data: Dict[str, Any] = dtl.prop_data(driver, wait)
-            
-            for key, value in prop_data.items():
-                setattr(host_detail, key, value)
+            try: 
+                prop_data: Dict[str, Any] = dtl.prop_data(driver, wait_time)
+                for key, value in prop_data.items():
+                    setattr(host_detail, key, value)
+            except Exception as e:
+                lg.log_detail_error(e)
+                log.error(f'Error collect property data of host <{host_name}> -> skip to next host')
+                continue
 
+            hst_utl.pretty_dict(host_detail.model_dump())
 
         except Exception as e:
             lg.log_detail_error(e)
@@ -152,17 +168,21 @@ def collect_data(driver: WebDriver, wait: WebDriverWait, data_file_path: str):
             continue
 
 
-        # go to website
-        # collect each data
-    
-        # add to dict
 
+
+
+# go to website
+# collect each data
+    # add to dict
     # convert dict to csv
 
 
 
 
+# -----------------------------------------------------------------------------------
 
 
-
+collect_data(
+    data_file_path = r"C:\Users\ADMIN\Pictures\scraper\scraper-be\data\host1.xlsx"
+)
 
