@@ -189,9 +189,14 @@ def search_date(driver: WebDriver, wait_time: float) -> None:
 
 
 
-def search_guest(driver: WebDriver, wait_time: float, num_guest: int) -> None:
+def search_guest(driver: WebDriver, wait_time: float, num_guest: int | None) -> None:
 
     lg.log_divider('Search guest')
+
+    if num_guest is None:
+        log.info('Search without guest number')
+        time.sleep(wait_time)
+        return
 
     try:
         date_guest_elements: List[WebElement] = driver.find_elements(By.CSS_SELECTOR,'div.fbb0tkq')

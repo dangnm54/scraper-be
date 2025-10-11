@@ -19,12 +19,12 @@ log = logging.getLogger(__name__)
 from dotenv import load_dotenv
 load_dotenv()
 
-from typing import Tuple, Dict, Any, cast, get_args
+from typing import Tuple, Dict, Any, List, cast, get_args
 
 import pandas as pd
 
 import src.detail_step.browser as brws
-import host.host_detail as dtl
+import host.host_p2 as p2
 
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -92,10 +92,7 @@ def start_driver() -> Tuple[WebDriver | None, WebDriverWait | None]:
 
 
 
-
-
-def collect_data(data_file_path: str):
-
+def scrape_p1():
 
     driver: WebDriver | None = None
     wait: WebDriverWait | None = None
@@ -108,9 +105,30 @@ def collect_data(data_file_path: str):
         return []
 
     # --------------------------------
+
+
+
+
+
+
+def scrape_p2(data_file_path: str) -> str:
+
+    driver: WebDriver | None = None
+    wait: WebDriverWait | None = None
+    driver, wait = start_driver()
+
+    if driver and wait:
+        pass
+    else:
+        log.error(f"Failed to start driver and create wait object")
+        return ''
+
+    # --------------------------------
     
     df: pd.DataFrame = pd.read_excel(data_file_path)
+    log.info(f'success convert excel file -> dataframe')
 
+    host_list: List[Dict[str, Any]] = []
     scraped_host_cnt: int = 0
     saved_host_cnt: int = 0
 
@@ -124,7 +142,7 @@ def collect_data(data_file_path: str):
         log.info(f'Scraping host #{scraped_host_cnt + 1}: {host_name} - {host_link}')
 
         try:
-            dtl.go_to_website(driver, wait_time, host_link)
+            p2.go_to_website(driver, wait_time, host_link)
         except Exception as e:
             lg.log_detail_error(e)
             log.error(f'Error to access page of host <{host_name}> -> skip to next host')
@@ -147,12 +165,12 @@ def collect_data(data_file_path: str):
 
         try:
 
-            overview_data: Dict[str, Any] = dtl.overview_data(driver)
+            overview_data: Dict[str, Any] = p2.overview_data(driver)
             for key, value in overview_data.items():
                 setattr(host_detail, key, value)
 
             try: 
-                prop_data: Dict[str, Any] = dtl.prop_data(driver, wait_time)
+                prop_data: Dict[str, Any] = p2.prop_data(driver, wait_time)
                 for key, value in prop_data.items():
                     setattr(host_detail, key, value)
             except Exception as e:
@@ -162,10 +180,26 @@ def collect_data(data_file_path: str):
 
             hst_utl.pretty_dict(host_detail.model_dump())
 
+            host_list.append(host_detail.model_dump())
+            saved_host_cnt += 1
+
         except Exception as e:
             lg.log_detail_error(e)
             log.error(f'Error to access page of host <{host_name}> -> skip to next host')
             continue
+
+    log.info(f'Saved {saved_host_cnt} / {scraped_host_cnt} hosts to list')
+
+    # --------------------------------
+
+    host_df: pd.DataFrame = pd.DataFrame(host_list)
+    log.info(f'success convert list dict -> dataframe')
+
+    host_csv_path: str = hst_utl.df_to_csv(host_df, 'host   ')
+    log.info(f'success save dataframe to csv file: {host_csv_path}')
+
+    return host_csv_path
+
 
 
 
@@ -173,8 +207,8 @@ def collect_data(data_file_path: str):
 
 # go to website
 # collect each data
-    # add to dict
-    # convert dict to csv
+# add to dict
+# convert dict to csv
 
 
 
@@ -182,7 +216,7 @@ def collect_data(data_file_path: str):
 # -----------------------------------------------------------------------------------
 
 
-collect_data(
+scrape_p2(
     data_file_path = r"C:\Users\ADMIN\Pictures\scraper\scraper-be\data\host1.xlsx"
 )
 

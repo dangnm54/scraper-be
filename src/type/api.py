@@ -8,7 +8,7 @@ from pydantic import BaseModel
 class ScraperSettings(BaseModel):
     file_name: str
     location: str
-    num_guest: int
+    num_guest: int | None
     num_property: int
     collect_host_data: bool = False
     collect_booking_rate: bool = False

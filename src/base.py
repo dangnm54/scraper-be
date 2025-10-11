@@ -100,7 +100,7 @@ def start_driver() -> Tuple[WebDriver | None, WebDriverWait | None]:
 
 
 def scrape_p1(db: Session, session_id: UUID, session_name: str, main_website_url: str, 
-            location: str, num_guest: int, num_property: int,
+            location: str, num_guest: int | None, num_property: int,
             save_db: bool = False
     ) -> List[PropertyDB]:
     
@@ -272,7 +272,7 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
 
 def run_full_flow(
         db: Session,
-        file_name: str, location: str, num_guest: int, num_property: int,
+        file_name: str, location: str, num_guest: int | None, num_property: int,
         collect_host_data: bool = False,
         collect_booking_rate: bool = False
     ) -> ScrapeStatus:
@@ -315,7 +315,6 @@ if test_local:
     if __name__ == "__main__":
         db_session: Session | None = dbop.create_db_session()
 
-
         log.info(f"""Config:
         - save_db: {save_db}
         - search_mode: {search_mode}
@@ -329,7 +328,7 @@ if test_local:
                     db = db_session,
                     file_name = 'D12_HCM',
                     location = 'D12, HCM',
-                    num_guest = 2,
+                    num_guest = None,
                     num_property = 2,
                     collect_host_data = True,
                     collect_booking_rate = True

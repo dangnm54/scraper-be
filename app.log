@@ -1,51 +1,115 @@
-LOG RECORDED AT: 10-10-2025 23:51:45
+LOG RECORDED AT: 11-10-2025 23:52:16
 STARTED BY FILE: host_app.py
 RUN METHOD: Directly in Terminal
 
 
-23:51:46 | INFO | host_app - start_driver - 67 | Starting driver in <local> mode
+23:52:17 | INFO | host_app - start_driver - 67 | Starting driver in <local> mode
 
 
 ============================== Create proxy helper extension
 
-23:51:46 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
-23:51:46 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
-23:51:46 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
-23:51:46 | INFO | host_app - start_driver - 72 | Proxy information found in .env -> driver will use proxy
+23:52:17 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
+23:52:17 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
+23:52:17 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
+23:52:17 | INFO | host_app - start_driver - 72 | Proxy information found in .env -> driver will use proxy
 
 
 ============================== Config basic driver setting
 
-23:51:46 | INFO | browser - config_basic_driver_setting - 134 | Configured basic settings
+23:52:17 | INFO | browser - config_basic_driver_setting - 134 | Configured basic settings
 
 
 ============================== Config advanced driver setting
 
-23:51:46 | INFO | browser - config_proxy_driver_setting - 144 | Configured minimal logging for selenium
-23:51:46 | INFO | browser - config_proxy_driver_setting - 157 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+23:52:17 | INFO | browser - config_proxy_driver_setting - 144 | Configured minimal logging for selenium
+23:52:17 | INFO | browser - config_proxy_driver_setting - 157 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
 
 
 ============================== Start browser
 
-23:51:47 | INFO | browser - start_browser - 183 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="4b135769895a45f19ad8ea22d1519ba2")>> created
-23:51:47 | INFO | browser - start_browser - 193 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="4b135769895a45f19ad8ea22d1519ba2")>> created
-23:51:47 | INFO | browser - start_browser - 220 | Only 1 monitor, maximizing browser
+23:52:18 | INFO | browser - start_browser - 183 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="3ef4f39cfd9b3413ca085e8c8a5b7842")>> created
+23:52:18 | INFO | browser - start_browser - 193 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="3ef4f39cfd9b3413ca085e8c8a5b7842")>> created
+23:52:18 | INFO | browser - start_browser - 220 | Only 1 monitor, maximizing browser
+23:52:19 | INFO | host_app - scrape_p2 - 129 | success convert excel file -> dataframe
 
 --------------------
 
-23:51:47 | INFO | host_app - collect_data - 124 | Scraping host #2: Phung & Viet - https://www.airbnb.com.vn/users/show/73256728
+23:52:19 | INFO | host_app - scrape_p2 - 142 | Scraping host #2: Lala Gạo’s House - https://www.airbnb.com.vn/users/show/694206429
 
 
 ============================== Go to website
 
-23:51:50 | INFO | host_detail - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/73256728
-23:51:50 | INFO | host_detail - go_to_website - 38 | Page loaded properly
+23:52:22 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/694206429
+23:52:22 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
 
 
 ============================== Overview data
 
-23:51:52 | INFO | host_detail - overview_data - 65 | Overview section found
-23:51:52 | INFO | host_utils - pretty_dict - 74 | {
+23:52:26 | INFO | host_p2 - overview_data - 65 | Overview section found
+23:52:26 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Host",
+    "rating_num": 1,
+    "rating_star": 1.0,
+    "exp_time": "5 thang"
+}
+
+
+============================== Property data
+
+23:52:29 | INFO | host_p2 - prop_data - 111 | Property section found
+23:52:29 | INFO | host_p2 - prop_data - 157 | Pop-up has 4 properties
+
+--------------------
+
+23:52:29 | INFO | host_p2 - prop_data - 162 | Checking property #1 / 4
+23:52:32 | INFO | host_p2 - prop_data - 180 | prop has no rating -> skip to next prop
+
+--------------------
+
+23:52:32 | INFO | host_p2 - prop_data - 162 | Checking property #2 / 4
+23:52:36 | INFO | host_p2 - prop_data - 180 | prop has no rating -> skip to next prop
+
+--------------------
+
+23:52:36 | INFO | host_p2 - prop_data - 162 | Checking property #3 / 4
+23:52:39 | INFO | host_p2 - prop_data - 180 | prop has no rating -> skip to next prop
+
+--------------------
+
+23:52:39 | INFO | host_p2 - prop_data - 162 | Checking property #4 / 4
+23:52:43 | INFO | host_p2 - prop_data - 180 | prop has no rating -> skip to next prop
+23:52:43 | INFO | host_utils - pretty_dict - 116 | {
+    "prop_num": null,
+    "avg_prop_rv_num": 0.0,
+    "avg_prop_rv_star": 0.0
+}
+23:52:43 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Lala Gạo’s House",
+    "link": "https://www.airbnb.com.vn/users/show/694206429",
+    "title": "Host",
+    "rating_num": 1,
+    "rating_star": 1.0,
+    "exp_time": "5 thang",
+    "prop_num": null,
+    "avg_prop_rv_num": 0.0,
+    "avg_prop_rv_star": 0.0
+}
+
+--------------------
+
+23:52:43 | INFO | host_app - scrape_p2 - 142 | Scraping host #3: Phung & Viet - https://www.airbnb.com.vn/users/show/73256728
+
+
+============================== Go to website
+
+23:52:44 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/73256728
+23:52:44 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+23:52:47 | INFO | host_p2 - overview_data - 65 | Overview section found
+23:52:47 | INFO | host_utils - pretty_dict - 116 | {
     "title": "Chủ nhà siêu cấp",
     "rating_num": 2655,
     "rating_star": 4.77,
@@ -55,34 +119,88 @@ RUN METHOD: Directly in Terminal
 
 ============================== Property data
 
-23:51:54 | INFO | host_detail - prop_data - 111 | Property section found
-23:51:54 | INFO | host_detail - prop_data - 116 | Found 13 properties
-23:51:56 | INFO | host_detail - prop_data - 120 | View all button clicked
-23:51:56 | INFO | host_detail - prop_data - 124 | Pop-up has 12 properties
+23:52:51 | INFO | host_p2 - prop_data - 111 | Property section found
+23:52:51 | INFO | host_p2 - prop_data - 127 | Found 13 properties
+23:52:54 | INFO | host_p2 - prop_data - 131 | View all button clicked
+23:52:54 | INFO | host_p2 - prop_data - 135 | Pop-up has 13 properties
 
 --------------------
 
-23:51:56 | INFO | host_detail - prop_data - 133 | Checking property #1 / 13
-23:51:58 | INFO | host_detail - prop_data - 139 | tot_rv_num: 393 (+ 393)
-23:51:58 | INFO | host_detail - prop_data - 143 | tot_rv_star: 4.78 (+ 4.78)
+23:52:54 | INFO | host_p2 - prop_data - 141 | Checking property #1 / 13
+23:52:57 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 393 (+ 393)
+23:52:57 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 4.78 (+ 4.78)
 
 --------------------
 
-23:51:58 | INFO | host_detail - prop_data - 133 | Checking property #2 / 13
-23:52:00 | INFO | host_detail - prop_data - 139 | tot_rv_num: 802 (+ 409)
-23:52:00 | INFO | host_detail - prop_data - 143 | tot_rv_star: 9.600000000000001 (+ 4.82)
+23:52:57 | INFO | host_p2 - prop_data - 141 | Checking property #2 / 13
+23:53:01 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 802 (+ 409)
+23:53:01 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 9.600000000000001 (+ 4.82)
 
 --------------------
 
-23:52:00 | INFO | host_detail - prop_data - 133 | Checking property #3 / 13
-23:52:02 | INFO | host_detail - prop_data - 139 | tot_rv_num: 1164 (+ 362)
-23:52:02 | INFO | host_detail - prop_data - 143 | tot_rv_star: 14.250000000000002 (+ 4.65)
-23:52:02 | INFO | host_utils - pretty_dict - 74 | {
+23:53:01 | INFO | host_p2 - prop_data - 141 | Checking property #3 / 13
+23:53:04 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 1164 (+ 362)
+23:53:04 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 14.250000000000002 (+ 4.65)
+
+--------------------
+
+23:53:04 | INFO | host_p2 - prop_data - 141 | Checking property #4 / 13
+23:53:07 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 1452 (+ 288)
+23:53:07 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 19.1 (+ 4.85)
+
+--------------------
+
+23:53:07 | INFO | host_p2 - prop_data - 141 | Checking property #5 / 13
+23:53:11 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 1921 (+ 469)
+23:53:11 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 23.89 (+ 4.79)
+
+--------------------
+
+23:53:11 | INFO | host_p2 - prop_data - 141 | Checking property #6 / 13
+23:53:14 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 1932 (+ 11)
+23:53:14 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 28.89 (+ 5.0)
+
+--------------------
+
+23:53:14 | INFO | host_p2 - prop_data - 141 | Checking property #7 / 13
+23:53:18 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 1991 (+ 59)
+23:53:18 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 33.65 (+ 4.76)
+
+--------------------
+
+23:53:18 | INFO | host_p2 - prop_data - 141 | Checking property #8 / 13
+23:53:21 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 2229 (+ 238)
+23:53:21 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 38.44 (+ 4.79)
+
+--------------------
+
+23:53:21 | INFO | host_p2 - prop_data - 141 | Checking property #9 / 13
+23:53:24 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 2236 (+ 7)
+23:53:24 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 43.44 (+ 5.0)
+
+--------------------
+
+23:53:24 | INFO | host_p2 - prop_data - 141 | Checking property #10 / 13
+23:53:28 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 2242 (+ 6)
+23:53:28 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 48.44 (+ 5.0)
+
+--------------------
+
+23:53:28 | INFO | host_p2 - prop_data - 141 | Checking property #11 / 13
+23:53:31 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 2245 (+ 3)
+23:53:31 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 53.44 (+ 5.0)
+
+--------------------
+
+23:53:31 | INFO | host_p2 - prop_data - 141 | Checking property #12 / 13
+23:53:34 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 2289 (+ 44)
+23:53:34 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 58.12 (+ 4.68)
+23:53:34 | INFO | host_utils - pretty_dict - 116 | {
     "prop_num": 13,
-    "avg_prop_rv_num": 89.54,
-    "avg_prop_rv_star": 1.1
+    "avg_prop_rv_num": 176.08,
+    "avg_prop_rv_star": 4.47
 }
-23:52:02 | INFO | host_utils - pretty_dict - 74 | {
+23:53:34 | INFO | host_utils - pretty_dict - 116 | {
     "name": "Phung & Viet",
     "link": "https://www.airbnb.com.vn/users/show/73256728",
     "title": "Chủ nhà siêu cấp",
@@ -90,6 +208,10 @@ RUN METHOD: Directly in Terminal
     "rating_star": 4.77,
     "exp_time": "9 nam",
     "prop_num": 13,
-    "avg_prop_rv_num": 89.54,
-    "avg_prop_rv_star": 1.1
+    "avg_prop_rv_num": 176.08,
+    "avg_prop_rv_star": 4.47
 }
+23:53:34 | INFO | host_app - scrape_p2 - 191 | Saved 2 / 2 hosts to list
+23:53:34 | INFO | host_app - scrape_p2 - 196 | success convert list dict -> dataframe
+23:53:34 | INFO | host_utils - df_to_csv - 104 | Dataframe saved to file: C:\\Users\\ADMIN\\Pictures\\scraper\\scraper-be\\data\host_111025 (1).csv
+23:53:34 | INFO | host_app - scrape_p2 - 199 | success save dataframe to csv file: C:\\Users\\ADMIN\\Pictures\\scraper\\scraper-be\\data\host_111025 (1).csv

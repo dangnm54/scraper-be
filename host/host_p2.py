@@ -110,45 +110,93 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
     hst_utl.scroll_focus_element(driver, prop_section)
     log.info('Property section found')
 
-    view_all_button: WebElement = prop_section.find_element(By.CSS_SELECTOR, 'div.v9765v button')
-    prop_num: int = int(hst_utl.clean_string(view_all_button.text, mode='prop_num'))
-    prop_data['prop_num'] = prop_num
-    log.info(f'Found {prop_num} properties')
-
-    view_all_button.click()
-    time.sleep(wait_time)
-    log.info('View all button clicked')
-
-    # need big screen
-    prop_list: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, 'div.cy5jw6o')
-    log.info(f'Pop-up has {len(prop_list)} properties')
+    # --------------------------------
 
     tot_rv_num: int = 0
     tot_rv_star: float = 0
+    prop_num: int = 0
 
-    for idx, prop in enumerate(prop_list):
+    try:
 
-        lg.log_divider()
+        view_all_button_area: List[WebElement] = prop_section.find_elements(By.CSS_SELECTOR, 'div.v9765v button')
 
-        log.info(f'Checking property #{idx + 1} / {prop_num}')
-        hst_utl.scroll_focus_element(driver, prop)
+        if view_all_button_area:
+            view_all_button: WebElement = view_all_button_area[0]
+            prop_num = int(hst_utl.clean_string(view_all_button.text, mode='prop_num'))
+            prop_data['prop_num'] = prop_num
+            log.info(f'Found {prop_num} properties')
 
-        prop_rv: WebElement = prop.find_element(By.CSS_SELECTOR, 'span.t1phmnpa span.a8jt5op')
-        rv_num: int = int(hst_utl.clean_string(prop_rv.text, mode='prop_num'))
-        tot_rv_num += rv_num
-        log.info(f'tot_rv_num: {tot_rv_num} (+ {rv_num})')
+            view_all_button.click()
+            time.sleep(wait_time)
+            log.info('View all button clicked')
 
-        rv_star: float = float(hst_utl.clean_string(prop_rv.text, mode='rv_star'))
-        tot_rv_star += rv_star
-        log.info(f'tot_rv_star: {tot_rv_star} (+ {rv_star})')
+            # need big screen
+            prop_list: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, 'div.cy5jw6o')
+            log.info(f'Pop-up has {prop_num} properties')
 
-        # if idx + 1 == 2:
-        #     break
+            for idx, prop in enumerate(prop_list):
 
-    avg_prop_rv_num: float = round(tot_rv_num / prop_num, 2)
-    avg_prop_rv_star: float = round(tot_rv_star / prop_num, 2)
-    prop_data['avg_prop_rv_num'] = avg_prop_rv_num
-    prop_data['avg_prop_rv_star'] = avg_prop_rv_star
+                lg.log_divider()
+
+                log.info(f'Checking property #{idx + 1} / {prop_num}')
+                hst_utl.scroll_focus_element(driver, prop)
+
+                prop_rv: WebElement = prop.find_element(By.CSS_SELECTOR, 'span.t1phmnpa span.a8jt5op')
+                rv_num: int = int(hst_utl.clean_string(prop_rv.text, mode='prop_num'))
+                tot_rv_num += rv_num
+                log.info(f'tot_rv_num: {tot_rv_num} (+ {rv_num})')
+
+                rv_star: float = float(hst_utl.clean_string(prop_rv.text, mode='rv_star'))
+                tot_rv_star += rv_star
+                log.info(f'tot_rv_star: {tot_rv_star} (+ {rv_star})')
+
+
+        else:
+            prop_list = driver.find_elements(By.CSS_SELECTOR, 'div.c3184sb')
+            prop_num = len(prop_list)
+            prop_data['prop_num'] = prop_num
+            log.info(f'Pop-up has {prop_num} properties')
+
+            for idx, prop in enumerate(prop_list):
+                lg.log_divider()
+
+                log.info(f'Checking property #{idx + 1} / {prop_num}')
+                hst_utl.scroll_focus_element(driver, prop)
+
+                prop_rv_area: List[WebElement] = prop.find_elements(By.CSS_SELECTOR, 'div.sxmrbbg')
+
+                if len(prop_rv_area) > 1:
+                    prop_rv = prop_rv_area[1]
+
+                    rv_num_element: WebElement = prop_rv.find_elements(By.CSS_SELECTOR, 'span')[7]
+                    rv_num = int(hst_utl.clean_string(rv_num_element.text, mode='prop_num'))
+                    tot_rv_num += rv_num
+                    log.info(f'tot_rv_num: {tot_rv_num} (+ {rv_num})')
+
+                    rv_star_element: WebElement = prop_rv.find_elements(By.CSS_SELECTOR, 'span')[4]
+                    rv_star = float(hst_utl.clean_string(rv_star_element.text, mode='rating_star'))
+                    tot_rv_star += rv_star
+
+                else:
+                    log.info('prop has no rating -> skip to next prop')
+
+
+
+    except Exception as e:
+        lg.log_detail_error(e)
+        log.error('Error to collect property data -> skip to next prop')
+        return prop_data
+
+
+    if prop_num > 0:
+        avg_prop_rv_num: float = round(tot_rv_num / prop_num, 2)
+        avg_prop_rv_star: float = round(tot_rv_star / prop_num, 2)
+        prop_data['avg_prop_rv_num'] = avg_prop_rv_num
+        prop_data['avg_prop_rv_star'] = avg_prop_rv_star
+    else:
+        log.error('prop_num is 0 -> skip to next prop')
+        prop_data['prop_num'] = 0
+
 
     hst_utl.pretty_dict(prop_data)
     return prop_data
