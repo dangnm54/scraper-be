@@ -68,7 +68,7 @@ def setup_logging_for_file_directly_run() -> str:
         f.write(f'RUN METHOD: {file_run_method()}\n\n\n')
 
 
-    console_handler: logging.StreamHandler = logging.StreamHandler()
+    console_handler: logging.StreamHandler = logging.StreamHandler(sys.stdout)
     file_handler: logging.StreamHandler = logging.StreamHandler(open('./app.log', mode='a', encoding='utf-8'))
 
 
