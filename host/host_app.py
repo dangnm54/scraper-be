@@ -131,6 +131,7 @@ def scrape_p2(data_file_path: str) -> str:
     host_list: List[Dict[str, Any]] = []
     scraped_host_cnt: int = 0
     saved_host_cnt: int = 0
+    total_host_cnt: int = len(df)
 
     for idx, host in df.iterrows():
 
@@ -139,7 +140,7 @@ def scrape_p2(data_file_path: str) -> str:
         host_link: str = str(host["link"])
 
         lg.log_divider()
-        log.info(f'Scraping host #{scraped_host_cnt + 1}: {host_name} - {host_link}')
+        log.info(f'Scraping host #{scraped_host_cnt + 1} / {total_host_cnt}: {host_name} - {host_link}')
 
         try:
             p2.go_to_website(driver, wait_time, host_link)
@@ -169,14 +170,14 @@ def scrape_p2(data_file_path: str) -> str:
             for key, value in overview_data.items():
                 setattr(host_detail, key, value)
 
-            try: 
-                prop_data: Dict[str, Any] = p2.prop_data(driver, wait_time)
-                for key, value in prop_data.items():
-                    setattr(host_detail, key, value)
-            except Exception as e:
-                lg.log_detail_error(e)
-                log.error(f'Error collect property data of host <{host_name}> -> skip to next host')
-                continue
+            # try: 
+            #     prop_data: Dict[str, Any] = p2.prop_data(driver, wait_time)
+            #     for key, value in prop_data.items():
+            #         setattr(host_detail, key, value)
+            # except Exception as e:
+            #     lg.log_detail_error(e)
+            #     log.error(f'Error collect property data of host <{host_name}> -> skip to next host')
+            #     continue
 
             hst_utl.pretty_dict(host_detail.model_dump())
 
@@ -195,7 +196,7 @@ def scrape_p2(data_file_path: str) -> str:
     host_df: pd.DataFrame = pd.DataFrame(host_list)
     log.info(f'success convert list dict -> dataframe')
 
-    host_csv_path: str = hst_utl.df_to_csv(host_df, 'host   ')
+    host_csv_path: str = hst_utl.df_to_csv(host_df, 'host')
     log.info(f'success save dataframe to csv file: {host_csv_path}')
 
     return host_csv_path
@@ -217,6 +218,7 @@ def scrape_p2(data_file_path: str) -> str:
 
 
 scrape_p2(
-    data_file_path = r"C:\Users\ADMIN\Pictures\scraper\scraper-be\data\host1.xlsx"
+    # data_file_path = r"C:\Users\ADMIN\Pictures\scraper\scraper-be\data\host1.xlsx"
+    data_file_path = r"C:\Users\ADMIN\Pictures\scraper\scraper-be\data\host2.xlsx"
 )
 

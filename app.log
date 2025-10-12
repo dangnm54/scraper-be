@@ -1,217 +1,1976 @@
-LOG RECORDED AT: 11-10-2025 23:52:16
+LOG RECORDED AT: 12-10-2025 21:33:57
 STARTED BY FILE: host_app.py
 RUN METHOD: Directly in Terminal
 
 
-23:52:17 | INFO | host_app - start_driver - 67 | Starting driver in <local> mode
+21:33:58 | INFO | host_app - start_driver - 67 | Starting driver in <local> mode
 
 
 ============================== Create proxy helper extension
 
-23:52:17 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
-23:52:17 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
-23:52:17 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
-23:52:17 | INFO | host_app - start_driver - 72 | Proxy information found in .env -> driver will use proxy
+21:33:58 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
+21:33:58 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
+21:33:58 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
+21:33:58 | INFO | host_app - start_driver - 72 | Proxy information found in .env -> driver will use proxy
 
 
 ============================== Config basic driver setting
 
-23:52:17 | INFO | browser - config_basic_driver_setting - 134 | Configured basic settings
+21:33:58 | INFO | browser - config_basic_driver_setting - 134 | Configured basic settings
 
 
 ============================== Config advanced driver setting
 
-23:52:17 | INFO | browser - config_proxy_driver_setting - 144 | Configured minimal logging for selenium
-23:52:17 | INFO | browser - config_proxy_driver_setting - 157 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+21:33:58 | INFO | browser - config_proxy_driver_setting - 144 | Configured minimal logging for selenium
+21:33:58 | INFO | browser - config_proxy_driver_setting - 157 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
 
 
 ============================== Start browser
 
-23:52:18 | INFO | browser - start_browser - 183 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="3ef4f39cfd9b3413ca085e8c8a5b7842")>> created
-23:52:18 | INFO | browser - start_browser - 193 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="3ef4f39cfd9b3413ca085e8c8a5b7842")>> created
-23:52:18 | INFO | browser - start_browser - 220 | Only 1 monitor, maximizing browser
-23:52:19 | INFO | host_app - scrape_p2 - 129 | success convert excel file -> dataframe
+21:33:59 | INFO | browser - start_browser - 183 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="8eb77f8a8fb4ec032e70bb85ebc5dc4d")>> created
+21:33:59 | INFO | browser - start_browser - 193 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="8eb77f8a8fb4ec032e70bb85ebc5dc4d")>> created
+21:33:59 | INFO | browser - start_browser - 220 | Only 1 monitor, maximizing browser
+21:33:59 | INFO | host_app - scrape_p2 - 129 | success convert excel file -> dataframe
 
 --------------------
 
-23:52:19 | INFO | host_app - scrape_p2 - 142 | Scraping host #2: Lala Gạo’s House - https://www.airbnb.com.vn/users/show/694206429
+21:33:59 | INFO | host_app - scrape_p2 - 142 | Scraping host #2: Phung & Viet - https://www.airbnb.com.vn/users/show/73256728
 
 
 ============================== Go to website
 
-23:52:22 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/694206429
-23:52:22 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+21:34:01 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/73256728
+21:34:01 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
 
 
 ============================== Overview data
 
-23:52:26 | INFO | host_p2 - overview_data - 65 | Overview section found
-23:52:26 | INFO | host_utils - pretty_dict - 116 | {
-    "title": "Host",
-    "rating_num": 1,
-    "rating_star": 1.0,
-    "exp_time": "5 thang"
-}
-
-
-============================== Property data
-
-23:52:29 | INFO | host_p2 - prop_data - 111 | Property section found
-23:52:29 | INFO | host_p2 - prop_data - 157 | Pop-up has 4 properties
-
---------------------
-
-23:52:29 | INFO | host_p2 - prop_data - 162 | Checking property #1 / 4
-23:52:32 | INFO | host_p2 - prop_data - 180 | prop has no rating -> skip to next prop
-
---------------------
-
-23:52:32 | INFO | host_p2 - prop_data - 162 | Checking property #2 / 4
-23:52:36 | INFO | host_p2 - prop_data - 180 | prop has no rating -> skip to next prop
-
---------------------
-
-23:52:36 | INFO | host_p2 - prop_data - 162 | Checking property #3 / 4
-23:52:39 | INFO | host_p2 - prop_data - 180 | prop has no rating -> skip to next prop
-
---------------------
-
-23:52:39 | INFO | host_p2 - prop_data - 162 | Checking property #4 / 4
-23:52:43 | INFO | host_p2 - prop_data - 180 | prop has no rating -> skip to next prop
-23:52:43 | INFO | host_utils - pretty_dict - 116 | {
-    "prop_num": null,
-    "avg_prop_rv_num": 0.0,
-    "avg_prop_rv_star": 0.0
-}
-23:52:43 | INFO | host_utils - pretty_dict - 116 | {
-    "name": "Lala Gạo’s House",
-    "link": "https://www.airbnb.com.vn/users/show/694206429",
-    "title": "Host",
-    "rating_num": 1,
-    "rating_star": 1.0,
-    "exp_time": "5 thang",
-    "prop_num": null,
-    "avg_prop_rv_num": 0.0,
-    "avg_prop_rv_star": 0.0
-}
-
---------------------
-
-23:52:43 | INFO | host_app - scrape_p2 - 142 | Scraping host #3: Phung & Viet - https://www.airbnb.com.vn/users/show/73256728
-
-
-============================== Go to website
-
-23:52:44 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/73256728
-23:52:44 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
-
-
-============================== Overview data
-
-23:52:47 | INFO | host_p2 - overview_data - 65 | Overview section found
-23:52:47 | INFO | host_utils - pretty_dict - 116 | {
+21:34:04 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:34:04 | INFO | host_utils - pretty_dict - 116 | {
     "title": "Chủ nhà siêu cấp",
     "rating_num": 2655,
     "rating_star": 4.77,
     "exp_time": "9 nam"
 }
-
-
-============================== Property data
-
-23:52:51 | INFO | host_p2 - prop_data - 111 | Property section found
-23:52:51 | INFO | host_p2 - prop_data - 127 | Found 13 properties
-23:52:54 | INFO | host_p2 - prop_data - 131 | View all button clicked
-23:52:54 | INFO | host_p2 - prop_data - 135 | Pop-up has 13 properties
-
---------------------
-
-23:52:54 | INFO | host_p2 - prop_data - 141 | Checking property #1 / 13
-23:52:57 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 393 (+ 393)
-23:52:57 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 4.78 (+ 4.78)
-
---------------------
-
-23:52:57 | INFO | host_p2 - prop_data - 141 | Checking property #2 / 13
-23:53:01 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 802 (+ 409)
-23:53:01 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 9.600000000000001 (+ 4.82)
-
---------------------
-
-23:53:01 | INFO | host_p2 - prop_data - 141 | Checking property #3 / 13
-23:53:04 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 1164 (+ 362)
-23:53:04 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 14.250000000000002 (+ 4.65)
-
---------------------
-
-23:53:04 | INFO | host_p2 - prop_data - 141 | Checking property #4 / 13
-23:53:07 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 1452 (+ 288)
-23:53:07 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 19.1 (+ 4.85)
-
---------------------
-
-23:53:07 | INFO | host_p2 - prop_data - 141 | Checking property #5 / 13
-23:53:11 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 1921 (+ 469)
-23:53:11 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 23.89 (+ 4.79)
-
---------------------
-
-23:53:11 | INFO | host_p2 - prop_data - 141 | Checking property #6 / 13
-23:53:14 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 1932 (+ 11)
-23:53:14 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 28.89 (+ 5.0)
-
---------------------
-
-23:53:14 | INFO | host_p2 - prop_data - 141 | Checking property #7 / 13
-23:53:18 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 1991 (+ 59)
-23:53:18 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 33.65 (+ 4.76)
-
---------------------
-
-23:53:18 | INFO | host_p2 - prop_data - 141 | Checking property #8 / 13
-23:53:21 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 2229 (+ 238)
-23:53:21 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 38.44 (+ 4.79)
-
---------------------
-
-23:53:21 | INFO | host_p2 - prop_data - 141 | Checking property #9 / 13
-23:53:24 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 2236 (+ 7)
-23:53:24 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 43.44 (+ 5.0)
-
---------------------
-
-23:53:24 | INFO | host_p2 - prop_data - 141 | Checking property #10 / 13
-23:53:28 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 2242 (+ 6)
-23:53:28 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 48.44 (+ 5.0)
-
---------------------
-
-23:53:28 | INFO | host_p2 - prop_data - 141 | Checking property #11 / 13
-23:53:31 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 2245 (+ 3)
-23:53:31 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 53.44 (+ 5.0)
-
---------------------
-
-23:53:31 | INFO | host_p2 - prop_data - 141 | Checking property #12 / 13
-23:53:34 | INFO | host_p2 - prop_data - 147 | tot_rv_num: 2289 (+ 44)
-23:53:34 | INFO | host_p2 - prop_data - 151 | tot_rv_star: 58.12 (+ 4.68)
-23:53:34 | INFO | host_utils - pretty_dict - 116 | {
-    "prop_num": 13,
-    "avg_prop_rv_num": 176.08,
-    "avg_prop_rv_star": 4.47
-}
-23:53:34 | INFO | host_utils - pretty_dict - 116 | {
+21:34:04 | INFO | host_utils - pretty_dict - 116 | {
     "name": "Phung & Viet",
     "link": "https://www.airbnb.com.vn/users/show/73256728",
     "title": "Chủ nhà siêu cấp",
     "rating_num": 2655,
     "rating_star": 4.77,
     "exp_time": "9 nam",
-    "prop_num": 13,
-    "avg_prop_rv_num": 176.08,
-    "avg_prop_rv_star": 4.47
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
 }
-23:53:34 | INFO | host_app - scrape_p2 - 191 | Saved 2 / 2 hosts to list
-23:53:34 | INFO | host_app - scrape_p2 - 196 | success convert list dict -> dataframe
-23:53:34 | INFO | host_utils - df_to_csv - 104 | Dataframe saved to file: C:\\Users\\ADMIN\\Pictures\\scraper\\scraper-be\\data\host_111025 (1).csv
-23:53:34 | INFO | host_app - scrape_p2 - 199 | success save dataframe to csv file: C:\\Users\\ADMIN\\Pictures\\scraper\\scraper-be\\data\host_111025 (1).csv
+
+--------------------
+
+21:34:04 | INFO | host_app - scrape_p2 - 142 | Scraping host #3: Hannah - https://www.airbnb.com.vn/users/show/84182389
+
+
+============================== Go to website
+
+21:34:06 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/84182389
+21:34:06 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:34:09 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:34:09 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Host",
+    "rating_num": 37,
+    "rating_star": 4.49,
+    "exp_time": "7 nam"
+}
+21:34:09 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Hannah",
+    "link": "https://www.airbnb.com.vn/users/show/84182389",
+    "title": "Host",
+    "rating_num": 37,
+    "rating_star": 4.49,
+    "exp_time": "7 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:34:09 | INFO | host_app - scrape_p2 - 142 | Scraping host #4: Tran Van Phi - https://www.airbnb.com.vn/users/show/3150111
+
+
+============================== Go to website
+
+21:34:12 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/3150111
+21:34:12 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:34:15 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:34:15 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 1573,
+    "rating_star": 4.88,
+    "exp_time": "12 nam"
+}
+21:34:15 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Tran Van Phi",
+    "link": "https://www.airbnb.com.vn/users/show/3150111",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 1573,
+    "rating_star": 4.88,
+    "exp_time": "12 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:34:15 | INFO | host_app - scrape_p2 - 142 | Scraping host #5: Haina - https://www.airbnb.com.vn/users/show/382921057
+
+
+============================== Go to website
+
+21:34:16 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/382921057
+21:34:16 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:34:19 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:34:19 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 416,
+    "rating_star": 4.81,
+    "exp_time": "2 nam"
+}
+21:34:19 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Haina",
+    "link": "https://www.airbnb.com.vn/users/show/382921057",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 416,
+    "rating_star": 4.81,
+    "exp_time": "2 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:34:19 | INFO | host_app - scrape_p2 - 142 | Scraping host #6: Konstantinos - https://www.airbnb.com.vn/users/show/7858163
+
+
+============================== Go to website
+
+21:34:21 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/7858163
+21:34:21 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:34:23 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:34:23 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 606,
+    "rating_star": 4.86,
+    "exp_time": "8 nam"
+}
+21:34:24 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Konstantinos",
+    "link": "https://www.airbnb.com.vn/users/show/7858163",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 606,
+    "rating_star": 4.86,
+    "exp_time": "8 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:34:24 | INFO | host_app - scrape_p2 - 142 | Scraping host #7: Daisy'S House - https://www.airbnb.com.vn/users/show/129421890
+
+
+============================== Go to website
+
+21:34:27 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/129421890
+21:34:27 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:34:30 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:34:30 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 2771,
+    "rating_star": 4.87,
+    "exp_time": "8 nam"
+}
+21:34:30 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Daisy'S House",
+    "link": "https://www.airbnb.com.vn/users/show/129421890",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 2771,
+    "rating_star": 4.87,
+    "exp_time": "8 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:34:30 | INFO | host_app - scrape_p2 - 142 | Scraping host #8: Son - https://www.airbnb.com.vn/users/show/504834973
+
+
+============================== Go to website
+
+21:34:31 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/504834973
+21:34:31 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:34:34 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:34:34 | ERROR | log_op - log_detail_error - 146 | list index out of range
+- Error level #1: File <host_app.py> | Function <scrape_p2> | Line #168: overview_data: Dict[str, Any] = p2.overview_data(driver)
+- Error level #2: File <host_p2.py> | Function <overview_data> | Line #71: rating_num_element: WebElement = overview_section.find_elements(By.CSS_SELECTOR, 'span.vqkyk4b')[0]
+21:34:34 | ERROR | host_app - scrape_p2 - 188 | Error to access page of host <Son> -> skip to next host
+
+--------------------
+
+21:34:34 | INFO | host_app - scrape_p2 - 142 | Scraping host #9: Tuan Anh - https://www.airbnb.com.vn/users/show/147074242
+
+
+============================== Go to website
+
+21:34:38 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/147074242
+21:34:38 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:34:40 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:34:40 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 685,
+    "rating_star": 4.89,
+    "exp_time": "8 nam"
+}
+21:34:40 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Tuan Anh",
+    "link": "https://www.airbnb.com.vn/users/show/147074242",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 685,
+    "rating_star": 4.89,
+    "exp_time": "8 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:34:40 | INFO | host_app - scrape_p2 - 142 | Scraping host #10: Van - https://www.airbnb.com.vn/users/show/470491493
+
+
+============================== Go to website
+
+21:34:43 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/470491493
+21:34:44 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:34:46 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:34:46 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Host",
+    "rating_num": 495,
+    "rating_star": 4.77,
+    "exp_time": "3 nam"
+}
+21:34:46 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Van",
+    "link": "https://www.airbnb.com.vn/users/show/470491493",
+    "title": "Host",
+    "rating_num": 495,
+    "rating_star": 4.77,
+    "exp_time": "3 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:34:46 | INFO | host_app - scrape_p2 - 142 | Scraping host #11: S.Sens Homes - https://www.airbnb.com.vn/users/show/510486231
+
+
+============================== Go to website
+
+21:34:47 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/510486231
+21:34:48 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:34:50 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:34:50 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Host",
+    "rating_num": 392,
+    "rating_star": 4.66,
+    "exp_time": "2 nam"
+}
+21:34:50 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "S.Sens Homes",
+    "link": "https://www.airbnb.com.vn/users/show/510486231",
+    "title": "Host",
+    "rating_num": 392,
+    "rating_star": 4.66,
+    "exp_time": "2 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:34:50 | INFO | host_app - scrape_p2 - 142 | Scraping host #12: Vi - https://www.airbnb.com.vn/users/show/131898655
+
+
+============================== Go to website
+
+21:34:53 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/131898655
+21:34:53 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:34:55 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:34:55 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 1189,
+    "rating_star": 4.82,
+    "exp_time": "8 nam"
+}
+21:34:55 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Vi",
+    "link": "https://www.airbnb.com.vn/users/show/131898655",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 1189,
+    "rating_star": 4.82,
+    "exp_time": "8 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:34:55 | INFO | host_app - scrape_p2 - 142 | Scraping host #13: Thien - https://www.airbnb.com.vn/users/show/251467786
+
+
+============================== Go to website
+
+21:34:59 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/251467786
+21:34:59 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:35:02 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:35:02 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 613,
+    "rating_star": 4.88,
+    "exp_time": "7 nam"
+}
+21:35:02 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Thien",
+    "link": "https://www.airbnb.com.vn/users/show/251467786",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 613,
+    "rating_star": 4.88,
+    "exp_time": "7 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:35:02 | INFO | host_app - scrape_p2 - 142 | Scraping host #14: Wendy - https://www.airbnb.com.vn/users/show/470291197
+
+
+============================== Go to website
+
+21:35:05 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/470291197
+21:35:05 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:35:08 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:35:08 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 152,
+    "rating_star": 4.87,
+    "exp_time": "3 nam"
+}
+21:35:08 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Wendy",
+    "link": "https://www.airbnb.com.vn/users/show/470291197",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 152,
+    "rating_star": 4.87,
+    "exp_time": "3 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:35:08 | INFO | host_app - scrape_p2 - 142 | Scraping host #15: Luminous - https://www.airbnb.com.vn/users/show/317036036
+
+
+============================== Go to website
+
+21:35:11 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/317036036
+21:35:11 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:35:13 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:35:13 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 371,
+    "rating_star": 4.86,
+    "exp_time": "6 nam"
+}
+21:35:13 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Luminous",
+    "link": "https://www.airbnb.com.vn/users/show/317036036",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 371,
+    "rating_star": 4.86,
+    "exp_time": "6 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:35:13 | INFO | host_app - scrape_p2 - 142 | Scraping host #16: Chloe - https://www.airbnb.com.vn/users/show/296070306
+
+
+============================== Go to website
+
+21:35:16 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/296070306
+21:35:16 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:35:18 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:35:18 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 336,
+    "rating_star": 4.83,
+    "exp_time": "6 nam"
+}
+21:35:18 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Chloe",
+    "link": "https://www.airbnb.com.vn/users/show/296070306",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 336,
+    "rating_star": 4.83,
+    "exp_time": "6 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:35:18 | INFO | host_app - scrape_p2 - 142 | Scraping host #17: Blue Arch - https://www.airbnb.com.vn/users/show/171215110
+
+
+============================== Go to website
+
+21:35:21 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/171215110
+21:35:21 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:35:23 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:35:23 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 1447,
+    "rating_star": 4.87,
+    "exp_time": "7 nam"
+}
+21:35:23 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Blue Arch",
+    "link": "https://www.airbnb.com.vn/users/show/171215110",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 1447,
+    "rating_star": 4.87,
+    "exp_time": "7 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:35:23 | INFO | host_app - scrape_p2 - 142 | Scraping host #18: The Metropole - https://www.airbnb.com.vn/users/show/465879364
+
+
+============================== Go to website
+
+21:35:25 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/465879364
+21:35:25 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:35:27 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:35:27 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 3202,
+    "rating_star": 4.87,
+    "exp_time": "3 nam"
+}
+21:35:27 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "The Metropole",
+    "link": "https://www.airbnb.com.vn/users/show/465879364",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 3202,
+    "rating_star": 4.87,
+    "exp_time": "3 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:35:27 | INFO | host_app - scrape_p2 - 142 | Scraping host #19: Kate’s House - https://www.airbnb.com.vn/users/show/85254475
+
+
+============================== Go to website
+
+21:35:30 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/85254475
+21:35:30 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:35:33 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:35:33 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 1096,
+    "rating_star": 4.84,
+    "exp_time": "9 nam"
+}
+21:35:33 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Kate’s House",
+    "link": "https://www.airbnb.com.vn/users/show/85254475",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 1096,
+    "rating_star": 4.84,
+    "exp_time": "9 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:35:33 | INFO | host_app - scrape_p2 - 142 | Scraping host #20: Sophia - https://www.airbnb.com.vn/users/show/461952952
+
+
+============================== Go to website
+
+21:35:35 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/461952952
+21:35:35 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:35:37 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:35:37 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 1283,
+    "rating_star": 4.88,
+    "exp_time": "3 nam"
+}
+21:35:37 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Sophia",
+    "link": "https://www.airbnb.com.vn/users/show/461952952",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 1283,
+    "rating_star": 4.88,
+    "exp_time": "3 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:35:37 | INFO | host_app - scrape_p2 - 142 | Scraping host #21: Thieu - https://www.airbnb.com.vn/users/show/327732436
+
+
+============================== Go to website
+
+21:35:40 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/327732436
+21:35:40 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:35:42 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:35:42 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 702,
+    "rating_star": 4.92,
+    "exp_time": "6 nam"
+}
+21:35:42 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Thieu",
+    "link": "https://www.airbnb.com.vn/users/show/327732436",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 702,
+    "rating_star": 4.92,
+    "exp_time": "6 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:35:42 | INFO | host_app - scrape_p2 - 142 | Scraping host #22: Vinkun - https://www.airbnb.com.vn/users/show/434765251
+
+
+============================== Go to website
+
+21:35:46 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/434765251
+21:35:46 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:35:48 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:35:49 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Host",
+    "rating_num": 373,
+    "rating_star": 4.71,
+    "exp_time": "3 nam"
+}
+21:35:49 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Vinkun",
+    "link": "https://www.airbnb.com.vn/users/show/434765251",
+    "title": "Host",
+    "rating_num": 373,
+    "rating_star": 4.71,
+    "exp_time": "3 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:35:49 | INFO | host_app - scrape_p2 - 142 | Scraping host #23: Anh - https://www.airbnb.com.vn/users/show/121606191
+
+
+============================== Go to website
+
+21:35:52 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/121606191
+21:35:52 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:35:54 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:35:54 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 597,
+    "rating_star": 4.85,
+    "exp_time": "9 nam"
+}
+21:35:54 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Anh",
+    "link": "https://www.airbnb.com.vn/users/show/121606191",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 597,
+    "rating_star": 4.85,
+    "exp_time": "9 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:35:54 | INFO | host_app - scrape_p2 - 142 | Scraping host #24: Julie - https://www.airbnb.com.vn/users/show/381201167
+
+
+============================== Go to website
+
+21:35:59 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/381201167
+21:35:59 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:36:01 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:36:01 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 257,
+    "rating_star": 4.87,
+    "exp_time": "2 nam"
+}
+21:36:01 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Julie",
+    "link": "https://www.airbnb.com.vn/users/show/381201167",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 257,
+    "rating_star": 4.87,
+    "exp_time": "2 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:36:01 | INFO | host_app - scrape_p2 - 142 | Scraping host #25: Circadian - https://www.airbnb.com.vn/users/show/122829979
+
+
+============================== Go to website
+
+21:36:03 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/122829979
+21:36:03 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:36:05 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:36:06 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 8862,
+    "rating_star": 4.89,
+    "exp_time": "8 nam"
+}
+21:36:06 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Circadian",
+    "link": "https://www.airbnb.com.vn/users/show/122829979",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 8862,
+    "rating_star": 4.89,
+    "exp_time": "8 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:36:06 | INFO | host_app - scrape_p2 - 142 | Scraping host #26: Helene, Dylan, Spring - https://www.airbnb.com.vn/users/show/177112381
+
+
+============================== Go to website
+
+21:36:08 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/177112381
+21:36:08 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:36:11 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:36:11 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 924,
+    "rating_star": 4.77,
+    "exp_time": "8 nam"
+}
+21:36:11 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Helene, Dylan, Spring",
+    "link": "https://www.airbnb.com.vn/users/show/177112381",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 924,
+    "rating_star": 4.77,
+    "exp_time": "8 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:36:11 | INFO | host_app - scrape_p2 - 142 | Scraping host #27: Nguyen - https://www.airbnb.com.vn/users/show/49542872
+
+
+============================== Go to website
+
+21:36:12 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/49542872
+21:36:12 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:36:15 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:36:15 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 1335,
+    "rating_star": 4.89,
+    "exp_time": "8 nam"
+}
+21:36:15 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Nguyen",
+    "link": "https://www.airbnb.com.vn/users/show/49542872",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 1335,
+    "rating_star": 4.89,
+    "exp_time": "8 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:36:15 | INFO | host_app - scrape_p2 - 142 | Scraping host #28: Ben - https://www.airbnb.com.vn/users/show/1443279
+
+
+============================== Go to website
+
+21:36:18 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/1443279
+21:36:18 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:36:21 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:36:21 | ERROR | log_op - log_detail_error - 146 | invalid literal for int() with base 10: '10.000\n+'
+- Error level #1: File <host_app.py> | Function <scrape_p2> | Line #168: 
+- Error level #2: File <host_p2.py> | Function <overview_data> | Line #72: rating_num: int = int(rating_num_element.text)
+21:36:21 | ERROR | host_app - scrape_p2 - 188 | Error to access page of host <Ben> -> skip to next host
+
+--------------------
+
+21:36:21 | INFO | host_app - scrape_p2 - 142 | Scraping host #29: Shell, Alice, Tee - https://www.airbnb.com.vn/users/show/60005629
+
+
+============================== Go to website
+
+21:36:24 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/60005629
+21:36:24 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:36:27 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:36:27 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 5818,
+    "rating_star": 4.64,
+    "exp_time": "10 nam"
+}
+21:36:27 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Shell, Alice, Tee",
+    "link": "https://www.airbnb.com.vn/users/show/60005629",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 5818,
+    "rating_star": 4.64,
+    "exp_time": "10 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:36:27 | INFO | host_app - scrape_p2 - 142 | Scraping host #30: Ct - https://www.airbnb.com.vn/users/show/255911566
+
+
+============================== Go to website
+
+21:36:30 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/255911566
+21:36:30 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:36:32 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:36:33 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 573,
+    "rating_star": 4.84,
+    "exp_time": "6 nam"
+}
+21:36:33 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Ct",
+    "link": "https://www.airbnb.com.vn/users/show/255911566",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 573,
+    "rating_star": 4.84,
+    "exp_time": "6 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:36:33 | INFO | host_app - scrape_p2 - 142 | Scraping host #31: Quang Vinh - https://www.airbnb.com.vn/users/show/165565183
+
+
+============================== Go to website
+
+21:36:35 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/165565183
+21:36:35 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:36:38 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:36:38 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 278,
+    "rating_star": 4.79,
+    "exp_time": "8 nam"
+}
+21:36:38 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Quang Vinh",
+    "link": "https://www.airbnb.com.vn/users/show/165565183",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 278,
+    "rating_star": 4.79,
+    "exp_time": "8 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:36:38 | INFO | host_app - scrape_p2 - 142 | Scraping host #32: Trini - https://www.airbnb.com.vn/users/show/452990064
+
+
+============================== Go to website
+
+21:36:40 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/452990064
+21:36:40 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:36:42 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:36:42 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 103,
+    "rating_star": 4.88,
+    "exp_time": "3 nam"
+}
+21:36:42 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Trini",
+    "link": "https://www.airbnb.com.vn/users/show/452990064",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 103,
+    "rating_star": 4.88,
+    "exp_time": "3 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:36:42 | INFO | host_app - scrape_p2 - 142 | Scraping host #33: Trang - https://www.airbnb.com.vn/users/show/244265405
+
+
+============================== Go to website
+
+21:36:45 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/244265405
+21:36:45 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:36:48 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:36:48 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Host",
+    "rating_num": 3,
+    "rating_star": 2.33,
+    "exp_time": "6 nam"
+}
+21:36:48 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Trang",
+    "link": "https://www.airbnb.com.vn/users/show/244265405",
+    "title": "Host",
+    "rating_num": 3,
+    "rating_star": 2.33,
+    "exp_time": "6 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:36:48 | INFO | host_app - scrape_p2 - 142 | Scraping host #34: Phuong Quynh - https://www.airbnb.com.vn/users/show/463336892
+
+
+============================== Go to website
+
+21:36:50 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/463336892
+21:36:51 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:36:53 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:36:53 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Host",
+    "rating_num": 14,
+    "rating_star": 4.71,
+    "exp_time": "3 nam"
+}
+21:36:53 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Phuong Quynh",
+    "link": "https://www.airbnb.com.vn/users/show/463336892",
+    "title": "Host",
+    "rating_num": 14,
+    "rating_star": 4.71,
+    "exp_time": "3 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:36:53 | INFO | host_app - scrape_p2 - 142 | Scraping host #35: Jack - https://www.airbnb.com.vn/users/show/72043066
+
+
+============================== Go to website
+
+21:36:55 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/72043066
+21:36:55 | INFO | host_p2 - go_to_website - 40 | Page not loaded properly, refreshing...
+
+
+============================== Overview data
+
+21:37:01 | ERROR | log_op - log_detail_error - 146 | Message: no such element: Unable to locate element: {"method":"css selector","selector":"section.c1h2ee1b"}
+  (Session info: MicrosoftEdge=141.0.3537.71); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6d0582a15+51877]
+	GetHandleVerifier [0x0x7ff6d0582a74+51972]
+	GetHandleVerifier [0x0x7ff6d07393c5+1848405]
+	(No symbol) [0x0x7ff6d034045b]
+	(No symbol) [0x0x7ff6d034071b]
+	(No symbol) [0x0x7ff6d0381927]
+	(No symbol) [0x0x7ff6d036216f]
+	(No symbol) [0x0x7ff6d033667b]
+	(No symbol) [0x0x7ff6d037f3d2]
+	(No symbol) [0x0x7ff6d0361df3]
+	(No symbol) [0x0x7ff6d0335b36]
+	(No symbol) [0x0x7ff6d0334d80]
+	(No symbol) [0x0x7ff6d0335973]
+	(No symbol) [0x0x7ff6d03fe4a5]
+	(No symbol) [0x0x7ff6d03fa75d]
+	GetHandleVerifier [0x0x7ff6d05ad253+226019]
+	GetHandleVerifier [0x0x7ff6d059c421+156849]
+	GetHandleVerifier [0x0x7ff6d05a4919+190889]
+	GetHandleVerifier [0x0x7ff6d0589b54+80868]
+	GetHandleVerifier [0x0x7ff6d0589ca3+81203]
+	GetHandleVerifier [0x0x7ff6d0578226+8886]
+	BaseThreadInitThunk [0x0x7ffdb0fce8d7+23]
+	RtlUserThreadStart [0x0x7ffdb2c88d9c+44]
+
+- Error level #1: File <webdriver.py> | Function <find_element> | Line #922: return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+- Error level #2: File <webdriver.py> | Function <execute> | Line #454: self.error_handler.check_response(response)
+- Error level #3: File <errorhandler.py> | Function <check_response> | Line #232: raise exception_class(message, screen, stacktrace)
+21:37:01 | ERROR | host_app - scrape_p2 - 188 | Error to access page of host <Jack> -> skip to next host
+
+--------------------
+
+21:37:01 | INFO | host_app - scrape_p2 - 142 | Scraping host #36: Apartment and Villa - https://www.airbnb.com.vn/users/show/226323656
+
+
+============================== Go to website
+
+21:37:04 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/226323656
+21:37:04 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:37:06 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:37:06 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 124,
+    "rating_star": 4.83,
+    "exp_time": "7 nam"
+}
+21:37:06 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Apartment and Villa",
+    "link": "https://www.airbnb.com.vn/users/show/226323656",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 124,
+    "rating_star": 4.83,
+    "exp_time": "7 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:37:06 | INFO | host_app - scrape_p2 - 142 | Scraping host #37: Nancy - https://www.airbnb.com.vn/users/show/473544095
+
+
+============================== Go to website
+
+21:37:08 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/473544095
+21:37:08 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:37:10 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:37:10 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Host",
+    "rating_num": 161,
+    "rating_star": 4.72,
+    "exp_time": "3 nam"
+}
+21:37:10 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Nancy",
+    "link": "https://www.airbnb.com.vn/users/show/473544095",
+    "title": "Host",
+    "rating_num": 161,
+    "rating_star": 4.72,
+    "exp_time": "3 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:37:10 | INFO | host_app - scrape_p2 - 142 | Scraping host #38: Duc Anh - https://www.airbnb.com.vn/users/show/483156452
+
+
+============================== Go to website
+
+21:37:14 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/483156452
+21:37:14 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:37:16 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:37:16 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Host",
+    "rating_num": 5,
+    "rating_star": 3.4,
+    "exp_time": "3 nam"
+}
+21:37:16 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Duc Anh",
+    "link": "https://www.airbnb.com.vn/users/show/483156452",
+    "title": "Host",
+    "rating_num": 5,
+    "rating_star": 3.4,
+    "exp_time": "3 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:37:16 | INFO | host_app - scrape_p2 - 142 | Scraping host #39: Lien - https://www.airbnb.com.vn/users/show/436872834
+
+
+============================== Go to website
+
+21:37:18 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/436872834
+21:37:18 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:37:21 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:37:21 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 79,
+    "rating_star": 4.85,
+    "exp_time": "3 nam"
+}
+21:37:21 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Lien",
+    "link": "https://www.airbnb.com.vn/users/show/436872834",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 79,
+    "rating_star": 4.85,
+    "exp_time": "3 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:37:21 | INFO | host_app - scrape_p2 - 142 | Scraping host #40: Mon Kevin - https://www.airbnb.com.vn/users/show/459846628
+
+
+============================== Go to website
+
+21:37:23 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/459846628
+21:37:23 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:37:25 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:37:25 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 304,
+    "rating_star": 4.88,
+    "exp_time": "3 nam"
+}
+21:37:25 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Mon Kevin",
+    "link": "https://www.airbnb.com.vn/users/show/459846628",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 304,
+    "rating_star": 4.88,
+    "exp_time": "3 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:37:25 | INFO | host_app - scrape_p2 - 142 | Scraping host #41: Khanh - https://www.airbnb.com.vn/users/show/545327332
+
+
+============================== Go to website
+
+21:37:27 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/545327332
+21:37:27 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:37:29 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:37:29 | ERROR | log_op - log_detail_error - 146 | list index out of range
+- Error level #1: File <host_app.py> | Function <scrape_p2> | Line #168: 
+- Error level #2: File <host_p2.py> | Function <overview_data> | Line #71: rating_num_element: WebElement = overview_section.find_elements(By.CSS_SELECTOR, 'span.vqkyk4b')[0]
+21:37:29 | ERROR | host_app - scrape_p2 - 188 | Error to access page of host <Khanh> -> skip to next host
+
+--------------------
+
+21:37:29 | INFO | host_app - scrape_p2 - 142 | Scraping host #42: Krystal - https://www.airbnb.com.vn/users/show/464576322
+
+
+============================== Go to website
+
+21:37:31 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/464576322
+21:37:31 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:37:33 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:37:33 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 93,
+    "rating_star": 4.92,
+    "exp_time": "3 nam"
+}
+21:37:33 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Krystal",
+    "link": "https://www.airbnb.com.vn/users/show/464576322",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 93,
+    "rating_star": 4.92,
+    "exp_time": "3 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:37:33 | INFO | host_app - scrape_p2 - 142 | Scraping host #43: Le - https://www.airbnb.com.vn/users/show/468102719
+
+
+============================== Go to website
+
+21:37:37 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/468102719
+21:37:37 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:37:40 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:37:40 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Host",
+    "rating_num": 9,
+    "rating_star": 4.89,
+    "exp_time": "2 nam"
+}
+21:37:40 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Le",
+    "link": "https://www.airbnb.com.vn/users/show/468102719",
+    "title": "Host",
+    "rating_num": 9,
+    "rating_star": 4.89,
+    "exp_time": "2 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:37:40 | INFO | host_app - scrape_p2 - 142 | Scraping host #44: Lee - https://www.airbnb.com.vn/users/show/178371479
+
+
+============================== Go to website
+
+21:37:42 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/178371479
+21:37:42 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:37:44 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:37:44 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Host",
+    "rating_num": 306,
+    "rating_star": 4.76,
+    "exp_time": "8 nam"
+}
+21:37:44 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Lee",
+    "link": "https://www.airbnb.com.vn/users/show/178371479",
+    "title": "Host",
+    "rating_num": 306,
+    "rating_star": 4.76,
+    "exp_time": "8 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:37:44 | INFO | host_app - scrape_p2 - 142 | Scraping host #45: Louis - https://www.airbnb.com.vn/users/show/478109160
+
+
+============================== Go to website
+
+21:37:47 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/478109160
+21:37:47 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:37:49 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:37:50 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Host",
+    "rating_num": 1,
+    "rating_star": 5.0,
+    "exp_time": "2 nam"
+}
+21:37:50 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Louis",
+    "link": "https://www.airbnb.com.vn/users/show/478109160",
+    "title": "Host",
+    "rating_num": 1,
+    "rating_star": 5.0,
+    "exp_time": "2 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:37:50 | INFO | host_app - scrape_p2 - 142 | Scraping host #46: Yung - https://www.airbnb.com.vn/users/show/17530851
+
+
+============================== Go to website
+
+21:37:51 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/17530851
+21:37:51 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:37:54 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:37:54 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 2004,
+    "rating_star": 4.86,
+    "exp_time": "11 nam"
+}
+21:37:54 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Yung",
+    "link": "https://www.airbnb.com.vn/users/show/17530851",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 2004,
+    "rating_star": 4.86,
+    "exp_time": "11 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:37:54 | INFO | host_app - scrape_p2 - 142 | Scraping host #47: Thuy - https://www.airbnb.com.vn/users/show/131122580
+
+
+============================== Go to website
+
+21:37:56 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/131122580
+21:37:56 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:37:58 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:37:58 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Host",
+    "rating_num": 167,
+    "rating_star": 4.76,
+    "exp_time": "7 nam"
+}
+21:37:58 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Thuy",
+    "link": "https://www.airbnb.com.vn/users/show/131122580",
+    "title": "Host",
+    "rating_num": 167,
+    "rating_star": 4.76,
+    "exp_time": "7 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:37:58 | INFO | host_app - scrape_p2 - 142 | Scraping host #48: Tracy - https://www.airbnb.com.vn/users/show/34129946
+
+
+============================== Go to website
+
+21:38:00 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/34129946
+21:38:00 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:38:02 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:38:02 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Host",
+    "rating_num": 1748,
+    "rating_star": 4.68,
+    "exp_time": "9 nam"
+}
+21:38:02 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Tracy",
+    "link": "https://www.airbnb.com.vn/users/show/34129946",
+    "title": "Host",
+    "rating_num": 1748,
+    "rating_star": 4.68,
+    "exp_time": "9 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:38:02 | INFO | host_app - scrape_p2 - 142 | Scraping host #49: Tin - https://www.airbnb.com.vn/users/show/22831939
+
+
+============================== Go to website
+
+21:38:04 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/22831939
+21:38:04 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:38:06 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:38:07 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 121,
+    "rating_star": 4.9,
+    "exp_time": "11 nam"
+}
+21:38:07 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Tin",
+    "link": "https://www.airbnb.com.vn/users/show/22831939",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 121,
+    "rating_star": 4.9,
+    "exp_time": "11 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:38:07 | INFO | host_app - scrape_p2 - 142 | Scraping host #50: Kay - https://www.airbnb.com.vn/users/show/166103085
+
+
+============================== Go to website
+
+21:38:08 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/166103085
+21:38:08 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:38:11 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:38:11 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Host",
+    "rating_num": 953,
+    "rating_star": 4.72,
+    "exp_time": "8 nam"
+}
+21:38:11 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Kay",
+    "link": "https://www.airbnb.com.vn/users/show/166103085",
+    "title": "Host",
+    "rating_num": 953,
+    "rating_star": 4.72,
+    "exp_time": "8 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:38:11 | INFO | host_app - scrape_p2 - 142 | Scraping host #51: Brian - https://www.airbnb.com.vn/users/show/233067850
+
+
+============================== Go to website
+
+21:38:13 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/233067850
+21:38:13 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:38:15 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:38:15 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 616,
+    "rating_star": 4.77,
+    "exp_time": "7 nam"
+}
+21:38:15 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Brian",
+    "link": "https://www.airbnb.com.vn/users/show/233067850",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 616,
+    "rating_star": 4.77,
+    "exp_time": "7 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:38:15 | INFO | host_app - scrape_p2 - 142 | Scraping host #52: Manuka - https://www.airbnb.com.vn/users/show/227253517
+
+
+============================== Go to website
+
+21:38:17 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/227253517
+21:38:17 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:38:19 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:38:19 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 1338,
+    "rating_star": 4.84,
+    "exp_time": "7 nam"
+}
+21:38:19 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Manuka",
+    "link": "https://www.airbnb.com.vn/users/show/227253517",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 1338,
+    "rating_star": 4.84,
+    "exp_time": "7 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:38:19 | INFO | host_app - scrape_p2 - 142 | Scraping host #53: Thuong - https://www.airbnb.com.vn/users/show/208772296
+
+
+============================== Go to website
+
+21:38:22 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/208772296
+21:38:23 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:38:25 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:38:25 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Host",
+    "rating_num": 250,
+    "rating_star": 4.57,
+    "exp_time": "7 nam"
+}
+21:38:25 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Thuong",
+    "link": "https://www.airbnb.com.vn/users/show/208772296",
+    "title": "Host",
+    "rating_num": 250,
+    "rating_star": 4.57,
+    "exp_time": "7 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:38:25 | INFO | host_app - scrape_p2 - 142 | Scraping host #54: Nhien - https://www.airbnb.com.vn/users/show/460649196
+
+
+============================== Go to website
+
+21:38:28 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/460649196
+21:38:28 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:38:30 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:38:30 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Host",
+    "rating_num": 164,
+    "rating_star": 4.59,
+    "exp_time": "3 nam"
+}
+21:38:30 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Nhien",
+    "link": "https://www.airbnb.com.vn/users/show/460649196",
+    "title": "Host",
+    "rating_num": 164,
+    "rating_star": 4.59,
+    "exp_time": "3 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:38:30 | INFO | host_app - scrape_p2 - 142 | Scraping host #55: David, Manh An, Hana - https://www.airbnb.com.vn/users/show/179511280
+
+
+============================== Go to website
+
+21:38:32 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/179511280
+21:38:32 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:38:34 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:38:34 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 864,
+    "rating_star": 4.83,
+    "exp_time": "8 nam"
+}
+21:38:34 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "David, Manh An, Hana",
+    "link": "https://www.airbnb.com.vn/users/show/179511280",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 864,
+    "rating_star": 4.83,
+    "exp_time": "8 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:38:34 | INFO | host_app - scrape_p2 - 142 | Scraping host #56: Kent - https://www.airbnb.com.vn/users/show/183070870
+
+
+============================== Go to website
+
+21:38:37 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/183070870
+21:38:37 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:38:39 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:38:39 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 157,
+    "rating_star": 4.89,
+    "exp_time": "7 nam"
+}
+21:38:39 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Kent",
+    "link": "https://www.airbnb.com.vn/users/show/183070870",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 157,
+    "rating_star": 4.89,
+    "exp_time": "7 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:38:39 | INFO | host_app - scrape_p2 - 142 | Scraping host #57: An'S House - https://www.airbnb.com.vn/users/show/317304060
+
+
+============================== Go to website
+
+21:38:41 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/317304060
+21:38:41 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:38:44 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:38:44 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 267,
+    "rating_star": 4.87,
+    "exp_time": "6 nam"
+}
+21:38:44 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "An'S House",
+    "link": "https://www.airbnb.com.vn/users/show/317304060",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 267,
+    "rating_star": 4.87,
+    "exp_time": "6 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:38:44 | INFO | host_app - scrape_p2 - 142 | Scraping host #58: My Nghi - https://www.airbnb.com.vn/users/show/488554123
+
+
+============================== Go to website
+
+21:38:45 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/488554123
+21:38:45 | INFO | host_p2 - go_to_website - 40 | Page not loaded properly, refreshing...
+
+
+============================== Overview data
+
+21:38:51 | ERROR | log_op - log_detail_error - 146 | Message: no such element: Unable to locate element: {"method":"css selector","selector":"section.c1h2ee1b"}
+  (Session info: MicrosoftEdge=141.0.3537.71); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6d0582a15+51877]
+	GetHandleVerifier [0x0x7ff6d0582a74+51972]
+	GetHandleVerifier [0x0x7ff6d07393c5+1848405]
+	(No symbol) [0x0x7ff6d034045b]
+	(No symbol) [0x0x7ff6d034071b]
+	(No symbol) [0x0x7ff6d0381927]
+	(No symbol) [0x0x7ff6d036216f]
+	(No symbol) [0x0x7ff6d033667b]
+	(No symbol) [0x0x7ff6d037f3d2]
+	(No symbol) [0x0x7ff6d0361df3]
+	(No symbol) [0x0x7ff6d0335b36]
+	(No symbol) [0x0x7ff6d0334d80]
+	(No symbol) [0x0x7ff6d0335973]
+	(No symbol) [0x0x7ff6d03fe4a5]
+	(No symbol) [0x0x7ff6d03fa75d]
+	GetHandleVerifier [0x0x7ff6d05ad253+226019]
+	GetHandleVerifier [0x0x7ff6d059c421+156849]
+	GetHandleVerifier [0x0x7ff6d05a4919+190889]
+	GetHandleVerifier [0x0x7ff6d0589b54+80868]
+	GetHandleVerifier [0x0x7ff6d0589ca3+81203]
+	GetHandleVerifier [0x0x7ff6d0578226+8886]
+	BaseThreadInitThunk [0x0x7ffdb0fce8d7+23]
+	RtlUserThreadStart [0x0x7ffdb2c88d9c+44]
+
+- Error level #1: File <webdriver.py> | Function <find_element> | Line #922: return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+- Error level #2: File <webdriver.py> | Function <execute> | Line #454: self.error_handler.check_response(response)
+- Error level #3: File <errorhandler.py> | Function <check_response> | Line #232: raise exception_class(message, screen, stacktrace)
+21:38:51 | ERROR | host_app - scrape_p2 - 188 | Error to access page of host <My Nghi> -> skip to next host
+
+--------------------
+
+21:38:51 | INFO | host_app - scrape_p2 - 142 | Scraping host #59: Quan - https://www.airbnb.com.vn/users/show/183249892
+
+
+============================== Go to website
+
+21:38:53 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/183249892
+21:38:53 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:38:55 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:38:55 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Host",
+    "rating_num": 311,
+    "rating_star": 4.7,
+    "exp_time": "3 nam"
+}
+21:38:55 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Quan",
+    "link": "https://www.airbnb.com.vn/users/show/183249892",
+    "title": "Host",
+    "rating_num": 311,
+    "rating_star": 4.7,
+    "exp_time": "3 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:38:55 | INFO | host_app - scrape_p2 - 142 | Scraping host #60: Suite - https://www.airbnb.com.vn/users/show/231203606
+
+
+============================== Go to website
+
+21:38:57 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/231203606
+21:38:57 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:39:00 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:39:00 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 610,
+    "rating_star": 4.83,
+    "exp_time": "3 nam"
+}
+21:39:00 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Suite",
+    "link": "https://www.airbnb.com.vn/users/show/231203606",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 610,
+    "rating_star": 4.83,
+    "exp_time": "3 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:39:00 | INFO | host_app - scrape_p2 - 142 | Scraping host #61: Tony DC - https://www.airbnb.com.vn/users/show/516617982
+
+
+============================== Go to website
+
+21:39:01 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/516617982
+21:39:01 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:39:04 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:39:04 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Host",
+    "rating_num": 423,
+    "rating_star": 4.65,
+    "exp_time": "2 nam"
+}
+21:39:04 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Tony DC",
+    "link": "https://www.airbnb.com.vn/users/show/516617982",
+    "title": "Host",
+    "rating_num": 423,
+    "rating_star": 4.65,
+    "exp_time": "2 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+
+--------------------
+
+21:39:04 | INFO | host_app - scrape_p2 - 142 | Scraping host #62: Thao - https://www.airbnb.com.vn/users/show/515115667
+
+
+============================== Go to website
+
+21:39:06 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/515115667
+21:39:06 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+
+
+============================== Overview data
+
+21:39:08 | INFO | host_p2 - overview_data - 65 | Overview section found
+21:39:09 | INFO | host_utils - pretty_dict - 116 | {
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 44,
+    "rating_star": 4.98,
+    "exp_time": "2 nam"
+}
+21:39:09 | INFO | host_utils - pretty_dict - 116 | {
+    "name": "Thao",
+    "link": "https://www.airbnb.com.vn/users/show/515115667",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 44,
+    "rating_star": 4.98,
+    "exp_time": "2 nam",
+    "prop_num": null,
+    "avg_prop_rv_num": null,
+    "avg_prop_rv_star": null
+}
+21:39:09 | INFO | host_app - scrape_p2 - 191 | Saved 56 / 61 hosts to list
+21:39:09 | INFO | host_app - scrape_p2 - 196 | success convert list dict -> dataframe
+21:39:09 | INFO | host_utils - df_to_csv - 104 | Dataframe saved to file: C:\\Users\\ADMIN\\Pictures\\scraper\\scraper-be\\data\host   _121025 (1).csv
+21:39:09 | INFO | host_app - scrape_p2 - 199 | success save dataframe to csv file: C:\\Users\\ADMIN\\Pictures\\scraper\\scraper-be\\data\host   _121025 (1).csv

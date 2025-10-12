@@ -264,9 +264,6 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
 
 
     try:
-        link_list: List[Dict[str, str]] = []
-        prop_cnt: int = 0 
-
         log.info(f'Ready to scrape {num_property} properties | Search-mode: {search}')
 
         prop_list: List[WebElement] = []
@@ -284,6 +281,10 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
             log.error(f'Error to check visibility and locate property list | {e}')
             return []
 
+        # -------------------------------
+
+        link_list: List[Dict[str, str]] = []
+        prop_cnt: int = 0
 
         while prop_cnt < num_property:
 
@@ -316,10 +317,10 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                 prop_info['prop_link'] = clean_link
                     
                 link_list.append(prop_info)
-                
-                utl.print_pretty_dict(prop_info)
 
                 prop_cnt += 1
+                log.info(f'Prop #{prop_cnt + 1} / {num_property}: {name}')
+                utl.print_pretty_dict(prop_info)
 
                 if prop_cnt == num_property:
                     break
