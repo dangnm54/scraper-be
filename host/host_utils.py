@@ -33,12 +33,17 @@ def clean_string(string: str, mode: str) -> str:
     try:
         word_list: List[str] = string.split()
         target_word: str = ''
+        word: str = ''
 
         match mode:
+            case 'rating_num':
+                word = word_list[0]
+                target_word = word.replace('.', '').strip('\n+')
+
             case 'rating_star':
                 # no space -> not split
                 # test -> ' "4,94" '
-                word: str = word_list[0]
+                word = word_list[0]
                 word = word.strip('"').replace(',', '.')
                 target_word = word
 

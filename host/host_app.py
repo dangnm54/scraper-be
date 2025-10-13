@@ -125,7 +125,7 @@ def scrape_p2(data_file_path: str) -> str:
 
     # --------------------------------
     
-    df: pd.DataFrame = pd.read_excel(data_file_path)
+    df: pd.DataFrame = pd.read_csv(data_file_path, encoding='utf-8-sig')
     log.info(f'success convert excel file -> dataframe')
 
     host_list: List[Dict[str, Any]] = []
@@ -136,6 +136,10 @@ def scrape_p2(data_file_path: str) -> str:
     for idx, host in df.iterrows():
 
         scraped_host_cnt += 1
+
+        # if scraped_host_cnt != 2: 
+        #     continue
+
         host_link: str = str(host["link"])
 
         lg.log_divider()
@@ -219,6 +223,6 @@ def scrape_p2(data_file_path: str) -> str:
 
 scrape_p2(
     # data_file_path = r"C:\Users\ADMIN\Pictures\scraper\scraper-be\data\host1.xlsx"
-    data_file_path = r"C:\Users\ADMIN\Pictures\scraper\scraper-be\data\host3.xlsx"
+    data_file_path = r"C:\Users\ADMIN\Pictures\scraper\scraper-be\data\host_131025 (1).csv"
 )
 

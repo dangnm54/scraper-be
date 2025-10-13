@@ -75,7 +75,8 @@ def overview_data(driver: WebDriver) -> Dict[str, Any]:
 
     try:
         rating_num_element: WebElement = overview_section.find_elements(By.CSS_SELECTOR, 'span.vqkyk4b')[0]
-        rating_num: int = int(rating_num_element.text)
+        log.info(f'rating_num_element: {rating_num_element.text}')
+        rating_num: int = int(hst_utl.clean_string(rating_num_element.text, mode='rating_num'))
         overview_data['rating_num'] = rating_num
 
         rating_star_element: WebElement = overview_section.find_elements(By.CSS_SELECTOR, 'span.vqkyk4b')[1]

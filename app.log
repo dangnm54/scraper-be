@@ -1,68 +1,66 @@
-LOG RECORDED AT: 13-10-2025 10:19:06
+LOG RECORDED AT: 13-10-2025 22:27:17
 STARTED BY FILE: host_app.py
 RUN METHOD: Directly in Terminal
 
 
-10:19:07 | INFO | host_app - start_driver - 67 | Starting driver in <local> mode
+22:27:18 | INFO | host_app - start_driver - 67 | Starting driver in <local> mode
 
 
 ============================== Create proxy helper extension
 
-10:19:07 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
-10:19:07 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
-10:19:07 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
-10:19:07 | INFO | host_app - start_driver - 72 | Proxy information found in .env -> driver will use proxy
+22:27:18 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
+22:27:18 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
+22:27:18 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
+22:27:18 | INFO | host_app - start_driver - 72 | Proxy information found in .env -> driver will use proxy
 
 
 ============================== Config basic driver setting
 
-10:19:07 | INFO | browser - config_basic_driver_setting - 134 | Configured basic settings
+22:27:18 | INFO | browser - config_basic_driver_setting - 134 | Configured basic settings
 
 
 ============================== Config advanced driver setting
 
-10:19:07 | INFO | browser - config_proxy_driver_setting - 144 | Configured minimal logging for selenium
-10:19:07 | INFO | browser - config_proxy_driver_setting - 157 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+22:27:18 | INFO | browser - config_proxy_driver_setting - 144 | Configured minimal logging for selenium
+22:27:18 | INFO | browser - config_proxy_driver_setting - 157 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
 
 
 ============================== Start browser
 
-10:19:09 | INFO | browser - start_browser - 183 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="9f3ecb92a98cbded1b6c3e9ce2ee0f33")>> created
-10:19:09 | INFO | browser - start_browser - 193 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="9f3ecb92a98cbded1b6c3e9ce2ee0f33")>> created
-10:19:09 | INFO | browser - start_browser - 220 | Only 1 monitor, maximizing browser
-10:19:09 | INFO | host_app - scrape_p2 - 129 | success convert excel file -> dataframe
+22:27:20 | INFO | browser - start_browser - 183 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="c00746501aae968135233bb1808df4b2")>> created
+22:27:20 | INFO | browser - start_browser - 193 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="c00746501aae968135233bb1808df4b2")>> created
+22:27:20 | INFO | browser - start_browser - 220 | Only 1 monitor, maximizing browser
+22:27:20 | INFO | host_app - scrape_p2 - 129 | success convert excel file -> dataframe
 
 --------------------
 
-10:19:09 | INFO | host_app - scrape_p2 - 142 | Scraping host #1 / 5: https://www.airbnb.com.vn/users/show/504834973
+22:27:20 | INFO | host_app - scrape_p2 - 146 | Scraping host #1 / 2: https://www.airbnb.com.vn/users/show/14488629
 
 
 ============================== Go to website
 
-10:19:11 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/504834973
-10:19:11 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+22:27:21 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/14488629
+22:27:22 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
 
 
 ============================== Overview data
 
-10:19:13 | INFO | host_p2 - overview_data - 66 | Overview section found
-10:19:14 | ERROR | log_op - log_detail_error - 146 | list index out of range
-- Error level #1: File <host_p2.py> | Function <overview_data> | Line #77: rating_num_element: WebElement = overview_section.find_elements(By.CSS_SELECTOR, 'span.vqkyk4b')[0]
-10:19:14 | ERROR | host_p2 - overview_data - 101 | Error to collect host rating & exp data -> skip to next data (if any)
-10:19:14 | INFO | host_utils - pretty_dict - 116 | {
-    "name": "Son & Henry - Jack",
-    "title": "Host",
-    "rating_num": null,
-    "rating_star": null,
-    "exp_time": null
+22:27:24 | INFO | host_p2 - overview_data - 66 | Overview section found
+22:27:24 | INFO | host_p2 - overview_data - 78 | rating_num_element: 4247
+22:27:24 | INFO | host_utils - pretty_dict - 121 | {
+    "name": "Son & Henry",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 4247,
+    "rating_star": 4.79,
+    "exp_time": "9 nam"
 }
-10:19:14 | INFO | host_utils - pretty_dict - 116 | {
-    "link": "https://www.airbnb.com.vn/users/show/504834973",
-    "name": "Son & Henry - Jack",
-    "title": "Host",
-    "rating_num": null,
-    "rating_star": null,
-    "exp_time": null,
+22:27:24 | INFO | host_utils - pretty_dict - 121 | {
+    "link": "https://www.airbnb.com.vn/users/show/14488629",
+    "name": "Son & Henry",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 4247,
+    "rating_star": 4.79,
+    "exp_time": "9 nam",
     "prop_num": null,
     "avg_prop_rv_num": null,
     "avg_prop_rv_star": null
@@ -70,166 +68,68 @@ RUN METHOD: Directly in Terminal
 
 --------------------
 
-10:19:14 | INFO | host_app - scrape_p2 - 142 | Scraping host #2 / 5: https://www.airbnb.com.vn/users/show/1443279
+22:27:24 | INFO | host_app - scrape_p2 - 146 | Scraping host #2 / 2: nan
 
 
 ============================== Go to website
 
-10:19:15 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/1443279
-10:19:15 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
-
-
-============================== Overview data
-
-10:19:17 | INFO | host_p2 - overview_data - 66 | Overview section found
-10:19:18 | ERROR | log_op - log_detail_error - 146 | invalid literal for int() with base 10: '10.000\n+'
-- Error level #1: File <host_p2.py> | Function <overview_data> | Line #78: rating_num: int = int(rating_num_element.text)
-10:19:18 | ERROR | host_p2 - overview_data - 101 | Error to collect host rating & exp data -> skip to next data (if any)
-10:19:18 | INFO | host_utils - pretty_dict - 116 | {
-    "name": "Ben",
-    "title": "Chủ nhà siêu cấp",
-    "rating_num": null,
-    "rating_star": null,
-    "exp_time": null
-}
-10:19:18 | INFO | host_utils - pretty_dict - 116 | {
-    "link": "https://www.airbnb.com.vn/users/show/1443279",
-    "name": "Ben",
-    "title": "Chủ nhà siêu cấp",
-    "rating_num": null,
-    "rating_star": null,
-    "exp_time": null,
-    "prop_num": null,
-    "avg_prop_rv_num": null,
-    "avg_prop_rv_star": null
-}
-
---------------------
-
-10:19:18 | INFO | host_app - scrape_p2 - 142 | Scraping host #3 / 5: https://www.airbnb.com.vn/users/show/72043066
-
-
-============================== Go to website
-
-10:19:19 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/72043066
-10:19:19 | INFO | host_p2 - go_to_website - 40 | Page not loaded properly, refreshing...
-
-
-============================== Overview data
-
-10:19:25 | ERROR | log_op - log_detail_error - 146 | Message: no such element: Unable to locate element: {"method":"css selector","selector":"section.c1h2ee1b"}
-  (Session info: MicrosoftEdge=141.0.3537.71); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+22:27:24 | ERROR | log_op - log_detail_error - 146 | Message: invalid argument
+  (Session info: MicrosoftEdge=141.0.3537.71)
 Stacktrace:
-	GetHandleVerifier [0x0x7ff68ae12a15+51877]
-	GetHandleVerifier [0x0x7ff68ae12a74+51972]
-	GetHandleVerifier [0x0x7ff68afc93c5+1848405]
-	(No symbol) [0x0x7ff68abd045b]
-	(No symbol) [0x0x7ff68abd071b]
-	(No symbol) [0x0x7ff68ac11927]
-	(No symbol) [0x0x7ff68abf216f]
-	(No symbol) [0x0x7ff68abc667b]
-	(No symbol) [0x0x7ff68ac0f3d2]
-	(No symbol) [0x0x7ff68abf1df3]
-	(No symbol) [0x0x7ff68abc5b36]
-	(No symbol) [0x0x7ff68abc4d80]
-	(No symbol) [0x0x7ff68abc5973]
-	(No symbol) [0x0x7ff68ac8e4a5]
-	(No symbol) [0x0x7ff68ac8a75d]
-	GetHandleVerifier [0x0x7ff68ae3d253+226019]
-	GetHandleVerifier [0x0x7ff68ae2c421+156849]
-	GetHandleVerifier [0x0x7ff68ae34919+190889]
-	GetHandleVerifier [0x0x7ff68ae19b54+80868]
-	GetHandleVerifier [0x0x7ff68ae19ca3+81203]
-	GetHandleVerifier [0x0x7ff68ae08226+8886]
+	GetHandleVerifier [0x0x7ff6a0bf2a15+51877]
+	GetHandleVerifier [0x0x7ff6a0bf2a74+51972]
+	(No symbol) [0x0x7ff6a0961149]
+	(No symbol) [0x0x7ff6a0951602]
+	(No symbol) [0x0x7ff6a095002e]
+	(No symbol) [0x0x7ff6a095051c]
+	(No symbol) [0x0x7ff6a09649aa]
+	(No symbol) [0x0x7ff6a09ef92e]
+	(No symbol) [0x0x7ff6a09d212a]
+	(No symbol) [0x0x7ff6a09a667b]
+	(No symbol) [0x0x7ff6a09ef3d2]
+	(No symbol) [0x0x7ff6a09d1df3]
+	(No symbol) [0x0x7ff6a09a5b36]
+	(No symbol) [0x0x7ff6a09a4d80]
+	(No symbol) [0x0x7ff6a09a5973]
+	(No symbol) [0x0x7ff6a0a6e4a5]
+	(No symbol) [0x0x7ff6a0a6a75d]
+	GetHandleVerifier [0x0x7ff6a0c1d253+226019]
+	GetHandleVerifier [0x0x7ff6a0c0c421+156849]
+	GetHandleVerifier [0x0x7ff6a0c14919+190889]
+	GetHandleVerifier [0x0x7ff6a0bf9b54+80868]
+	GetHandleVerifier [0x0x7ff6a0bf9ca3+81203]
+	GetHandleVerifier [0x0x7ff6a0be8226+8886]
 	BaseThreadInitThunk [0x0x7ffdb0fce8d7+23]
 	RtlUserThreadStart [0x0x7ffdb2c88d9c+44]
 
-- Error level #1: File <webdriver.py> | Function <find_element> | Line #922: return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+- Error level #1: File <webdriver.py> | Function <get> | Line #479: self.execute(Command.GET, {"url": url})
 - Error level #2: File <webdriver.py> | Function <execute> | Line #454: self.error_handler.check_response(response)
 - Error level #3: File <errorhandler.py> | Function <check_response> | Line #232: raise exception_class(message, screen, stacktrace)
-10:19:25 | ERROR | host_app - scrape_p2 - 188 | Error to access page of host #2 -> skip to next host
-
---------------------
-
-10:19:25 | INFO | host_app - scrape_p2 - 142 | Scraping host #4 / 5: https://www.airbnb.com.vn/users/show/545327332
-
-
-============================== Go to website
-
-10:19:26 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/545327332
-10:19:26 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
 
 
 ============================== Overview data
 
-10:19:29 | INFO | host_p2 - overview_data - 66 | Overview section found
-10:19:29 | ERROR | log_op - log_detail_error - 146 | list index out of range
-- Error level #1: File <host_p2.py> | Function <overview_data> | Line #77: rating_num_element: WebElement = overview_section.find_elements(By.CSS_SELECTOR, 'span.vqkyk4b')[0]
-10:19:29 | ERROR | host_p2 - overview_data - 101 | Error to collect host rating & exp data -> skip to next data (if any)
-10:19:29 | INFO | host_utils - pretty_dict - 116 | {
-    "name": "Khanh",
-    "title": "Host",
-    "rating_num": null,
-    "rating_star": null,
-    "exp_time": null
+22:27:24 | INFO | host_p2 - overview_data - 66 | Overview section found
+22:27:24 | INFO | host_p2 - overview_data - 78 | rating_num_element: 4247
+22:27:24 | INFO | host_utils - pretty_dict - 121 | {
+    "name": "Son & Henry",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 4247,
+    "rating_star": 4.79,
+    "exp_time": "9 nam"
 }
-10:19:29 | INFO | host_utils - pretty_dict - 116 | {
-    "link": "https://www.airbnb.com.vn/users/show/545327332",
-    "name": "Khanh",
-    "title": "Host",
-    "rating_num": null,
-    "rating_star": null,
-    "exp_time": null,
+22:27:24 | INFO | host_utils - pretty_dict - 121 | {
+    "link": "nan",
+    "name": "Son & Henry",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 4247,
+    "rating_star": 4.79,
+    "exp_time": "9 nam",
     "prop_num": null,
     "avg_prop_rv_num": null,
     "avg_prop_rv_star": null
 }
-
---------------------
-
-10:19:29 | INFO | host_app - scrape_p2 - 142 | Scraping host #5 / 5: https://www.airbnb.com.vn/users/show/488554123
-
-
-============================== Go to website
-
-10:19:30 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/488554123
-10:19:30 | INFO | host_p2 - go_to_website - 40 | Page not loaded properly, refreshing...
-
-
-============================== Overview data
-
-10:19:36 | ERROR | log_op - log_detail_error - 146 | Message: no such element: Unable to locate element: {"method":"css selector","selector":"section.c1h2ee1b"}
-  (Session info: MicrosoftEdge=141.0.3537.71); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
-Stacktrace:
-	GetHandleVerifier [0x0x7ff68ae12a15+51877]
-	GetHandleVerifier [0x0x7ff68ae12a74+51972]
-	GetHandleVerifier [0x0x7ff68afc93c5+1848405]
-	(No symbol) [0x0x7ff68abd045b]
-	(No symbol) [0x0x7ff68abd071b]
-	(No symbol) [0x0x7ff68ac11927]
-	(No symbol) [0x0x7ff68abf216f]
-	(No symbol) [0x0x7ff68abc667b]
-	(No symbol) [0x0x7ff68ac0f3d2]
-	(No symbol) [0x0x7ff68abf1df3]
-	(No symbol) [0x0x7ff68abc5b36]
-	(No symbol) [0x0x7ff68abc4d80]
-	(No symbol) [0x0x7ff68abc5973]
-	(No symbol) [0x0x7ff68ac8e4a5]
-	(No symbol) [0x0x7ff68ac8a75d]
-	GetHandleVerifier [0x0x7ff68ae3d253+226019]
-	GetHandleVerifier [0x0x7ff68ae2c421+156849]
-	GetHandleVerifier [0x0x7ff68ae34919+190889]
-	GetHandleVerifier [0x0x7ff68ae19b54+80868]
-	GetHandleVerifier [0x0x7ff68ae19ca3+81203]
-	GetHandleVerifier [0x0x7ff68ae08226+8886]
-	BaseThreadInitThunk [0x0x7ffdb0fce8d7+23]
-	RtlUserThreadStart [0x0x7ffdb2c88d9c+44]
-
-- Error level #1: File <webdriver.py> | Function <find_element> | Line #922: return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-- Error level #2: File <webdriver.py> | Function <execute> | Line #454: self.error_handler.check_response(response)
-- Error level #3: File <errorhandler.py> | Function <check_response> | Line #232: raise exception_class(message, screen, stacktrace)
-10:19:36 | ERROR | host_app - scrape_p2 - 188 | Error to access page of host #4 -> skip to next host
-10:19:36 | INFO | host_app - scrape_p2 - 192 | Saved 3 / 5 hosts to list
-10:19:36 | INFO | host_app - scrape_p2 - 197 | success convert list dict -> dataframe
-10:19:36 | INFO | host_utils - df_to_csv - 104 | Dataframe saved to file: C:\\Users\\ADMIN\\Pictures\\scraper\\scraper-be\\data\host_131025 (3).csv
-10:19:36 | INFO | host_app - scrape_p2 - 200 | success save dataframe to csv file: C:\\Users\\ADMIN\\Pictures\\scraper\\scraper-be\\data\host_131025 (3).csv
+22:27:24 | INFO | host_app - scrape_p2 - 196 | Saved 2 / 2 hosts to list
+22:27:24 | INFO | host_app - scrape_p2 - 201 | success convert list dict -> dataframe
+22:27:24 | INFO | host_utils - df_to_csv - 109 | Dataframe saved to file: C:\\Users\\ADMIN\\Pictures\\scraper\\scraper-be\\data\host_131025 (3).csv
+22:27:24 | INFO | host_app - scrape_p2 - 204 | success save dataframe to csv file: C:\\Users\\ADMIN\\Pictures\\scraper\\scraper-be\\data\host_131025 (3).csv
