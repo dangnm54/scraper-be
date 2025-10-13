@@ -136,6 +136,7 @@ def scrape_p1(db: Session, session_id: UUID, session_name: str, main_website_url
         return []
     
     link_list_db: List[PropertyDB] = []
+
     for property in link_list:
         prop: PropertyDB = (PropertyDB(
             session_id = session_id,
@@ -147,17 +148,25 @@ def scrape_p1(db: Session, session_id: UUID, session_name: str, main_website_url
         
         if save_db:
             db.add(prop) # add object to session -> session track and know which python object is linked to which db object until session closed
-            db.commit()
             log.info(f'Saved property <{prop.prop_code}> (basic info) to database')
         
         link_list_db.append(prop)
 
-    log.info(f'Finish saving {len(link_list_db)} properties (basic info) to database')
 
-    if save_db:
-        # update prop object in Python with data created by db after during the commit (like timestamp)
-        for prop in link_list_db:
-            db.refresh(prop)
+    if save_db and link_list_db:
+        try: 
+            db.commit()
+            log.info(f'Batch saved {len(link_list_db)} properties (basic info) to database')
+
+            # update prop object in Python with data created by db after the commit (eg: timestamp)
+            for prop in link_list_db:
+                db.refresh(prop)
+
+        except Exception as e:
+            lg.log_detail_error(e)
+            log.error(f'Error to batch save properties (basic info) to database')
+            db.rollback()
+            return []
 
     return link_list_db
 
@@ -182,8 +191,9 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
 
     scraped_prop_cnt: int = 0
     saved_prop_cnt: int = 0
+    batch_size: int = 10    # saved to db after every 10 properties
 
-    for prop in detail_list_db:
+    for idx, prop in enumerate(detail_list_db, start=1):
 
         lg.log_divider()
         log.info(f'Scraping property #{scraped_prop_cnt + 1}: {prop.prop_code} - {prop.prop_name}')
@@ -239,16 +249,16 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
             log.error(f'Error to scrape all data of property <{prop.prop_code}> -> save already-scraped data to database')
 
 
-        if save_db:
+        if save_db and (idx % batch_size == 0 or idx == len(detail_list_db)):
             try:
                 db.commit()
-                log.info(f'Saved property <{prop.prop_code}> (detail info) to database')
-                saved_prop_cnt += 1
+                batch_saved_cnt: int = idx - saved_prop_cnt
+                saved_prop_cnt += batch_saved_cnt
+                log.info(f'Saved {batch_saved_cnt} properties (detail info) to database')
             except Exception as e:
                 lg.log_detail_error(e)
-                log.error(f'Error to save property <{prop.prop_code}> (detail info) to database')
-                # clean up failed transaction (eg: failed commit)
-                db.rollback()
+                log.error(f'Error to batch save property (detail info) to database')
+                db.rollback()   # clean up failed transaction (eg: failed commit)
 
         lg.log_divider()
         utl.print_pretty_dict(prop)

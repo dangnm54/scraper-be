@@ -137,7 +137,8 @@ def scrape_p2(data_file_path: str) -> str:
 
         scraped_host_cnt += 1
 
-        # if scraped_host_cnt != 2: 
+        # if scraped_host_cnt == 4: 
+        #     break
         #     continue
 
         host_link: str = str(host["link"])
@@ -173,14 +174,14 @@ def scrape_p2(data_file_path: str) -> str:
             for key, value in overview_data.items():
                 setattr(host_detail, key, value)
 
-            # try: 
-            #     prop_data: Dict[str, Any] = p2.prop_data(driver, wait_time)
-            #     for key, value in prop_data.items():
-            #         setattr(host_detail, key, value)
-            # except Exception as e:
-            #     lg.log_detail_error(e)
-            #     log.error(f'Error collect property data of host <{host_name}> -> skip to next host')
-            #     continue
+            try: 
+                prop_data: Dict[str, Any] = p2.prop_data(driver, wait_time)
+                for key, value in prop_data.items():
+                    setattr(host_detail, key, value)
+            except Exception as e:
+                lg.log_detail_error(e)
+                log.error(f'Error collect property data of host #{idx} | {host_detail.name} -> skip to next host')
+                continue
 
             hst_utl.pretty_dict(host_detail.model_dump())
 
@@ -189,7 +190,7 @@ def scrape_p2(data_file_path: str) -> str:
 
         except Exception as e:
             lg.log_detail_error(e)
-            log.error(f'Error to access page of host #{idx} -> skip to next host')
+            log.error(f'Error to access page of host #{idx} | {host_detail.name} -> skip to next host')
             host_list.append(host_detail.model_dump())
             continue
 
@@ -223,6 +224,10 @@ def scrape_p2(data_file_path: str) -> str:
 
 scrape_p2(
     # data_file_path = r"C:\Users\ADMIN\Pictures\scraper\scraper-be\data\host1.xlsx"
-    data_file_path = r"C:\Users\ADMIN\Pictures\scraper\scraper-be\data\host_131025 (1).csv"
+    data_file_path = r"C:\Users\ADMIN\Pictures\scraper\scraper-be\data\host_full.csv"
 )
 
+
+
+# main | fix db problem -> re-run
+# host | fix scarpe prop data in pop-up of more than 12 props

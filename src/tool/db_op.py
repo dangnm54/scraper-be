@@ -29,11 +29,31 @@ if DATABASE_URL:
     # 'engine' -> core component connects your app to database.
     engine: Engine | None= create_engine(
         DATABASE_URL,
-        connect_args={"sslmode": "require"}
+
+        # Optimized for Railway free tier
+        pool_pre_ping=True,               # Test connection before using (CRITICAL)
+        pool_size=2,                      # Small pool for free tier (default: 5)
+        max_overflow=3,                   # Limited overflow connections
+        pool_recycle=1800,                # Recycle connections after 30 min (Railway may timeout sooner)
+        pool_timeout=30,                  # Wait max 30s for connection from pool
+        echo_pool=False,                  # Set True only for debugging
+        connect_args={
+            "sslmode": "require",
+            "connect_timeout": 10,        # Connection timeout in seconds
+            "keepalives": 1,              # Enable TCP keepalives
+            "keepalives_idle": 30,        # Start keepalives after 30s
+            "keepalives_interval": 10,    # Send keepalive every 10s
+            "keepalives_count": 5         # Max 5 failed keepalives before disconnect
+        }
     )
 
     # 'SessionLocal' -> a factory that create new database session whenever you need one.
-    SessionLocal: sessionmaker | None = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    SessionLocal: sessionmaker | None = sessionmaker(
+        autocommit=False, 
+        autoflush=False, 
+        bind=engine,
+        expire_on_commit=False
+    )
 
     log.info(f'Create engine and SessionLocal for database connection')
 
