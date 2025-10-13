@@ -5,9 +5,9 @@ from pydantic import BaseModel
 
 
 class HostDetail(BaseModel):
-    name: str
     link: str
 
+    name: str | None
     title: str | None
     rating_num: int | None
     rating_star: float | None

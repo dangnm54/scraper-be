@@ -136,24 +136,23 @@ def scrape_p2(data_file_path: str) -> str:
     for idx, host in df.iterrows():
 
         scraped_host_cnt += 1
-        host_name: str = str(host["name"])
         host_link: str = str(host["link"])
 
         lg.log_divider()
-        log.info(f'Scraping host #{scraped_host_cnt + 1} / {total_host_cnt}: {host_name} - {host_link}')
+        log.info(f'Scraping host #{scraped_host_cnt} / {total_host_cnt}: {host_link}')
 
         try:
             p2.go_to_website(driver, wait_time, host_link)
         except Exception as e:
             lg.log_detail_error(e)
-            log.error(f'Error to access page of host <{host_name}> -> skip to next host')
+            log.error(f'Error to access page of host #{idx} -> skip to next host')
             continue
 
 
         host_detail = HostDetail(
-            name = host_name,   # str
             link = host_link,   # str
 
+            name = None,   # str
             title = None,   # str | None
             rating_num = None,   # int | None
             rating_star = None,   # float | None
@@ -186,7 +185,8 @@ def scrape_p2(data_file_path: str) -> str:
 
         except Exception as e:
             lg.log_detail_error(e)
-            log.error(f'Error to access page of host <{host_name}> -> skip to next host')
+            log.error(f'Error to access page of host #{idx} -> skip to next host')
+            host_list.append(host_detail.model_dump())
             continue
 
     log.info(f'Saved {saved_host_cnt} / {scraped_host_cnt} hosts to list')
@@ -219,6 +219,6 @@ def scrape_p2(data_file_path: str) -> str:
 
 scrape_p2(
     # data_file_path = r"C:\Users\ADMIN\Pictures\scraper\scraper-be\data\host1.xlsx"
-    data_file_path = r"C:\Users\ADMIN\Pictures\scraper\scraper-be\data\host2.xlsx"
+    data_file_path = r"C:\Users\ADMIN\Pictures\scraper\scraper-be\data\host3.xlsx"
 )
 
