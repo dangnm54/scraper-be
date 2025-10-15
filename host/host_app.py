@@ -224,7 +224,7 @@ def scrape_p2(data_file_path: str) -> str:
 
 scrape_p2(
     # data_file_path = r"C:\Users\ADMIN\Pictures\scraper\scraper-be\data\host1.xlsx"
-    data_file_path = r"C:\Users\ADMIN\Pictures\scraper\scraper-be\data\host_full.csv"
+    data_file_path = r"C:\Users\ADMIN\Pictures\scraper\scraper-be\data\host1.csv"
 )
 
 

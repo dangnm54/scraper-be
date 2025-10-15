@@ -339,7 +339,7 @@ if test_local:
                     file_name = 'D12_HCM',
                     location = 'D12, HCM',
                     num_guest = None,
-                    num_property = 2,
+                    num_property = 60,
                     collect_host_data = True,
                     collect_booking_rate = True
                 )

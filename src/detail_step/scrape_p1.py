@@ -266,27 +266,27 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
     try:
         log.info(f'Ready to scrape {num_property} properties | Search-mode: {search}')
 
-        prop_list: List[WebElement] = []
-        try:
-            match search:
-                case 'none':
-                    prop_list = driver.find_elements(By.CSS_SELECTOR,'div.c1r8sk5a')
-
-                case 'apply':
-                    wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR,'div.c965t3n')))
-                    time.sleep(wait_time)
-                    prop_list = driver.find_elements(By.CSS_SELECTOR,'div.cfutgp0')
-        except Exception as e:
-            lg.log_detail_error(e)
-            log.error(f'Error to check visibility and locate property list | {e}')
-            return []
-
-        # -------------------------------
-
         link_list: List[Dict[str, str]] = []
         prop_cnt: int = 0
 
         while prop_cnt < num_property:
+
+            prop_list: List[WebElement] = []
+            try:
+                match search:
+                    case 'none':
+                        prop_list = driver.find_elements(By.CSS_SELECTOR,'div.c1r8sk5a')
+
+                    case 'apply':
+                        wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR,'div.c965t3n')))
+                        time.sleep(wait_time)
+                        prop_list = driver.find_elements(By.CSS_SELECTOR,'div.cfutgp0')
+            except Exception as e:
+                lg.log_detail_error(e)
+                log.error(f'Error to check visibility and locate property list | {e}')
+                break
+                
+            # -------------------------------
 
             for property in prop_list:
 
@@ -319,7 +319,7 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                 link_list.append(prop_info)
 
                 prop_cnt += 1
-                log.info(f'Prop #{prop_cnt + 1} / {num_property}: {name}')
+                log.info(f'Prop #{prop_cnt} / {num_property}: {name}')
                 utl.print_pretty_dict(prop_info)
 
                 if prop_cnt == num_property:
@@ -332,6 +332,7 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                     pagination_section: WebElement = driver.find_element(By.CSS_SELECTOR, 'div.p1j2gy66')
                     next_page_element: WebElement = pagination_section.find_element(By.CSS_SELECTOR, 'a[aria-label="Tiếp theo"]')
                     next_page_element.click()
+                    time.sleep(wait_time)
                     log.info('Move to next page')
                     lg.log_divider()
                 except Exception as e:

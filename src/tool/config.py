@@ -26,5 +26,5 @@ log_error_level: LogErrorLevel = '3_level'
 
 scrape_phase: int = 2
 
-test_local: bool = False
+test_local: bool = True
 
