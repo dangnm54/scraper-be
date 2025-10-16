@@ -1,572 +1,145 @@
-LOG RECORDED AT: 15-10-2025 22:32:20
-STARTED BY FILE: base.py
+LOG RECORDED AT: 16-10-2025 20:33:57
+STARTED BY FILE: host_app.py
 RUN METHOD: Directly in Terminal
 
 
-22:32:20 | INFO | db_op - <module> - 58 | Create engine and SessionLocal for database connection
-22:32:20 | INFO | db_op - create_db_session - 103 | Creating database session for direct file run.
-22:32:20 | INFO | base - <module> - 328 | Config:
-        - save_db: True
-        - search_mode: apply
-        - BROWSER_MODE: local
-        - log_error_level: 3_level
-        
-
-
-============================== Start full flow
-
-22:32:20 | INFO | base - run_full_flow - 292 | API Request Received:
-22:32:20 | INFO | base - run_full_flow - 293 |     
-    - Location: D12, HCM
-    - Number of guests: None
-    - Number of properties: 60
-    - Collect host data: True
-    - Collect booking rate: True
-    
-22:32:21 | INFO | base - run_full_flow - 303 | New scraping session <D12_HCM_151025> started | ID: ece538ab-ba05-4bcf-bca0-c7e5821e63a8
-22:32:21 | INFO | base - start_driver - 70 | Starting driver in <local> mode
+20:33:57 | INFO | host_app - start_driver - 67 | Starting driver in <local> mode
 
 
 ============================== Create proxy helper extension
 
-22:32:21 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
-22:32:21 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
-22:32:21 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
-22:32:21 | INFO | base - start_driver - 75 | Proxy information found in .env -> driver will use proxy
+20:33:57 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
+20:33:57 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
+20:33:57 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
+20:33:57 | INFO | host_app - start_driver - 72 | Proxy information found in .env -> driver will use proxy
 
 
 ============================== Config basic driver setting
 
-22:32:21 | INFO | browser - config_basic_driver_setting - 134 | Configured basic settings
+20:33:57 | INFO | browser - config_basic_driver_setting - 134 | Configured basic settings
 
 
 ============================== Config advanced driver setting
 
-22:32:21 | INFO | browser - config_proxy_driver_setting - 144 | Configured minimal logging for selenium
-22:32:21 | INFO | browser - config_proxy_driver_setting - 157 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+20:33:57 | INFO | browser - config_proxy_driver_setting - 144 | Configured minimal logging for selenium
+20:33:57 | INFO | browser - config_proxy_driver_setting - 157 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
 
 
 ============================== Start browser
 
-22:32:22 | INFO | browser - start_browser - 183 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="f75de03c942ab1c979bda8481dde0174")>> created
-22:32:22 | INFO | browser - start_browser - 193 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="f75de03c942ab1c979bda8481dde0174")>> created
-22:32:22 | INFO | browser - start_browser - 220 | Only 1 monitor, maximizing browser
+20:33:59 | INFO | browser - start_browser - 183 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="0066c8c6d5aadef6131071b99f75e581")>> created
+20:33:59 | INFO | browser - start_browser - 193 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="0066c8c6d5aadef6131071b99f75e581")>> created
+20:33:59 | INFO | browser - start_browser - 220 | Only 1 monitor, maximizing browser
+20:33:59 | INFO | host_app - scrape_p2 - 129 | success convert excel file -> dataframe
+
+--------------------
+
+20:33:59 | INFO | host_app - scrape_p2 - 147 | Scraping host #2 / 3: https://www.airbnb.com.vn/users/show/171215110
 
 
 ============================== Go to website
 
-22:32:24 | INFO | scrape_p1 - go_to_website - 30 | Go to website: https://www.airbnb.com.vn/homes
-22:32:26 | INFO | scrape_p1 - go_to_website - 36 | Page loaded properly
-22:32:26 | INFO | scrape_p1 - go_to_website - 57 | Check Ad pop-up
-22:32:47 | ERROR | scrape_p1 - go_to_website - 83 | Found no Ad pop-up
-22:32:49 | INFO | base - scrape_p1 - 119 | Search mode: apply
+20:34:02 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/171215110
+20:34:02 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
 
 
-============================== Search location
+============================== Overview data
 
-22:32:49 | INFO | scrape_p1 - search_location - 156 | Location element found and clicked
-22:32:51 | INFO | scrape_p1 - search_location - 162 | <D12, HCM> typed and ENTER
-
-
-============================== Search date
-
-22:32:53 | INFO | scrape_p1 - search_date - 178 | Flexible time button found and clicked
-22:32:55 | INFO | scrape_p1 - search_date - 184 | Flexible weekend button found and clicked
-
-
-============================== Search guest
-
-22:32:57 | INFO | scrape_p1 - search_guest - 197 | Search without guest number
+20:34:06 | INFO | host_p2 - overview_data - 66 | Overview section found
+20:34:06 | INFO | host_p2 - overview_data - 78 | rating_num_element: 1447
+20:34:06 | INFO | host_utils - pretty_dict - 121 | {
+    "name": "Blue Arch",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 1447,
+    "rating_star": 4.87,
+    "exp_time": "7 nam"
+}
 
 
-============================== Press search
+============================== Property data
 
-22:33:00 | INFO | scrape_p1 - press_search - 236 | Seach button founded and clicked
-
-
-============================== View page and get all link
-
-22:33:00 | INFO | scrape_p1 - view_page_get_all_link - 248 | Check Ad pop-up
-22:33:03 | INFO | scrape_p1 - view_page_get_all_link - 250 | Found Ad pop-up
-22:33:03 | INFO | scrape_p1 - view_page_get_all_link - 253 | Found close button
-22:33:03 | INFO | scrape_p1 - view_page_get_all_link - 255 | Close Ad pop-up
-22:33:03 | INFO | scrape_p1 - view_page_get_all_link - 267 | Ready to scrape 60 properties | Search-mode: apply
-22:33:08 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #2 / 60: Căn hộ dịch vụ MT Easmark city 1 phòng ngủ
-22:33:08 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-CIS89Z",
-    "prop_name": "Căn hộ dịch vụ MT Easmark city 1 phòng ngủ",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1503947466871081897"
-}
-22:33:10 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #3 / 60: -20% Phòng tại Vinhome Thủ Đức.
-22:33:10 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-F40ZJW",
-    "prop_name": "-20% Phòng tại Vinhome Thủ Đức.",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1472877320123994046"
-}
-22:33:12 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #4 / 60: Maihomesg Retreat - Vinhome Grand Park
-22:33:12 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-IP9YQW",
-    "prop_name": "Maihomesg Retreat - Vinhome Grand Park",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1440360230783125743"
-}
-22:33:14 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #5 / 60: Studio căn hộ/ NemoHouse
-22:33:14 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-CHFEVY",
-    "prop_name": "Studio căn hộ/ NemoHouse",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1040975492015862212"
-}
-22:33:16 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #6 / 60: Glory Heights 1PN+ GH3 Vinhome Grand Park Q9
-22:33:16 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-W4PIT1",
-    "prop_name": "Glory Heights 1PN+ GH3 Vinhome Grand Park Q9",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1365642707364664034"
-}
-22:33:19 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #7 / 60: Maihomesg Retreat - Vinhome Grand Park
-22:33:19 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-IUCFSZ",
-    "prop_name": "Maihomesg Retreat - Vinhome Grand Park",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1478763254201283884"
-}
-22:33:21 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #8 / 60: Vinhomes Grand Park Quận 9 - 30m đến Vincom
-22:33:21 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-F1D0Z1",
-    "prop_name": "Vinhomes Grand Park Quận 9 - 30m đến Vincom",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1324005579056505743"
-}
-22:33:23 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #9 / 60: Studio lãng mạn Be5
-22:33:23 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-IUTLXE",
-    "prop_name": "Studio lãng mạn Be5",
-    "prop_link": "https://www.airbnb.com.vn/rooms/817015527622046163"
-}
-22:33:25 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #10 / 60: Tv55”+Netflix,Thể thao và Chữa bệnh
-22:33:25 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-PZ1W4L",
-    "prop_name": "Tv55”+Netflix,Thể thao và Chữa bệnh",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1194706934189661723"
-}
-22:33:27 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #11 / 60: 2 br Luxury Vinhomes Grand Park
-22:33:27 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-JW8NIJ",
-    "prop_name": "2 br Luxury Vinhomes Grand Park",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1482268063607019162"
-}
-22:33:29 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #12 / 60: Lina Home 7 - Can ho 1PN+ Vinhomes Grand Park Q9
-22:33:29 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-1XXNA4",
-    "prop_name": "Lina Home 7 - Can ho 1PN+ Vinhomes Grand Park Q9",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1160075806496147653"
-}
-22:33:31 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #13 / 60: 2BR MasteriVinwonder D9 | Hồ bơi|BBQ | Phong cách nghỉ dưỡng
-22:33:31 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-GQIRMD",
-    "prop_name": "2BR MasteriVinwonder D9 | Hồ bơi|BBQ | Phong cách nghỉ dưỡng",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1344877382110296786"
-}
-22:33:33 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #14 / 60: Emma House 3 - Rainbow 2BR Vinhomes Grand Park Q9
-22:33:33 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-7DZ8TD",
-    "prop_name": "Emma House 3 - Rainbow 2BR Vinhomes Grand Park Q9",
-    "prop_link": "https://www.airbnb.com.vn/rooms/869070174007848507"
-}
-22:33:35 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #15 / 60: Emma House 12 - Rainbow 1BR Vinhomes Grand Park Q9
-22:33:35 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-FUBRPU",
-    "prop_name": "Emma House 12 - Rainbow 1BR Vinhomes Grand Park Q9",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1127942078932460094"
-}
-22:33:37 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #16 / 60: Phòng nhỏ có ban công tại Vinhomes Grand Park
-22:33:37 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-7HPJ8L",
-    "prop_name": "Phòng nhỏ có ban công tại Vinhomes Grand Park",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1517883890561176373"
-}
-22:33:39 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #17 / 60: 1 PN trong căn hộ 2 PN (riêng tư)
-22:33:39 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-PBY42C",
-    "prop_name": "1 PN trong căn hộ 2 PN (riêng tư)",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1293695251983066626"
-}
-22:33:41 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #18 / 60: Vinwonder Vinhomes Grand Park Q9 - Beverly
-22:33:41 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-QWA44I",
-    "prop_name": "Vinwonder Vinhomes Grand Park Q9 - Beverly",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1325400678114771976"
-}
-22:33:43 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #19 / 60: Căn hộ Vinhomes 1 phòng ngủ có tầm nhìn ra hồ bơi
-22:33:43 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-TP2WON",
-    "prop_name": "Căn hộ Vinhomes 1 phòng ngủ có tầm nhìn ra hồ bơi",
-    "prop_link": "https://www.airbnb.com.vn/rooms/959125313060303748"
-}
-22:33:43 | INFO | scrape_p1 - view_page_get_all_link - 335 | Move to next page
+20:34:09 | INFO | host_p2 - prop_data - 125 | Property section found
+20:34:09 | INFO | host_p2 - prop_data - 190 | Carousel has 9 properties
 
 --------------------
 
-22:33:48 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #20 / 60: 1 giường, Hiện đại, Vinhome Grand Park, Quận 9
-22:33:48 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-0A37F6",
-    "prop_name": "1 giường, Hiện đại, Vinhome Grand Park, Quận 9",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1305072171740091438"
-}
-22:33:50 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #21 / 60: studio - vinhomes grand park hcm
-22:33:50 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-A7D0OC",
-    "prop_name": "studio - vinhomes grand park hcm",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1317873571505761280"
-}
-22:33:52 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #22 / 60: Căn hộ Vinhomes - Gần công viên, đầy đủ tiện ích
-22:33:52 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-2WXUBM",
-    "prop_name": "Căn hộ Vinhomes - Gần công viên, đầy đủ tiện ích",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1502770112448493823"
-}
-22:33:54 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #23 / 60: (Riverside 303B) Studio nhỏ gọn và yên tĩnh
-22:33:54 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-N5F69S",
-    "prop_name": "(Riverside 303B) Studio nhỏ gọn và yên tĩnh",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1399221521134790210"
-}
-22:33:56 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #24 / 60: T & T Luxury House 2 phòng ngủ tại Vinhomes Grand Park
-22:33:56 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-2BVYWL",
-    "prop_name": "T & T Luxury House 2 phòng ngủ tại Vinhomes Grand Park",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1101047628530556398"
-}
-22:33:58 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #25 / 60: VinhomesGrandPark căn hộ ấm cúng view sông
-22:33:58 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-X1IXMV",
-    "prop_name": "VinhomesGrandPark căn hộ ấm cúng view sông",
-    "prop_link": "https://www.airbnb.com.vn/rooms/862539815186536303"
-}
-22:34:00 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #26 / 60: Dear-Soul : 1br• L81 View • Tầng trên cùng - Hồ bơi
-22:34:00 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-M7JPCH",
-    "prop_name": "Dear-Soul : 1br• L81 View • Tầng trên cùng - Hồ bơi",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1462849377191931233"
-}
-22:34:02 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #27 / 60: Phong Linh homestay-Studio view hồ bơi
-22:34:02 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-WM4ZJQ",
-    "prop_name": "Phong Linh homestay-Studio view hồ bơi",
-    "prop_link": "https://www.airbnb.com.vn/rooms/917697578963590991"
-}
-22:34:04 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #28 / 60: CĂN HỘ 1+ phòng ngủ | Hướng hồ bơi I Wifi nhanh
-22:34:04 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-YALK34",
-    "prop_name": "CĂN HỘ 1+ phòng ngủ | Hướng hồ bơi I Wifi nhanh",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1293073245706609171"
-}
-22:34:06 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #29 / 60: Phòng nhỏ có phòng tắm không gắn liền với AQHome
-22:34:06 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-18TX1W",
-    "prop_name": "Phòng nhỏ có phòng tắm không gắn liền với AQHome",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1517886736155050002"
-}
-22:34:08 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #30 / 60: Vinhomes Grand Park 2 phòng ngủ
-22:34:08 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-4KNEGM",
-    "prop_name": "Vinhomes Grand Park 2 phòng ngủ",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1430247878589817144"
-}
-22:34:10 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #31 / 60: Căn hộ Pinky 30m2- Quận 9
-22:34:10 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-O90W5U",
-    "prop_name": "Căn hộ Pinky 30m2- Quận 9",
-    "prop_link": "https://www.airbnb.com.vn/rooms/696893061255623973"
-}
-22:34:12 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #32 / 60: (501 Kiwi) Studio hiện đại có bếp và ban công
-22:34:12 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-D5KNYI",
-    "prop_name": "(501 Kiwi) Studio hiện đại có bếp và ban công",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1401264850068904666"
-}
-22:34:14 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #33 / 60: Eco Masteri D, hồ bơi tập thể dục miễn phí gần Vincom
-22:34:14 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-9ZU6G4",
-    "prop_name": "Eco Masteri D, hồ bơi tập thể dục miễn phí gần Vincom",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1299777676279445240"
-}
-22:34:16 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #34 / 60: Eco Masteri A - Căn hộ 2 phòng ngủ sang trọng với PHÒNG TẬP THỂ DỤC, HỒ BƠI miễn phí
-22:34:16 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-YZAAUP",
-    "prop_name": "Eco Masteri A - Căn hộ 2 phòng ngủ sang trọng với PHÒNG TẬP THỂ DỤC, HỒ BƠI miễn phí",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1250705682198725230"
-}
-22:34:18 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #35 / 60: Best View Vinhome Grand Park-Thành phố Hồ Chí Minh
-22:34:18 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-Q9V0QS",
-    "prop_name": "Best View Vinhome Grand Park-Thành phố Hồ Chí Minh",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1495626608590962416"
-}
-22:34:20 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #36 / 60: Căn hộ studio Vinhomes Sweet
-22:34:20 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-DLAG9U",
-    "prop_name": "Căn hộ studio Vinhomes Sweet",
-    "prop_link": "https://www.airbnb.com.vn/rooms/823138796142785610"
-}
-22:34:22 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #37 / 60: Nhà gần LM81,ga Metro,sở thú
-22:34:22 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-0UBHK2",
-    "prop_name": "Nhà gần LM81,ga Metro,sở thú",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1466783006936841330"
-}
-22:34:22 | INFO | scrape_p1 - view_page_get_all_link - 335 | Move to next page
+20:34:09 | INFO | host_p2 - prop_data - 197 | Checking property #1 / 9
+20:34:13 | INFO | host_p2 - prop_data - 206 | rv_num: 182 đánh giá
+20:34:13 | INFO | host_p2 - prop_data - 209 | tot_rv_num: 182 (+ 182)
+20:34:13 | INFO | host_p2 - prop_data - 212 | rv_star: 4,88
 
 --------------------
 
-22:34:27 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #38 / 60: Masteri Home 2BR-2WC tại Vinhomes Grand Park
-22:34:27 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-AWIY12",
-    "prop_name": "Masteri Home 2BR-2WC tại Vinhomes Grand Park",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1075171887338750540"
-}
-22:34:29 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #39 / 60: Emma House 9 - The Oasis Studio Vinhomes Q9
-22:34:29 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-Q68PBP",
-    "prop_name": "Emma House 9 - The Oasis Studio Vinhomes Q9",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1043247109549304364"
-}
-22:34:31 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #40 / 60: Best View Vinhome Grand Park-Thành phố Hồ Chí Minh
-22:34:31 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-8BJCI0",
-    "prop_name": "Best View Vinhome Grand Park-Thành phố Hồ Chí Minh",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1495626608590962416"
-}
-22:34:33 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #41 / 60: Phong Linh Homestay Căn Studio cạnh siêu thị
-22:34:33 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-E11426",
-    "prop_name": "Phong Linh Homestay Căn Studio cạnh siêu thị",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1487387339551470715"
-}
-22:34:35 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #42 / 60: Vinhomes GrandPark |The Oasis| Nhật Bản nghỉ dưỡng 1PN
-22:34:35 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-EJNLVN",
-    "prop_name": "Vinhomes GrandPark |The Oasis| Nhật Bản nghỉ dưỡng 1PN",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1248395792865821193"
-}
-22:34:37 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #43 / 60: Y Vi Vinhomes Grand Park 02
-22:34:37 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-D1Z21T",
-    "prop_name": "Y Vi Vinhomes Grand Park 02",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1373649202238434748"
-}
-22:34:39 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #44 / 60: Sunset-Glow Suit @ The Sun Avenue Free Pool Gym-
-22:34:39 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-P8C3OE",
-    "prop_name": "Sunset-Glow Suit @ The Sun Avenue Free Pool Gym-",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1463506401359495773"
-}
-22:34:41 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #45 / 60: Ellie Home | Vinhomes 1BR | The Origami
-22:34:41 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-CH6NMM",
-    "prop_name": "Ellie Home | Vinhomes 1BR | The Origami",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1124442093113478061"
-}
-22:34:43 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #46 / 60: 1 pho ̀ ng ngu ̉ Lumiere Boulevard - Erica Tower
-22:34:43 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-DY86HA",
-    "prop_name": "1 pho ̀ ng ngu ̉ Lumiere Boulevard - Erica Tower",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1454224817402903788"
-}
-22:34:45 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #47 / 60: Masteri Centre Point C 2BR/2WC VinhomeGrandPark
-22:34:45 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-FMQ81D",
-    "prop_name": "Masteri Centre Point C 2BR/2WC VinhomeGrandPark",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1360010286336410132"
-}
-22:34:47 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #48 / 60: Lina Home 1 - Can ho 2PN Vinhomes Grand Park Q9
-22:34:47 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-GF2PNP",
-    "prop_name": "Lina Home 1 - Can ho 2PN Vinhomes Grand Park Q9",
-    "prop_link": "https://www.airbnb.com.vn/rooms/959130977596962012"
-}
-22:34:49 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #49 / 60: Studio ấm cúng Vinhomes Grand Park
-22:34:49 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-WOPOL6",
-    "prop_name": "Studio ấm cúng Vinhomes Grand Park",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1370778679149225552"
-}
-22:34:51 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #50 / 60: Maihomesg Retreat - Vinhome Grand Park
-22:34:51 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-5OOKIL",
-    "prop_name": "Maihomesg Retreat - Vinhome Grand Park",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1418625411506364463"
-}
-22:34:53 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #51 / 60: BS7-Vinhome Grandpark 2 giường Căn hộ cao cấp, Thủ Đức
-22:34:53 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-VPA5R1",
-    "prop_name": "BS7-Vinhome Grandpark 2 giường Căn hộ cao cấp, Thủ Đức",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1298992349523206222"
-}
-22:34:55 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #52 / 60: Căn hộ Vinhomes Quận 9 có máy chiếu, giường đôi to
-22:34:55 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-B5EZIV",
-    "prop_name": "Căn hộ Vinhomes Quận 9 có máy chiếu, giường đôi to",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1310436790329736418"
-}
-22:34:57 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #53 / 60: (Riverside 403A) Studio nhỏ gọn và yên tĩnh
-22:34:57 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-RCN9JX",
-    "prop_name": "(Riverside 403A) Studio nhỏ gọn và yên tĩnh",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1399223933112761284"
-}
-22:34:59 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #54 / 60: 1 phòng ngủ 2 giường
-22:34:59 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-63D0TT",
-    "prop_name": "1 phòng ngủ 2 giường",
-    "prop_link": "https://www.airbnb.com.vn/rooms/618498169497451577"
-}
-22:35:01 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #55 / 60: Phong Linh homestay-Studio view hồ bơi
-22:35:01 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-6SBGYA",
-    "prop_name": "Phong Linh homestay-Studio view hồ bơi",
-    "prop_link": "https://www.airbnb.com.vn/rooms/900359209448961894"
-}
-22:35:02 | INFO | scrape_p1 - view_page_get_all_link - 335 | Move to next page
+20:34:13 | INFO | host_p2 - prop_data - 197 | Checking property #2 / 9
+20:34:16 | INFO | host_p2 - prop_data - 206 | rv_num: 121 đánh giá
+20:34:16 | INFO | host_p2 - prop_data - 209 | tot_rv_num: 303 (+ 121)
+20:34:16 | INFO | host_p2 - prop_data - 212 | rv_star: 4,83
 
 --------------------
 
-22:35:06 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #56 / 60: Tòa nhà Nest BE2 nhìn ra sông tạiVinhomes Grand Park
-22:35:06 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-QI2HEV",
-    "prop_name": "Tòa nhà Nest BE2 nhìn ra sông tạiVinhomes Grand Park",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1353423319808204747"
-}
-22:35:08 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #57 / 60: Studio ấm cúng nhìn ra Landmark81, Phòng tập thể dục/hồ bơi, cách khu thương mại trung tâm 10 m
-22:35:08 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-OIDD8S",
-    "prop_name": "Studio ấm cúng nhìn ra Landmark81, Phòng tập thể dục/hồ bơi, cách khu thương mại trung tâm 10 m",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1313618396422644729"
-}
-22:35:10 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #58 / 60: Nhà gần LM81,ga Metro,sở thú
-22:35:10 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-BNZWBS",
-    "prop_name": "Nhà gần LM81,ga Metro,sở thú",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1435460583230043464"
-}
-22:35:12 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #59 / 60: 1 phòng ngủ 2 giường
-22:35:12 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-KHEGTV",
-    "prop_name": "1 phòng ngủ 2 giường",
-    "prop_link": "https://www.airbnb.com.vn/rooms/618498169497451577"
-}
-22:35:14 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #60 / 60: Căn hộ 2PN2WC cao cấp
-22:35:14 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-F9PA67",
-    "prop_name": "Căn hộ 2PN2WC cao cấp",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1320956788372062587"
-}
-22:35:16 | INFO | scrape_p1 - view_page_get_all_link - 322 | Prop #61 / 60: Rainbow 2 phòng ngủ của AQHomes - Vinhomes Grand Park
-22:35:16 | INFO | utils - print_pretty_dict - 140 | {
-    "prop_code": "P-LDB5VI",
-    "prop_name": "Rainbow 2 phòng ngủ của AQHomes - Vinhomes Grand Park",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1404767997470055680"
-}
-22:35:16 | INFO | scrape_p1 - view_page_get_all_link - 342 | 60 properties (basic info) scraped
-
-
-============================== Close browser
-
-22:35:18 | INFO | browser - close_browser - 237 | Close browser
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-CIS89Z> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-F40ZJW> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-IP9YQW> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-CHFEVY> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-W4PIT1> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-IUCFSZ> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-F1D0Z1> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-IUTLXE> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-PZ1W4L> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-JW8NIJ> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-1XXNA4> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-GQIRMD> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-7DZ8TD> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-FUBRPU> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-7HPJ8L> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-PBY42C> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-QWA44I> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-TP2WON> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-0A37F6> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-A7D0OC> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-2WXUBM> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-N5F69S> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-2BVYWL> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-X1IXMV> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-M7JPCH> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-WM4ZJQ> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-YALK34> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-18TX1W> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-4KNEGM> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-O90W5U> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-D5KNYI> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-9ZU6G4> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-YZAAUP> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-Q9V0QS> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-DLAG9U> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-0UBHK2> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-AWIY12> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-Q68PBP> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-8BJCI0> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-E11426> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-EJNLVN> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-D1Z21T> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-P8C3OE> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-CH6NMM> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-DY86HA> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-FMQ81D> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-GF2PNP> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-WOPOL6> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-5OOKIL> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-VPA5R1> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-B5EZIV> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-RCN9JX> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-63D0TT> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-6SBGYA> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-QI2HEV> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-OIDD8S> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-BNZWBS> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-KHEGTV> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-F9PA67> (basic info) to database
-22:35:18 | INFO | base - scrape_p1 - 151 | Saved property <P-LDB5VI> (basic info) to database
-22:35:19 | INFO | base - scrape_p1 - 159 | Batch saved 60 properties (basic info) to database
-22:35:21 | INFO | base - run_full_flow - 306 | Phase 1 (link scraping) completed.
-22:35:21 | INFO | base - start_driver - 70 | Starting driver in <local> mode
-
-
-============================== Create proxy helper extension
-
-22:35:21 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
-22:35:21 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
-22:35:21 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
-22:35:21 | INFO | base - start_driver - 75 | Proxy information found in .env -> driver will use proxy
-
-
-============================== Config basic driver setting
-
-22:35:21 | INFO | browser - config_basic_driver_setting - 134 | Configured basic settings
-
-
-============================== Config advanced driver setting
-
-22:35:21 | INFO | browser - config_proxy_driver_setting - 144 | Configured minimal logging for selenium
-22:35:21 | INFO | browser - config_proxy_driver_setting - 157 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
-
-
-============================== Start browser
-
-22:35:22 | INFO | browser - start_browser - 183 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="b3fcc3aae665a3da19d1ea653ddec5c9")>> created
-22:35:22 | INFO | browser - start_browser - 193 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="b3fcc3aae665a3da19d1ea653ddec5c9")>> created
-22:35:22 | INFO | browser - start_browser - 220 | Only 1 monitor, maximizing browser
+20:34:16 | INFO | host_p2 - prop_data - 197 | Checking property #3 / 9
+20:34:19 | INFO | host_p2 - prop_data - 206 | rv_num: 208 đánh giá
+20:34:19 | INFO | host_p2 - prop_data - 209 | tot_rv_num: 511 (+ 208)
+20:34:19 | INFO | host_p2 - prop_data - 212 | rv_star: 4,85
 
 --------------------
 
-22:35:22 | INFO | base - scrape_p2 - 199 | Scraping property #1: P-CIS89Z - Căn hộ dịch vụ MT Easmark city 1 phòng ngủ
+20:34:19 | INFO | host_p2 - prop_data - 197 | Checking property #4 / 9
+20:34:23 | INFO | host_p2 - prop_data - 206 | rv_num: 173 đánh giá
+20:34:23 | INFO | host_p2 - prop_data - 209 | tot_rv_num: 684 (+ 173)
+20:34:23 | INFO | host_p2 - prop_data - 212 | rv_star: 4,88
 
+--------------------
 
-============================== Go to website
+20:34:23 | INFO | host_p2 - prop_data - 197 | Checking property #5 / 9
+20:34:26 | INFO | host_p2 - prop_data - 206 | rv_num: 174 đánh giá
+20:34:26 | INFO | host_p2 - prop_data - 209 | tot_rv_num: 858 (+ 174)
+20:34:26 | INFO | host_p2 - prop_data - 212 | rv_star: 4,91
 
-22:35:25 | INFO | scrape_p1 - go_to_website - 30 | Go to website: https://www.airbnb.com.vn/rooms/1503947466871081897
-22:35:27 | INFO | scrape_p1 - go_to_website - 36 | Page loaded properly
-22:35:27 | INFO | scrape_p1 - go_to_website - 57 | Check Ad pop-up
-22:35:27 | INFO | base - <module> - 347 | Closing database session for direct file run.
+--------------------
+
+20:34:26 | INFO | host_p2 - prop_data - 197 | Checking property #6 / 9
+20:34:30 | INFO | host_p2 - prop_data - 206 | rv_num: 140 đánh giá
+20:34:30 | INFO | host_p2 - prop_data - 209 | tot_rv_num: 998 (+ 140)
+20:34:30 | INFO | host_p2 - prop_data - 212 | rv_star: 4,89
+
+--------------------
+
+20:34:30 | INFO | host_p2 - prop_data - 197 | Checking property #7 / 9
+20:34:33 | INFO | host_p2 - prop_data - 206 | rv_num: 164 đánh giá
+20:34:33 | INFO | host_p2 - prop_data - 209 | tot_rv_num: 1162 (+ 164)
+20:34:33 | INFO | host_p2 - prop_data - 212 | rv_star: 4,86
+
+--------------------
+
+20:34:33 | INFO | host_p2 - prop_data - 197 | Checking property #8 / 9
+20:34:36 | INFO | host_p2 - prop_data - 206 | rv_num: 147 đánh giá
+20:34:36 | INFO | host_p2 - prop_data - 209 | tot_rv_num: 1309 (+ 147)
+20:34:36 | INFO | host_p2 - prop_data - 212 | rv_star: 4,9
+
+--------------------
+
+20:34:36 | INFO | host_p2 - prop_data - 197 | Checking property #9 / 9
+20:34:40 | INFO | host_p2 - prop_data - 206 | rv_num: 105 đánh giá
+20:34:40 | INFO | host_p2 - prop_data - 209 | tot_rv_num: 1414 (+ 105)
+20:34:40 | INFO | host_p2 - prop_data - 212 | rv_star: 4,81
+20:34:40 | INFO | host_utils - pretty_dict - 121 | {
+    "prop_num": 9,
+    "avg_prop_rv_num": 157.11,
+    "avg_prop_rv_star": 4.87
+}
+20:34:40 | INFO | host_utils - pretty_dict - 121 | {
+    "link": "https://www.airbnb.com.vn/users/show/171215110",
+    "name": "Blue Arch",
+    "title": "Chủ nhà siêu cấp",
+    "rating_num": 1447,
+    "rating_star": 4.87,
+    "exp_time": "7 nam",
+    "prop_num": 9,
+    "avg_prop_rv_num": 157.11,
+    "avg_prop_rv_star": 4.87
+}
+20:34:40 | INFO | host_app - scrape_p2 - 197 | Saved 1 / 3 hosts to list
+20:34:40 | INFO | host_app - scrape_p2 - 202 | success convert list dict -> dataframe
+20:34:40 | INFO | host_utils - df_to_csv - 109 | Dataframe saved to file: C:\\Users\\ADMIN\\Pictures\\scraper\\scraper-be\\data\host_161025 (2).csv
+20:34:40 | INFO | host_app - scrape_p2 - 205 | success save dataframe to csv file: C:\\Users\\ADMIN\\Pictures\\scraper\\scraper-be\\data\host_161025 (2).csv

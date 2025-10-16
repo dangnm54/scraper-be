@@ -137,9 +137,9 @@ def scrape_p2(data_file_path: str) -> str:
 
         scraped_host_cnt += 1
 
-        # if scraped_host_cnt == 4: 
-        #     break
-        #     continue
+        if scraped_host_cnt != 2: 
+            # break
+            continue
 
         host_link: str = str(host["link"])
 

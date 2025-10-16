@@ -187,12 +187,14 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
             prop_list = driver.find_elements(By.CSS_SELECTOR, 'div.c3184sb')
             tot_prop_num = len(prop_list)
             prop_data['prop_num'] = tot_prop_num
-            log.info(f'Pop-up has {tot_prop_num} properties')
+            log.info(f'Carousel has {tot_prop_num} properties')
 
-            for idx, prop in enumerate(prop_list):
+            for prop in prop_list:
+                
+                prop_cnt += 1
                 lg.log_divider()
 
-                log.info(f'Checking property #{idx + 1} / {tot_prop_num}')
+                log.info(f'Checking property #{prop_cnt} / {tot_prop_num}')
                 hst_utl.scroll_focus_element(driver, prop)
 
                 prop_rv_area: List[WebElement] = prop.find_elements(By.CSS_SELECTOR, 'div.sxmrbbg')
@@ -205,9 +207,10 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
                     tot_rv_num += rv_num
                     log.info(f'tot_rv_num: {tot_rv_num} (+ {rv_num})')
 
-                    rv_star_element: WebElement = prop_rv.find_elements(By.CSS_SELECTOR, 'span')[4]
+                    rv_star_element: WebElement = prop_rv.find_elements(By.CSS_SELECTOR, 'span.s1sd7v66 > span')[-1]
                     rv_star = float(hst_utl.clean_string(rv_star_element.text, mode='rating_star'))
                     tot_rv_star += rv_star
+                    log.info(f'tot_rv_star: {tot_rv_star} (+ {rv_star})')
 
                 else:
                     log.info('prop has no rating -> skip to next prop')
