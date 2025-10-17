@@ -34,6 +34,7 @@ def clean_string(string: str, mode: str) -> str:
         word_list: List[str] = string.split()
         target_word: str = ''
         word: str = ''
+        # print(f'word_list: {word_list}')
 
         match mode:
             case 'rating_num':
@@ -41,11 +42,14 @@ def clean_string(string: str, mode: str) -> str:
                 target_word = word.replace('.', '').strip('\n+')
 
             case 'rating_star':
-                # no space -> not split
-                # test -> ' "4,94" '
+                # test: "Mới"
+                # test: ' "4,94" '
                 word = word_list[0]
-                word = word.strip('"').replace(',', '.')
-                target_word = word
+                if 'Mới' in word:
+                    target_word = '0'
+                else:
+                    word = word.strip('"').replace(',', '.')
+                    target_word = word
 
             case 'exp_unit':
                 # test: "năm kinh nghiệm đón tiếp khách"
@@ -58,18 +62,28 @@ def clean_string(string: str, mode: str) -> str:
                         break
 
             case 'prop_num':
-                # test: "Xem tất cả 13 bài đăng"
+                # test: 
+                    # "Xem tất cả 13 bài đăng"
+                    # "Nơi ở mới"
                 for word in word_list:
+                    if 'mới' in word:
+                        target_word = '0'
+                        break
                     if word.isdigit():
                         target_word = word
                         break
 
-            case 'rv_star':
-                # test: "Xếp hạng trung bình 4,98/5, 130 đánh giá"
-                for word in word_list:
-                    if '/' in word:
-                        target_word = word.replace('/5,', '').replace(',', '.')
-                        break
+            # case 'rv_star':
+            #     # test: 
+            #         # "Xếp hạng trung bình 4,98/5, 130 đánh giá"
+            #         # "Mới"
+            #     for word in word_list:
+            #         if 'Mới' in word:
+            #             target_word = '0'
+            #             break
+            #         if '/' in word:
+            #             target_word = word.replace('/5,', '').replace(',', '.')
+            #             break
 
         return target_word
 

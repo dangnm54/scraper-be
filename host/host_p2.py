@@ -159,14 +159,27 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
                     log.info(f'Checking property #{prop_cnt} / {tot_prop_num}')
                     hst_utl.scroll_focus_element(driver, prop)
 
-                    prop_rv: WebElement = prop.find_element(By.CSS_SELECTOR, 'span.t1phmnpa span.a8jt5op')
-                    rv_num: int = int(hst_utl.clean_string(prop_rv.text, mode='prop_num'))
-                    tot_rv_num += rv_num
-                    log.info(f'tot_rv_num: {tot_rv_num} (+ {rv_num})')
+                    # if prop_cnt < 50:
+                    #     continue
 
-                    rv_star: float = float(hst_utl.clean_string(prop_rv.text, mode='rv_star'))
-                    tot_rv_star += rv_star
-                    log.info(f'tot_rv_star: {tot_rv_star} (+ {rv_star})')
+                    try:
+                        prop_rv: WebElement = prop.find_element(By.CSS_SELECTOR, 'span.t1phmnpa')
+
+                        rv_num_element: WebElement = prop_rv.find_element(By.CSS_SELECTOR, 'span.a8jt5op')
+                        rv_num: int = int(hst_utl.clean_string(rv_num_element.text, mode='prop_num'))
+                        tot_rv_num += rv_num
+                        log.info(f'tot_rv_num: {tot_rv_num} (+ {rv_num})')
+
+                        rv_star_element: WebElement = prop_rv.find_elements(By.CSS_SELECTOR, 'span')[-1]
+                        rv_star: float = float(hst_utl.clean_string(rv_star_element.text, mode='rating_star'))
+                        tot_rv_star += rv_star
+                        log.info(f'tot_rv_star: {tot_rv_star} (+ {rv_star})')
+
+                    except Exception as e:
+                        lg.log_detail_error(e)
+                        log.error(f'Error to collect THIS property data #{prop_cnt} -> skip to next prop')
+                        continue
+
 
                 if prop_cnt == tot_prop_num:
                     break
@@ -197,23 +210,29 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
                 log.info(f'Checking property #{prop_cnt} / {tot_prop_num}')
                 hst_utl.scroll_focus_element(driver, prop)
 
-                prop_rv_area: List[WebElement] = prop.find_elements(By.CSS_SELECTOR, 'div.sxmrbbg')
+                try:
+                    prop_rv_area: List[WebElement] = prop.find_elements(By.CSS_SELECTOR, 'div.sxmrbbg')
 
-                if len(prop_rv_area) > 1:
-                    prop_rv = prop_rv_area[1]
+                    if len(prop_rv_area) > 1:
+                        prop_rv = prop_rv_area[1]
 
-                    rv_num_element: WebElement = prop_rv.find_elements(By.CSS_SELECTOR, 'span')[7]
-                    rv_num = int(hst_utl.clean_string(rv_num_element.text, mode='prop_num'))
-                    tot_rv_num += rv_num
-                    log.info(f'tot_rv_num: {tot_rv_num} (+ {rv_num})')
+                        rv_num_element = prop_rv.find_elements(By.CSS_SELECTOR, 'span')[7]
+                        rv_num = int(hst_utl.clean_string(rv_num_element.text, mode='prop_num'))
+                        tot_rv_num += rv_num
+                        log.info(f'tot_rv_num: {tot_rv_num} (+ {rv_num})')
 
-                    rv_star_element: WebElement = prop_rv.find_elements(By.CSS_SELECTOR, 'span.s1sd7v66 > span')[-1]
-                    rv_star = float(hst_utl.clean_string(rv_star_element.text, mode='rating_star'))
-                    tot_rv_star += rv_star
-                    log.info(f'tot_rv_star: {tot_rv_star} (+ {rv_star})')
+                        rv_star_element = prop_rv.find_elements(By.CSS_SELECTOR, 'span.s1sd7v66 > span')[-1]
+                        rv_star = float(hst_utl.clean_string(rv_star_element.text, mode='rating_star'))
+                        tot_rv_star += rv_star
+                        log.info(f'tot_rv_star: {tot_rv_star} (+ {rv_star})')
 
-                else:
-                    log.info('prop has no rating -> skip to next prop')
+                    else:
+                        log.info('prop has no rating -> skip to next prop')
+
+                except Exception as e:
+                    lg.log_detail_error(e)
+                    log.error(f'Error to collect THIS property data #{prop_cnt} -> skip to next prop')
+                    continue
 
 
 
