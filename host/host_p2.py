@@ -130,34 +130,127 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
     tot_rv_star: float = 0
     tot_prop_num: int = 0
     prop_cnt: int = 0
+    cfg: Dict[str, Any] | None = None
+
+
+    css_config: List[Dict[str, Any]] = [
+        {
+            'type': 'popup',
+            'prop_list':'div.cy5jw6o',
+            'rv_area':'span.t1phmnpa',
+            'rv_num': 'span.a8jt5op',
+            'rv_star':('span', -1)
+        },
+        {
+            'type': 'carousel',
+            'prop_list':'div.c3184sb',
+            'rv_area':'div.sxmrbbg',
+            'rv_num': ('span', 7),
+            'rv_star': ('span.s1sd7v66 > span', -1)
+        }
+    ]
+
+    # --------------------------------
+
+    prop_list: List[WebElement] = []
+
+    view_all_button_area: List[WebElement] = prop_section.find_elements(By.CSS_SELECTOR, 'div.v9765v button')
+    
+    if view_all_button_area:
+        cfg = css_config[0]
+
+        view_all_button: WebElement = view_all_button_area[0]
+        tot_prop_num = int(hst_utl.clean_string(view_all_button.text, mode='prop_num'))
+
+        view_all_button.click()
+        time.sleep(wait_time)
+        log.info('View all button clicked')
+
+    else:
+        cfg = css_config[1]
+        prop_list = driver.find_elements(By.CSS_SELECTOR, cfg['prop_list'])
+        tot_prop_num = len(prop_list)
+
+    prop_data['prop_num'] = tot_prop_num
+    log.info(f'Prop display mode: {cfg["type"]}')
+    log.info(f'Total prop num: {tot_prop_num}')
+    
+    # --------------------------------
+
+    if tot_prop_num > 0:
+        avg_prop_rv_num: float = round(tot_rv_num / tot_prop_num, 2)
+        avg_prop_rv_star: float = round(tot_rv_star / tot_prop_num, 2)
+        prop_data['avg_prop_rv_num'] = avg_prop_rv_num
+        prop_data['avg_prop_rv_star'] = avg_prop_rv_star
+    else:
+        log.error('prop_num is 0 -> skip to next prop')
+        prop_data['prop_num'] = 0
+        hst_utl.pretty_dict(prop_data)
+        return prop_data
+
+    # --------------------------------
+
+    while prop_cnt < tot_prop_num:
+
+        if cfg['type'] == 'popup':
+            prop_list = driver.find_elements(By.CSS_SELECTOR, cfg['prop_list'])
+
+
+        for prop in prop_list[prop_cnt:]:
+
+            prop_cnt += 1
+            lg.log_divider()
+
+            log.info(f'Checking property #{prop_cnt} / {tot_prop_num}')
+            hst_utl.scroll_focus_element(driver, prop)
+
+            # --------------------------------
+
+
+            try:
+
+                pass
+
+            except Exception as e:
+
+                lg.log_detail_error(e)
+
+                
+
+
+
+
+
+
+
 
     try:
 
-        view_all_button_area: List[WebElement] = prop_section.find_elements(By.CSS_SELECTOR, 'div.v9765v button')
+        # view_all_button_area = prop_section.find_elements(By.CSS_SELECTOR, 'div.v9765v button')
 
-        if view_all_button_area:
-            view_all_button: WebElement = view_all_button_area[0]
-            tot_prop_num = int(hst_utl.clean_string(view_all_button.text, mode='prop_num'))
-            prop_data['prop_num'] = tot_prop_num
-            log.info(f'Found {tot_prop_num} properties')
+        # if view_all_button_area:
+            # view_all_button = view_all_button_area[0]
+            # tot_prop_num = int(hst_utl.clean_string(view_all_button.text, mode='prop_num'))
+            # prop_data['prop_num'] = tot_prop_num
+            # log.info(f'Found {tot_prop_num} properties')
 
-            view_all_button.click()
-            time.sleep(wait_time)
-            log.info('View all button clicked')
+            # view_all_button.click()
+            # time.sleep(wait_time)
+            # log.info('View all button clicked')
 
-            while prop_cnt < tot_prop_num:
+            # while prop_cnt < tot_prop_num:
 
                 # need big screen
-                prop_list: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, 'div.cy5jw6o')
-                log.info(f'Pop-up has {tot_prop_num} properties')
+                # prop_list = driver.find_elements(By.CSS_SELECTOR, 'div.cy5jw6o')
+                # log.info(f'Pop-up has {tot_prop_num} properties')
 
-                for prop in prop_list[prop_cnt:]:
+                # for prop in prop_list[prop_cnt:]:
 
-                    prop_cnt += 1
-                    lg.log_divider()
+                    # prop_cnt += 1
+                    # lg.log_divider()
 
-                    log.info(f'Checking property #{prop_cnt} / {tot_prop_num}')
-                    hst_utl.scroll_focus_element(driver, prop)
+                    # log.info(f'Checking property #{prop_cnt} / {tot_prop_num}')
+                    # hst_utl.scroll_focus_element(driver, prop)
 
                     # if prop_cnt < 50:
                     #     continue
@@ -197,18 +290,18 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
 
 
         else:
-            prop_list = driver.find_elements(By.CSS_SELECTOR, 'div.c3184sb')
-            tot_prop_num = len(prop_list)
-            prop_data['prop_num'] = tot_prop_num
-            log.info(f'Carousel has {tot_prop_num} properties')
+            # prop_list = driver.find_elements(By.CSS_SELECTOR, 'div.c3184sb')
+            # tot_prop_num = len(prop_list)
+            # prop_data['prop_num'] = tot_prop_num
+            # log.info(f'Carousel has {tot_prop_num} properties')
 
-            for prop in prop_list:
+            # for prop in prop_list:
                 
-                prop_cnt += 1
-                lg.log_divider()
+                # prop_cnt += 1
+                # lg.log_divider()
 
-                log.info(f'Checking property #{prop_cnt} / {tot_prop_num}')
-                hst_utl.scroll_focus_element(driver, prop)
+                # log.info(f'Checking property #{prop_cnt} / {tot_prop_num}')
+                # hst_utl.scroll_focus_element(driver, prop)
 
                 try:
                     prop_rv_area: List[WebElement] = prop.find_elements(By.CSS_SELECTOR, 'div.sxmrbbg')
@@ -242,18 +335,18 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
         return prop_data
 
 
-    if tot_prop_num > 0:
-        avg_prop_rv_num: float = round(tot_rv_num / tot_prop_num, 2)
-        avg_prop_rv_star: float = round(tot_rv_star / tot_prop_num, 2)
-        prop_data['avg_prop_rv_num'] = avg_prop_rv_num
-        prop_data['avg_prop_rv_star'] = avg_prop_rv_star
-    else:
-        log.error('prop_num is 0 -> skip to next prop')
-        prop_data['prop_num'] = 0
+    # if tot_prop_num > 0:
+    #     avg_prop_rv_num: float = round(tot_rv_num / tot_prop_num, 2)
+    #     avg_prop_rv_star: float = round(tot_rv_star / tot_prop_num, 2)
+    #     prop_data['avg_prop_rv_num'] = avg_prop_rv_num
+    #     prop_data['avg_prop_rv_star'] = avg_prop_rv_star
+    # else:
+    #     log.error('prop_num is 0 -> skip to next prop')
+    #     prop_data['prop_num'] = 0
 
 
-    hst_utl.pretty_dict(prop_data)
-    return prop_data
+    # hst_utl.pretty_dict(prop_data)
+    # return prop_data
 
 
 
