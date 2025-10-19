@@ -139,12 +139,13 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
             'prop_list':'div.cy5jw6o',
             'rv_area':'span.t1phmnpa',
             'rv_num': 'span.a8jt5op',
-            'rv_star':('span', -1)
+            'rv_star':('span', -1),
+            'view_more_button':'div.lk34ed1 button'
         },
         {
             'type': 'carousel',
             'prop_list':'div.c3184sb',
-            'rv_area':'div.sxmrbbg',
+            'rv_area':('div.sxmrbbg', 1),
             'rv_num': ('span', 7),
             'rv_star': ('span.s1sd7v66 > span', -1)
         }
@@ -154,27 +155,35 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
 
     prop_list: List[WebElement] = []
 
-    view_all_button_area: List[WebElement] = prop_section.find_elements(By.CSS_SELECTOR, 'div.v9765v button')
+    try:
+
+        view_all_button_area: List[WebElement] = prop_section.find_elements(By.CSS_SELECTOR, 'div.v9765v button')
+        
+        if view_all_button_area:
+            cfg = css_config[0]
+
+            view_all_button: WebElement = view_all_button_area[0]
+            tot_prop_num = int(hst_utl.clean_string(view_all_button.text, mode='prop_num'))
+
+            view_all_button.click()
+            time.sleep(wait_time)
+            log.info('View all button clicked')
+
+        else:
+            cfg = css_config[1]
+            prop_list = driver.find_elements(By.CSS_SELECTOR, cfg['prop_list'])
+            tot_prop_num = len(prop_list)
+
+        prop_data['prop_num'] = tot_prop_num
+        log.info(f'Prop display mode: {cfg["type"]}')
+        log.info(f'Total prop num: {tot_prop_num}')
+
     
-    if view_all_button_area:
-        cfg = css_config[0]
-
-        view_all_button: WebElement = view_all_button_area[0]
-        tot_prop_num = int(hst_utl.clean_string(view_all_button.text, mode='prop_num'))
-
-        view_all_button.click()
-        time.sleep(wait_time)
-        log.info('View all button clicked')
-
-    else:
-        cfg = css_config[1]
-        prop_list = driver.find_elements(By.CSS_SELECTOR, cfg['prop_list'])
-        tot_prop_num = len(prop_list)
-
-    prop_data['prop_num'] = tot_prop_num
-    log.info(f'Prop display mode: {cfg["type"]}')
-    log.info(f'Total prop num: {tot_prop_num}')
-    
+    except Exception as e:
+        lg.log_detail_error(e)
+        log.error('Error find css config -> skip to next host')
+        return prop_data
+        
     # --------------------------------
 
     if tot_prop_num > 0:
@@ -183,7 +192,7 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
         prop_data['avg_prop_rv_num'] = avg_prop_rv_num
         prop_data['avg_prop_rv_star'] = avg_prop_rv_star
     else:
-        log.error('prop_num is 0 -> skip to next prop')
+        log.error('prop_num is 0 -> skip to next host')
         prop_data['prop_num'] = 0
         hst_utl.pretty_dict(prop_data)
         return prop_data
@@ -206,16 +215,56 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
 
             # --------------------------------
 
-
             try:
 
-                pass
+                if cfg['type'] == 'popup':
+                    rv_area: WebElement = prop.find_element(By.CSS_SELECTOR, cfg['rv_area'])
+                else:
+                    info_area: List[WebElement] = prop.find_elements(By.CSS_SELECTOR, cfg['rv_area'][0])
+                    if len(info_area) > 1:
+                        rv_area = info_area[cfg['rv_area'][1]]
+                    else:
+                        log.error('prop has no rating -> skip to next prop')
+                        continue
+
+                # --------------------------------
+
+                if cfg['type'] == 'popup':
+                    rv_num_element: WebElement = rv_area.find_element(By.CSS_SELECTOR, cfg['rv_num'])
+                else:
+                    rv_num_element = rv_area.find_elements(By.CSS_SELECTOR, cfg['rv_num'][0])[cfg['rv_num'][1]]
+                    
+                rv_num: int = int(hst_utl.clean_string(rv_num_element.text, mode='prop_num'))
+                tot_rv_num += rv_num
+                log.info(f'tot_rv_num: {tot_rv_num} (+ {rv_num})')
+
+                # --------------------------------
+
+                rv_star_element = rv_area.find_elements(By.CSS_SELECTOR, cfg['rv_star'][0])[cfg['rv_star'][1]]
+                rv_star: float = float(hst_utl.clean_string(rv_star_element.text, mode='rating_star'))
+                tot_rv_star += rv_star
+                log.info(f'tot_rv_star: {tot_rv_star} (+ {rv_star})')
+
 
             except Exception as e:
-
                 lg.log_detail_error(e)
+                log.error(f'Error collect property #{prop_cnt} data -> skip to next prop')
+                continue
 
-                
+        # --------------------------------
+
+        if cfg['type'] == 'popup':
+            try:
+                view_more_button: WebElement = driver.find_element(By.CSS_SELECTOR, cfg['view_more_button'])
+                log.info('View more button found')
+                view_more_button.click()
+                log.info('View more button clicked')
+                time.sleep(wait_time)
+
+            except Exception as e:
+                lg.log_detail_error(e)
+                log.error(f'Error handle view_more button -> skip to next host')
+                return prop_data
 
 
 
@@ -224,7 +273,7 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
 
 
 
-    try:
+    # try:
 
         # view_all_button_area = prop_section.find_elements(By.CSS_SELECTOR, 'div.v9765v button')
 
@@ -255,38 +304,38 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
                     # if prop_cnt < 50:
                     #     continue
 
-                    try:
-                        prop_rv: WebElement = prop.find_element(By.CSS_SELECTOR, 'span.t1phmnpa')
+                    # try:
+                        # prop_rv: WebElement = prop.find_element(By.CSS_SELECTOR, 'span.t1phmnpa')
 
-                        rv_num_element: WebElement = prop_rv.find_element(By.CSS_SELECTOR, 'span.a8jt5op')
-                        rv_num: int = int(hst_utl.clean_string(rv_num_element.text, mode='prop_num'))
-                        tot_rv_num += rv_num
-                        log.info(f'tot_rv_num: {tot_rv_num} (+ {rv_num})')
+                        # rv_num_element = prop_rv.find_element(By.CSS_SELECTOR, 'span.a8jt5op')
+                        # rv_num = int(hst_utl.clean_string(rv_num_element.text, mode='prop_num'))
+                        # tot_rv_num += rv_num
+                        # log.info(f'tot_rv_num: {tot_rv_num} (+ {rv_num})')
 
-                        rv_star_element: WebElement = prop_rv.find_elements(By.CSS_SELECTOR, 'span')[-1]
-                        rv_star: float = float(hst_utl.clean_string(rv_star_element.text, mode='rating_star'))
-                        tot_rv_star += rv_star
-                        log.info(f'tot_rv_star: {tot_rv_star} (+ {rv_star})')
+                        # rv_star_element = prop_rv.find_elements(By.CSS_SELECTOR, 'span')[-1]
+                        # rv_star = float(hst_utl.clean_string(rv_star_element.text, mode='rating_star'))
+                        # tot_rv_star += rv_star
+                        # log.info(f'tot_rv_star: {tot_rv_star} (+ {rv_star})')
 
-                    except Exception as e:
-                        lg.log_detail_error(e)
-                        log.error(f'Error to collect THIS property data #{prop_cnt} -> skip to next prop')
-                        continue
+                    # except Exception as e:
+                    #     lg.log_detail_error(e)
+                    #     log.error(f'Error to collect THIS property data #{prop_cnt} -> skip to next prop')
+                    #     continue
 
 
-                if prop_cnt == tot_prop_num:
-                    break
-                else:
-                    try:
-                        view_more_button: WebElement = driver.find_element(By.CSS_SELECTOR, 'div.lk34ed1 button')
-                        log.info('More button found')
-                        view_more_button.click()
-                        log.info('More button clicked')
-                        time.sleep(wait_time)
-                    except Exception as e:
-                        log.error('Error finding "View more" button')
-                        lg.log_detail_error(e)
-                        break
+                # if prop_cnt == tot_prop_num:
+                #     break
+                # else:
+                #     try:
+                #         view_more_button = driver.find_element(By.CSS_SELECTOR, 'div.lk34ed1 button')
+                #         log.info('More button found')
+                #         view_more_button.click()
+                #         log.info('More button clicked')
+                #         time.sleep(wait_time)
+                #     except Exception as e:
+                #         log.error('Error finding "View more" button')
+                #         lg.log_detail_error(e)
+                #         break
 
 
         else:
@@ -303,36 +352,37 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
                 # log.info(f'Checking property #{prop_cnt} / {tot_prop_num}')
                 # hst_utl.scroll_focus_element(driver, prop)
 
-                try:
-                    prop_rv_area: List[WebElement] = prop.find_elements(By.CSS_SELECTOR, 'div.sxmrbbg')
+                # try:
+                    # prop_rv_area: List[WebElement] = prop.find_elements(By.CSS_SELECTOR, 'div.sxmrbbg')
 
-                    if len(prop_rv_area) > 1:
-                        prop_rv = prop_rv_area[1]
+                    # if len(prop_rv_area) > 1:
+                    #     prop_rv = prop_rv_area[1]
 
-                        rv_num_element = prop_rv.find_elements(By.CSS_SELECTOR, 'span')[7]
-                        rv_num = int(hst_utl.clean_string(rv_num_element.text, mode='prop_num'))
-                        tot_rv_num += rv_num
-                        log.info(f'tot_rv_num: {tot_rv_num} (+ {rv_num})')
+                        # rv_num_element = prop_rv.find_elements(By.CSS_SELECTOR, 'span')[7]
+                        # rv_num = int(hst_utl.clean_string(rv_num_element.text, mode='prop_num'))
+                        # tot_rv_num += rv_num
+                        # log.info(f'tot_rv_num: {tot_rv_num} (+ {rv_num})')
 
-                        rv_star_element = prop_rv.find_elements(By.CSS_SELECTOR, 'span.s1sd7v66 > span')[-1]
+                        # rv_star_element = prop_rv.find_elements(By.CSS_SELECTOR, 'span.s1sd7v66 > span')[-1]
                         rv_star = float(hst_utl.clean_string(rv_star_element.text, mode='rating_star'))
-                        tot_rv_star += rv_star
-                        log.info(f'tot_rv_star: {tot_rv_star} (+ {rv_star})')
+                        # tot_rv_star += rv_star
+                        # log.info(f'tot_rv_star: {tot_rv_star} (+ {rv_star})')
 
-                    else:
-                        log.info('prop has no rating -> skip to next prop')
+                    # else:
+                    #     log.info('prop has no rating -> skip to next prop')
+                    #     continue
 
-                except Exception as e:
-                    lg.log_detail_error(e)
-                    log.error(f'Error to collect THIS property data #{prop_cnt} -> skip to next prop')
-                    continue
+                # except Exception as e:
+                #     lg.log_detail_error(e)
+                #     log.error(f'Error to collect THIS property data #{prop_cnt} -> skip to next prop')
+                #     continue
 
 
 
-    except Exception as e:
-        lg.log_detail_error(e)
-        log.error('Error to collect property data -> skip to next prop')
-        return prop_data
+    # except Exception as e:
+    #     lg.log_detail_error(e)
+    #     log.error('Error to collect property data -> skip to next prop')
+    #     return prop_data
 
 
     # if tot_prop_num > 0:
