@@ -196,7 +196,7 @@ def start_browser(driver_path_ipt: str, option_ipt: EdgeOptions, browser_mode: B
     if browser_mode == 'local':      
         monitor_list: List[Monitor] = get_monitors()
         log.debug(f'Detected {len(monitor_list)} monitors')
-            # screen laptop: 1920 x 1080
+            # screen laptop: 1920 x 1080 -> main display always start at x=0, y=0 (top left corner)
             # screen monitor: 2560 x 1440
             # current position: monitor on top laptop vertical
 
@@ -209,12 +209,12 @@ def start_browser(driver_path_ipt: str, option_ipt: EdgeOptions, browser_mode: B
 
             if secondary_monitor:
                 log.info(f'Secondary monitor found, open browser on secondary monitor')
-                driver.set_window_rect(x=-1920, y=380, width=1500, height=1010)  #monitor
-                # driver.set_window_rect(x=1550, y=1450, width=960, height=1010)   #laptop
-                # driver.set_window_rect(x=-1920, y=180, width=1700, height=800)  #uat
+                # driver.set_window_rect(x=-1920, y=380, width=1500, height=1000)  #monitor (monitor left (main) | lap right)
+                # driver.set_window_rect(x=1550, y=1450, width=960, height=1000)   #laptop (monitor left (main), lap right)
+                driver.set_window_rect(x=600, y=1450, width=1800, height=1000)  #laptop (monitor up (main), lap down)
             else:
                 log.info(f'Cannot identify clear secondary monitor, maximizing browser')
-                driver.set_window_rect(x=960, y=10, width=960, height=1010)     #laptop - normal 
+                driver.set_window_rect(x=-500, y=-500, width=960, height=1010)     #laptop - normal 
 
         else:
             log.info(f'Only 1 monitor, maximizing browser')

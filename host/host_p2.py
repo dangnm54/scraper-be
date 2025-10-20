@@ -116,13 +116,24 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
         'prop_num': None,
         'avg_prop_rv_num': None,
         'avg_prop_rv_star': None
-
     }
 
-    prop_section_block: WebElement = driver.find_elements(By.CSS_SELECTOR, 'div.c1yo0219')[6]
-    prop_section: WebElement = prop_section_block.find_element(By.CSS_SELECTOR, 'section')
-    hst_utl.scroll_focus_element(driver, prop_section)
-    log.info('Property section found')
+    # --------------------------------
+
+    attempt: int = 0
+
+    while attempt < 3:
+        try:
+            prop_section_block: WebElement = driver.find_elements(By.CSS_SELECTOR, 'div.c1yo0219')[6]
+            prop_section: WebElement = prop_section_block.find_element(By.CSS_SELECTOR, 'section')
+            hst_utl.scroll_focus_element(driver, prop_section)
+            log.info('Property section found')
+            break
+        except:
+            log.info('Page not loaded properly section, refreshing...')
+            driver.refresh()
+            time.sleep(wait_time)
+            attempt += 1
 
     # --------------------------------
 
@@ -138,7 +149,7 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
             'type': 'popup',
             'prop_list':'div.cy5jw6o',
             'rv_area':'span.t1phmnpa',
-            'rv_num': 'span.a8jt5op',
+            'rv_num': ('span.a8jt5op', 0),
             'rv_star':('span', -1),
             'view_more_button':'div.lk34ed1 button'
         },
@@ -186,14 +197,8 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
         
     # --------------------------------
 
-    if tot_prop_num > 0:
-        avg_prop_rv_num: float = round(tot_rv_num / tot_prop_num, 2)
-        avg_prop_rv_star: float = round(tot_rv_star / tot_prop_num, 2)
-        prop_data['avg_prop_rv_num'] = avg_prop_rv_num
-        prop_data['avg_prop_rv_star'] = avg_prop_rv_star
-    else:
+    if tot_prop_num == 0:
         log.error('prop_num is 0 -> skip to next host')
-        prop_data['prop_num'] = 0
         hst_utl.pretty_dict(prop_data)
         return prop_data
 
@@ -229,22 +234,17 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
 
                 # --------------------------------
 
-                if cfg['type'] == 'popup':
-                    rv_num_element: WebElement = rv_area.find_element(By.CSS_SELECTOR, cfg['rv_num'])
-                else:
-                    rv_num_element = rv_area.find_elements(By.CSS_SELECTOR, cfg['rv_num'][0])[cfg['rv_num'][1]]
-                    
+                rv_num_element: WebElement = rv_area.find_elements(By.CSS_SELECTOR, cfg['rv_num'][0])[cfg['rv_num'][1]]                    
                 rv_num: int = int(hst_utl.clean_string(rv_num_element.text, mode='prop_num'))
                 tot_rv_num += rv_num
                 log.info(f'tot_rv_num: {tot_rv_num} (+ {rv_num})')
 
                 # --------------------------------
 
-                rv_star_element = rv_area.find_elements(By.CSS_SELECTOR, cfg['rv_star'][0])[cfg['rv_star'][1]]
+                rv_star_element: WebElement = rv_area.find_elements(By.CSS_SELECTOR, cfg['rv_star'][0])[cfg['rv_star'][1]]
                 rv_star: float = float(hst_utl.clean_string(rv_star_element.text, mode='rating_star'))
                 tot_rv_star += rv_star
                 log.info(f'tot_rv_star: {tot_rv_star} (+ {rv_star})')
-
 
             except Exception as e:
                 lg.log_detail_error(e)
@@ -265,6 +265,15 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
                 lg.log_detail_error(e)
                 log.error(f'Error handle view_more button -> skip to next host')
                 return prop_data
+    
+
+    avg_prop_rv_num: float = round(tot_rv_num / tot_prop_num, 2)
+    avg_prop_rv_star: float = round(tot_rv_star / tot_prop_num, 2)
+    prop_data['avg_prop_rv_num'] = avg_prop_rv_num
+    prop_data['avg_prop_rv_star'] = avg_prop_rv_star
+
+    hst_utl.pretty_dict(prop_data)
+    return prop_data
 
 
 
@@ -338,7 +347,7 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
                 #         break
 
 
-        else:
+        # else:
             # prop_list = driver.find_elements(By.CSS_SELECTOR, 'div.c3184sb')
             # tot_prop_num = len(prop_list)
             # prop_data['prop_num'] = tot_prop_num
@@ -364,7 +373,7 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
                         # log.info(f'tot_rv_num: {tot_rv_num} (+ {rv_num})')
 
                         # rv_star_element = prop_rv.find_elements(By.CSS_SELECTOR, 'span.s1sd7v66 > span')[-1]
-                        rv_star = float(hst_utl.clean_string(rv_star_element.text, mode='rating_star'))
+                        # rv_star = float(hst_utl.clean_string(rv_star_element.text, mode='rating_star'))
                         # tot_rv_star += rv_star
                         # log.info(f'tot_rv_star: {tot_rv_star} (+ {rv_star})')
 
