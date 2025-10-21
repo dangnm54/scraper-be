@@ -30,8 +30,9 @@ from selenium.webdriver.edge.options import Options as EdgeOptions
 
 # When running from root directory (FastAPI)
 import src.detail_step.browser as brws
-import src.detail_step.scrape_p1 as scr1
-import src.detail_step.scrape_p2 as scr2
+import src.detail_step.scrape1 as scr1
+import src.detail_step.scrape2 as scr2
+import src.detail_step.scrape3 as scr3
 import src.tool.db_op as dbop
 import src.tool.utils as utl
 
@@ -196,7 +197,7 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
     for idx, prop in enumerate(detail_list_db, start=1):
 
         lg.log_divider()
-        log.info(f'Scraping property #{scraped_prop_cnt + 1}: {prop.prop_code} - {prop.prop_name}')
+        log.info(f'Scraping property #{idx}: {prop.prop_code} - {prop.prop_name}')
         property_link: str = str(prop.prop_link)
 
         try:
@@ -208,31 +209,31 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
 
 
         try:
-            overview_data: Dict[str, Any] = scr2.overview_info(driver, wait)
-            rating_data: Dict[str, Any] = scr2.rating_info(driver)
+            # overview_data: Dict[str, Any] = scr2.overview_info(driver, wait)
+            # rating_data: Dict[str, Any] = scr2.rating_info(driver)
 
-            prop.guest_num = overview_data['guest_num']
-            prop.bed_num = overview_data['bed_num']
-            prop.bath_num = overview_data['bath_num']
-            prop.location = overview_data['location']
-            prop.ggmap_link = overview_data['ggmap_link']
+            # prop.guest_num = overview_data['guest_num']
+            # prop.bed_num = overview_data['bed_num']
+            # prop.bath_num = overview_data['bath_num']
+            # prop.location = overview_data['location']
+            # prop.ggmap_link = overview_data['ggmap_link']
             
-            prop.rating_title = rating_data['rating_title']
-            prop.rating_star = rating_data['rating_star']
-            prop.rating_num = rating_data['rating_num']
+            # prop.rating_title = rating_data['rating_title']
+            # prop.rating_star = rating_data['rating_star']
+            # prop.rating_num = rating_data['rating_num']
 
-            if collect_host_data:
-                host_data: Dict[str, Any] = scr2.host_info(driver)
+            # if collect_host_data:
+            #     host_data: Dict[str, Any] = scr2.host_info(driver)
 
-                prop.host_name = host_data['host_name']
-                prop.host_title = host_data['host_title']
-                prop.host_rating_star = host_data['host_rating_star']
-                prop.host_rating_num = host_data['host_rating_num']
-                prop.host_exp = host_data['host_exp']
-                prop.host_link = host_data['host_link']
+            #     prop.host_name = host_data['host_name']
+            #     prop.host_title = host_data['host_title']
+            #     prop.host_rating_star = host_data['host_rating_star']
+            #     prop.host_rating_num = host_data['host_rating_num']
+            #     prop.host_exp = host_data['host_exp']
+            #     prop.host_link = host_data['host_link']
 
             if collect_booking_rate:
-                book_rate_data: Dict[str, Any] = scr2.book_rate_info(driver, wait_time)
+                book_rate_data: Dict[str, Any] = scr3.book_rate_info(driver, wait_time)
 
                 prop.this_month_booked_rate = book_rate_data['this_month_booked_rate']
                 prop.next_1_month_booked_rate = book_rate_data['next_1_month_booked_rate']
@@ -336,10 +337,10 @@ if test_local:
             try: 
                 run_full_flow(
                     db = db_session,
-                    file_name = 'D12_HCM',
-                    location = 'D12, HCM',
+                    file_name = 'D1_HCM',
+                    location = 'D1, HCM',
                     num_guest = None,
-                    num_property = 60,
+                    num_property = 1,
                     collect_host_data = True,
                     collect_booking_rate = True
                 )
@@ -352,3 +353,5 @@ if test_local:
 
 
 
+# bỏ .vn trong mọi link
+# search pricing

@@ -120,20 +120,24 @@ def prop_data(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
 
     # --------------------------------
 
-    attempt: int = 0
+    # attempt: int = 0
+    # while attempt < 3:
+    #     try:
+    #         prop_section_block: WebElement = driver.find_elements(By.CSS_SELECTOR, 'div.c1yo0219')[6]
+    #         prop_section: WebElement = prop_section_block.find_element(By.CSS_SELECTOR, 'section')
+    #         hst_utl.scroll_focus_element(driver, prop_section)
+    #         log.info('Property section found')
+    #         break
+    #     except:
+    #         log.info('Page not loaded properly section, refreshing...')
+    #         driver.refresh()
+    #         time.sleep(wait_time)
+    #         attempt += 1
 
-    while attempt < 3:
-        try:
-            prop_section_block: WebElement = driver.find_elements(By.CSS_SELECTOR, 'div.c1yo0219')[6]
-            prop_section: WebElement = prop_section_block.find_element(By.CSS_SELECTOR, 'section')
-            hst_utl.scroll_focus_element(driver, prop_section)
-            log.info('Property section found')
-            break
-        except:
-            log.info('Page not loaded properly section, refreshing...')
-            driver.refresh()
-            time.sleep(wait_time)
-            attempt += 1
+    prop_section_block: WebElement = driver.find_elements(By.CSS_SELECTOR, 'div.c1yo0219')[6]
+    prop_section: WebElement = prop_section_block.find_element(By.CSS_SELECTOR, 'section')
+    hst_utl.scroll_focus_element(driver, prop_section)
+    log.info('Property section found')
 
     # --------------------------------
 

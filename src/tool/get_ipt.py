@@ -76,6 +76,7 @@ def get_date_for_book_data() -> Dict[str, Any]:
         month_data['next_1_month'] = int(next_1m_date.month)
         month_data['next_3_month'] = [int(next_1m_date.month), int(next_2m_date.month), int(next_3m_date.month)]
 
-        log.info(f'Month data: {month_data}')
+        log.info(f'Month data:')
+        utl.print_pretty_dict(month_data)
 
         return month_data

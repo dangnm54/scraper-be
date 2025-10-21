@@ -1,78 +1,118 @@
-LOG RECORDED AT: 20-10-2025 14:18:21
-STARTED BY FILE: host_app.py
+LOG RECORDED AT: 21-10-2025 14:28:08
+STARTED BY FILE: base.py
 RUN METHOD: Directly in Terminal
 
 
-14:18:22 | INFO | host_app - start_driver - 67 | Starting driver in <local> mode
+14:28:08 | INFO | db_op - <module> - 58 | Create engine and SessionLocal for database connection
+14:28:08 | INFO | db_op - create_db_session - 103 | Creating database session for direct file run.
+14:28:08 | INFO | base - <module> - 329 | Config:
+        - save_db: False
+        - search_mode: none
+        - BROWSER_MODE: local
+        - log_error_level: 3_level
+        
+
+
+============================== Start full flow
+
+14:28:08 | INFO | base - run_full_flow - 293 | API Request Received:
+14:28:08 | INFO | base - run_full_flow - 294 |     
+    - Location: D1, HCM
+    - Number of guests: None
+    - Number of properties: 1
+    - Collect host data: True
+    - Collect booking rate: True
+    
+14:28:09 | INFO | base - run_full_flow - 304 | New scraping session <D1_HCM_211025> started | ID: 5a93768b-472f-4292-b5e1-95f4085b362b
+14:28:09 | INFO | base - start_driver - 71 | Starting driver in <local> mode
 
 
 ============================== Create proxy helper extension
 
-14:18:22 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
-14:18:22 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
-14:18:22 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
-14:18:22 | INFO | host_app - start_driver - 72 | Proxy information found in .env -> driver will use proxy
+14:28:09 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
+14:28:09 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
+14:28:09 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
+14:28:09 | INFO | base - start_driver - 76 | Proxy information found in .env -> driver will use proxy
 
 
 ============================== Config basic driver setting
 
-14:18:22 | INFO | browser - config_basic_driver_setting - 134 | Configured basic settings
+14:28:09 | INFO | browser - config_basic_driver_setting - 134 | Configured basic settings
 
 
 ============================== Config advanced driver setting
 
-14:18:22 | INFO | browser - config_proxy_driver_setting - 144 | Configured minimal logging for selenium
-14:18:22 | INFO | browser - config_proxy_driver_setting - 157 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+14:28:09 | INFO | browser - config_proxy_driver_setting - 144 | Configured minimal logging for selenium
+14:28:09 | INFO | browser - config_proxy_driver_setting - 157 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
 
 
 ============================== Start browser
 
-14:18:23 | INFO | browser - start_browser - 183 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="90923a0b30731b263c39bdc187c7900f")>> created
-14:18:23 | INFO | browser - start_browser - 193 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="90923a0b30731b263c39bdc187c7900f")>> created
-14:18:23 | INFO | browser - start_browser - 211 | Secondary monitor found, open browser on secondary monitor
-14:18:23 | INFO | host_app - scrape_p2 - 129 | success convert excel file -> dataframe
-
---------------------
-
-14:18:23 | INFO | host_app - scrape_p2 - 147 | Scraping host #1 / 3: https://www.airbnb.com.vn/users/show/73256728
+14:28:10 | INFO | browser - start_browser - 183 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="6fe7f489727279f05a8fe21686cb89b7")>> created
+14:28:10 | INFO | browser - start_browser - 193 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="6fe7f489727279f05a8fe21686cb89b7")>> created
+14:28:10 | INFO | browser - start_browser - 211 | Secondary monitor found, open browser on secondary monitor
 
 
 ============================== Go to website
 
-14:18:31 | INFO | host_p2 - go_to_website - 34 | Go to website: https://www.airbnb.com.vn/users/show/73256728
-14:18:31 | INFO | host_p2 - go_to_website - 38 | Page loaded properly
+14:28:13 | INFO | scrape1 - go_to_website - 30 | Go to website: https://www.airbnb.com.vn/homes
+14:28:17 | INFO | scrape1 - go_to_website - 36 | Page loaded properly
+14:28:17 | INFO | scrape1 - go_to_website - 57 | Check Ad pop-up
+14:28:37 | ERROR | scrape1 - go_to_website - 83 | Found no Ad pop-up
+14:28:40 | INFO | base - scrape_p1 - 120 | Search mode: none
 
 
-============================== Overview data
+============================== View page and get all link
 
-14:18:34 | INFO | host_p2 - overview_data - 66 | Overview section found
-14:18:34 | INFO | host_p2 - overview_data - 78 | rating_num_element: 2664
-14:18:34 | INFO | host_utils - pretty_dict - 135 | {
-    "name": "Phung & Viet",
-    "title": "Chủ nhà siêu cấp",
-    "rating_num": 2664,
-    "rating_star": 4.77,
-    "exp_time": "9 nam"
+14:28:40 | INFO | scrape1 - view_page_get_all_link - 248 | Check Ad pop-up
+14:29:00 | INFO | scrape1 - view_page_get_all_link - 258 | Found no Ad pop-up
+14:29:00 | INFO | scrape1 - view_page_get_all_link - 267 | Ready to scrape 1 properties | Search-mode: none
+14:29:04 | INFO | scrape1 - view_page_get_all_link - 322 | Prop #1 / 1: Căn hộ tại Thành phố Hồ Chí Minh
+14:29:04 | INFO | utils - print_pretty_dict - 140 | {
+    "prop_code": "P-MN0Q4Q",
+    "prop_name": "Căn hộ tại Thành phố Hồ Chí Minh",
+    "prop_link": "https://www.airbnb.com.vn/rooms/1386690223982968237"
 }
+14:29:04 | INFO | scrape1 - view_page_get_all_link - 343 | 1 properties (basic info) scraped
 
 
-============================== Property data
+============================== Close browser
 
-14:18:34 | INFO | host_p2 - prop_data - 133 | Page not loaded properly section, refreshing...
-14:18:38 | INFO | host_p2 - prop_data - 133 | Page not loaded properly section, refreshing...
-14:18:42 | INFO | host_p2 - prop_data - 133 | Page not loaded properly section, refreshing...
-14:18:47 | ERROR | log_op - log_detail_error - 146 | local variable 'prop_section' referenced before assignment
-- Error level #1: File <host_p2.py> | Function <prop_data> | Line #171: view_all_button_area: List[WebElement] = prop_section.find_elements(By.CSS_SELECTOR, 'div.v9765v button')
-14:18:47 | ERROR | host_p2 - prop_data - 195 | Error find css config -> skip to next host
-14:18:47 | INFO | host_utils - pretty_dict - 135 | {
-    "link": "https://www.airbnb.com.vn/users/show/73256728",
-    "name": "Phung & Viet",
-    "title": "Chủ nhà siêu cấp",
-    "rating_num": 2664,
-    "rating_star": 4.77,
-    "exp_time": "9 nam",
-    "prop_num": null,
-    "avg_prop_rv_num": null,
-    "avg_prop_rv_star": null
-}
-14:18:47 | INFO | host_app - scrape_p2 - 197 | Saved 1 / 3 hosts to list
+14:29:06 | INFO | browser - close_browser - 237 | Close browser
+14:29:06 | INFO | base - run_full_flow - 307 | Phase 1 (link scraping) completed.
+14:29:06 | INFO | base - start_driver - 71 | Starting driver in <local> mode
+
+
+============================== Create proxy helper extension
+
+14:29:06 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
+14:29:06 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
+14:29:06 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
+14:29:06 | INFO | base - start_driver - 76 | Proxy information found in .env -> driver will use proxy
+
+
+============================== Config basic driver setting
+
+14:29:06 | INFO | browser - config_basic_driver_setting - 134 | Configured basic settings
+
+
+============================== Config advanced driver setting
+
+14:29:06 | INFO | browser - config_proxy_driver_setting - 144 | Configured minimal logging for selenium
+14:29:06 | INFO | browser - config_proxy_driver_setting - 157 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+
+
+============================== Start browser
+
+14:29:07 | INFO | browser - start_browser - 183 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="915c886ef85e3e54baa7edaf66afd3b2")>> created
+14:29:07 | INFO | browser - start_browser - 193 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="915c886ef85e3e54baa7edaf66afd3b2")>> created
+14:29:07 | INFO | browser - start_browser - 211 | Secondary monitor found, open browser on secondary monitor
+
+--------------------
+
+14:29:07 | INFO | base - scrape_p2 - 200 | Scraping property #1: P-MN0Q4Q - Căn hộ tại Thành phố Hồ Chí Minh
+
+
+============================== Go to website
+
+14:29:10 | INFO | base - <module> - 348 | Closing database session for direct file run.
