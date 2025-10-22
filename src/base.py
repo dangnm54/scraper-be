@@ -340,8 +340,8 @@ if test_local:
             try: 
                 run_full_flow(
                     db = db_session,
-                    file_name = 'D1_HCM',
-                    location = 'D1, HCM',
+                    file_name = 'D2_HCM',
+                    location = 'D2, HCM',
                     num_guest = None,
                     num_property = 1,
                     collect_host_data = True,
