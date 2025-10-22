@@ -51,6 +51,8 @@ class PropertyDB(Base):
     rating_star = Column(Float)
     rating_num = Column(Integer)
 
+    nightly_price = Column(Integer)
+
     host_name = Column(String)
     host_title = Column(String)
     host_rating_star = Column(Float)

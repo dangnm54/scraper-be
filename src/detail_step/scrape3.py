@@ -1,3 +1,4 @@
+from email.charset import QP
 import time
 import logging
 from typing import Dict, Any, List, Tuple, cast
@@ -46,12 +47,15 @@ def book_rate_info(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
         time.sleep(wait_time)
         lg.log_divider()
 
-        # month_data struc
+        # --------------------------------
+
         # month_data: Dict[str, Any] = {
         #     'this_month': 0, # int
         #     'next_1_month': 0, # int
         #     'next_3_month': [], # List[int]
         # }
+
+        # --------------------------------
 
         for key, month in month_data.items():
 
@@ -63,11 +67,11 @@ def book_rate_info(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
                 target_month: int = month
                 log.info(f'_____Target month: {target_month}_____')
 
-                tot_date: int = 0
-                booked_date: int = 0
-                tot_date, booked_date = detail_booking_cal(driver, wait_time, target_month)
+                tot_day: int = 0
+                booked_day: int = 0
+                tot_day, booked_day = book_rate_cnt(driver, wait_time, target_month)
 
-                book_rate = final_stage_book_cal(booked_date, tot_date)
+                book_rate = book_rate_cal(booked_day, tot_day)
 
             # --------------------------------
 
@@ -76,8 +80,8 @@ def book_rate_info(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
                 target_month_range: List[int] = month
                 log.info(f'_____Target month_list: {target_month_range}_____')
 
-                all_tot_date: int = 0
-                all_booked_date: int = 0
+                all_tot_day: int = 0
+                all_booked_day: int = 0
 
                 # --------------------------------
 
@@ -87,16 +91,16 @@ def book_rate_info(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
 
                     log.info(f'___Single target month: {target_month}___')
 
-                    single_tot_date: int = 0
-                    single_booked_date: int = 0
-                    single_tot_date, single_booked_date = detail_booking_cal(driver, wait_time, target_month)
+                    single_tot_day: int = 0
+                    single_booked_day: int = 0
+                    single_tot_day, single_booked_day = book_rate_cnt(driver, wait_time, target_month)
                     
-                    all_tot_date += single_tot_date
-                    all_booked_date += single_booked_date
+                    all_tot_day += single_tot_day
+                    all_booked_day += single_booked_day
 
                 # --------------------------------
 
-                book_rate = final_stage_book_cal(all_booked_date, all_tot_date)
+                book_rate = book_rate_cal(all_booked_day, all_tot_day)
 
             # --------------------------------
 
@@ -118,21 +122,21 @@ def book_rate_info(driver: WebDriver, wait_time: float) -> Dict[str, Any]:
 
 
 
-def final_stage_book_cal(booked_date: int, tot_date: int) -> float | None:
+def book_rate_cal(booked_day: int, tot_day: int) -> float | None:
 
     """
     operation: calculate book rate
     input:
-        - booked_date: num of booked days in a month
-        - tot_date: num of total days in a month
+        - booked_day: num of booked days in a month
+        - tot_day: num of total days in a month
     output:
         - book rate: float | None
     """
     book_rate: float | None = None
 
     try:
-        book_rate = float(booked_date / tot_date * 100)
-        log.info(f'Total booked-rate: {booked_date} / {tot_date} = {book_rate:.2f}%')
+        book_rate = float(booked_day / tot_day * 100)
+        log.info(f'Total booked-rate: {booked_day} / {tot_day} = {book_rate:.2f}%')
     except ZeroDivisionError:
         book_rate = None
         log.info('No data to calculate book_rate')
@@ -141,7 +145,7 @@ def final_stage_book_cal(booked_date: int, tot_date: int) -> float | None:
 
 
 
-def detail_booking_cal(driver: WebDriver, wait_time: float, target_month: int) -> Tuple[int, int]:
+def book_rate_cnt(driver: WebDriver, wait_time: float, target_month: int) -> Tuple[int, int]:
 
     """
     operation: loop through each month
@@ -156,10 +160,14 @@ def detail_booking_cal(driver: WebDriver, wait_time: float, target_month: int) -
         - num of booked days in a month
     """
     try:
+
         max_try: int = 12
         current_try: int = 0
 
+        # --------------------------------
+
         while current_try < max_try:
+            
             current_try += 1
             log.info(f'Try #{current_try}')
 
@@ -167,8 +175,8 @@ def detail_booking_cal(driver: WebDriver, wait_time: float, target_month: int) -
 
             calender_section: WebElement = driver.find_element(By.CSS_SELECTOR, 'div.c1e8f4ze')
             next_month_button: WebElement = calender_section.find_element(By.CSS_SELECTOR, 'div._qz9x4fc > button')
-
             month_sides: List[WebElement] = calender_section.find_elements(By.CSS_SELECTOR, 'div._1lds9wb') 
+            
             month_pair: List[int] = []
 
             # --------------------------------
@@ -177,7 +185,9 @@ def detail_booking_cal(driver: WebDriver, wait_time: float, target_month: int) -
                 month_name: WebElement = month_box.find_element(By.CSS_SELECTOR, 'h3')
                 clean_month_name: int = cast(int, utl.get_info_from_string(month_name.text, mode='month'))
                 month_pair.append(clean_month_name)
-            
+
+            # --------------------------------
+
             log.info(f'Target month: {target_month}')
             log.info(f'Current month_pair: {month_pair}')
 
@@ -189,12 +199,12 @@ def detail_booking_cal(driver: WebDriver, wait_time: float, target_month: int) -
 
                 matched_month_box: WebElement = month_sides[0] if target_month == month_pair[0] else month_sides[1]
                 date_list: List[WebElement] = matched_month_box.find_elements(By.CSS_SELECTOR, 'td[class]')
-                booked_date_list: List[WebElement] = matched_month_box.find_elements(By.CSS_SELECTOR, 'td[aria-disabled="true"]')
+                booked_day_list: List[WebElement] = matched_month_box.find_elements(By.CSS_SELECTOR, 'td[aria-disabled="true"]')
 
-                tot_date: int = len(date_list)
-                booked_date: int = len(booked_date_list)
+                tot_day: int = len(date_list)
+                booked_day: int = len(booked_day_list)
                 
-                return tot_date, booked_date
+                return tot_day, booked_day
             
             else:
                 next_month_button.click()
@@ -208,8 +218,106 @@ def detail_booking_cal(driver: WebDriver, wait_time: float, target_month: int) -
         return 0, 0
 
 
-# define state of 'found pricing' -> add to while loop
-# if a month has > 3 days left
-# find checkout date
-# pick prev and checkout date
-# find price + log + change state of 'found pricing'
+
+
+def price_info(driver: WebDriver, wait_time: float) -> int | None:
+
+    lg.log_divider('Price info')
+
+    price_data: int | None = None
+
+    try:
+
+        calender_section = driver.find_element(By.CSS_SELECTOR, 'div.c1e8f4ze')
+        utl.scroll_focus_element(driver, calender_section)
+        log.info('Calender section found')
+        time.sleep(wait_time)
+        
+        # --------------------------------
+
+        max_try: int = 12
+        current_try: int = 0
+
+        price_checked_month_list: List[int] = []
+        price_found_state: bool = False
+
+        # --------------------------------
+
+        while current_try < max_try:
+            
+            current_try += 1
+            log.info(f'Try #{current_try}')
+
+            # --------------------------------
+
+            calender_section: WebElement = driver.find_element(By.CSS_SELECTOR, 'div.c1e8f4ze')
+            next_month_button: WebElement = calender_section.find_element(By.CSS_SELECTOR, 'div._qz9x4fc > button')
+            month_sides: List[WebElement] = calender_section.find_elements(By.CSS_SELECTOR, 'div._1lds9wb') 
+
+            # --------------------------------
+
+            for month_box in month_sides:
+                month_name: WebElement = month_box.find_element(By.CSS_SELECTOR, 'h3')
+                clean_month_name: int = cast(int, utl.get_info_from_string(month_name.text, mode='month'))
+
+                log.info(f'_____Current month: {clean_month_name}_____')
+
+                # --------------------------------
+
+                # if clean_month_name in price_checked_month_list:
+                #     log.info(f'Month #{clean_month_name} | Already checked pricing -> check next month_box')
+                #     continue
+                
+                # --------------------------------
+
+                defualt_avai_day_list: List[WebElement] = month_box.find_elements(By.CSS_SELECTOR, 'td[aria-disabled="false"]')
+
+                if len(defualt_avai_day_list) == 0:
+                    log.error(f'No available days to check pricing -> check next month_box')
+                    continue
+
+                # --------------------------------
+
+                for idx in range(2):
+
+                    log.info(f'--- Click iteration {idx + 1}/2 ---')
+                        
+                    try:
+                        current_avai_day_list: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, 'td[aria-disabled="false"]')
+                        
+                        avai_day: WebElement = current_avai_day_list[0]
+                        avai_day_text: str = avai_day.text
+                        avai_day.click()
+                        log.info(f'Click {idx + 1}/2 -> choose day #{avai_day_text}')
+                        time.sleep(wait_time)
+
+                    except Exception as e:
+                        log.error(f'Error scraping pricing at click iteration {idx + 1}')
+                        return
+
+                # --------------------------------
+
+                price_element: WebElement = driver.find_elements(By.CSS_SELECTOR, 'span.umg93v9')[1] 
+                price: int = cast(int, utl.get_info_from_string(price_element.text, mode='price'))
+                price_data = price
+
+                log.info(f'Pricing found: {price}')
+                return price_data
+
+                # --------------------------------
+                
+            for idx in range(2):
+                next_month_button.click()
+                time.sleep(wait_time)
+
+            log.info('Both months has no available days to check pricing -> next_month_button clicked twice')
+
+            # --------------------------------
+
+        log.info('No available days in 1 year from now -> return None')
+        return price_data
+
+    except Exception as e:
+        lg.log_detail_error(e)
+        return price_data
+

@@ -209,39 +209,42 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
 
 
         try:
-            # overview_data: Dict[str, Any] = scr2.overview_info(driver, wait)
-            # rating_data: Dict[str, Any] = scr2.rating_info(driver)
+            overview_data: Dict[str, Any] = scr2.overview_info(driver, wait)
+            for key, value in overview_data.items():
+                setattr(prop, key, value)
 
-            # prop.guest_num = overview_data['guest_num']
-            # prop.bed_num = overview_data['bed_num']
-            # prop.bath_num = overview_data['bath_num']
-            # prop.location = overview_data['location']
-            # prop.ggmap_link = overview_data['ggmap_link']
-            
-            # prop.rating_title = rating_data['rating_title']
-            # prop.rating_star = rating_data['rating_star']
-            # prop.rating_num = rating_data['rating_num']
+            # --------------------------------
 
-            # if collect_host_data:
-            #     host_data: Dict[str, Any] = scr2.host_info(driver)
+            rating_data: Dict[str, Any] = scr2.rating_info(driver)
+            for key, value in rating_data.items():
+                setattr(prop, key, value)
 
-            #     prop.host_name = host_data['host_name']
-            #     prop.host_title = host_data['host_title']
-            #     prop.host_rating_star = host_data['host_rating_star']
-            #     prop.host_rating_num = host_data['host_rating_num']
-            #     prop.host_exp = host_data['host_exp']
-            #     prop.host_link = host_data['host_link']
+            # --------------------------------
+
+            price_data: int | None = scr3.price_info(driver, wait_time)
+            setattr(prop, 'nightly_price', price_data)
+
+            # --------------------------------
+
+            if collect_host_data:
+                host_data: Dict[str, Any] = scr2.host_info(driver)
+                for key, value in host_data.items():
+                    setattr(prop, key, value)
+
+            # --------------------------------
 
             if collect_booking_rate:
                 book_rate_data: Dict[str, Any] = scr3.book_rate_info(driver, wait_time)
+                for key, value in book_rate_data.items():
+                    setattr(prop, key, value)
 
-                prop.this_month_booked_rate = book_rate_data['this_month_booked_rate']
-                prop.next_1_month_booked_rate = book_rate_data['next_1_month_booked_rate']
-                prop.next_3_month_booked_rate = book_rate_data['next_3_month_booked_rate']
-            
+            # --------------------------------
 
             scrape_result: ScrapeResult = scr2.get_scrape_result(prop)
             setattr(prop, 'scrape_result', str(scrape_result)) 
+
+            # --------------------------------
+
             log.info(f'Complete scraping data for property #{prop.prop_code} | result: {scrape_result}')
             scraped_prop_cnt += 1
 

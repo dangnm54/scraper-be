@@ -74,6 +74,10 @@ def get_info_from_string(string: str, mode: str) -> str | int | None:
                     if word.isdigit() and int(word) < 2025:
                         # print(f'word: {word}')
                         target_word = int(word)
+
+            case 'price':
+                # test: ₫1.138.895
+                target_word = string.replace('₫', '').replace('.', '')
                 
         return target_word
     
