@@ -1,6 +1,331 @@
-LOG RECORDED AT: 22-10-2025 21:09:31
+LOG RECORDED AT: 23-10-2025 23:00:37
 STARTED BY FILE: base.py
 RUN METHOD: Directly in Terminal
 
 
-21:09:31 | INFO | db_op - <module> - 58 | Create engine and SessionLocal for database connection
+23:00:37 | INFO | db_op - <module> - 58 | Create engine and SessionLocal for database connection
+23:00:37 | INFO | db_op - create_db_session - 103 | Creating database session for direct file run.
+23:00:37 | INFO | base - <module> - 332 | Config:
+        - save_db: False
+        - search_mode: apply
+        - BROWSER_MODE: local
+        - log_error_level: 3_level
+        
+
+
+============================== Start full flow
+
+23:00:37 | INFO | base - run_full_flow - 296 | API Request Received:
+23:00:37 | INFO | base - run_full_flow - 297 |     
+    - Location: D2, HCM
+    - Number of guests: None
+    - Number of properties: 1
+    - Collect host data: True
+    - Collect booking rate: True
+    
+23:00:38 | INFO | base - run_full_flow - 307 | New scraping session <D2_HCM_231025> started | ID: 64bb96a6-605d-407a-b79a-da15bc74b085
+23:00:38 | INFO | base - start_driver - 71 | Starting driver in <local> mode
+
+
+============================== Create proxy helper extension
+
+23:00:38 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
+23:00:38 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
+23:00:38 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
+23:00:38 | INFO | base - start_driver - 76 | Proxy information found in .env -> driver will use proxy
+
+
+============================== Config basic driver setting
+
+23:00:38 | INFO | browser - config_basic_driver_setting - 134 | Configured basic settings
+
+
+============================== Config advanced driver setting
+
+23:00:38 | INFO | browser - config_proxy_driver_setting - 144 | Configured minimal logging for selenium
+23:00:38 | INFO | browser - config_proxy_driver_setting - 157 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+
+
+============================== Start browser
+
+23:00:40 | INFO | browser - start_browser - 183 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="621bb058a7af154579efa5cb46e9317c")>> created
+23:00:40 | INFO | browser - start_browser - 193 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="621bb058a7af154579efa5cb46e9317c")>> created
+23:00:40 | INFO | browser - start_browser - 220 | Only 1 monitor, maximizing browser
+
+
+============================== Go to website
+
+23:00:46 | INFO | scrape1 - go_to_website - 30 | Go to website: https://www.airbnb.com.vn/homes
+23:00:49 | INFO | scrape1 - go_to_website - 36 | Page loaded properly
+23:00:49 | INFO | scrape1 - go_to_website - 57 | Check Ad pop-up
+23:01:09 | ERROR | scrape1 - go_to_website - 83 | Found no Ad pop-up
+23:01:12 | INFO | base - scrape_p1 - 120 | Search mode: apply
+
+
+============================== Search location
+
+23:01:12 | INFO | scrape1 - search_location - 156 | Location element found and clicked
+23:01:16 | INFO | scrape1 - search_location - 162 | <D2, HCM> typed and ENTER
+
+
+============================== Search date
+
+23:01:19 | INFO | scrape1 - search_date - 178 | Flexible time button found and clicked
+23:01:22 | INFO | scrape1 - search_date - 184 | Flexible weekend button found and clicked
+
+
+============================== Search guest
+
+23:01:25 | INFO | scrape1 - search_guest - 197 | Search without guest number
+
+
+============================== Press search
+
+23:01:28 | INFO | scrape1 - press_search - 236 | Seach button founded and clicked
+
+
+============================== View page and get all link
+
+23:01:28 | INFO | scrape1 - view_page_get_all_link - 248 | Check Ad pop-up
+23:01:30 | INFO | scrape1 - view_page_get_all_link - 250 | Found Ad pop-up
+23:01:30 | INFO | scrape1 - view_page_get_all_link - 253 | Found close button
+23:01:30 | INFO | scrape1 - view_page_get_all_link - 255 | Close Ad pop-up
+23:01:30 | INFO | scrape1 - view_page_get_all_link - 267 | Ready to scrape 1 properties | Search-mode: apply
+23:01:36 | INFO | scrape1 - view_page_get_all_link - 322 | Prop #1 / 1: *Little Star* Suite - Sun Avenue - Hồ bơi miễn phí
+23:01:36 | INFO | utils - print_pretty_dict - 144 | {
+    "prop_code": "P-M1KSAW",
+    "prop_name": "*Little Star* Suite - Sun Avenue - Hồ bơi miễn phí",
+    "prop_link": "https://www.airbnb.com.vn/rooms/1523775006708810520"
+}
+23:01:36 | INFO | scrape1 - view_page_get_all_link - 343 | 1 properties (basic info) scraped
+
+
+============================== Close browser
+
+23:01:39 | INFO | browser - close_browser - 237 | Close browser
+23:01:39 | INFO | base - run_full_flow - 310 | Phase 1 (link scraping) completed.
+23:01:39 | INFO | base - start_driver - 71 | Starting driver in <local> mode
+
+
+============================== Create proxy helper extension
+
+23:01:39 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
+23:01:39 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
+23:01:39 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
+23:01:39 | INFO | base - start_driver - 76 | Proxy information found in .env -> driver will use proxy
+
+
+============================== Config basic driver setting
+
+23:01:39 | INFO | browser - config_basic_driver_setting - 134 | Configured basic settings
+
+
+============================== Config advanced driver setting
+
+23:01:39 | INFO | browser - config_proxy_driver_setting - 144 | Configured minimal logging for selenium
+23:01:39 | INFO | browser - config_proxy_driver_setting - 157 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+
+
+============================== Start browser
+
+23:01:40 | INFO | browser - start_browser - 183 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="4be809a876c0c17e6183fe0427a1ed92")>> created
+23:01:40 | INFO | browser - start_browser - 193 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="4be809a876c0c17e6183fe0427a1ed92")>> created
+23:01:40 | INFO | browser - start_browser - 220 | Only 1 monitor, maximizing browser
+
+--------------------
+
+23:01:40 | INFO | base - scrape_p2 - 200 | Scraping property #1: P-M1KSAW - *Little Star* Suite - Sun Avenue - Hồ bơi miễn phí
+
+
+============================== Go to website
+
+23:01:43 | INFO | scrape1 - go_to_website - 30 | Go to website: https://www.airbnb.com.vn/rooms/1523775006708810520
+23:01:46 | INFO | scrape1 - go_to_website - 36 | Page loaded properly
+23:01:46 | INFO | scrape1 - go_to_website - 57 | Check Ad pop-up
+23:01:46 | INFO | scrape1 - go_to_website - 62 | Found Ad pop-up
+23:01:46 | INFO | scrape1 - go_to_website - 68 | Check config | found_element: <<selenium.webdriver.remote.webelement.WebElement (session="4be809a876c0c17e6183fe0427a1ed92", element="f.82C0A9015EDD784BAFE5AB8D677B5E87.d.047FC4BA5FEEBAD1574ACA21D3359075.e.34")>> | current_elements: <[]>
+23:01:46 | INFO | scrape1 - go_to_website - 68 | Check config | found_element: <<selenium.webdriver.remote.webelement.WebElement (session="4be809a876c0c17e6183fe0427a1ed92", element="f.82C0A9015EDD784BAFE5AB8D677B5E87.d.047FC4BA5FEEBAD1574ACA21D3359075.e.34")>> | current_elements: <[<selenium.webdriver.remote.webelement.WebElement (session="4be809a876c0c17e6183fe0427a1ed92", element="f.82C0A9015EDD784BAFE5AB8D677B5E87.d.047FC4BA5FEEBAD1574ACA21D3359075.e.34")>]>
+23:01:46 | INFO | scrape1 - go_to_website - 71 | Found ad type <2>
+23:01:46 | INFO | scrape1 - go_to_website - 76 | Found close button
+23:01:46 | INFO | scrape1 - go_to_website - 78 | Close Ad pop-up
+
+
+============================== Overview info
+
+23:01:50 | INFO | scrape2 - overview_info - 41 | Overview section found
+23:01:53 | INFO | utils - print_pretty_dict - 144 | {
+    "guest_num": 3,
+    "bed_num": 1,
+    "bath_num": 1,
+    "location": "10.7854,106.7494",
+    "ggmap_link": "https://maps.google.com/?q=10.7854,106.7494"
+}
+
+
+============================== Rating info
+
+23:01:56 | INFO | scrape2 - rating_info - 217 | Special rating element found
+23:01:56 | INFO | scrape2 - rating_info - 232 | Special rating data collected
+23:01:56 | INFO | utils - print_pretty_dict - 144 | {
+    "rating_title": "Top guest favorite",
+    "rating_star": 5.0,
+    "rating_num": 6
+}
+
+
+============================== Price info
+
+23:01:59 | INFO | scrape3 - price_info - 233 | Calender section found
+23:02:02 | INFO | scrape3 - price_info - 246 | Try #1
+23:02:02 | INFO | scrape3 - price_info - 260 | _____Current month: 10_____
+23:02:02 | ERROR | scrape3 - price_info - 267 | No available days to check pricing -> check next month_box
+23:02:02 | INFO | scrape3 - price_info - 260 | _____Current month: 11_____
+23:02:02 | INFO | scrape3 - price_info - 274 | --- Click iteration 1/2 ---
+23:02:02 | INFO | scrape3 - price_info - 282 | Click 1/2 -> choose day #2
+23:02:05 | INFO | scrape3 - price_info - 274 | --- Click iteration 2/2 ---
+23:02:06 | INFO | scrape3 - price_info - 282 | Click 2/2 -> choose day #3
+23:02:09 | INFO | scrape3 - price_info - 299 | Normal price element found
+23:02:09 | ERROR | log_op - log_detail_error - 146 | Unknown format code 'f' for object of type 'str'
+- Error level #1: File <scrape3.py> | Function <price_info> | Line #302: log.info(f'{config["type"]} price: {price:.0f} VND')
+
+
+============================== Host info
+
+23:02:12 | INFO | utils - print_pretty_dict - 144 | {
+    "host_name": "Vi And DingDong Home Team",
+    "host_title": null,
+    "host_rating_star": 4.74,
+    "host_rating_num": 535,
+    "host_exp": "6 nam",
+    "host_link": "https://www.airbnb.com.vn/users/profile/1463432708010196044?previous_page_name=PdpHomeMarketplace"
+}
+
+
+============================== Book rate info
+
+23:02:12 | INFO | get_ipt - get_date_for_book_data - 62 | --Month info--
+23:02:12 | INFO | get_ipt - get_date_for_book_data - 79 | Month data:
+23:02:12 | INFO | utils - print_pretty_dict - 144 | {
+    "this_month": 10,
+    "next_1_month": 11,
+    "next_3_month": [
+        11,
+        12,
+        1
+    ]
+}
+23:02:15 | INFO | scrape3 - book_rate_info - 45 | Calender section found
+
+--------------------
+
+23:02:18 | INFO | scrape3 - book_rate_info - 68 | _____Target month: 10_____
+23:02:18 | INFO | scrape3 - book_rate_cnt - 172 | Try #1
+23:02:18 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 10
+23:02:18 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [10, 11]
+23:02:18 | INFO | scrape3 - book_rate_cnt - 197 | At the right calendar view
+23:02:21 | INFO | scrape3 - book_rate_cal - 139 | Total booked-rate: 31 / 31 = 100.00%
+
+--------------------
+
+23:02:21 | INFO | scrape3 - book_rate_info - 68 | _____Target month: 11_____
+23:02:21 | INFO | scrape3 - book_rate_cnt - 172 | Try #1
+23:02:21 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 11
+23:02:21 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [10, 11]
+23:02:21 | INFO | scrape3 - book_rate_cnt - 197 | At the right calendar view
+23:02:24 | INFO | scrape3 - book_rate_cal - 139 | Total booked-rate: 9 / 30 = 30.00%
+
+--------------------
+
+23:02:24 | INFO | scrape3 - book_rate_info - 81 | _____Target month_list: [11, 12, 1]_____
+
+--------------------
+
+23:02:24 | INFO | scrape3 - book_rate_info - 92 | ___Single target month: 11___
+23:02:24 | INFO | scrape3 - book_rate_cnt - 172 | Try #1
+23:02:24 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 11
+23:02:24 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [10, 11]
+23:02:24 | INFO | scrape3 - book_rate_cnt - 197 | At the right calendar view
+
+--------------------
+
+23:02:27 | INFO | scrape3 - book_rate_info - 92 | ___Single target month: 12___
+23:02:27 | INFO | scrape3 - book_rate_cnt - 172 | Try #1
+23:02:27 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 12
+23:02:27 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [10, 11]
+23:02:27 | INFO | scrape3 - book_rate_cnt - 211 | Wrong calendar view -> next_month_button clicked
+23:02:30 | INFO | scrape3 - book_rate_cnt - 172 | Try #2
+23:02:30 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 12
+23:02:30 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [11, 12]
+23:02:30 | INFO | scrape3 - book_rate_cnt - 197 | At the right calendar view
+
+--------------------
+
+23:02:34 | INFO | scrape3 - book_rate_info - 92 | ___Single target month: 1___
+23:02:34 | INFO | scrape3 - book_rate_cnt - 172 | Try #1
+23:02:34 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 1
+23:02:34 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [11, 12]
+23:02:34 | INFO | scrape3 - book_rate_cnt - 211 | Wrong calendar view -> next_month_button clicked
+23:02:37 | INFO | scrape3 - book_rate_cnt - 172 | Try #2
+23:02:37 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 1
+23:02:37 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [12, 1]
+23:02:37 | INFO | scrape3 - book_rate_cnt - 197 | At the right calendar view
+23:02:40 | INFO | scrape3 - book_rate_cal - 139 | Total booked-rate: 37 / 92 = 40.22%
+
+--------------------
+
+23:02:40 | INFO | utils - print_pretty_dict - 144 | {
+    "this_month_booked_rate": 100.0,
+    "next_1_month_booked_rate": 30.0,
+    "next_3_month_booked_rate": 40.21739130434783
+}
+
+
+============================== Get scrape result
+
+23:02:40 | INFO | utils - obj_to_dict - 165 | Success convert <PropertyDB> object -> <Dict> object
+23:02:40 | INFO | scrape2 - get_scrape_result - 405 | Missing data (exclude result field): 4 / 25 -> Scraping result: Partial
+23:02:40 | INFO | base - scrape_p2 - 248 | Complete scraping data for property #P-M1KSAW | result: Partial
+
+--------------------
+
+23:02:40 | INFO | utils - obj_to_dict - 165 | Success convert <PropertyDB> object -> <Dict> object
+23:02:40 | INFO | utils - print_pretty_dict - 144 | {
+    "id": null,
+    "session_id": "64bb96a6-605d-407a-b79a-da15bc74b085",
+    "session_name": "D2_HCM_231025",
+    "created_at": null,
+    "prop_code": "P-M1KSAW",
+    "prop_name": "*Little Star* Suite - Sun Avenue - Hồ bơi miễn phí",
+    "prop_link": "https://www.airbnb.com.vn/rooms/1523775006708810520",
+    "scrape_result": "Partial",
+    "guest_num": 3,
+    "bed_num": 1,
+    "bath_num": 1,
+    "location": "10.7854,106.7494",
+    "ggmap_link": "https://maps.google.com/?q=10.7854,106.7494",
+    "rating_title": "Top guest favorite",
+    "rating_star": 5.0,
+    "rating_num": 6,
+    "nightly_price": null,
+    "host_name": "Vi And DingDong Home Team",
+    "host_title": null,
+    "host_rating_star": 4.74,
+    "host_rating_num": 535,
+    "host_exp": "6 nam",
+    "host_link": "https://www.airbnb.com.vn/users/profile/1463432708010196044?previous_page_name=PdpHomeMarketplace",
+    "this_month_booked_rate": 100.0,
+    "next_1_month_booked_rate": 30.0,
+    "next_3_month_booked_rate": 40.21739130434783
+}
+23:02:40 | INFO | base - scrape_p2 - 271 | Scraping process completed | 1 properties scraped
+23:02:40 | INFO | base - scrape_p2 - 272 | Finish saving 0 properties (detail info) to database
+
+
+============================== Close browser
+
+23:02:42 | INFO | browser - close_browser - 237 | Close browser
+
+--------------------
+
+23:02:42 | INFO | base - run_full_flow - 320 | Phase 2 (detail scraping) completed.
+23:02:42 | INFO | base - <module> - 351 | Closing database session for direct file run.

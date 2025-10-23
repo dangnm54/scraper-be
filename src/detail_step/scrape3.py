@@ -238,9 +238,6 @@ def price_info(driver: WebDriver, wait_time: float) -> int | None:
         max_try: int = 12
         current_try: int = 0
 
-        price_checked_month_list: List[int] = []
-        price_found_state: bool = False
-
         # --------------------------------
 
         while current_try < max_try:
@@ -261,12 +258,6 @@ def price_info(driver: WebDriver, wait_time: float) -> int | None:
                 clean_month_name: int = cast(int, utl.get_info_from_string(month_name.text, mode='month'))
 
                 log.info(f'_____Current month: {clean_month_name}_____')
-
-                # --------------------------------
-
-                # if clean_month_name in price_checked_month_list:
-                #     log.info(f'Month #{clean_month_name} | Already checked pricing -> check next month_box')
-                #     continue
                 
                 # --------------------------------
 
@@ -297,12 +288,23 @@ def price_info(driver: WebDriver, wait_time: float) -> int | None:
 
                 # --------------------------------
 
-                price_element: WebElement = driver.find_elements(By.CSS_SELECTOR, 'span.umg93v9')[1] 
-                price: int = cast(int, utl.get_info_from_string(price_element.text, mode='price'))
-                price_data = price
+                price_css_list: List[Dict[str, str]] = [
+                    {'type': 'Normal', 'css': 'span.umg93v9'},
+                    {'type': 'Discounted', 'css': 'span.umuerxh'},
+                ]
+                
+                for config in price_css_list:
+                    price_element: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, config['css'])
+                    if price_element:
+                        log.info(f'{config["type"]} price element found')
 
-                log.info(f'Pricing found: {price}')
-                return price_data
+                        price = cast(int, utl.get_info_from_string(price_element[1].text, mode='price'))
+                        log.info(f'{config["type"]} price: {price:.0f} VND')
+
+                        price_data = price
+                        return price_data
+
+                log.info('No price element found -> check next month_box')
 
                 # --------------------------------
                 

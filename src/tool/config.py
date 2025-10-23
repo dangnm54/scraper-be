@@ -16,7 +16,8 @@ ip_website_url: str = 'https://nordvpn.com/what-is-my-ip/'
 
 
 
-# scraping config
+# scraping config ---------------------------------------------
+
 
 save_db: bool = True
 

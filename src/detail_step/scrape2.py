@@ -295,12 +295,11 @@ def host_info(driver: WebDriver) -> Dict[str, Any]:
 
         host_title_element: List[WebElement] = host_section.find_elements(By.CSS_SELECTOR, 'span.s1h3l0w7')
         host_title: str = host_title_element[0].text
-        if host_title != 'Host':
-            host_data['host_title'] = host_title
+        host_data['host_title'] = host_title
 
+        # --------------------------------
 
         host_detail_section: WebElement = host_section.find_element(By.CSS_SELECTOR, 'div.s13au5n7')
-
 
         host_rating_star: WebElement = host_detail_section.find_element(By.CSS_SELECTOR, 'div.rz5w5y3')
         clean_host_rating_star: str = utl.clean_text(host_rating_star.text, mode=3)
@@ -311,6 +310,7 @@ def host_info(driver: WebDriver) -> Dict[str, Any]:
         clean_host_rating_num2: int = cast(int, utl.get_info_from_string(clean_host_rating_num1, mode='int'))
         host_data['host_rating_num'] = clean_host_rating_num2
 
+        # --------------------------------
 
         host_exp: List[WebElement] = host_detail_section.find_elements(By.CSS_SELECTOR, 'span.a8jt5op')
         if len(host_exp) == 3:
@@ -323,6 +323,7 @@ def host_info(driver: WebDriver) -> Dict[str, Any]:
         if isinstance(host_link, str):
             host_data['host_link'] = host_link
 
+        # --------------------------------
 
         utl.print_pretty_dict(host_data)
         return host_data
