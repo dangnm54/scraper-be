@@ -298,10 +298,10 @@ def price_info(driver: WebDriver, wait_time: float) -> int | None:
                     if price_element:
                         log.info(f'{config["type"]} price element found')
 
-                        price = cast(int, utl.get_info_from_string(price_element[1].text, mode='price'))
-                        log.info(f'{config["type"]} price: {price:.0f} VND')
+                        price: int = cast(int, utl.get_info_from_string(price_element[1].text, mode='price'))
+                        log.info(f'{config["type"]} price: {price} VND')
 
-                        price_data = price
+                        price_data = int(price)
                         return price_data
 
                 log.info('No price element found -> check next month_box')
