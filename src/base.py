@@ -101,7 +101,7 @@ def start_driver() -> Tuple[WebDriver | None, WebDriverWait | None]:
 
 
 def scrape_p1(db: Session, session_id: UUID, session_name: str, 
-            location_url: str, num_guest: int | None, num_property: int,
+            search_url: str, num_guest: int | None, num_property: int,
             save_db: bool = False
     ) -> List[PropertyDB]:
     
@@ -122,7 +122,7 @@ def scrape_p1(db: Session, session_id: UUID, session_name: str,
     log.info(f'Search mode: {search_mode}')
 
     
-    scr1.go_to_website(driver, wait, wait_time, location_url)
+    scr1.go_to_website(driver, wait, wait_time, search_url)
 
     # tool search
         # scr1.go_to_website(driver, wait, wait_time, main_website_url, view='main_page')
@@ -298,7 +298,7 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
 
 def run_full_flow(
         db: Session,
-        file_name: str, location_url: str, num_guest: int | None, num_property: int,
+        file_name: str, search_url: str, num_guest: int | None, num_property: int,
         collect_host_data: bool = False,
         collect_booking_rate: bool = False
     ) -> ScrapeStatus:
@@ -308,7 +308,7 @@ def run_full_flow(
     log.info("API Request Received:")
     log.info(f"""
     - file_name: {file_name}
-    - Location: {location_url}
+    - search_url: {search_url}
     - Number of guests: {num_guest}
     - Number of properties: {num_property}
     - Collect host data: {collect_host_data}
@@ -319,7 +319,7 @@ def run_full_flow(
     session_name: str = dbop.get_session_name(db, file_name)
     log.info(f"New scraping session <{session_name}> started | ID: {session_id}")
 
-    link_list_db: List[PropertyDB] = scrape_p1(db, session_id, session_name, location_url, num_guest, num_property, save_db)
+    link_list_db: List[PropertyDB] = scrape_p1(db, session_id, session_name, search_url, num_guest, num_property, save_db)
     log.info(f"Phase 1 (link scraping) completed.")
 
     if not link_list_db:
@@ -354,7 +354,7 @@ if test_local:
                 run_full_flow(
                     db = db_session,
                     file_name = 'D2_HCM',
-                    location_url = 'https://www.airbnb.com.vn/s/Ch%E1%BB%A3-B%E1%BA%BFn-Th%C3%A0nh--H%E1%BB%93-Ch%C3%AD-Minh/homes?refinement_paths%5B%5D=%2Fhomes&place_id=ChIJTeYpMT8vdTERMH8sUnkta40&acp_id=b3099460-7cf8-426d-a28d-2fd63584ecca&date_picker_type=calendar&source=structured_search_input_header&search_type=user_map_move&query=Ch%E1%BB%A3%20B%E1%BA%BFn%20Th%C3%A0nh%2C%20H%E1%BB%93%20Ch%C3%AD%20Minh&flexible_trip_lengths%5B%5D=one_week&monthly_start_date=2025-11-01&monthly_length=3&monthly_end_date=2026-02-01&search_mode=regular_search&price_filter_input_type=2&channel=EXPLORE&ne_lat=10.776167541325885&ne_lng=106.69584543240717&sw_lat=10.773755161532563&sw_lng=106.69300269380926&zoom=19.4407356826498&zoom_level=19.4407356826498&search_by_map=true&price_filter_num_nights=5&disable_auto_translation=true',
+                    search_url = 'https://www.airbnb.com.vn/s/Ch%E1%BB%A3-B%E1%BA%BFn-Th%C3%A0nh--H%E1%BB%93-Ch%C3%AD-Minh/homes?refinement_paths%5B%5D=%2Fhomes&place_id=ChIJTeYpMT8vdTERMH8sUnkta40&acp_id=b3099460-7cf8-426d-a28d-2fd63584ecca&date_picker_type=calendar&source=structured_search_input_header&search_type=user_map_move&query=Ch%E1%BB%A3%20B%E1%BA%BFn%20Th%C3%A0nh%2C%20H%E1%BB%93%20Ch%C3%AD%20Minh&flexible_trip_lengths%5B%5D=one_week&monthly_start_date=2025-11-01&monthly_length=3&monthly_end_date=2026-02-01&search_mode=regular_search&price_filter_input_type=2&channel=EXPLORE&ne_lat=10.776167541325885&ne_lng=106.69584543240717&sw_lat=10.773755161532563&sw_lng=106.69300269380926&zoom=19.4407356826498&zoom_level=19.4407356826498&search_by_map=true&price_filter_num_nights=5&disable_auto_translation=true',
                     num_guest = None,
                     num_property = 2,
                     collect_host_data = True,
@@ -372,7 +372,7 @@ if test_local:
 # search thẳng
         # move ad checking lên go_to_website
         # add website_url input 
-    # sửa typing + db struc
+    # sửa typing
     # sửa api
     # sửa FE
 

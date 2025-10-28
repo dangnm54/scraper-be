@@ -24,7 +24,7 @@ ip_website_url: str = 'https://nordvpn.com/what-is-my-ip/'
 # scraping config ---------------------------------------------
 
 
-save_db: bool = False
+save_db: bool = True
 
 search_mode: SearchMode = 'apply'
 
@@ -32,5 +32,5 @@ log_error_level: LogErrorLevel = '3_level'
 
 scrape_phase: int = 2
 
-test_local: bool = True
+test_local: bool = False
 

@@ -7,7 +7,7 @@ from pydantic import BaseModel
 
 class ScraperSettings(BaseModel):
     file_name: str
-    location_url: str
+    search_url: str
     num_guest: int | None
     num_property: int
     collect_host_data: bool = False

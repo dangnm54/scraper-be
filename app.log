@@ -1,11 +1,11 @@
-LOG RECORDED AT: 28-10-2025 18:56:31
+LOG RECORDED AT: 28-10-2025 19:59:08
 STARTED BY FILE: base.py
 RUN METHOD: Directly in Terminal
 
 
-18:56:31 | INFO | db_op - <module> - 58 | Create engine and SessionLocal for database connection
-18:56:31 | INFO | db_op - create_db_session - 103 | Creating database session for direct file run.
-18:56:31 | INFO | base - <module> - 345 | Config:
+19:59:08 | INFO | db_op - <module> - 58 | Create engine and SessionLocal for database connection
+19:59:08 | INFO | db_op - create_db_session - 103 | Creating database session for direct file run.
+19:59:08 | INFO | base - <module> - 345 | Config:
         - save_db: False
         - search_mode: apply
         - BROWSER_MODE: local
@@ -15,710 +15,124 @@ RUN METHOD: Directly in Terminal
 
 ============================== Start full flow
 
-18:56:31 | INFO | base - run_full_flow - 308 | API Request Received:
-18:56:31 | INFO | base - run_full_flow - 309 | 
+19:59:08 | INFO | base - run_full_flow - 308 | API Request Received:
+19:59:08 | INFO | base - run_full_flow - 309 | 
     - file_name: D2_HCM
-    - Location: https://www.airbnb.com.vn/s/Ch%E1%BB%A3-B%E1%BA%BFn-Th%C3%A0nh--H%E1%BB%93-Ch%C3%AD-Minh/homes?refinement_paths%5B%5D=%2Fhomes&place_id=ChIJTeYpMT8vdTERMH8sUnkta40&acp_id=b3099460-7cf8-426d-a28d-2fd63584ecca&date_picker_type=calendar&source=structured_search_input_header&search_type=user_map_move&query=Ch%E1%BB%A3%20B%E1%BA%BFn%20Th%C3%A0nh%2C%20H%E1%BB%93%20Ch%C3%AD%20Minh&flexible_trip_lengths%5B%5D=one_week&monthly_start_date=2025-11-01&monthly_length=3&monthly_end_date=2026-02-01&search_mode=regular_search&price_filter_input_type=2&channel=EXPLORE&ne_lat=10.776167541325885&ne_lng=106.69584543240717&sw_lat=10.773755161532563&sw_lng=106.69300269380926&zoom=19.4407356826498&zoom_level=19.4407356826498&search_by_map=true&price_filter_num_nights=5&disable_auto_translation=true
+    - search_url: https://www.airbnb.com.vn/s/Ch%E1%BB%A3-B%E1%BA%BFn-Th%C3%A0nh--H%E1%BB%93-Ch%C3%AD-Minh/homes?refinement_paths%5B%5D=%2Fhomes&place_id=ChIJTeYpMT8vdTERMH8sUnkta40&acp_id=b3099460-7cf8-426d-a28d-2fd63584ecca&date_picker_type=calendar&source=structured_search_input_header&search_type=user_map_move&query=Ch%E1%BB%A3%20B%E1%BA%BFn%20Th%C3%A0nh%2C%20H%E1%BB%93%20Ch%C3%AD%20Minh&flexible_trip_lengths%5B%5D=one_week&monthly_start_date=2025-11-01&monthly_length=3&monthly_end_date=2026-02-01&search_mode=regular_search&price_filter_input_type=2&channel=EXPLORE&ne_lat=10.776167541325885&ne_lng=106.69584543240717&sw_lat=10.773755161532563&sw_lng=106.69300269380926&zoom=19.4407356826498&zoom_level=19.4407356826498&search_by_map=true&price_filter_num_nights=5&disable_auto_translation=true
     - Number of guests: None
-    - Number of properties: 3
+    - Number of properties: 2
     - Collect host data: True
     - Collect booking rate: True
     
-18:56:31 | INFO | base - run_full_flow - 320 | New scraping session <D2_HCM_281025> started | ID: 99a29166-f512-4885-bcdd-1667a81a948c
-18:56:31 | INFO | base - start_driver - 71 | Starting driver in <local> mode
+19:59:09 | INFO | base - run_full_flow - 320 | New scraping session <D2_HCM_281025> started | ID: 6e9f8d4a-945a-4a74-9243-e91aac2c8c95
+19:59:09 | INFO | base - start_driver - 71 | Starting driver in <local> mode
 
 
 ============================== Create proxy helper extension
 
-18:56:31 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
-18:56:31 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
-18:56:31 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
-18:56:31 | INFO | base - start_driver - 76 | Proxy information found in .env -> driver will use proxy
+19:59:09 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
+19:59:09 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
+19:59:09 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
+19:59:09 | INFO | base - start_driver - 76 | Proxy information found in .env -> driver will use proxy
 
 
 ============================== Config basic driver setting
 
-18:56:31 | INFO | browser - config_basic_driver_setting - 134 | Configured basic settings
+19:59:09 | INFO | browser - config_basic_driver_setting - 134 | Configured basic settings
 
 
 ============================== Config advanced driver setting
 
-18:56:31 | INFO | browser - config_proxy_driver_setting - 144 | Configured minimal logging for selenium
-18:56:31 | INFO | browser - config_proxy_driver_setting - 157 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+19:59:09 | INFO | browser - config_proxy_driver_setting - 144 | Configured minimal logging for selenium
+19:59:09 | INFO | browser - config_proxy_driver_setting - 157 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
 
 
 ============================== Start browser
 
-18:56:33 | INFO | browser - start_browser - 183 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="6d475f216bc24abaf76dd7c7d3a00aca")>> created
-18:56:33 | INFO | browser - start_browser - 193 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="6d475f216bc24abaf76dd7c7d3a00aca")>> created
-18:56:33 | INFO | browser - start_browser - 211 | Secondary monitor found, open browser on secondary monitor
-18:56:33 | INFO | base - scrape_p1 - 122 | Search mode: apply
+19:59:10 | INFO | browser - start_browser - 183 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="f69464dfde06d74206ed8a799faba26a")>> created
+19:59:10 | INFO | browser - start_browser - 193 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="f69464dfde06d74206ed8a799faba26a")>> created
+19:59:10 | INFO | browser - start_browser - 220 | Only 1 monitor, maximizing browser
+19:59:10 | INFO | base - scrape_p1 - 122 | Search mode: apply
 
 
 ============================== Go to website
 
-18:56:39 | INFO | scrape1 - go_to_website - 30 | Go to website: https://www.airbnb.com.vn/s/Ch%E1%BB%A3-B%E1%BA%BFn-Th%C3%A0nh--H%E1%BB%93-Ch%C3%AD-Minh/homes?refinement_paths%5B%5D=%2Fhomes&place_id=ChIJTeYpMT8vdTERMH8sUnkta40&acp_id=b3099460-7cf8-426d-a28d-2fd63584ecca&date_picker_type=calendar&source=structured_search_input_header&search_type=user_map_move&query=Ch%E1%BB%A3%20B%E1%BA%BFn%20Th%C3%A0nh%2C%20H%E1%BB%93%20Ch%C3%AD%20Minh&flexible_trip_lengths%5B%5D=one_week&monthly_start_date=2025-11-01&monthly_length=3&monthly_end_date=2026-02-01&search_mode=regular_search&price_filter_input_type=2&channel=EXPLORE&ne_lat=10.776167541325885&ne_lng=106.69584543240717&sw_lat=10.773755161532563&sw_lng=106.69300269380926&zoom=19.4407356826498&zoom_level=19.4407356826498&search_by_map=true&price_filter_num_nights=5&disable_auto_translation=true
-18:56:43 | INFO | scrape1 - go_to_website - 38 | Page loaded properly
-18:56:43 | INFO | scrape1 - go_to_website - 67 | Check Ad pop-up
-18:57:03 | ERROR | scrape1 - go_to_website - 99 | Found no Ad pop-up
+19:59:16 | INFO | scrape1 - go_to_website - 30 | Go to website: https://www.airbnb.com.vn/s/Ch%E1%BB%A3-B%E1%BA%BFn-Th%C3%A0nh--H%E1%BB%93-Ch%C3%AD-Minh/homes?refinement_paths%5B%5D=%2Fhomes&place_id=ChIJTeYpMT8vdTERMH8sUnkta40&acp_id=b3099460-7cf8-426d-a28d-2fd63584ecca&date_picker_type=calendar&source=structured_search_input_header&search_type=user_map_move&query=Ch%E1%BB%A3%20B%E1%BA%BFn%20Th%C3%A0nh%2C%20H%E1%BB%93%20Ch%C3%AD%20Minh&flexible_trip_lengths%5B%5D=one_week&monthly_start_date=2025-11-01&monthly_length=3&monthly_end_date=2026-02-01&search_mode=regular_search&price_filter_input_type=2&channel=EXPLORE&ne_lat=10.776167541325885&ne_lng=106.69584543240717&sw_lat=10.773755161532563&sw_lng=106.69300269380926&zoom=19.4407356826498&zoom_level=19.4407356826498&search_by_map=true&price_filter_num_nights=5&disable_auto_translation=true
+19:59:17 | INFO | scrape1 - go_to_website - 38 | Page loaded properly
+19:59:17 | INFO | scrape1 - go_to_website - 67 | Check Ad pop-up
+19:59:38 | ERROR | scrape1 - go_to_website - 99 | Found no Ad pop-up
 
 
 ============================== View page and get all link
 
-18:57:03 | INFO | scrape1 - view_page_get_all_link - 261 | Ready to scrape 3 properties | Search-mode: apply
-18:57:10 | INFO | scrape1 - view_page_get_all_link - 324 | Prop #1 / 3: MG Daisy Wabi-Sabi Inspired
-18:57:10 | INFO | utils - print_pretty_dict - 159 | {
-    "prop_code": "P-62V4EL",
+19:59:38 | INFO | scrape1 - view_page_get_all_link - 261 | Ready to scrape 2 properties | Search-mode: apply
+19:59:42 | INFO | scrape1 - view_page_get_all_link - 324 | Prop #1 / 2: MG Daisy Wabi-Sabi Inspired
+19:59:42 | INFO | utils - print_pretty_dict - 159 | {
+    "prop_code": "P-ZWWF9B",
     "prop_name": "MG Daisy Wabi-Sabi Inspired",
     "prop_link": "https://www.airbnb.com.vn/rooms/1470103827296390049"
 }
-18:57:13 | INFO | scrape1 - view_page_get_all_link - 324 | Prop #2 / 3: Ẩn - Hidden Home Sài Gòn
-18:57:13 | INFO | utils - print_pretty_dict - 159 | {
-    "prop_code": "P-BK0P82",
+19:59:44 | INFO | scrape1 - view_page_get_all_link - 324 | Prop #2 / 2: Ẩn - Hidden Home Sài Gòn
+19:59:44 | INFO | utils - print_pretty_dict - 159 | {
+    "prop_code": "P-1CYIQV",
     "prop_name": "Ẩn - Hidden Home Sài Gòn",
     "prop_link": "https://www.airbnb.com.vn/rooms/1373073985398194296"
 }
-18:57:17 | INFO | scrape1 - view_page_get_all_link - 324 | Prop #3 / 3: Căn hộ quận 1 đầy phong cách | Hồ bơi + Tầng thượng + Thang máy
-18:57:17 | INFO | utils - print_pretty_dict - 159 | {
-    "prop_code": "P-MXYKMX",
-    "prop_name": "Căn hộ quận 1 đầy phong cách | Hồ bơi + Tầng thượng + Thang máy",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1522895671149723972"
-}
-18:57:17 | INFO | scrape1 - view_page_get_all_link - 351 | 3 properties (basic info) scraped
+19:59:44 | INFO | scrape1 - view_page_get_all_link - 351 | 2 properties (basic info) scraped
 
 
 ============================== Close browser
 
-18:57:19 | INFO | browser - close_browser - 237 | Close browser
-18:57:19 | INFO | base - run_full_flow - 323 | Phase 1 (link scraping) completed.
-18:57:19 | INFO | base - start_driver - 71 | Starting driver in <local> mode
+19:59:46 | INFO | browser - close_browser - 237 | Close browser
+19:59:46 | INFO | base - run_full_flow - 323 | Phase 1 (link scraping) completed.
+19:59:46 | INFO | base - start_driver - 71 | Starting driver in <local> mode
 
 
 ============================== Create proxy helper extension
 
-18:57:19 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
-18:57:19 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
-18:57:19 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
-18:57:19 | INFO | base - start_driver - 76 | Proxy information found in .env -> driver will use proxy
+19:59:46 | INFO | browser - crt_proxy_helper_extention - 32 | Created proxy_auth_extension
+19:59:46 | INFO | browser - crt_proxy_helper_extention - 58 | Created proxy_auth_extension\manifest.json
+19:59:46 | INFO | browser - crt_proxy_helper_extention - 99 | Created proxy_auth_extension\background.js
+19:59:46 | INFO | base - start_driver - 76 | Proxy information found in .env -> driver will use proxy
 
 
 ============================== Config basic driver setting
 
-18:57:19 | INFO | browser - config_basic_driver_setting - 134 | Configured basic settings
+19:59:46 | INFO | browser - config_basic_driver_setting - 134 | Configured basic settings
 
 
 ============================== Config advanced driver setting
 
-18:57:19 | INFO | browser - config_proxy_driver_setting - 144 | Configured minimal logging for selenium
-18:57:19 | INFO | browser - config_proxy_driver_setting - 157 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
+19:59:46 | INFO | browser - config_proxy_driver_setting - 144 | Configured minimal logging for selenium
+19:59:46 | INFO | browser - config_proxy_driver_setting - 157 | Configured Edge to load proxy helper extension from: C:\Users\ADMIN\Pictures\scraper\scraper-be\proxy_auth_extension
 
 
 ============================== Start browser
 
-18:57:20 | INFO | browser - start_browser - 183 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="086e99d0b779ec425923093ba3ddcaa8")>> created
-18:57:20 | INFO | browser - start_browser - 193 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="086e99d0b779ec425923093ba3ddcaa8")>> created
-18:57:20 | INFO | browser - start_browser - 211 | Secondary monitor found, open browser on secondary monitor
+19:59:47 | INFO | browser - start_browser - 183 | Edge browser started | Driver <<selenium.webdriver.edge.webdriver.WebDriver (session="fc01a9443feed2a082dc321040a89da7")>> created
+19:59:47 | INFO | browser - start_browser - 193 | Wait <<selenium.webdriver.support.wait.WebDriverWait (session="fc01a9443feed2a082dc321040a89da7")>> created
+19:59:47 | INFO | browser - start_browser - 220 | Only 1 monitor, maximizing browser
 
 --------------------
 
-18:57:21 | INFO | base - scrape_p2 - 212 | Scraping property #1: P-62V4EL - MG Daisy Wabi-Sabi Inspired
+19:59:47 | INFO | base - scrape_p2 - 212 | Scraping property #1: P-ZWWF9B - MG Daisy Wabi-Sabi Inspired
 
 
 ============================== Go to website
 
-18:57:25 | INFO | scrape1 - go_to_website - 30 | Go to website: https://www.airbnb.com.vn/rooms/1470103827296390049
-18:57:28 | INFO | scrape1 - go_to_website - 38 | Page loaded properly
-18:57:28 | INFO | scrape1 - go_to_website - 67 | Check Ad pop-up
-18:57:28 | INFO | scrape1 - go_to_website - 72 | Found Ad pop-up
-18:57:28 | INFO | scrape1 - go_to_website - 80 | Check config | found_element: <<selenium.webdriver.remote.webelement.WebElement (session="086e99d0b779ec425923093ba3ddcaa8", element="f.40476E0F3C26ECF3EC211B00D813543D.d.5CC4E7A56F5C25881D98C9B2B119EA83.e.48")>> | current_elements: <[]>
-18:57:28 | INFO | scrape1 - go_to_website - 80 | Check config | found_element: <<selenium.webdriver.remote.webelement.WebElement (session="086e99d0b779ec425923093ba3ddcaa8", element="f.40476E0F3C26ECF3EC211B00D813543D.d.5CC4E7A56F5C25881D98C9B2B119EA83.e.48")>> | current_elements: <[]>
-18:57:28 | INFO | scrape1 - go_to_website - 80 | Check config | found_element: <<selenium.webdriver.remote.webelement.WebElement (session="086e99d0b779ec425923093ba3ddcaa8", element="f.40476E0F3C26ECF3EC211B00D813543D.d.5CC4E7A56F5C25881D98C9B2B119EA83.e.48")>> | current_elements: <[<selenium.webdriver.remote.webelement.WebElement (session="086e99d0b779ec425923093ba3ddcaa8", element="f.40476E0F3C26ECF3EC211B00D813543D.d.5CC4E7A56F5C25881D98C9B2B119EA83.e.48")>]>
-18:57:28 | INFO | scrape1 - go_to_website - 83 | Found ad type <detail-page>
-18:57:28 | INFO | scrape1 - go_to_website - 90 | Found close button
-18:57:28 | INFO | scrape1 - go_to_website - 92 | Close Ad pop-up
+19:59:55 | INFO | scrape1 - go_to_website - 30 | Go to website: https://www.airbnb.com.vn/rooms/1470103827296390049
+19:59:57 | INFO | scrape1 - go_to_website - 38 | Page loaded properly
+19:59:57 | INFO | scrape1 - go_to_website - 67 | Check Ad pop-up
+19:59:57 | INFO | scrape1 - go_to_website - 72 | Found Ad pop-up
+19:59:57 | INFO | scrape1 - go_to_website - 80 | Check config | found_element: <<selenium.webdriver.remote.webelement.WebElement (session="fc01a9443feed2a082dc321040a89da7", element="f.AD5615F6AEADD984738B8C8FFFA7B222.d.3DDB47104C16698AFCB1D5E7EF30ADF4.e.50")>> | current_elements: <[]>
+19:59:57 | INFO | scrape1 - go_to_website - 80 | Check config | found_element: <<selenium.webdriver.remote.webelement.WebElement (session="fc01a9443feed2a082dc321040a89da7", element="f.AD5615F6AEADD984738B8C8FFFA7B222.d.3DDB47104C16698AFCB1D5E7EF30ADF4.e.50")>> | current_elements: <[]>
+19:59:57 | INFO | scrape1 - go_to_website - 80 | Check config | found_element: <<selenium.webdriver.remote.webelement.WebElement (session="fc01a9443feed2a082dc321040a89da7", element="f.AD5615F6AEADD984738B8C8FFFA7B222.d.3DDB47104C16698AFCB1D5E7EF30ADF4.e.50")>> | current_elements: <[<selenium.webdriver.remote.webelement.WebElement (session="fc01a9443feed2a082dc321040a89da7", element="f.AD5615F6AEADD984738B8C8FFFA7B222.d.3DDB47104C16698AFCB1D5E7EF30ADF4.e.50")>]>
+19:59:57 | INFO | scrape1 - go_to_website - 83 | Found ad type <detail-page>
+19:59:57 | INFO | scrape1 - go_to_website - 90 | Found close button
+19:59:57 | INFO | scrape1 - go_to_website - 92 | Close Ad pop-up
 
 
 ============================== Overview info
 
-18:57:28 | INFO | scrape2 - overview_info - 41 | Overview section found
-18:57:52 | ERROR | log_op - log_detail_error - 146 | Message: 
-Stacktrace:
-	GetHandleVerifier [0x0x7ff7a4762a15+51877]
-	GetHandleVerifier [0x0x7ff7a4762a74+51972]
-	GetHandleVerifier [0x0x7ff7a49193c5+1848405]
-	(No symbol) [0x0x7ff7a452045b]
-	(No symbol) [0x0x7ff7a452071b]
-	(No symbol) [0x0x7ff7a4561927]
-	(No symbol) [0x0x7ff7a454216f]
-	(No symbol) [0x0x7ff7a451667b]
-	(No symbol) [0x0x7ff7a455f3d2]
-	(No symbol) [0x0x7ff7a4541df3]
-	(No symbol) [0x0x7ff7a4515b36]
-	(No symbol) [0x0x7ff7a4514d80]
-	(No symbol) [0x0x7ff7a4515973]
-	(No symbol) [0x0x7ff7a45de4a5]
-	(No symbol) [0x0x7ff7a45da75d]
-	GetHandleVerifier [0x0x7ff7a478d253+226019]
-	GetHandleVerifier [0x0x7ff7a477c421+156849]
-	GetHandleVerifier [0x0x7ff7a4784919+190889]
-	GetHandleVerifier [0x0x7ff7a4769b54+80868]
-	GetHandleVerifier [0x0x7ff7a4769ca3+81203]
-	GetHandleVerifier [0x0x7ff7a4758226+8886]
-	BaseThreadInitThunk [0x0x7ffb73dce8d7+23]
-	RtlUserThreadStart [0x0x7ffb7490c53c+44]
-
-- Error level #1: File <scrape2.py> | Function <overview_info> | Line #62: wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a[href*="google.com/maps"]')))
-- Error level #2: File <wait.py> | Function <until> | Line #138: raise TimeoutException(message, screen, stacktrace)
-18:57:52 | ERROR | scrape2 - overview_info - 76 | Error to scrape location data
-18:57:52 | INFO | utils - print_pretty_dict - 159 | {
-    "guest_num": 3,
-    "bed_num": 2,
-    "bath_num": 1,
-    "location": null,
-    "ggmap_link": null
-}
-
-
-============================== Rating info
-
-18:57:56 | INFO | scrape2 - rating_info - 217 | Normal rating element found
-18:57:56 | INFO | scrape2 - rating_info - 232 | Normal rating data collected
-18:57:56 | INFO | utils - print_pretty_dict - 159 | {
-    "rating_title": null,
-    "rating_star": 4.78,
-    "rating_num": 40
-}
-
-
-============================== Price info
-
-18:57:59 | INFO | scrape3 - price_info - 233 | Calender section found
-18:58:03 | INFO | scrape3 - price_info - 246 | Try #1
-18:58:03 | INFO | scrape3 - price_info - 260 | _____Current month: 10_____
-18:58:03 | INFO | scrape3 - price_info - 274 | --- Click iteration 1/2 ---
-18:58:03 | INFO | scrape3 - price_info - 282 | Click 1/2 -> choose day #29
-18:58:06 | INFO | scrape3 - price_info - 274 | --- Click iteration 2/2 ---
-18:58:07 | INFO | scrape3 - price_info - 282 | Click 2/2 -> choose day #30
-18:58:10 | INFO | scrape3 - price_info - 299 | Normal price element found
-18:58:10 | INFO | scrape3 - price_info - 302 | Normal price: 889291 VND
-
-
-============================== Host info
-
-18:58:14 | INFO | utils - print_pretty_dict - 159 | {
-    "host_name": "Amelia",
-    "host_title": "Chủ nhà siêu cấp",
-    "host_rating_star": 4.82,
-    "host_rating_num": 312,
-    "host_exp": "6 nam",
-    "host_link": "https://www.airbnb.com.vn/users/profile/1469605740042052494?previous_page_name=PdpHomeMarketplace"
-}
-
-
-============================== Book rate info
-
-18:58:14 | INFO | get_ipt - get_date_for_book_data - 62 | --Month info--
-18:58:14 | INFO | get_ipt - get_date_for_book_data - 79 | Month data:
-18:58:14 | INFO | utils - print_pretty_dict - 159 | {
-    "this_month": 10,
-    "next_1_month": 11,
-    "next_3_month": [
-        11,
-        12,
-        1
-    ]
-}
-18:58:17 | INFO | scrape3 - book_rate_info - 45 | Calender section found
-
---------------------
-
-18:58:21 | INFO | scrape3 - book_rate_info - 68 | _____Target month: 10_____
-18:58:21 | INFO | scrape3 - book_rate_cnt - 172 | Try #1
-18:58:21 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 10
-18:58:21 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [10, 11]
-18:58:21 | INFO | scrape3 - book_rate_cnt - 197 | At the right calendar view
-18:58:24 | INFO | scrape3 - book_rate_cal - 139 | Total booked-rate: 29 / 31 = 93.55%
-
---------------------
-
-18:58:24 | INFO | scrape3 - book_rate_info - 68 | _____Target month: 11_____
-18:58:24 | INFO | scrape3 - book_rate_cnt - 172 | Try #1
-18:58:24 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 11
-18:58:24 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [10, 11]
-18:58:24 | INFO | scrape3 - book_rate_cnt - 197 | At the right calendar view
-18:58:28 | INFO | scrape3 - book_rate_cal - 139 | Total booked-rate: 14 / 30 = 46.67%
-
---------------------
-
-18:58:28 | INFO | scrape3 - book_rate_info - 81 | _____Target month_list: [11, 12, 1]_____
-
---------------------
-
-18:58:28 | INFO | scrape3 - book_rate_info - 92 | ___Single target month: 11___
-18:58:28 | INFO | scrape3 - book_rate_cnt - 172 | Try #1
-18:58:28 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 11
-18:58:28 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [10, 11]
-18:58:28 | INFO | scrape3 - book_rate_cnt - 197 | At the right calendar view
-
---------------------
-
-18:58:31 | INFO | scrape3 - book_rate_info - 92 | ___Single target month: 12___
-18:58:31 | INFO | scrape3 - book_rate_cnt - 172 | Try #1
-18:58:31 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 12
-18:58:31 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [10, 11]
-18:58:31 | INFO | scrape3 - book_rate_cnt - 211 | Wrong calendar view -> next_month_button clicked
-18:58:35 | INFO | scrape3 - book_rate_cnt - 172 | Try #2
-18:58:35 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 12
-18:58:35 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [11, 12]
-18:58:35 | INFO | scrape3 - book_rate_cnt - 197 | At the right calendar view
-
---------------------
-
-18:58:38 | INFO | scrape3 - book_rate_info - 92 | ___Single target month: 1___
-18:58:38 | INFO | scrape3 - book_rate_cnt - 172 | Try #1
-18:58:38 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 1
-18:58:38 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [11, 12]
-18:58:38 | INFO | scrape3 - book_rate_cnt - 211 | Wrong calendar view -> next_month_button clicked
-18:58:42 | INFO | scrape3 - book_rate_cnt - 172 | Try #2
-18:58:42 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 1
-18:58:42 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [12, 1]
-18:58:42 | INFO | scrape3 - book_rate_cnt - 197 | At the right calendar view
-18:58:45 | INFO | scrape3 - book_rate_cal - 139 | Total booked-rate: 31 / 92 = 33.70%
-
---------------------
-
-18:58:45 | INFO | utils - print_pretty_dict - 159 | {
-    "this_month_booked_rate": 93.54838709677419,
-    "next_1_month_booked_rate": 46.666666666666664,
-    "next_3_month_booked_rate": 33.69565217391305
-}
-
-
-============================== Get scrape result
-
-18:58:45 | INFO | utils - obj_to_dict - 180 | Success convert <PropertyDB> object -> <Dict> object
-18:58:45 | INFO | scrape2 - get_scrape_result - 406 | Missing data (exclude result field): 5 / 25 -> Scraping result: Partial
-18:58:45 | INFO | base - scrape_p2 - 260 | Complete scraping data for property #P-62V4EL | result: Partial
-
---------------------
-
-18:58:45 | INFO | utils - obj_to_dict - 180 | Success convert <PropertyDB> object -> <Dict> object
-18:58:45 | INFO | utils - print_pretty_dict - 159 | {
-    "id": null,
-    "session_id": "99a29166-f512-4885-bcdd-1667a81a948c",
-    "session_name": "D2_HCM_281025",
-    "created_at": null,
-    "prop_code": "P-62V4EL",
-    "prop_name": "MG Daisy Wabi-Sabi Inspired",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1470103827296390049",
-    "scrape_result": "Partial",
-    "guest_num": 3,
-    "bed_num": 2,
-    "bath_num": 1,
-    "location": null,
-    "ggmap_link": null,
-    "rating_title": null,
-    "rating_star": 4.78,
-    "rating_num": 40,
-    "nightly_price": 889291,
-    "host_name": "Amelia",
-    "host_title": "Chủ nhà siêu cấp",
-    "host_rating_star": 4.82,
-    "host_rating_num": 312,
-    "host_exp": "6 nam",
-    "host_link": "https://www.airbnb.com.vn/users/profile/1469605740042052494?previous_page_name=PdpHomeMarketplace",
-    "this_month_booked_rate": 93.54838709677419,
-    "next_1_month_booked_rate": 46.666666666666664,
-    "next_3_month_booked_rate": 33.69565217391305
-}
-
---------------------
-
-18:58:45 | INFO | base - scrape_p2 - 212 | Scraping property #2: P-BK0P82 - Ẩn - Hidden Home Sài Gòn
-
-
-============================== Go to website
-
-18:58:46 | INFO | scrape1 - go_to_website - 30 | Go to website: https://www.airbnb.com.vn/rooms/1373073985398194296
-18:58:49 | INFO | scrape1 - go_to_website - 38 | Page loaded properly
-18:58:49 | INFO | scrape1 - go_to_website - 67 | Check Ad pop-up
-18:59:10 | ERROR | scrape1 - go_to_website - 99 | Found no Ad pop-up
-
-
-============================== Overview info
-
-18:59:10 | INFO | scrape2 - overview_info - 41 | Overview section found
-18:59:13 | INFO | utils - print_pretty_dict - 159 | {
-    "guest_num": 2,
-    "bed_num": 1,
-    "bath_num": 1,
-    "location": "10.7740804,106.6946832",
-    "ggmap_link": "https://maps.google.com/?q=10.7740804,106.6946832"
-}
-
-
-============================== Rating info
-
-18:59:17 | INFO | scrape2 - rating_info - 217 | Normal rating element found
-18:59:17 | INFO | scrape2 - rating_info - 232 | Normal rating data collected
-18:59:17 | INFO | utils - print_pretty_dict - 159 | {
-    "rating_title": null,
-    "rating_star": 4.69,
-    "rating_num": 13
-}
-
-
-============================== Price info
-
-18:59:20 | INFO | scrape3 - price_info - 233 | Calender section found
-18:59:23 | INFO | scrape3 - price_info - 246 | Try #1
-18:59:24 | INFO | scrape3 - price_info - 260 | _____Current month: 10_____
-18:59:24 | ERROR | scrape3 - price_info - 267 | No available days to check pricing -> check next month_box
-18:59:24 | INFO | scrape3 - price_info - 260 | _____Current month: 11_____
-18:59:24 | INFO | scrape3 - price_info - 274 | --- Click iteration 1/2 ---
-18:59:24 | INFO | scrape3 - price_info - 282 | Click 1/2 -> choose day #2
-18:59:27 | INFO | scrape3 - price_info - 274 | --- Click iteration 2/2 ---
-18:59:27 | INFO | scrape3 - price_info - 282 | Click 2/2 -> choose day #3
-18:59:31 | INFO | scrape3 - price_info - 299 | Normal price element found
-18:59:31 | INFO | scrape3 - price_info - 302 | Normal price: 1154871 VND
-
-
-============================== Host info
-
-18:59:34 | INFO | utils - print_pretty_dict - 159 | {
-    "host_name": "Krystal Nguyễn",
-    "host_title": "Host",
-    "host_rating_star": 4.71,
-    "host_rating_num": 14,
-    "host_exp": "7 thang",
-    "host_link": "https://www.airbnb.com.vn/users/profile/1469820216493340556?previous_page_name=PdpHomeMarketplace"
-}
-
-
-============================== Book rate info
-
-18:59:34 | INFO | get_ipt - get_date_for_book_data - 62 | --Month info--
-18:59:34 | INFO | get_ipt - get_date_for_book_data - 79 | Month data:
-18:59:34 | INFO | utils - print_pretty_dict - 159 | {
-    "this_month": 10,
-    "next_1_month": 11,
-    "next_3_month": [
-        11,
-        12,
-        1
-    ]
-}
-18:59:38 | INFO | scrape3 - book_rate_info - 45 | Calender section found
-
---------------------
-
-18:59:41 | INFO | scrape3 - book_rate_info - 68 | _____Target month: 10_____
-18:59:41 | INFO | scrape3 - book_rate_cnt - 172 | Try #1
-18:59:41 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 10
-18:59:41 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [10, 11]
-18:59:41 | INFO | scrape3 - book_rate_cnt - 197 | At the right calendar view
-18:59:45 | INFO | scrape3 - book_rate_cal - 139 | Total booked-rate: 31 / 31 = 100.00%
-
---------------------
-
-18:59:45 | INFO | scrape3 - book_rate_info - 68 | _____Target month: 11_____
-18:59:45 | INFO | scrape3 - book_rate_cnt - 172 | Try #1
-18:59:45 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 11
-18:59:45 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [10, 11]
-18:59:45 | INFO | scrape3 - book_rate_cnt - 197 | At the right calendar view
-18:59:48 | INFO | scrape3 - book_rate_cal - 139 | Total booked-rate: 9 / 30 = 30.00%
-
---------------------
-
-18:59:48 | INFO | scrape3 - book_rate_info - 81 | _____Target month_list: [11, 12, 1]_____
-
---------------------
-
-18:59:48 | INFO | scrape3 - book_rate_info - 92 | ___Single target month: 11___
-18:59:48 | INFO | scrape3 - book_rate_cnt - 172 | Try #1
-18:59:48 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 11
-18:59:48 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [10, 11]
-18:59:48 | INFO | scrape3 - book_rate_cnt - 197 | At the right calendar view
-
---------------------
-
-18:59:52 | INFO | scrape3 - book_rate_info - 92 | ___Single target month: 12___
-18:59:52 | INFO | scrape3 - book_rate_cnt - 172 | Try #1
-18:59:52 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 12
-18:59:52 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [10, 11]
-18:59:52 | INFO | scrape3 - book_rate_cnt - 211 | Wrong calendar view -> next_month_button clicked
-18:59:55 | INFO | scrape3 - book_rate_cnt - 172 | Try #2
-18:59:56 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 12
-18:59:56 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [11, 12]
-18:59:56 | INFO | scrape3 - book_rate_cnt - 197 | At the right calendar view
-
---------------------
-
-18:59:59 | INFO | scrape3 - book_rate_info - 92 | ___Single target month: 1___
-18:59:59 | INFO | scrape3 - book_rate_cnt - 172 | Try #1
-18:59:59 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 1
-18:59:59 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [11, 12]
-18:59:59 | INFO | scrape3 - book_rate_cnt - 211 | Wrong calendar view -> next_month_button clicked
-19:00:03 | INFO | scrape3 - book_rate_cnt - 172 | Try #2
-19:00:03 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 1
-19:00:03 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [12, 1]
-19:00:03 | INFO | scrape3 - book_rate_cnt - 197 | At the right calendar view
-19:00:06 | INFO | scrape3 - book_rate_cal - 139 | Total booked-rate: 20 / 92 = 21.74%
-
---------------------
-
-19:00:06 | INFO | utils - print_pretty_dict - 159 | {
-    "this_month_booked_rate": 100.0,
-    "next_1_month_booked_rate": 30.0,
-    "next_3_month_booked_rate": 21.73913043478261
-}
-
-
-============================== Get scrape result
-
-19:00:06 | INFO | utils - obj_to_dict - 180 | Success convert <PropertyDB> object -> <Dict> object
-19:00:06 | INFO | scrape2 - get_scrape_result - 406 | Missing data (exclude result field): 3 / 25 -> Scraping result: Partial
-19:00:06 | INFO | base - scrape_p2 - 260 | Complete scraping data for property #P-BK0P82 | result: Partial
-
---------------------
-
-19:00:06 | INFO | utils - obj_to_dict - 180 | Success convert <PropertyDB> object -> <Dict> object
-19:00:06 | INFO | utils - print_pretty_dict - 159 | {
-    "id": null,
-    "session_id": "99a29166-f512-4885-bcdd-1667a81a948c",
-    "session_name": "D2_HCM_281025",
-    "created_at": null,
-    "prop_code": "P-BK0P82",
-    "prop_name": "Ẩn - Hidden Home Sài Gòn",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1373073985398194296",
-    "scrape_result": "Partial",
-    "guest_num": 2,
-    "bed_num": 1,
-    "bath_num": 1,
-    "location": "10.7740804,106.6946832",
-    "ggmap_link": "https://maps.google.com/?q=10.7740804,106.6946832",
-    "rating_title": null,
-    "rating_star": 4.69,
-    "rating_num": 13,
-    "nightly_price": 1154871,
-    "host_name": "Krystal Nguyễn",
-    "host_title": "Host",
-    "host_rating_star": 4.71,
-    "host_rating_num": 14,
-    "host_exp": "7 thang",
-    "host_link": "https://www.airbnb.com.vn/users/profile/1469820216493340556?previous_page_name=PdpHomeMarketplace",
-    "this_month_booked_rate": 100.0,
-    "next_1_month_booked_rate": 30.0,
-    "next_3_month_booked_rate": 21.73913043478261
-}
-
---------------------
-
-19:00:06 | INFO | base - scrape_p2 - 212 | Scraping property #3: P-MXYKMX - Căn hộ quận 1 đầy phong cách | Hồ bơi + Tầng thượng + Thang máy
-
-
-============================== Go to website
-
-19:00:06 | INFO | scrape1 - go_to_website - 30 | Go to website: https://www.airbnb.com.vn/rooms/1522895671149723972
-19:00:10 | INFO | scrape1 - go_to_website - 38 | Page loaded properly
-19:00:10 | INFO | scrape1 - go_to_website - 67 | Check Ad pop-up
-19:00:30 | ERROR | scrape1 - go_to_website - 99 | Found no Ad pop-up
-
-
-============================== Overview info
-
-19:00:30 | INFO | scrape2 - overview_info - 41 | Overview section found
-19:00:34 | INFO | utils - print_pretty_dict - 159 | {
-    "guest_num": 2,
-    "bed_num": 1,
-    "bath_num": 1,
-    "location": "10.7754862,106.6937725",
-    "ggmap_link": "https://maps.google.com/?q=10.7754862,106.6937725"
-}
-
-
-============================== Rating info
-
-19:00:37 | INFO | scrape2 - rating_info - 217 | Normal rating element found
-19:00:37 | ERROR | log_op - log_detail_error - 146 | could not convert string to float: 'Mới'
-- Error level #1: File <scrape2.py> | Function <rating_info> | Line #226: rating_data['rating_star'] = float(clean_star)
-
-
-============================== Price info
-
-19:00:41 | INFO | scrape3 - price_info - 233 | Calender section found
-19:00:44 | INFO | scrape3 - price_info - 246 | Try #1
-19:00:44 | INFO | scrape3 - price_info - 260 | _____Current month: 10_____
-19:00:44 | INFO | scrape3 - price_info - 274 | --- Click iteration 1/2 ---
-19:00:44 | INFO | scrape3 - price_info - 282 | Click 1/2 -> choose day #28
-19:00:48 | INFO | scrape3 - price_info - 274 | --- Click iteration 2/2 ---
-19:00:48 | INFO | scrape3 - price_info - 282 | Click 2/2 -> choose day #29
-19:00:51 | INFO | scrape3 - price_info - 299 | Normal price element found
-19:00:51 | INFO | scrape3 - price_info - 302 | Normal price: 1369412 VND
-
-
-============================== Host info
-
-19:00:55 | ERROR | log_op - log_detail_error - 146 | Message: no such element: Unable to locate element: {"method":"css selector","selector":"div.s13au5n7"}
-  (Session info: MicrosoftEdge=141.0.3537.92); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
-Stacktrace:
-	GetHandleVerifier [0x0x7ff7a4762a15+51877]
-	GetHandleVerifier [0x0x7ff7a4762a74+51972]
-	GetHandleVerifier [0x0x7ff7a49193c5+1848405]
-	(No symbol) [0x0x7ff7a452045b]
-	(No symbol) [0x0x7ff7a452071b]
-	(No symbol) [0x0x7ff7a45166cc]
-	(No symbol) [0x0x7ff7a454216f]
-	(No symbol) [0x0x7ff7a451667b]
-	(No symbol) [0x0x7ff7a451652d]
-	(No symbol) [0x0x7ff7a45423e0]
-	(No symbol) [0x0x7ff7a451667b]
-	(No symbol) [0x0x7ff7a455f3d2]
-	(No symbol) [0x0x7ff7a4541df3]
-	(No symbol) [0x0x7ff7a4515b36]
-	(No symbol) [0x0x7ff7a4514d80]
-	(No symbol) [0x0x7ff7a4515973]
-	(No symbol) [0x0x7ff7a45de4a5]
-	(No symbol) [0x0x7ff7a45da75d]
-	GetHandleVerifier [0x0x7ff7a478d253+226019]
-	GetHandleVerifier [0x0x7ff7a477c421+156849]
-	GetHandleVerifier [0x0x7ff7a4784919+190889]
-	GetHandleVerifier [0x0x7ff7a4769b54+80868]
-	GetHandleVerifier [0x0x7ff7a4769ca3+81203]
-	GetHandleVerifier [0x0x7ff7a4758226+8886]
-	BaseThreadInitThunk [0x0x7ffb73dce8d7+23]
-	RtlUserThreadStart [0x0x7ffb7490c53c+44]
-
-- Error level #1: File <webelement.py> | Function <_execute> | Line #573: return self._parent.execute(command, params)
-- Error level #2: File <webdriver.py> | Function <execute> | Line #454: self.error_handler.check_response(response)
-- Error level #3: File <errorhandler.py> | Function <check_response> | Line #232: raise exception_class(message, screen, stacktrace)
-
-
-============================== Book rate info
-
-19:00:55 | INFO | get_ipt - get_date_for_book_data - 62 | --Month info--
-19:00:55 | INFO | get_ipt - get_date_for_book_data - 79 | Month data:
-19:00:55 | INFO | utils - print_pretty_dict - 159 | {
-    "this_month": 10,
-    "next_1_month": 11,
-    "next_3_month": [
-        11,
-        12,
-        1
-    ]
-}
-19:00:58 | INFO | scrape3 - book_rate_info - 45 | Calender section found
-
---------------------
-
-19:01:02 | INFO | scrape3 - book_rate_info - 68 | _____Target month: 10_____
-19:01:02 | INFO | scrape3 - book_rate_cnt - 172 | Try #1
-19:01:02 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 10
-19:01:02 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [10, 11]
-19:01:02 | INFO | scrape3 - book_rate_cnt - 197 | At the right calendar view
-19:01:05 | INFO | scrape3 - book_rate_cal - 139 | Total booked-rate: 27 / 31 = 87.10%
-
---------------------
-
-19:01:05 | INFO | scrape3 - book_rate_info - 68 | _____Target month: 11_____
-19:01:05 | INFO | scrape3 - book_rate_cnt - 172 | Try #1
-19:01:05 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 11
-19:01:05 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [10, 11]
-19:01:05 | INFO | scrape3 - book_rate_cnt - 197 | At the right calendar view
-19:01:09 | INFO | scrape3 - book_rate_cal - 139 | Total booked-rate: 0 / 30 = 0.00%
-
---------------------
-
-19:01:09 | INFO | scrape3 - book_rate_info - 81 | _____Target month_list: [11, 12, 1]_____
-
---------------------
-
-19:01:09 | INFO | scrape3 - book_rate_info - 92 | ___Single target month: 11___
-19:01:09 | INFO | scrape3 - book_rate_cnt - 172 | Try #1
-19:01:09 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 11
-19:01:09 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [10, 11]
-19:01:09 | INFO | scrape3 - book_rate_cnt - 197 | At the right calendar view
-
---------------------
-
-19:01:12 | INFO | scrape3 - book_rate_info - 92 | ___Single target month: 12___
-19:01:12 | INFO | scrape3 - book_rate_cnt - 172 | Try #1
-19:01:12 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 12
-19:01:12 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [10, 11]
-19:01:12 | INFO | scrape3 - book_rate_cnt - 211 | Wrong calendar view -> next_month_button clicked
-19:01:16 | INFO | scrape3 - book_rate_cnt - 172 | Try #2
-19:01:16 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 12
-19:01:16 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [11, 12]
-19:01:16 | INFO | scrape3 - book_rate_cnt - 197 | At the right calendar view
-
---------------------
-
-19:01:19 | INFO | scrape3 - book_rate_info - 92 | ___Single target month: 1___
-19:01:19 | INFO | scrape3 - book_rate_cnt - 172 | Try #1
-19:01:19 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 1
-19:01:19 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [11, 12]
-19:01:20 | INFO | scrape3 - book_rate_cnt - 211 | Wrong calendar view -> next_month_button clicked
-19:01:23 | INFO | scrape3 - book_rate_cnt - 172 | Try #2
-19:01:23 | INFO | scrape3 - book_rate_cnt - 191 | Target month: 1
-19:01:23 | INFO | scrape3 - book_rate_cnt - 192 | Current month_pair: [12, 1]
-19:01:23 | INFO | scrape3 - book_rate_cnt - 197 | At the right calendar view
-19:01:26 | INFO | scrape3 - book_rate_cal - 139 | Total booked-rate: 3 / 92 = 3.26%
-
---------------------
-
-19:01:27 | INFO | utils - print_pretty_dict - 159 | {
-    "this_month_booked_rate": 87.09677419354838,
-    "next_1_month_booked_rate": 0.0,
-    "next_3_month_booked_rate": 3.260869565217391
-}
-
-
-============================== Get scrape result
-
-19:01:27 | INFO | utils - obj_to_dict - 180 | Success convert <PropertyDB> object -> <Dict> object
-19:01:27 | INFO | scrape2 - get_scrape_result - 406 | Missing data (exclude result field): 9 / 25 -> Scraping result: Partial
-19:01:27 | INFO | base - scrape_p2 - 260 | Complete scraping data for property #P-MXYKMX | result: Partial
-
---------------------
-
-19:01:27 | INFO | utils - obj_to_dict - 180 | Success convert <PropertyDB> object -> <Dict> object
-19:01:27 | INFO | utils - print_pretty_dict - 159 | {
-    "id": null,
-    "session_id": "99a29166-f512-4885-bcdd-1667a81a948c",
-    "session_name": "D2_HCM_281025",
-    "created_at": null,
-    "prop_code": "P-MXYKMX",
-    "prop_name": "Căn hộ quận 1 đầy phong cách | Hồ bơi + Tầng thượng + Thang máy",
-    "prop_link": "https://www.airbnb.com.vn/rooms/1522895671149723972",
-    "scrape_result": "Partial",
-    "guest_num": 2,
-    "bed_num": 1,
-    "bath_num": 1,
-    "location": "10.7754862,106.6937725",
-    "ggmap_link": "https://maps.google.com/?q=10.7754862,106.6937725",
-    "rating_title": null,
-    "rating_star": null,
-    "rating_num": null,
-    "nightly_price": 1369412,
-    "host_name": "Nguyễn Như Ý",
-    "host_title": "Bắt đầu đón tiếp khách từ năm 2025",
-    "host_rating_star": null,
-    "host_rating_num": null,
-    "host_exp": null,
-    "host_link": null,
-    "this_month_booked_rate": 87.09677419354838,
-    "next_1_month_booked_rate": 0.0,
-    "next_3_month_booked_rate": 3.260869565217391
-}
-19:01:27 | INFO | base - scrape_p2 - 283 | Scraping process completed | 3 properties scraped
-19:01:27 | INFO | base - scrape_p2 - 284 | Finish saving 0 properties (detail info) to database
-
-
-============================== Close browser
-
-19:01:29 | INFO | browser - close_browser - 237 | Close browser
-
---------------------
-
-19:01:29 | INFO | base - run_full_flow - 333 | Phase 2 (detail scraping) completed.
-19:01:29 | INFO | base - <module> - 364 | Closing database session for direct file run.
+19:59:57 | INFO | scrape2 - overview_info - 41 | Overview section found
+20:00:04 | INFO | base - <module> - 364 | Closing database session for direct file run.
