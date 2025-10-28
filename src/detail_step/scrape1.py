@@ -31,6 +31,8 @@ def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, webs
         
         time.sleep(wait_time)
 
+        # --------------------------------
+
         try:
             driver.find_element(By.CSS_SELECTOR, 'body')
             log.info('Page loaded properly')
@@ -39,19 +41,27 @@ def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, webs
             driver.refresh()
             time.sleep(wait_time)
 
+        # --------------------------------
 
         ad_css_configs: List[Dict[str, Any]] = [
             {
-                'type': 1,
+                'type': 'main-page',
                 'element': 'div[aria-label="Giờ đây bạn sẽ thấy một mức giá duy nhất cho chuyến đi của mình, đã bao gồm mọi khoản phí."]',
                 'ok_button':'button[aria-label="Đóng"]'
             },
             {
-                'type': 2,
+                'type': 'result-search-page',
+                'element': 'div.c1qme1pd',
+                'ok_button':'button[aria-label="Đóng"]'
+            },
+            {
+                'type': 'detail-page',
                 'element': 'div[aria-label="Dịch trên"]',
                 'ok_button':'button[aria-label="Đóng"]'
             }
         ]
+
+        # --------------------------------
 
         try:
             log.info('Check Ad pop-up')
@@ -60,6 +70,8 @@ def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, webs
 
             ad_element: WebElement = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, all_element_css)))
             log.info('Found Ad pop-up')
+
+            # --------------------------------
 
             found_config: Dict[str, Any] | None = None
 
@@ -71,6 +83,8 @@ def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, webs
                     log.info(f'Found ad type <{config["type"]}>')
                     break
 
+            # --------------------------------
+
             if found_config:
                 ok_button: WebElement = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, found_config['ok_button'])))
                 log.info('Found close button')
@@ -78,6 +92,8 @@ def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, webs
                 log.info('Close Ad pop-up')
             else:
                 log.error('Cannot identify ad type')
+
+            # --------------------------------
 
         except TimeoutException:
             log.error(f'Found no Ad pop-up')
@@ -87,20 +103,15 @@ def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, webs
             log.error(f'Error to locate and close Ad pop-up | {e}')
             pass
 
+        # --------------------------------
 
-        match view:
-            case 'main_page':
-                wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div.m1un5iz5')))
-            case 'detail_page':
-                wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[data-section-id="HIGHLIGHTS_DEFAULT"]')))
-        time.sleep(wait_time)
-        
+        # match view:
+        #     case 'main_page':
+        #         wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div.m1un5iz5')))
+        #     case 'detail_page':
+        #         wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[data-section-id="HIGHLIGHTS_DEFAULT"]')))
+        # time.sleep(wait_time)
 
-        # # return original_tab_handle to switch tabs between Main page and IP page
-        # original_tab_handle: str = driver.current_window_handle
-        # print(f'Handle <{original_tab_handle}> is for URL:{website_url}')
-        # print('-'*30)
-        # return original_tab_handle
 
     except Exception as e:
         lg.log_detail_error(e)
@@ -244,24 +255,7 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
     
     lg.log_divider('View page and get all link')
 
-    try:
-        log.info('Check Ad pop-up')
-        wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div.c1qme1pd')))
-        log.info('Found Ad pop-up')
-
-        ok_button: WebElement = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[aria-label="Đóng"]')))
-        log.info('Found close button')
-        ok_button.click()
-        log.info('Close Ad pop-up')
-
-    except TimeoutException:
-        log.info(f'Found no Ad pop-up')
-
-    except Exception as e:
-        lg.log_detail_error(e)
-        log.error(f'Error to locate and close Ad pop-up | {e}')
-        pass
-
+    # --------------------------------
 
     try:
         log.info(f'Ready to scrape {num_property} properties | Search-mode: {search}')
@@ -298,12 +292,16 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                     'prop_link': ''
                 }
 
+                # --------------------------------
+
                 match search:
                     case 'none':
                         name_element: WebElement = property.find_element(By.CSS_SELECTOR,'div[data-testid="listing-card-title"]')
                     case 'apply':
                         name_element = property.find_element(By.CSS_SELECTOR,'span[data-testid="listing-card-name"]')
                 name: str = name_element.text 
+
+                # --------------------------------
                 
                 link_element: WebElement = property.find_element(By.CSS_SELECTOR,'div[data-testid="card-container"] > a')
                 link: str | None = link_element.get_attribute('href')
@@ -312,18 +310,26 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                 else:
                     clean_link = ''
                 
+                # --------------------------------
+
                 prop_info['prop_code'] = utl.generate_random_code()
                 prop_info['prop_name'] = name
                 prop_info['prop_link'] = clean_link
-                    
-                link_list.append(prop_info)
 
+                # --------------------------------
+
+                link_list.append(prop_info)
                 prop_cnt += 1
+
                 log.info(f'Prop #{prop_cnt} / {num_property}: {name}')
                 utl.print_pretty_dict(prop_info)
 
+                # --------------------------------
+
                 if prop_cnt == num_property:
                     break
+
+            # --------------------------------
 
             if prop_cnt == num_property:
                     break
@@ -339,6 +345,8 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                     log.error(f'On last page, no more property to scrape | {e}')
                     lg.log_detail_error(e)
                     break
+
+            # --------------------------------
 
         log.info(f'{prop_cnt} properties (basic info) scraped')
         return link_list

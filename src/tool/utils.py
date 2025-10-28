@@ -9,27 +9,67 @@ import string
 import datetime
 from uuid import UUID
 from typing import List, Dict, Any
+from urllib.parse import unquote
 
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
-try:
-    import src.tool.log_op as lg
-    from src.tool.config import wait_time
-    from src.type.data import PropertyDB
-except ImportError:
-    import log_op as lg
-    from config import wait_time
-    from type.data import PropertyDB
+import src.tool.log_op as lg
+from src.tool.config import wait_time
+from src.type.data import PropertyDB
 
+# -----------------------------------------------------------------------------------
+
+if __name__ == "__main__":
+    log_file_path = lg.setup_logging_for_file_directly_run()
+
+log = logging.getLogger(__name__)
 
 
 # -----------------------------------------------------------------------------------
 
 
-log = logging.getLogger(__name__)
+
+def clean_text(string: str, mode: int) -> str:
+    
+    clean_text: str = ''
+    try:
+        match mode:
+            case 1:
+                nfd_string: str = unicodedata.normalize('NFD', string)
+                clean_text = ''.join(char for char in nfd_string if unicodedata.category(char) != 'Mn')
+
+                replacements = {
+                    'đ': 'd', 'Đ': 'D',
+                    'ă': 'a', 'Ă': 'A',
+                    'â': 'a', 'Â': 'A',
+                    'ê': 'e', 'Ê': 'E',
+                    'ô': 'o', 'Ô': 'O',
+                    'ơ': 'o', 'Ơ': 'O',
+                    'ư': 'u', 'Ư': 'U',
+                }
+
+                for vn_key, en_value in replacements.items():
+                    clean_text = clean_text.replace(vn_key, en_value).lower()
+            
+            case 2:
+                clean_text = string.strip('"').strip(' · ').lower()
+            case 3:
+                clean_text = (string.replace(',','.'))
+            case 4:
+                clean_text = string.replace('.','')
+            case 5:
+                clean_text = string.split('?')[0]
+
+        return clean_text
+    
+    except Exception as e:
+        lg.log_detail_error(e)
+        return ''
+
+
 
 
 def get_info_from_string(string: str, mode: str) -> str | int | None:
@@ -79,50 +119,25 @@ def get_info_from_string(string: str, mode: str) -> str | int | None:
                 # test: ₫1.138.895
                 target_word = string.replace('₫', '').replace('.', '')
                 
+
+            case 'search_url':
+                word_list = word_list[0].split('/')
+                location_text = word_list[4]
+
+                decoded_word = unquote(location_text)
+                vn_decoded_word = clean_text(decoded_word, mode=1)
+
+                if 'nearby' in vn_decoded_word:
+                    target_word = 'nearby'
+                else:
+                    target_word1 = vn_decoded_word.replace('--', '-')
+                    target_word = target_word1.replace('-','_')
+
         return target_word
     
     except Exception as e:
         lg.log_detail_error(e)
         return None
-
-
-
-def clean_text(string: str, mode: int) -> str:
-    
-    clean_text: str = ''
-    try:
-        match mode:
-            case 1:
-                nfd_string: str = unicodedata.normalize('NFD', string)
-                clean_text = ''.join(char for char in nfd_string if unicodedata.category(char) != 'Mn')
-
-                replacements = {
-                    'đ': 'd', 'Đ': 'D',
-                    'ă': 'a', 'Ă': 'A',
-                    'â': 'a', 'Â': 'A',
-                    'ê': 'e', 'Ê': 'E',
-                    'ô': 'o', 'Ô': 'O',
-                    'ơ': 'o', 'Ơ': 'O',
-                    'ư': 'u', 'Ư': 'U',
-                }
-
-                for vn_key, en_value in replacements.items():
-                    clean_text = clean_text.replace(vn_key, en_value).lower()
-            
-            case 2:
-                clean_text = string.strip('"').strip(' · ').lower()
-            case 3:
-                clean_text = (string.replace(',','.'))
-            case 4:
-                clean_text = string.replace('.','')
-            case 5:
-                clean_text = string.split('?')[0]
-
-        return clean_text
-    
-    except Exception as e:
-        lg.log_detail_error(e)
-        return ''
 
 
 

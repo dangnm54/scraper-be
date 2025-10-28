@@ -147,7 +147,7 @@ async def run_scraper_api(fe_input: ScraperSettings, db: Session | None = Depend
             run_full_flow,
                 db,
                 file_name = fe_input.file_name,
-                location = fe_input.location,
+                location_url = fe_input.location_url,
                 num_guest = fe_input.num_guest,
                 num_property = fe_input.num_property,
                 collect_host_data = fe_input.collect_host_data,
