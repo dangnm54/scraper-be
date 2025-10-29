@@ -103,15 +103,6 @@ def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, webs
             log.error(f'Error to locate and close Ad pop-up | {e}')
             pass
 
-        # --------------------------------
-
-        # match view:
-        #     case 'main_page':
-        #         wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div.m1un5iz5')))
-        #     case 'detail_page':
-        #         wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[data-section-id="HIGHLIGHTS_DEFAULT"]')))
-        # time.sleep(wait_time)
-
 
     except Exception as e:
         lg.log_detail_error(e)

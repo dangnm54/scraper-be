@@ -270,21 +270,31 @@ def price_info(driver: WebDriver, wait_time: float) -> int | None:
                 # --------------------------------
 
                 for idx in range(2):
-
-                    log.info(f'--- Click iteration {idx + 1}/2 ---')
-                        
                     try:
                         current_avai_day_list: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, 'td[aria-disabled="false"]')
                         
                         avai_day: WebElement = current_avai_day_list[0]
                         avai_day_text: str = avai_day.text
                         avai_day.click()
-                        log.info(f'Click {idx + 1}/2 -> choose day #{avai_day_text}')
+                        log.info(f'Click {idx + 1}/2 -> choose day {avai_day_text}')
                         time.sleep(wait_time)
 
                     except Exception as e:
                         log.error(f'Error scraping pricing at click iteration {idx + 1}')
                         return
+
+                # --------------------------------
+
+                chosen_day_cnt: int = 0
+
+                current_avai_day_list = driver.find_elements(By.CSS_SELECTOR, 'td[aria-disabled="false"]')
+
+                for day in current_avai_day_list:
+                    day_aria_label: str = cast(str, day.get_attribute('aria-label'))
+                    if 'Đã chọn' in day_aria_label or 'đã chọn' in day_aria_label:
+                        chosen_day_cnt += 1
+
+                log.info(f'Total chosen days: {chosen_day_cnt}')
 
                 # --------------------------------
 
@@ -301,7 +311,10 @@ def price_info(driver: WebDriver, wait_time: float) -> int | None:
                         price: int = cast(int, utl.get_info_from_string(price_element[1].text, mode='price'))
                         log.info(f'{config["type"]} price: {price} VND')
 
-                        price_data = int(price)
+                        nightly_price: float = round( int(price) / chosen_day_cnt, 0)
+                        log.info(f'Price: {price} VND / {chosen_day_cnt} chosen days = {nightly_price} VND/day')
+
+                        price_data = int(nightly_price)
                         return price_data
 
                 log.info('No price element found -> check next month_box')

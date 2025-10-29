@@ -118,20 +118,7 @@ def get_info_from_string(string: str, mode: str) -> str | int | None:
             case 'price':
                 # test: ₫1.138.895
                 target_word = string.replace('₫', '').replace('.', '')
-                
 
-            case 'search_url':
-                word_list = word_list[0].split('/')
-                location_text = word_list[4]
-
-                decoded_word = unquote(location_text)
-                vn_decoded_word = clean_text(decoded_word, mode=1)
-
-                if 'nearby' in vn_decoded_word:
-                    target_word = 'nearby'
-                else:
-                    target_word1 = vn_decoded_word.replace('--', '-')
-                    target_word = target_word1.replace('-','_')
 
         return target_word
     
