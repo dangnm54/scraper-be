@@ -329,8 +329,12 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
 
             # --------------------------------
 
+            if shared_state.cancel_status:
+                lg.log_divider('User trigger cancellation from FE -> cancel scraping process')
+                break
+
             if prop_cnt == num_property:
-                    break
+                break
             else:
                 try:
                     pagination_section: WebElement = driver.find_element(By.CSS_SELECTOR, 'div.p1j2gy66')
