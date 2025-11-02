@@ -214,7 +214,7 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
     for idx, prop in enumerate[PropertyDB](detail_list_db, start=1):
 
         if shared_state.cancel_status:
-            lg.log_divider('User trigger cancellation from FE -> cancel scraping process')
+            lg.log_divider('[base.py | scrape_p2] User (FE) trigger cancellation -> cancel scraping process')
             break
 
         # --------------------------------
