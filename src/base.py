@@ -1,10 +1,12 @@
 import sys
 import os
-from type.data import PropertyDB
+
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 import logging
 import src.tool.log_op as lg
+
+from src.type.data import PropertyDB
 
 if __name__ == "__main__":
     log_file_path = lg.setup_logging_for_file_directly_run()
