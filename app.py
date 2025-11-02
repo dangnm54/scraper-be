@@ -193,9 +193,10 @@ async def cancel_scraper_api() -> JSONResponse:
 
     api_sig = '[cancel-scraper api]'
 
-    success_resp = ResponseBody[None](
+    success_resp = ResponseBody[str](
         success = True,
-        message = f"{api_sig} Successfully cancelled scraping process"
+        message = f"{api_sig} Successfully cancelled scraping process",
+        data = 'This message means scraping process will be cancelled shortly'
     )
     return JSONResponse(status_code=200, content=success_resp.model_dump())
 
