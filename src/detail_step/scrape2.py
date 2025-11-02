@@ -293,7 +293,7 @@ def host_info(driver: WebDriver) -> Dict[str, Any]:
         host_name: str = host_section.find_element(By.CSS_SELECTOR, 'span.t1gpcl1t').text
         host_data['host_name'] = host_name
 
-        host_title_element: List[WebElement] = host_section.find_elements(By.CSS_SELECTOR, 'span.s1h3l0w7')
+        host_title_element: List[WebElement] = host_section.find_elements(By.CSS_SELECTOR, 'span.s1vpsye7')
         host_title: str = host_title_element[0].text
         host_data['host_title'] = host_title
 

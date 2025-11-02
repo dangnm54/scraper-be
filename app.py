@@ -25,9 +25,10 @@ from starlette.responses import JSONResponse
 from starlette.responses import StreamingResponse
 
 import src.tool.file_op as fop
+import src.detail_step.shared_state as shared_state
+
 from src.base import run_full_flow
 from src.tool.db_op import get_db
-
 from src.type.api import ScraperSettings, FileMetadata, FileDetail, ResponseBody, DeleteAllResult, DeleteAllInput
 from src.type.data import ScrapeStatus
 
@@ -121,6 +122,8 @@ async def run_scraper_api(fe_input: ScraperSettings, db: Session | None = Depend
         - log will be sent via SSE stream
     """
 
+    shared_state.cancel_status = False
+
     api_sig = '[run-scraper api]'
     
     if not db:
@@ -171,6 +174,30 @@ async def run_scraper_api(fe_input: ScraperSettings, db: Session | None = Depend
             message = f"{api_sig} Server error: {str(e)}"
         )
         return JSONResponse(status_code=500, content=error_resp.model_dump())
+
+
+
+
+
+@app.post("/api/cancel")
+async def cancel_scraper_api() -> JSONResponse:
+    """
+    - input: data required from FE
+    - output: file in database
+    - operation:
+        - trigger scraping process
+        - log will be sent via SSE stream
+    """
+
+    shared_state.cancel_status = True
+
+    api_sig = '[cancel-scraper api]'
+
+    success_resp = ResponseBody[None](
+        success = True,
+        message = f"{api_sig} Successfully cancelled scraping process"
+    )
+    return JSONResponse(status_code=200, content=success_resp.model_dump())
 
 
 

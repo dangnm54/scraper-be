@@ -1,5 +1,6 @@
 import sys
 import os
+from type.data import PropertyDB
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 import logging
@@ -20,7 +21,6 @@ load_dotenv()
 
 
 from uuid import UUID, uuid4
-
 from sqlalchemy.orm import Session
 from typing import Any, Dict, List, Tuple, Literal, cast, get_args
 
@@ -35,6 +35,7 @@ import src.detail_step.scrape2 as scr2
 import src.detail_step.scrape3 as scr3
 import src.tool.db_op as dbop
 import src.tool.utils as utl
+import src.detail_step.shared_state as shared_state
 
 from src.tool.config import wait_time
 from src.tool.config import main_website_url, ip_website_url, search_mode, save_db, log_error_level, scrape_phase, test_local
@@ -206,11 +207,21 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
     saved_prop_cnt: int = 0
     batch_size: int = 10    # saved to db after every 10 properties
 
-    for idx, prop in enumerate(detail_list_db, start=1):
+    # --------------------------------
+
+    for idx, prop in enumerate[PropertyDB](detail_list_db, start=1):
+
+        if shared_state.cancel_status:
+            lg.log_divider('User trigger cancellation from FE -> cancel scraping process')
+            break
+
+        # --------------------------------
 
         lg.log_divider()
         log.info(f'Scraping property #{idx}: {prop.prop_code} - {prop.prop_name}')
         property_link: str = str(prop.prop_link)
+
+        # --------------------------------
 
         try:
             scr1.go_to_website(driver, wait, wait_time, property_link, view='detail_page')
@@ -219,6 +230,7 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
             log.error(f'Error to access page of property <{prop.prop_code}> -> skip to next property')
             continue
 
+        # --------------------------------
 
         try:
             overview_data: Dict[str, Any] = scr2.overview_info(driver, wait)
@@ -264,6 +276,7 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
             lg.log_detail_error(e)
             log.error(f'Error to scrape all data of property <{prop.prop_code}> -> save already-scraped data to database')
 
+        # --------------------------------
 
         if save_db and (idx % batch_size == 0 or idx == len(detail_list_db)):
             try:
@@ -315,9 +328,13 @@ def run_full_flow(
     - Collect booking rate: {collect_booking_rate}
     """)
 
+    # --------------------------------
+
     session_id: UUID = uuid4()
     session_name: str = dbop.get_session_name(db, file_name)
     log.info(f"New scraping session <{session_name}> started | ID: {session_id}")
+
+    # --------------------------------
 
     link_list_db: List[PropertyDB] = scrape_p1(db, session_id, session_name, search_url, num_guest, num_property, save_db)
     log.info(f"Phase 1 (link scraping) completed.")
@@ -326,12 +343,16 @@ def run_full_flow(
         log.error(f"Phase 1 didn't find any properties -> Stop scraping process")
         return ScrapeStatus.failed
 
-    if scrape_phase == 1:
+    # --------------------------------
+
+    if scrape_phase == 1 and not shared_state.cancel_status:
         scrape_status = ScrapeStatus.partial
     else:
         scrape_status: ScrapeStatus = scrape_p2(db, link_list_db, collect_host_data, collect_booking_rate, save_db)
         log.info(f"Phase 2 (detail scraping) completed.")
     
+    # --------------------------------
+
     return scrape_status
 
 
@@ -356,7 +377,7 @@ if test_local:
                     file_name = 'D2_HCM',
                     search_url = 'https://www.airbnb.com.vn/s/Ch%E1%BB%A3-B%E1%BA%BFn-Th%C3%A0nh--H%E1%BB%93-Ch%C3%AD-Minh/homes?refinement_paths%5B%5D=%2Fhomes&place_id=ChIJTeYpMT8vdTERMH8sUnkta40&acp_id=b3099460-7cf8-426d-a28d-2fd63584ecca&date_picker_type=calendar&source=structured_search_input_header&search_type=user_map_move&query=Ch%E1%BB%A3%20B%E1%BA%BFn%20Th%C3%A0nh%2C%20H%E1%BB%93%20Ch%C3%AD%20Minh&flexible_trip_lengths%5B%5D=one_week&monthly_start_date=2025-11-01&monthly_length=3&monthly_end_date=2026-02-01&search_mode=regular_search&price_filter_input_type=2&channel=EXPLORE&ne_lat=10.776167541325885&ne_lng=106.69584543240717&sw_lat=10.773755161532563&sw_lng=106.69300269380926&zoom=19.4407356826498&zoom_level=19.4407356826498&search_by_map=true&price_filter_num_nights=5&disable_auto_translation=true',
                     num_guest = None,
-                    num_property = 2,
+                    num_property = 1,
                     collect_host_data = True,
                     collect_booking_rate = True
                 )

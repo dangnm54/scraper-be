@@ -12,6 +12,7 @@ from selenium.common.exceptions import TimeoutException
 
 import src.tool.utils as utl
 import src.tool.log_op as lg
+import src.detail_step.shared_state as shared_state
 
 
 # -----------------------------------------------------------------------------------
@@ -270,10 +271,16 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
                 lg.log_detail_error(e)
                 log.error(f'Error to check visibility and locate property list | {e}')
                 break
-                
-            # -------------------------------
+
+            # --------------------------------
 
             for property in prop_list:
+
+                if shared_state.cancel_status:
+                    lg.log_divider('User trigger cancellation from FE -> cancel scraping process')
+                    break
+
+                # -------------------------------
 
                 utl.scroll_focus_element(driver, property)
 
