@@ -25,13 +25,11 @@ cc_47NTB = r'https://www.airbnb.com.vn/s/Qu%E1%BA%ADn-1--H%E1%BB%93-Ch%C3%AD-Min
 
 # scraping config ---------------------------------------------
 
-search_mode: SearchMode = 'apply'
-
 log_error_level: LogErrorLevel = '3_level'
 
 scrape_phase: int = 2
 
-save_db: bool = False
+save_db: bool = True
 
-test_local: bool = True
+test_local: bool = False
 

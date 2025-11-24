@@ -40,7 +40,7 @@ import src.tool.utils as utl
 import src.detail_step.shared_state as shared_state
 
 from src.tool.config import wait_time
-from src.tool.config import main_website_url, ip_website_url, search_mode, save_db, log_error_level, scrape_phase, test_local
+from src.tool.config import main_website_url, ip_website_url, save_db, log_error_level, scrape_phase, test_local
 from src.type.data import ScrapeResult, ScrapeStatus, PropertyDB, BrowserMode
 
 
@@ -121,24 +121,10 @@ def scrape_p1(db: Session, session_id: UUID, session_name: str,
         return []
 
     # --------------------------------
-
-    log.info(f'Search mode: {search_mode}')
-
     
     scr1.go_to_website(driver, wait, wait_time, search_url)
 
-    # tool search
-        # scr1.go_to_website(driver, wait, wait_time, main_website_url, view='main_page')
-        # match search_mode:
-        #     case 'none':
-        #         pass
-        #     case 'apply':
-        #         scr1.search_location(driver, wait_time, location)
-        #         scr1.search_date(driver, wait_time)
-        #         scr1.search_guest(driver, wait_time, num_guest)
-        #         scr1.press_search(driver)
-
-    link_list: List[Dict[str, str]] = scr1.view_page_get_all_link(driver, wait, wait_time, num_property, search_mode)
+    link_list: List[Dict[str, str]] = scr1.view_page_get_link(driver, wait, wait_time, num_property)
 
     brws.close_browser(driver)
     
@@ -241,37 +227,37 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
 
             # --------------------------------
 
-            rating_data: Dict[str, Any] = scr2.rating_info(driver)
-            for key, value in rating_data.items():
-                setattr(prop, key, value)
+            # rating_data: Dict[str, Any] = scr2.rating_info(driver)
+            # for key, value in rating_data.items():
+            #     setattr(prop, key, value)
 
-            # --------------------------------
+            # # --------------------------------
 
-            price_data: int | None = scr3.price_info(driver, wait_time)
-            setattr(prop, 'nightly_price', price_data)
+            # price_data: int | None = scr3.price_info(driver, wait_time)
+            # setattr(prop, 'nightly_price', price_data)
 
-            # --------------------------------
+            # # --------------------------------
 
-            if collect_host_data:
-                host_data: Dict[str, Any] = scr2.host_info(driver)
-                for key, value in host_data.items():
-                    setattr(prop, key, value)
+            # if collect_host_data:
+            #     host_data: Dict[str, Any] = scr2.host_info(driver)
+            #     for key, value in host_data.items():
+            #         setattr(prop, key, value)
 
-            # --------------------------------
+            # # --------------------------------
 
-            if collect_booking_rate:
-                book_rate_data: Dict[str, Any] = scr3.book_rate_info(driver, wait_time)
-                for key, value in book_rate_data.items():
-                    setattr(prop, key, value)
+            # if collect_booking_rate:
+            #     book_rate_data: Dict[str, Any] = scr3.book_rate_info(driver, wait_time)
+            #     for key, value in book_rate_data.items():
+            #         setattr(prop, key, value)
 
-            # --------------------------------
+            # # --------------------------------
 
-            scrape_result: ScrapeResult = scr2.get_scrape_result(prop)
-            setattr(prop, 'scrape_result', str(scrape_result)) 
+            # scrape_result: ScrapeResult = scr2.get_scrape_result(prop)
+            # setattr(prop, 'scrape_result', str(scrape_result)) 
 
-            # --------------------------------
+            # # --------------------------------
 
-            log.info(f'Complete scraping data for property #{prop.prop_code} | result: {scrape_result}')
+            # log.info(f'Complete scraping data for property #{prop.prop_code} | result: {scrape_result}')
             scraped_prop_cnt += 1
 
         except Exception as e:
@@ -367,7 +353,6 @@ if test_local:
 
         log.info(f"""Config:
         - save_db: {save_db}
-        - search_mode: {search_mode}
         - BROWSER_MODE: {BROWSER_MODE}
         - log_error_level: {log_error_level}
         """)
@@ -392,12 +377,7 @@ if test_local:
 
 
 
-# search thẳng
-        # move ad checking lên go_to_website
-        # add website_url input 
-    # sửa typing
-    # sửa api
-    # sửa FE
-
-
-    
+# sửa location
+# check driver setup
+# check function pausing
+# api call

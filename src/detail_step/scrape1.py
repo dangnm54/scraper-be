@@ -109,6 +109,7 @@ def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, webs
         lg.log_detail_error(e)
 
 
+# ------------------------------------------------------------------------------------------------
 
 
 # def check_proxy_ip(driver, wait, wait_time, website_url, original_tab_handle):
@@ -148,109 +149,111 @@ def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, webs
 
 
 
-def search_location(driver: WebDriver, wait_time: float, location_ipt: str) -> None:
+# def search_location(driver: WebDriver, wait_time: float, location_ipt: str) -> None:
 
-    lg.log_divider('Search location')
+#     lg.log_divider('Search location')
 
-    try:
-        location_element: WebElement = driver.find_element(By.CSS_SELECTOR, 'div.f1o8nkkf.atm_mk_h2mmj6.atm_wq_cs5v99')
-        location_element.click()
+#     try:
+#         location_element: WebElement = driver.find_element(By.CSS_SELECTOR, 'div.f1o8nkkf.atm_mk_h2mmj6.atm_wq_cs5v99')
+#         location_element.click()
 
-        log.info('Location element found and clicked')
-        time.sleep(wait_time)
+#         log.info('Location element found and clicked')
+#         time.sleep(wait_time)
 
-        location_input: WebElement = location_element.find_element(By.CSS_SELECTOR, 'input.fp9kp52')
-        location_input.send_keys(location_ipt, Keys.ENTER)
+#         location_input: WebElement = location_element.find_element(By.CSS_SELECTOR, 'input.fp9kp52')
+#         location_input.send_keys(location_ipt, Keys.ENTER)
         
-        log.info(f'<{location_ipt}> typed and ENTER')
-        time.sleep(wait_time)
+#         log.info(f'<{location_ipt}> typed and ENTER')
+#         time.sleep(wait_time)
         
-    except Exception as e:
-        lg.log_detail_error(e)
+#     except Exception as e:
+#         lg.log_detail_error(e)
 
 
 
-def search_date(driver: WebDriver, wait_time: float) -> None:
+# def search_date(driver: WebDriver, wait_time: float) -> None:
 
-    lg.log_divider('Search date')
+#     lg.log_divider('Search date')
 
-    try:
-        flexible_date_button: WebElement = driver.find_element(By.CSS_SELECTOR,'button[id="tab--tabs--2"]')
-        flexible_date_button.click()
+#     try:
+#         flexible_date_button: WebElement = driver.find_element(By.CSS_SELECTOR,'button[id="tab--tabs--2"]')
+#         flexible_date_button.click()
 
-        log.info('Flexible time button found and clicked')
-        time.sleep(wait_time)
+#         log.info('Flexible time button found and clicked')
+#         time.sleep(wait_time)
 
-        weekend_date_button: WebElement = driver.find_element(By.CSS_SELECTOR,'label[id="flexible_trip_lengths-weekend_trip"]')
-        weekend_date_button.click()
+#         weekend_date_button: WebElement = driver.find_element(By.CSS_SELECTOR,'label[id="flexible_trip_lengths-weekend_trip"]')
+#         weekend_date_button.click()
         
-        log.info('Flexible weekend button found and clicked')
-        time.sleep(wait_time)
+#         log.info('Flexible weekend button found and clicked')
+#         time.sleep(wait_time)
 
-    except Exception as e:
-        lg.log_detail_error(e)
-
-
-
-def search_guest(driver: WebDriver, wait_time: float, num_guest: int | None) -> None:
-
-    lg.log_divider('Search guest')
-
-    if num_guest is None:
-        log.info('Search without guest number')
-        time.sleep(wait_time)
-        return
-
-    try:
-        date_guest_elements: List[WebElement] = driver.find_elements(By.CSS_SELECTOR,'div.fbb0tkq')
-        for element in date_guest_elements:
-            if element.text == 'Thêm khách':
-                element.click()
-
-        log.info('Guest element found and clicked')
-        time.sleep(wait_time)
-
-        guest_section: WebElement = driver.find_element(By.CSS_SELECTOR,'div.p1nt1a2q')
-        adult_element: WebElement = guest_section.find_element(By.CSS_SELECTOR,'div[data-testid="search-block-filter-stepper-row-adults"]')
-        add_button: WebElement = adult_element.find_element(By.CSS_SELECTOR, 'button[aria-label="tăng giá trị"]')
-
-        num_click: int = 0
-        while num_click < num_guest:
-            add_button.click()
-            num_click += 1
-
-        log.info(f'{num_guest} guests added')
-        time.sleep(wait_time)
-
-
-    except Exception as e:
-        lg.log_detail_error(e)
+#     except Exception as e:
+#         lg.log_detail_error(e)
 
 
 
-def press_search(driver: WebDriver) -> None:
+# def search_guest(driver: WebDriver, wait_time: float, num_guest: int | None) -> None:
 
-    lg.log_divider('Press search')
+#     lg.log_divider('Search guest')
 
-    try:
-        search_button: WebElement = driver.find_element(By.CSS_SELECTOR,'button.siey6h7')
-        search_button.click()
+#     if num_guest is None:
+#         log.info('Search without guest number')
+#         time.sleep(wait_time)
+#         return
 
-        log.info('Seach button founded and clicked')
+#     try:
+#         date_guest_elements: List[WebElement] = driver.find_elements(By.CSS_SELECTOR,'div.fbb0tkq')
+#         for element in date_guest_elements:
+#             if element.text == 'Thêm khách':
+#                 element.click()
 
-    except Exception as e:
-        lg.log_detail_error(e)
+#         log.info('Guest element found and clicked')
+#         time.sleep(wait_time)
+
+#         guest_section: WebElement = driver.find_element(By.CSS_SELECTOR,'div.p1nt1a2q')
+#         adult_element: WebElement = guest_section.find_element(By.CSS_SELECTOR,'div[data-testid="search-block-filter-stepper-row-adults"]')
+#         add_button: WebElement = adult_element.find_element(By.CSS_SELECTOR, 'button[aria-label="tăng giá trị"]')
+
+#         num_click: int = 0
+#         while num_click < num_guest:
+#             add_button.click()
+#             num_click += 1
+
+#         log.info(f'{num_guest} guests added')
+#         time.sleep(wait_time)
+
+
+#     except Exception as e:
+#         lg.log_detail_error(e)
 
 
 
-def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: float, num_property: int, search: Literal['apply', 'none']) -> List[Dict[str, str]]:
+# def press_search(driver: WebDriver) -> None:
+
+#     lg.log_divider('Press search')
+
+#     try:
+#         search_button: WebElement = driver.find_element(By.CSS_SELECTOR,'button.siey6h7')
+#         search_button.click()
+
+#         log.info('Seach button founded and clicked')
+
+#     except Exception as e:
+#         lg.log_detail_error(e)
+
+
+# ------------------------------------------------------------------------------------------------
+
+
+def view_page_get_link(driver: WebDriver, wait: WebDriverWait, wait_time: float, num_property: int) -> List[Dict[str, str]]:
     
     lg.log_divider('View page and get all link')
 
     # --------------------------------
 
     try:
-        log.info(f'Ready to scrape {num_property} properties | Search-mode: {search}')
+        log.info(f'Ready to scrape {num_property} properties')
 
         link_list: List[Dict[str, str]] = []
         prop_cnt: int = 0
@@ -259,14 +262,9 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
 
             prop_list: List[WebElement] = []
             try:
-                match search:
-                    case 'none':
-                        prop_list = driver.find_elements(By.CSS_SELECTOR,'div.c1r8sk5a')
-
-                    case 'apply':
-                        wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR,'div.c965t3n')))
-                        time.sleep(wait_time)
-                        prop_list = driver.find_elements(By.CSS_SELECTOR,'div.cfutgp0')
+                wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR,'div.c965t3n')))
+                time.sleep(wait_time)
+                prop_list = driver.find_elements(By.CSS_SELECTOR,'div.cfutgp0')
             except Exception as e:
                 lg.log_detail_error(e)
                 log.error(f'Error to check visibility and locate property list | {e}')
@@ -292,11 +290,7 @@ def view_page_get_all_link(driver: WebDriver, wait: WebDriverWait, wait_time: fl
 
                 # --------------------------------
 
-                match search:
-                    case 'none':
-                        name_element: WebElement = property.find_element(By.CSS_SELECTOR,'div[data-testid="listing-card-title"]')
-                    case 'apply':
-                        name_element = property.find_element(By.CSS_SELECTOR,'span[data-testid="listing-card-name"]')
+                name_element = property.find_element(By.CSS_SELECTOR,'span[data-testid="listing-card-name"]')
                 name: str = name_element.text 
 
                 # --------------------------------

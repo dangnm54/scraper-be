@@ -56,8 +56,12 @@ def overview_info(driver: WebDriver, wait: WebDriverWait) -> Dict[str, Any]:
                     overview_data['bath_num'] = num
 
         try:
-            location_section: WebElement = driver.find_element(By.CSS_SELECTOR, 'div[data-section-id="LOCATION_DEFAULT"]')
+            time.sleep(2)
+            location_section: WebElement = driver.find_elements(By.CSS_SELECTOR, 'div.plmw1e5')[4]
             utl.scroll_focus_element(driver, location_section)
+            log.info('Location section found')
+
+            # time.sleep(100000)
 
             wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a[href*="google.com/maps"]')))
             location_element: WebElement = location_section.find_elements(By.CSS_SELECTOR, 'a[href*="google.com/maps"]')[1]
@@ -286,7 +290,6 @@ def host_info(driver: WebDriver) -> Dict[str, Any]:
     }
     
     try:
-
         host_section: WebElement = driver.find_element(By.CSS_SELECTOR, 'div.c1h2ee1b')
         utl.scroll_focus_element(driver, host_section)
 

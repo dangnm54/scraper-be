@@ -196,8 +196,8 @@ def start_browser(driver_path_ipt: str, option_ipt: EdgeOptions, browser_mode: B
     if browser_mode == 'local':      
         monitor_list: List[Monitor] = get_monitors()
         log.debug(f'Detected {len(monitor_list)} monitors')
-            # screen laptop: 1920 x 1080 -> main display always start at x=0, y=0 (top left corner)
-            # screen monitor: 2560 x 1440
+            # screen laptop: 1920 x 1243 -> main display always start at x=0, y=0 (top left corner)
+            # screen monitor: 3008 x 1692 (maclab)
             # current position: monitor on top laptop vertical
 
         if len(monitor_list) > 1:
@@ -210,16 +210,14 @@ def start_browser(driver_path_ipt: str, option_ipt: EdgeOptions, browser_mode: B
             if secondary_monitor:
                 log.info(f'Secondary monitor found, open browser on secondary monitor')
                 # driver.set_window_rect(x=-1920, y=380, width=1500, height=1000)  #monitor (monitor left (main) | lap right)
-                # driver.set_window_rect(x=1550, y=1450, width=960, height=1000)   #laptop (monitor left (main), lap right)
-                driver.set_window_rect(x=600, y=1450, width=1800, height=1000)  #laptop (monitor up (main), lap down)
+                driver.set_window_rect(x=0, y=0, width=1800, height=1000)   #laptop (monitor left, lap (main)) right)
+                # driver.set_window_rect(x=0, y=0, width=1800, height=1000)  #laptop (monitor up, lap (main)) down)
             else:
                 log.info(f'Cannot identify clear secondary monitor, maximizing browser')
                 driver.set_window_rect(x=-500, y=-500, width=960, height=1010)     #laptop - normal 
 
         else:
             log.info(f'Only 1 monitor, maximizing browser')
-            # driver.set_window_rect(x=960, y=10, width=960, height=1010)
-            # driver.set_window_rect(x=10, y=10, width=1900, height=1010)   #uat
             driver.set_window_rect(x=10, y=10, width=1900, height=1010)     #laptop - host 
 
     return driver, wait

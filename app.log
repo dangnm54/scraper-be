@@ -1,6 +1,0 @@
-LOG RECORDED AT: 02-11-2025 11:56:51
-STARTED BY FILE: __main__.py
-RUN METHOD: Server started (uvicorn)
-
-
-11:56:56 | INFO | db_op - <module> - 58 | Create engine and SessionLocal for database connection
