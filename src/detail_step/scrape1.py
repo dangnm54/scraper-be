@@ -275,7 +275,7 @@ def view_page_get_link(driver: WebDriver, wait: WebDriverWait, wait_time: float,
             for property in prop_list:
 
                 if shared_state.cancel_status:
-                    lg.log_divider('[scrape1.py | view_page_get_all_link | property for loop] User (FE) trigger cancellation -> cancel scraping process')
+                    lg.log_divider('[scrape1.py | view_page_get_link | property for loop] User (FE) trigger cancellation -> cancel scraping process')
                     break
 
                 # -------------------------------
@@ -324,7 +324,7 @@ def view_page_get_link(driver: WebDriver, wait: WebDriverWait, wait_time: float,
             # --------------------------------
 
             if shared_state.cancel_status:
-                lg.log_divider('[scrape1.py | view_page_get_all_link | while loop] User (FE) trigger cancellation -> cancel scraping process')
+                lg.log_divider('[scrape1.py | view_page_get_link | while loop] User (FE) trigger cancellation -> cancel scraping process')
                 break
 
             if prop_cnt == num_property:

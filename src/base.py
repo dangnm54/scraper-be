@@ -333,7 +333,7 @@ def run_full_flow(
 
     # --------------------------------
 
-    if scrape_phase == 1 and not shared_state.cancel_status:
+    if scrape_phase == 1 or shared_state.cancel_status:
         scrape_status = ScrapeStatus.partial
     else:
         scrape_status: ScrapeStatus = scrape_p2(db, link_list_db, collect_host_data, collect_booking_rate, save_db)
@@ -377,7 +377,7 @@ if test_local:
 
 
 
-# sửa location
+
 # check driver setup
 # check function pausing
 # api call

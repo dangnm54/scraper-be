@@ -8,7 +8,8 @@
     - base.py: 
         - scrape_p2: for loop
         - run_full_flow
-    - scrape_p1: view_page_get_all_link
+    - scrape_p1: 
+        view_page_get_link
 """
 
 cancel_status: bool = False
