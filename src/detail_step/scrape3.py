@@ -294,7 +294,8 @@ def price_info(driver: WebDriver, wait_time: float) -> int | None:
                     if 'Đã chọn' in day_aria_label or 'đã chọn' in day_aria_label:
                         chosen_day_cnt += 1
 
-                log.info(f'Total chosen days: {chosen_day_cnt}')
+                chosen_night_cnt: int = chosen_day_cnt - 1
+                log.info(f'Total chosen days: {chosen_day_cnt} -> Total chosen nights: {chosen_night_cnt}')
 
                 # --------------------------------
 
@@ -311,8 +312,8 @@ def price_info(driver: WebDriver, wait_time: float) -> int | None:
                         price: int = cast(int, utl.get_info_from_string(price_element[1].text, mode='price'))
                         log.info(f'{config["type"]} price: {price} VND')
 
-                        nightly_price: float = round( int(price) / chosen_day_cnt, 0)
-                        log.info(f'Price: {price} VND / {chosen_day_cnt} chosen days = {nightly_price} VND/day')
+                        nightly_price: float = round( int(price) / chosen_night_cnt, 0)
+                        log.info(f'Price: {price} VND / {chosen_night_cnt} chosen nights = {nightly_price} VND/day')
 
                         price_data = int(nightly_price)
                         return price_data

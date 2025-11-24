@@ -227,37 +227,37 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
 
             # --------------------------------
 
-            # rating_data: Dict[str, Any] = scr2.rating_info(driver)
-            # for key, value in rating_data.items():
-            #     setattr(prop, key, value)
+            rating_data: Dict[str, Any] = scr2.rating_info(driver)
+            for key, value in rating_data.items():
+                setattr(prop, key, value)
 
-            # # --------------------------------
+            # --------------------------------
 
-            # price_data: int | None = scr3.price_info(driver, wait_time)
-            # setattr(prop, 'nightly_price', price_data)
+            price_data: int | None = scr3.price_info(driver, wait_time)
+            setattr(prop, 'nightly_price', price_data)
 
-            # # --------------------------------
+            # --------------------------------
 
-            # if collect_host_data:
-            #     host_data: Dict[str, Any] = scr2.host_info(driver)
-            #     for key, value in host_data.items():
-            #         setattr(prop, key, value)
+            if collect_host_data:
+                host_data: Dict[str, Any] = scr2.host_info(driver)
+                for key, value in host_data.items():
+                    setattr(prop, key, value)
 
-            # # --------------------------------
+            # --------------------------------
 
-            # if collect_booking_rate:
-            #     book_rate_data: Dict[str, Any] = scr3.book_rate_info(driver, wait_time)
-            #     for key, value in book_rate_data.items():
-            #         setattr(prop, key, value)
+            if collect_booking_rate:
+                book_rate_data: Dict[str, Any] = scr3.book_rate_info(driver, wait_time)
+                for key, value in book_rate_data.items():
+                    setattr(prop, key, value)
 
-            # # --------------------------------
+            # --------------------------------
 
-            # scrape_result: ScrapeResult = scr2.get_scrape_result(prop)
-            # setattr(prop, 'scrape_result', str(scrape_result)) 
+            scrape_result: ScrapeResult = scr2.get_scrape_result(prop)
+            setattr(prop, 'scrape_result', str(scrape_result)) 
 
-            # # --------------------------------
+            # --------------------------------
 
-            # log.info(f'Complete scraping data for property #{prop.prop_code} | result: {scrape_result}')
+            log.info(f'Complete scraping data for property #{prop.prop_code} | result: {scrape_result}')
             scraped_prop_cnt += 1
 
         except Exception as e:
