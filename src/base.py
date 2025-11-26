@@ -37,6 +37,7 @@ import src.detail_step.scrape2 as scr2
 import src.detail_step.scrape3 as scr3
 import src.tool.db_op as dbop
 import src.tool.utils as utl
+import src.tool.api_op as api_op
 import src.detail_step.shared_state as shared_state
 
 from src.tool.config import wait_time
@@ -103,30 +104,16 @@ def start_driver() -> Tuple[WebDriver | None, WebDriverWait | None]:
 
 
 
-def scrape_p1(db: Session, session_id: UUID, session_name: str, 
-            search_url: str, num_guest: int | None, num_property: int,
+def scrape_p1(
+            driver: WebDriver, wait: WebDriverWait,
+            db: Session, session_id: UUID, session_name: str, 
+            search_url: str, num_property: int,
             save_db: bool = False
     ) -> List[PropertyDB]:
-    
-    driver: WebDriver | None = None
-    wait: WebDriverWait | None = None
-    driver, wait = start_driver()
-
-    # --------------------------------
-
-    if driver and wait:
-        pass
-    else:
-        log.error(f"Failed to start driver and create wait object")
-        return []
-
-    # --------------------------------
     
     scr1.go_to_website(driver, wait, wait_time, search_url)
 
     link_list: List[Dict[str, str]] = scr1.view_page_get_link(driver, wait, wait_time, num_property)
-
-    brws.close_browser(driver)
     
     # --------------------------------
 
@@ -176,20 +163,12 @@ def scrape_p1(db: Session, session_id: UUID, session_name: str,
 
 
 
-def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
+def scrape_p2(
+            driver: WebDriver, wait: WebDriverWait,
+            db: Session, detail_list_db: List[PropertyDB],
             collect_host_data: bool=False, collect_booking_rate: bool=False,
             save_db: bool = False
     ) -> ScrapeStatus:
-
-    driver: WebDriver | None = None
-    wait: WebDriverWait | None = None
-    driver, wait = start_driver()
-
-    if driver and wait:
-        pass
-    else:
-        log.error(f"Failed to start driver and create wait object")
-        return ScrapeStatus.partial
 
     scraped_prop_cnt: int = 0
     saved_prop_cnt: int = 0
@@ -217,6 +196,32 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
             lg.log_detail_error(e)
             log.error(f'Error to access page of property <{prop.prop_code}> -> skip to next property')
             continue
+
+
+
+
+
+        api_key = api_op.get_api_key(driver)
+        session = api_op.extract_authen_session(driver, api_key)
+
+        # ------------------------
+
+        listing_id: str | None = api_op.get_listing_id_from_url(driver.current_url)
+        if listing_id:
+            pass
+        else:
+            log.error(f"No listing ID found in URL: {driver.current_url}")
+            continue
+
+        # ------------------------
+
+        api_op.test_calendar_api(session, listing_id)
+        break
+
+
+
+
+        
 
         # --------------------------------
 
@@ -284,7 +289,6 @@ def scrape_p2(db: Session, detail_list_db: List[PropertyDB],
     log.info(f"Scraping process completed | {scraped_prop_cnt} properties scraped")
     log.info(f'Finish saving {saved_prop_cnt} properties (detail info) to database')
     
-    brws.close_browser(driver)
     lg.log_divider()
 
     return ScrapeStatus.success
@@ -324,7 +328,19 @@ def run_full_flow(
 
     # --------------------------------
 
-    link_list_db: List[PropertyDB] = scrape_p1(db, session_id, session_name, search_url, num_guest, num_property, save_db)
+    driver: WebDriver | None = None
+    wait: WebDriverWait | None = None
+    driver, wait = start_driver()
+
+    if driver and wait:
+        pass
+    else:
+        log.error(f"Failed to start driver and create wait object")
+        return ScrapeStatus.failed
+
+    # --------------------------------
+
+    link_list_db: List[PropertyDB] = scrape_p1(driver, wait, db, session_id, session_name, search_url, num_property, save_db)
     log.info(f"Phase 1 (link scraping) completed.")
 
     if not link_list_db:
@@ -336,11 +352,12 @@ def run_full_flow(
     if scrape_phase == 1 or shared_state.cancel_status:
         scrape_status = ScrapeStatus.partial
     else:
-        scrape_status: ScrapeStatus = scrape_p2(db, link_list_db, collect_host_data, collect_booking_rate, save_db)
+        scrape_status: ScrapeStatus = scrape_p2(driver, wait, db, link_list_db, collect_host_data, collect_booking_rate, save_db)
         log.info(f"Phase 2 (detail scraping) completed.")
     
     # --------------------------------
 
+    brws.close_browser(driver)
     return scrape_status
 
 
@@ -377,7 +394,3 @@ if test_local:
 
 
 
-
-# check driver setup
-# check function pausing
-# api call

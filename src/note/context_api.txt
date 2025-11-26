@@ -1,0 +1,98 @@
+This roadmap guides you through refactoring your Airbnb scraper from a pure Selenium approach (slow, brittle) to a Hybrid Approach (Selenium for access + API for data).
+This method uses Selenium to "open the door" (handle login, cookies, and security checks) and then uses direct API calls to "grab the furniture" (get data instantly).
+📚 Part 1: Fundamental Concepts & Syntax
+Before writing code, you need to understand the tools we will use to replace your Selenium logic.
+1. The "Hybrid" Workflow
+Old Way (Selenium): Open Browser -> Wait for Load -> Find Element -> Click -> Wait -> Read Text.
+New Way (Hybrid): Open Browser (Selenium) -> Get Cookies/Tokens -> Switch to Python -> Send HTTP Request -> Get JSON Data.
+2. Key Concept: Headers & Cookies (The "Passport")
+Airbnb APIs are protected. They won't answer unless you show valid ID.
+API Key (x-airbnb-api-key): Identifying the application (Airbnb Web).
+Cookies: Identifying your session.
+Logic: We will use your existing Selenium driver to browse the site once, copy these "passports", and give them to our Python code.
+3. Essential Python Syntax (The "Tools")
+You will use the requests library instead of selenium.
+A. Sending a Request
+cookies
+import requests# The "Passport" we took from Seleniumheaders = {    "x-airbnb-api-key": "YOUR_KEY_HERE",    "content-type": "application/json"}cookies = { ... } # Dictionary of cookies# Calling the API (like entering a URL)response = requests.get("https://www.airbnb.com/api/...", headers=headers, cookies=cookies)
+B. Handling JSON Data (The "Response")
+Selenium gives you HTML (Tags). APIs give you JSON (Dictionaries & Lists).
+data = response.json()# Accessing deep data (Dot notation doesn't work here!)# Old Selenium: driver.find_element(...).text# New Python:price = data['data']['presentation']['stayProductDetailPage']['sections']['metadata']['price']
+C. Safe Access (Avoiding Errors)
+If a key is missing, Python crashes. Use .get():
+# If 'price' doesn't exist, return None instead of crashingprice = data.get('price', None) 
+🗺️ Part 2: Refactoring Roadmap
+We will attack the "slowest" parts first.
+Phase 1: The Bridge (Shared State)
+Goal: Create a helper function to transfer Cookies/Headers from Selenium to Python.
+Action:
+Create a new file src/tool/api_helper.py.
+Write a function get_auth_headers(driver) that:
+Takes your active Selenium driver.
+Returns a dictionary of headers (extracts apikey from page source or local storage) and cookies (driver.get_cookies()).
+Phase 2: Refactoring scrape3.py (Calendar & Price)
+Why: This is currently your slowest feature (looping through months).
+Goal: Replace loop with 1 API call.
+Action:
+Identify API: You found PdpAvailabilityCalendar (Availability) and StayProductDetailPage (Price).
+Create Function: get_calendar_data(listing_id, headers, cookies).
+Logic:
+Make a POST request to the PdpAvailabilityCalendar endpoint.
+Receive the JSON with 12 months of data.
+Lesson: Use a for loop to iterate through the JSON list of days instead of while loop with Selenium clicks.
+Count available: false to get booked days.
+Integration: Update scrape_p2 in base.py to call this new function instead of scr3.book_rate_info.
+Phase 3: Refactoring scrape2.py (Detail Info)
+Why: DOM parsing is brittle. If Airbnb changes a class name, your code breaks. JSON keys change less often.
+Goal: Get all Host, Rating, and Amenity info in one shot.
+Action:
+Identify API: StayProductDetailPage.
+Create Function: get_property_details(listing_id, headers, cookies).
+Logic:
+Make one request.
+Extract:
+Host: data...['sections']...['hostProfile']
+Rating: data...['reviews']...['overallRating']
+Amenities: data...['amenities']
+Integration: Update scrape_p2 to populate your PropertyDB object from this dictionary.
+Phase 4: Refactoring scrape1.py (Get Links)
+Why: This is the hardest part to purely replace because searching requires complex "signatures".
+Strategy: Keep Selenium for navigation but improve extraction.
+Action:
+Keep Selenium: Use driver.get(search_url) to load the page (this bypasses bot checks).
+Optimization: Instead of driver.find_elements (which reads the visible DOM):
+Read driver.page_source.
+Use a library like BeautifulSoup or a Regex pattern to find the Initial State JSON embedded in the HTML (often inside a <script id="data-deferred-state">).
+This JSON contains the list of all 18-20 properties on the page immediately.
+Result: You get all links instantly without scrolling or waiting for elements to render.
+Summary of Work
+Learn: JSON traversal and requests library.
+Build: api_helper.py to get tokens.
+Refactor Phase 2 (Calendar): Biggest speed gain.
+Refactor Phase 3 (Details): Biggest stability gain.
+Refactor Phase 1 (Search): Optimization.
+
+
+---------------------------------------------------------------------------------------------------------
+
+Here is your high-level roadmap for refactoring to a Hybrid Selenium/API scraper.
+🗺️ Roadmap: Hybrid Scraper Refactoring
+Milestone 1: The Foundation (Preparation)
+Goal: Set up the "Bridge" between Selenium and Python Requests.
+Key Task: Create a utility to extract cookies and x-airbnb-api-key from your active Selenium driver.
+Concept to Learn: Requests library syntax (Headers, Cookies) and how to extract hidden API keys from Browser LocalStorage/Page Source.
+Milestone 2: Refactoring Calendar & Price (Highest Impact)
+Goal: Replace scrape3.py (slowest part) with the PdpAvailabilityCalendar API.
+Key Task: Write a function that takes a listing_id, calls the API, and returns 12 months of availability instantly.
+Concept to Learn:
+Constructing API Payloads (JSON bodies).
+Navigating complex JSON responses (replacing DOM traversal).
+Handling dynamic pricing logic (requesting specific dates).
+Milestone 3: Refactoring Detail Page (Stability)
+Goal: Replace scrape2.py with the StayProductDetailPage API.
+Key Task: Consolidate Host, Rating, and Overview extraction into a single API call per property.
+Concept to Learn: Safe Dictionary Access (.get()) to prevent crashes when data fields are missing (unlike Selenium NoSuchElementException).
+Milestone 4: Optimizing Search (Speed)
+Goal: Optimize scrape1.py to extract links faster.
+Key Task: Instead of scrolling and finding elements, parse the initial state data embedded in the HTML source.
+Concept to Learn: "Pre-loaded State" scraping (extracting JSON from <script> tags inside HTML).
