@@ -45,6 +45,9 @@ from src.tool.config import main_website_url, ip_website_url, save_db, log_error
 from src.type.data import ScrapeResult, ScrapeStatus, PropertyDB, BrowserMode
 
 
+import src.detail_step.scrape3_new as scr3_n
+
+
 # -----------------------------------------------------------------------------------
 
 
@@ -174,7 +177,7 @@ def scrape_p2(
     saved_prop_cnt: int = 0
     batch_size: int = 10    # saved to db after every 10 properties
 
-    # --------------------------------
+    # ------------------------
 
     for idx, prop in enumerate[PropertyDB](detail_list_db, start=1):
 
@@ -182,41 +185,69 @@ def scrape_p2(
             lg.log_divider('[base.py | scrape_p2] User (FE) trigger cancellation -> cancel scraping process')
             break
 
-        # --------------------------------
+        # ------------------------
 
         lg.log_divider()
         log.info(f'Scraping property #{idx}: {prop.prop_code} - {prop.prop_name}')
         property_link: str = str(prop.prop_link)
 
-        # --------------------------------
+        # ------------------------
 
         try:
             scr1.go_to_website(driver, wait, wait_time, property_link, view='detail_page')
         except Exception as e:
-            lg.log_detail_error(e)
-            log.error(f'Error to access page of property <{prop.prop_code}> -> skip to next property')
+            lg.log_detail_error(
+                e,
+                message = f'Error to access page of property <{prop.prop_code}> -> skip to next property'
+            )
             continue
 
+        # ------------------------
 
+        scr3.price_info(driver, wait_time)
 
-
+        # ------------------------
 
         api_key = api_op.get_api_key(driver)
-        session = api_op.extract_authen_session(driver, api_key)
+        session = api_op.get_authen_session(driver, api_key)
+        input_data: Dict[str, Any] = api_op.get_input_from_url(driver.current_url)
 
         # ------------------------
 
-        listing_id: str | None = api_op.get_listing_id_from_url(driver.current_url)
-        if listing_id:
-            pass
-        else:
-            log.error(f"No listing ID found in URL: {driver.current_url}")
+        missing_input_state: bool = False
+        missing_input_name: List[str] = []
+
+        for key, value in input_data.items():
+            if value is None:
+                missing_input_state = True
+                missing_input_name.append(key)
+        
+        if missing_input_state:
+            log.error(f'Cannot find [{", ".join(missing_input_name)}] in above URL -> skip to next property')
             continue
 
         # ------------------------
 
-        api_op.test_calendar_api(session, listing_id)
+        prop_detail_resp: Dict[str, Any] = api_op.call_prop_detail_api(session, input_data['listing_id'], input_data['checkin_date'], input_data['checkout_date'])
+        if prop_detail_resp:
+            scr3_n.get_price(prop_detail_resp)
+        else:
+            log.error(f"No property detail response found")
+            continue
+
+        # ------------------------
+
+        # calender_resp: Dict[str, Any] = api_op.call_calendar_api(session, listing_id)
+        # if calender_resp:
+        #     book_rate_data: Dict[str, Any] = scr3_n.get_book_rate(calender_resp)
+        #     for key, value in book_rate_data.items():
+        #         setattr(prop, key, value)
+        # else:
+        #     log.error(f"No calendar response found")    
+
         break
+
+
 
 
 

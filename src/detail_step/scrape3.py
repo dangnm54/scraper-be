@@ -2,6 +2,7 @@ import time
 import logging
 from typing import Dict, Any, List, Tuple, cast
 
+from sqlalchemy.orm import Query
 from tqdm import tqdm
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
@@ -234,7 +235,7 @@ def price_info(driver: WebDriver, wait_time: float) -> int | None:
         
         # --------------------------------
 
-        max_try: int = 12
+        max_try: int = 6
         current_try: int = 0
 
         # --------------------------------
@@ -263,7 +264,7 @@ def price_info(driver: WebDriver, wait_time: float) -> int | None:
                 defualt_avai_day_list: List[WebElement] = month_box.find_elements(By.CSS_SELECTOR, 'td[aria-disabled="false"]')
 
                 if len(defualt_avai_day_list) == 0:
-                    log.error(f'No available days to check pricing -> check next month_box')
+                    log.error(f'No available days to select check-in & check-out dates -> check next month_box')
                     continue
 
                 # --------------------------------
@@ -275,49 +276,51 @@ def price_info(driver: WebDriver, wait_time: float) -> int | None:
                         avai_day: WebElement = current_avai_day_list[0]
                         avai_day_text: str = avai_day.text
                         avai_day.click()
-                        log.info(f'Click {idx + 1}/2 -> choose day {avai_day_text}')
+                        log.info(f'Click {idx + 1}/2 -> choose day #{avai_day_text}')
                         time.sleep(wait_time)
 
                     except Exception as e:
                         log.error(f'Error scraping pricing at click iteration {idx + 1}')
                         return
 
-                # --------------------------------
-
-                chosen_day_cnt: int = 0
-
-                current_avai_day_list = driver.find_elements(By.CSS_SELECTOR, 'td[aria-disabled="false"]')
-
-                for day in current_avai_day_list:
-                    day_aria_label: str = cast(str, day.get_attribute('aria-label'))
-                    if 'Đã chọn' in day_aria_label or 'đã chọn' in day_aria_label:
-                        chosen_day_cnt += 1
-
-                chosen_night_cnt: int = chosen_day_cnt - 1
-                log.info(f'Total chosen days: {chosen_day_cnt} -> Total chosen nights: {chosen_night_cnt}')
+                return price_data
 
                 # --------------------------------
 
-                price_css_list: List[Dict[str, str]] = [
-                    {'type': 'Normal', 'css': 'span.umg93v9'},
-                    {'type': 'Discounted', 'css': 'span.umuerxh'},
-                ]
+                # chosen_day_cnt: int = 0
+
+                # current_avai_day_list = driver.find_elements(By.CSS_SELECTOR, 'td[aria-disabled="false"]')
+
+                # for day in current_avai_day_list:
+                #     day_aria_label: str = cast(str, day.get_attribute('aria-label'))
+                #     if 'Đã chọn' in day_aria_label or 'đã chọn' in day_aria_label:
+                #         chosen_day_cnt += 1
+
+                # chosen_night_cnt: int = chosen_day_cnt - 1
+                # log.info(f'Total chosen days: {chosen_day_cnt} -> Total chosen nights: {chosen_night_cnt}')
+
+                # # --------------------------------
+
+                # price_css_list: List[Dict[str, str]] = [
+                #     {'type': 'Normal', 'css': 'span.umg93v9'},
+                #     {'type': 'Discounted', 'css': 'span.umuerxh'},
+                # ]
                 
-                for config in price_css_list:
-                    price_element: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, config['css'])
-                    if price_element:
-                        log.info(f'{config["type"]} price element found')
+                # for config in price_css_list:
+                #     price_element: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, config['css'])
+                #     if price_element:
+                #         log.info(f'{config["type"]} price element found')
 
-                        price: int = cast(int, utl.get_info_from_string(price_element[1].text, mode='price'))
-                        log.info(f'{config["type"]} price: {price} VND')
+                #         price: int = cast(int, utl.get_info_from_string(price_element[1].text, mode='price'))
+                #         log.info(f'{config["type"]} price: {price} VND')
 
-                        nightly_price: float = round( int(price) / chosen_night_cnt, 0)
-                        log.info(f'Price: {price} VND / {chosen_night_cnt} chosen nights = {nightly_price} VND/day')
+                #         nightly_price: float = round( int(price) / chosen_night_cnt, 0)
+                #         log.info(f'Price: {price} VND / {chosen_night_cnt} chosen nights = {nightly_price} VND/day')
 
-                        price_data = int(nightly_price)
-                        return price_data
+                #         price_data = int(nightly_price)
+                #         return price_data
 
-                log.info('No price element found -> check next month_box')
+                # log.info('No price element found -> check next month_box')
 
                 # --------------------------------
                 
@@ -329,7 +332,7 @@ def price_info(driver: WebDriver, wait_time: float) -> int | None:
 
             # --------------------------------
 
-        log.info('No available days in 1 year from now -> return None')
+        log.info('No available days in 6 months from now -> return None')
         return price_data
 
     except Exception as e:

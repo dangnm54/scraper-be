@@ -111,18 +111,18 @@ def log_divider(ipt_message: str = '') -> None:
 
 
 
-def log_detail_error(e: Exception) -> None:
+def log_detail_error(e: Exception, message: str | None = None) -> None:
     
     exc_type, exc_value, exc_traceback = sys.exc_info()
     
-    message = str(e)
+    err_message = str(e)
 
     if exc_traceback:
 
         match log_error_level:
             case 'full':
                 full_traceback = traceback.format_exc()
-                message = f"Full traceback:\n{full_traceback}"
+                err_message = f"Full traceback:\n{full_traceback}"
 
             # get 3 lastest level of error
             case '3_level':
@@ -136,14 +136,17 @@ def log_detail_error(e: Exception) -> None:
                     frame_info = f'- Error level #{i+1}: File <{short_file_name}> | Function <{frame.name}> | Line #{frame.lineno}: {frame.line}'
                     error_list.append(frame_info)
 
-                message = '\n'.join(error_list)
-
+                err_message = '\n'.join(error_list)
     else:
         pass
 
 
     root_logger = logging.getLogger()
-    root_logger.error(message)
+
+    if message:
+        root_logger.error(message)
+    
+    root_logger.error(err_message)
 
 
 
