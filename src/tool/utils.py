@@ -55,7 +55,7 @@ def clean_text(string: str, mode: int) -> str:
                     clean_text = clean_text.replace(vn_key, en_value).lower()
             
             case 2:
-                clean_text = string.strip('"').strip(' · ').lower()
+                clean_text = string.strip(' " ').strip(' · ').lower()
             case 3:
                 clean_text = (string.replace(',','.'))
             case 4:
@@ -71,60 +71,129 @@ def clean_text(string: str, mode: int) -> str:
 
 
 
+def clean_text_2(string: str, mode: str) -> str:
+    clean_text: str = ''
+    try:
+        match mode:
+            case 'normalize':
+                nfd_string: str = unicodedata.normalize('NFD', string)
+                clean_text = ''.join(char for char in nfd_string if unicodedata.category(char) != 'Mn')
+
+                replacements = {
+                    'đ': 'd', 'Đ': 'D',
+                    'ă': 'a', 'Ă': 'A',
+                    'â': 'a', 'Â': 'A',
+                    'ê': 'e', 'Ê': 'E',
+                    'ô': 'o', 'Ô': 'O',
+                    'ơ': 'o', 'Ơ': 'O',
+                    'ư': 'u', 'Ư': 'U',
+                }
+
+                for vn_key, en_value in replacements.items():
+                    clean_text = clean_text.replace(vn_key, en_value).lower()
+
+            case 'strip_"':
+                clean_text = string.strip(' " ').lower()
+
+
+        return clean_text
+
+    except Exception as e:
+        lg.log_detail_error(e, 'Error in clean_text')
+        return ''
+
+
 
 def get_info_from_string(string: str, mode: str) -> str | int | None:
 
-    try:
-        word_list: List[str] = string.split()
-        target_word: str | int | None = ''
+    word_list: List[str] = string.split()
+    target_word: str | int | None = None
 
+    try:
         match mode:
-            case 'int':
+            case 'price':
+                # test: 1 đêm x ₫1.335.177
+                target_word = word_list[3].replace('₫', '').replace('.', '')
+
+            case 'month':
                 for word in word_list:
-                    # print(word)
+                    if word.isdigit() and int(word) < 13:
+                        target_word = int(word)
+            
+            case 'int':
+                # test: 3 khach
+                for word in word_list:
                     if word.isdigit():
                         target_word = int(word)
-                        # print(target_word)
-                        
-            case 'exp':
-                for word in word_list:
-                    # print(word)
-                    if word.isdigit():
-                        target_word = word
-                    elif word == 'tháng':
-                        target_word += ' thang'
-                    elif word == 'năm':
-                        target_word += ' nam'
-                # print(target_word)
-
-            case 'coordinate':
-                word_list = word_list[0].split('/')
-                raw_coordinate: str = ''
-                for word in word_list:
-                    if '@' in word:
-                        raw_coordinate = word
-                coordinate_axis_list = raw_coordinate.strip('@').strip('z').split(',')
-                target_word = ','.join(coordinate_axis_list[0:2])  # stop before position #2
 
             case 'ggmap_link':
                 target_word = f'https://maps.google.com/?q={string}'
 
-            case 'month':
-                for word in word_list:
-                    if word.isdigit() and int(word) < 2025:
-                        # print(f'word: {word}')
-                        target_word = int(word)
-
-            case 'price':
-                # test: ₫1.138.895
-                target_word = string.replace('₫', '').replace('.', '')
-
 
         return target_word
-    
+
     except Exception as e:
-        lg.log_detail_error(e)
+        lg.log_detail_error(e, 'Error in get_info_from_string')
         return None
+
+
+
+
+
+
+# def get_info_from_string(string: str, mode: str) -> str | int | None:
+
+#     try:
+#         word_list: List[str] = string.split()
+#         target_word: str | int | None = ''
+
+#         match mode:
+#             case 'int':
+#                 for word in word_list:
+#                     # print(word)
+#                     if word.isdigit():
+#                         target_word = int(word)
+#                         # print(target_word)
+                        
+#             case 'exp':
+#                 for word in word_list:
+#                     # print(word)
+#                     if word.isdigit():
+#                         target_word = word
+#                     elif word == 'tháng':
+#                         target_word += ' thang'
+#                     elif word == 'năm':
+#                         target_word += ' nam'
+#                 # print(target_word)
+
+#             case 'coordinate':
+#                 word_list = word_list[0].split('/')
+#                 raw_coordinate: str = ''
+#                 for word in word_list:
+#                     if '@' in word:
+#                         raw_coordinate = word
+#                 coordinate_axis_list = raw_coordinate.strip('@').strip('z').split(',')
+#                 target_word = ','.join(coordinate_axis_list[0:2])  # stop before position #2
+
+#             case 'ggmap_link':
+#                 target_word = f'https://maps.google.com/?q={string}'
+
+#             case 'month':
+#                 for word in word_list:
+#                     if word.isdigit() and int(word) < 2025:
+#                         # print(f'word: {word}')
+#                         target_word = int(word)
+
+#             case 'price':
+#                 # test: ₫1.138.895
+#                 target_word = string.replace('₫', '').replace('.', '')
+
+
+#         return target_word
+    
+#     except Exception as e:
+#         lg.log_detail_error(e)
+#         return None
 
 
 

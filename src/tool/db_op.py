@@ -24,6 +24,7 @@ log = logging.getLogger(__name__)
 DATABASE_URL: str | None = os.getenv('DATABASE_URL')
 
 
+
 # create 'engine' and 'SessionLocal' for all functions in this file
 if DATABASE_URL:
     # 'engine' -> core component connects your app to database.

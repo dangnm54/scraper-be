@@ -3,6 +3,7 @@ import json
 import base64
 import logging
 import requests
+import urllib.parse
 import datetime
 from typing import Dict, Any
 
@@ -113,21 +114,50 @@ def get_input_from_url(url: str) -> Dict[str, Any]:
             info = match.group(1)
             input_data[input['key']] = info
 
-        log.info(f"- {input['key']}: {input_data[input['key']]}")
+    # ------------------------
 
+    utl.print_pretty_dict(input_data)
     return input_data
+
+
+
+
+
+def get_host_id_from_response(response: Dict[str, Any]) -> int:
+
+    lg.log_divider('get_host_id_from_response')
+
+    host_overview_resp: Dict[str, Any] = get_response_part(response, 'host')
+    host_id: int = host_overview_resp.get('hostAvatar', {}).get('loggingEventData', {}).get('eventData', {}).get('pdpContext', {}).get('hostId', 0)
+    
+    log.info(f'Host ID: {host_id}')
+    return host_id
+
+
 
 
 
 def get_response_part(response: Dict[str, Any], part_name: str) -> Dict[str, Any]:
 
+    # log.info('response')
+    # utl.print_pretty_dict(response)
+
     part_response: Dict[str, Any] = {}
-    PropDetail_outer_layers = response.get('data',{}).get('presentation',{}).get('stayProductDetailPage',{}).get('sections',{}).get('sections',[])
+    prop_detail_outer_layers = response.get('data',{}).get('presentation',{}).get('stayProductDetailPage',{}).get('sections',{})
+
+    # log.info('PropDetail_outer_layers')
+    # utl.print_pretty_dict(prop_detail_outer_layers)
 
     match part_name:
         case 'price':
-            part_response = PropDetail_outer_layers[1].get('section',{}).get('structuredDisplayPrice',{})
-            utl.print_pretty_dict(part_response)
+            part_response = prop_detail_outer_layers.get('sections',[])[1].get('section',{}).get('structuredDisplayPrice',{})
+        case 'location':
+            part_response = prop_detail_outer_layers.get('sections',[])[0].get('section',{})
+        case 'overview':
+            part_response = prop_detail_outer_layers.get('sbuiData',{}).get('sectionConfiguration',{}).get('root',{}).get('sections',[])[0].get('sectionData',{})
+        case 'host':
+            part_response = prop_detail_outer_layers.get('sbuiData',{}).get('sectionConfiguration',{}).get('root',{}).get('sections',[])[1].get('sectionData',{})
+
 
 
     return part_response
@@ -271,10 +301,7 @@ def call_prop_detail_api(
             log.info("✅ PropertyDetail API SUCCESS")
 
             resp: Dict[str, Any] = response.json()
-            utl.print_pretty_dict(resp)
-
-            # need_data: Dict[str, Any] = resp.get('data',{}).get('merlin',{}).get('pdpAvailabilityCalendar',{})
-            # # utl.print_pretty_dict(need_data)
+            # utl.print_pretty_dict(resp)
             
             return resp
 
@@ -286,3 +313,83 @@ def call_prop_detail_api(
     except Exception as e:
         log.error(f"❌ PropertyDetail API Exception: {e}")
         return {}
+
+
+
+
+
+def call_host_api(session: requests.Session, host_id: int) -> Dict[str, Any]:
+
+    lg.log_divider('call_host_api')
+
+    # ------------------------
+
+    base_url = 'https://www.airbnb.com.vn/api/v3/ContextualPublicProfileQuery'
+    sha_hash = 'e5be5314e402c6e215ee97b8584e02044115be7978555232e1b9fcaa8ca202cc'
+
+    contextual_user_id_raw = f"ContextualUser:{host_id}"
+    contextual_user_id = base64.b64encode(contextual_user_id_raw.encode()).decode()
+
+    # ------------------------
+
+    viewer_user_id = ''
+    is_viewer_logged_in = False
+
+    try:
+        user_attributes = session.cookies.get('_user_attributes')
+        if user_attributes:
+            decoded_attrs = urllib.parse.unquote(user_attributes)
+            user_data = json.loads(decoded_attrs)
+            
+            if 'id' in user_data:
+                raw_viewer_id = f"User:{user_data['id']}"
+                viewer_user_id = base64.b64encode(raw_viewer_id.encode()).decode()
+                is_viewer_logged_in = True
+                log.info(f"Found logged-in viewer ID: {user_data['id']}")
+    except Exception as e:
+        log.warning(f"Could not extract viewer info from cookies: {e}")
+
+    # ------------------------
+
+    variables = {
+        "contextualUserId": contextual_user_id,
+        "viewerUserId": viewer_user_id,
+        "isViewerLoggedIn": is_viewer_logged_in
+    }
+
+    extensions = {
+        "persistedQuery": {
+            "version": 1,
+            "sha256Hash": sha_hash
+        }
+    }
+
+    params = {
+        "operationName": "ContextualPublicProfileQuery",
+        "locale": "vi",
+        "currency": "VND",
+        "variables": json.dumps(variables),
+        "extensions": json.dumps(extensions)
+    }
+
+    # ------------------------
+
+    try:
+        response = session.get(base_url, params=params)
+        
+        if response.status_code == 200:
+            log.info("✅ Host API SUCCESS")
+
+            resp: Dict[str, Any] = response.json()
+            # utl.print_pretty_dict(resp)
+            return resp
+
+        else:
+            log.error(f"❌ Host API FAILED | status code: {response.status_code}")
+            log.error(f"Response: {response.text[:500]}")
+            return {}
+            
+    except Exception as e:
+        log.error(f"❌ Host API Exception: {e}")
+        return {}
+    

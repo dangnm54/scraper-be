@@ -5,7 +5,7 @@
         singleProxy: {
         scheme: "http",
         host: "103.99.1.146",
-        port: parseInt(8202)
+        port: parseInt(8659)
         },
         bypassList: ["localhost"]
     }
@@ -16,8 +16,8 @@
     function callbackFn(details) {
         return {
             authCredentials: {
-                username: "kz00mUFMminhd",
-                password: "Hm8fjL77"
+                username: "VoahrxmRminhd",
+                password: "OqeNIKac"
             }
         };
     }

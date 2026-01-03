@@ -24,7 +24,7 @@ log = logging.getLogger(__name__)
 
 def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, website_url: str, view: str | None = None) -> None:
 
-    lg.log_divider('Go to website')
+    lg.log_divider('go_to_website')
 
     try:
         driver.get(website_url)
@@ -100,13 +100,12 @@ def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, webs
             log.error(f'Found no Ad pop-up')
 
         except Exception as e:
-            lg.log_detail_error(e)
-            log.error(f'Error to locate and close Ad pop-up | {e}')
+            lg.log_detail_error(e, 'Error to locate and close Ad pop-up')
             pass
 
 
     except Exception as e:
-        lg.log_detail_error(e)
+        lg.log_detail_error(e, 'Error in go_to_website')
 
 
 # ------------------------------------------------------------------------------------------------
@@ -248,7 +247,7 @@ def go_to_website(driver: WebDriver, wait: WebDriverWait, wait_time: float, webs
 
 def view_page_get_link(driver: WebDriver, wait: WebDriverWait, wait_time: float, num_property: int) -> List[Dict[str, str]]:
     
-    lg.log_divider('View page and get all link')
+    lg.log_divider('view_page_get_link')
 
     # --------------------------------
 
@@ -348,5 +347,5 @@ def view_page_get_link(driver: WebDriver, wait: WebDriverWait, wait_time: float,
         return link_list
 
     except Exception as e:
-        lg.log_detail_error(e)
+        lg.log_detail_error(e, 'Error in view_page_get_link')
         return []

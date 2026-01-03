@@ -45,7 +45,6 @@ from src.tool.config import main_website_url, ip_website_url, save_db, log_error
 from src.type.data import ScrapeResult, ScrapeStatus, PropertyDB, BrowserMode
 
 
-import src.detail_step.scrape3_new as scr3_n
 
 
 # -----------------------------------------------------------------------------------
@@ -204,13 +203,15 @@ def scrape_p2(
 
         # ------------------------
 
-        scr3.price_info(driver, wait_time)
+        scr3.click_calender(driver, wait_time)
+
+        host_id: int | None = scr3.get_host_id(driver)
 
         # ------------------------
 
         api_key = api_op.get_api_key(driver)
         session = api_op.get_authen_session(driver, api_key)
-        input_data: Dict[str, Any] = api_op.get_input_from_url(driver.current_url)
+        input_data: Dict[str, Any] = api_op.get_input_from_url(driver.current_url)  # listing id, checkin & checkout date
 
         # ------------------------
 
@@ -222,24 +223,55 @@ def scrape_p2(
                 missing_input_state = True
                 missing_input_name.append(key)
         
+        # ------------------------
+
         if missing_input_state:
-            log.error(f'Cannot find [{", ".join(missing_input_name)}] in above URL -> skip to next property')
-            continue
+            log.error(f'Cannot find <{", ".join(missing_input_name)}> -> skip overview and price data')
+        
+        else:
+            log.info('All input data <listing_id, checkin_date, checkout_date> found')
+
+            # prop_detail_resp: Dict[str, Any] = api_op.call_prop_detail_api(session, input_data['listing_id'], input_data['checkin_date'], input_data['checkout_date'])
+        
+            # # ------------------------
+        
+            # if prop_detail_resp:
+
+            #     price_data: int | None = scr3.get_price(prop_detail_resp)
+            #     setattr(prop, 'nightly_price', price_data)
+
+            #     # ------------------------
+
+            #     overview_data: Dict[str, Any] = scr3.get_overview_info(prop_detail_resp)
+            #     for key, value in overview_data.items():
+            #         setattr(prop, key, value)
+
+            # else:
+            #     log.error(f"No property detail response found -> skip price and overview data")
+
 
         # ------------------------
 
-        prop_detail_resp: Dict[str, Any] = api_op.call_prop_detail_api(session, input_data['listing_id'], input_data['checkin_date'], input_data['checkout_date'])
-        if prop_detail_resp:
-            scr3_n.get_price(prop_detail_resp)
+
+        if not host_id:
+            log.error('Cannot find host id -> skip host data')
         else:
-            log.error(f"No property detail response found")
-            continue
+            host_resp: Dict[str, Any] = api_op.call_host_api(session, host_id)
+            if host_resp:
+                host_data: Dict[str, Any] = scr3.get_host_info(host_resp)
+                for key, value in host_data.items():
+                    setattr(prop, key, value)
+            else:
+                log.error(f"No host response found -> skip host data")
+
+
+
 
         # ------------------------
 
         # calender_resp: Dict[str, Any] = api_op.call_calendar_api(session, listing_id)
         # if calender_resp:
-        #     book_rate_data: Dict[str, Any] = scr3_n.get_book_rate(calender_resp)
+        #     book_rate_data: Dict[str, Any] = scr3.get_book_rate(calender_resp)
         #     for key, value in book_rate_data.items():
         #         setattr(prop, key, value)
         # else:
@@ -339,7 +371,7 @@ def run_full_flow(
         collect_booking_rate: bool = False
     ) -> ScrapeStatus:
 
-    lg.log_divider('Start full flow')
+    lg.log_divider('start_full_flow')
 
     log.info("API Request Received:")
     log.info(f"""

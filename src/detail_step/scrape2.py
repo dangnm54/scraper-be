@@ -90,88 +90,88 @@ def overview_info(driver: WebDriver, wait: WebDriverWait) -> Dict[str, Any]:
 
 # def utility_info(driver, wait_time):
 
-    lg.log_divider('Utility info')
+#     lg.log_divider('Utility info')
 
-    try:
-        utility_data = {
-            # 'Utility_num': None,
-            # 'Utility_bathroom': None,
-            # 'Utility_bedroom': None,
-            # 'Utility_entertain': None,
-            # 'Utility_safety': None,
-            # 'Utility_kitchen': None,
-            # 'Utility_outdoor': None,
-            # 'Utility_parking': None,
-            # 'Utility_service': None,
-            # 'Utility_not_included': None,
-        }
+#     try:
+#         utility_data = {
+#             # 'Utility_num': None,
+#             # 'Utility_bathroom': None,
+#             # 'Utility_bedroom': None,
+#             # 'Utility_entertain': None,
+#             # 'Utility_safety': None,
+#             # 'Utility_kitchen': None,
+#             # 'Utility_outdoor': None,
+#             # 'Utility_parking': None,
+#             # 'Utility_service': None,
+#             # 'Utility_not_included': None,
+#         }
 
-        utility_section = driver.find_element(By.CSS_SELECTOR, 'div[data-section-id="AMENITIES_DEFAULT"]')
-        utility_button = utility_section.find_element(By.CSS_SELECTOR, 'button.l1ovpqvx')
-        utl.scroll_focus_element(driver, utility_button)
+#         utility_section = driver.find_element(By.CSS_SELECTOR, 'div[data-section-id="AMENITIES_DEFAULT"]')
+#         utility_button = utility_section.find_element(By.CSS_SELECTOR, 'button.l1ovpqvx')
+#         utl.scroll_focus_element(driver, utility_button)
 
-        # utility_num = utl.get_info_from_string(utility_button.text, mode='int')
-        # utility_data['Utility_num'] = utility_num
+#         # utility_num = utl.get_info_from_string(utility_button.text, mode='int')
+#         # utility_data['Utility_num'] = utility_num
         
-        # utility_button.click()
-        # time.sleep(wait_time)
-        # log.info('Open utility modal')
+#         # utility_button.click()
+#         # time.sleep(wait_time)
+#         # log.info('Open utility modal')
 
-        # utility_modal = driver.find_element(By.CSS_SELECTOR, 'div.d1pe7dt2')
-        # utility_category_list = utility_modal.find_elements(By.CSS_SELECTOR,'div._11jhslp')
+#         # utility_modal = driver.find_element(By.CSS_SELECTOR, 'div.d1pe7dt2')
+#         # utility_category_list = utility_modal.find_elements(By.CSS_SELECTOR,'div._11jhslp')
 
-        # for category in tqdm(utility_category_list, desc='Scraping utility data: '):
-        #     utl.scroll_focus_element(driver, category)
+#         # for category in tqdm(utility_category_list, desc='Scraping utility data: '):
+#         #     utl.scroll_focus_element(driver, category)
 
-        #     item_list = []
+#         #     item_list = []
 
-        #     item_element_list = category.find_elements(By.CSS_SELECTOR, 'li')
-        #     for item in item_element_list:
+#         #     item_element_list = category.find_elements(By.CSS_SELECTOR, 'li')
+#         #     for item in item_element_list:
                 
-        #         non_striked_name = item.find_elements(By.CSS_SELECTOR, 'del')
-        #         sub_name = item.find_elements(By.CSS_SELECTOR, 'div.s9gst5p')
-        #         if non_striked_name:
-        #             if sub_name:
-        #                 item_name = f'{non_striked_name[0].text}\n{sub_name[0].text}'
-        #             else:
-        #                 item_name = non_striked_name[0].text
-        #         else:
-        #             item_name = item.text
-        #         item_list.append(item_name)
+#         #         non_striked_name = item.find_elements(By.CSS_SELECTOR, 'del')
+#         #         sub_name = item.find_elements(By.CSS_SELECTOR, 'div.s9gst5p')
+#         #         if non_striked_name:
+#         #             if sub_name:
+#         #                 item_name = f'{non_striked_name[0].text}\n{sub_name[0].text}'
+#         #             else:
+#         #                 item_name = non_striked_name[0].text
+#         #         else:
+#         #             item_name = item.text
+#         #         item_list.append(item_name)
 
-        #     cate_name = category.find_element(By.CSS_SELECTOR, 'h2.hpipapi').text
-        #     clean_cate_name = utl.clean_text(cate_name, mode=1)
+#         #     cate_name = category.find_element(By.CSS_SELECTOR, 'h2.hpipapi').text
+#         #     clean_cate_name = utl.clean_text(cate_name, mode=1)
 
-        #     category_map = {
-        #         'Utility_bathroom':'phong tam',
-        #         'Utility_bedroom':'phong ngu',
-        #         'Utility_entertain':'giai tri',
-        #         'Utility_safety':'an toan',
-        #         'Utility_kitchen':'bep',
-        #         'Utility_outdoor':'ngoai troi',
-        #         'Utility_parking':'do xe',
-        #         'Utility_service':'dich vu',
-        #         'Utility_not_included':'khong bao gom'
-        #     }
+#         #     category_map = {
+#         #         'Utility_bathroom':'phong tam',
+#         #         'Utility_bedroom':'phong ngu',
+#         #         'Utility_entertain':'giai tri',
+#         #         'Utility_safety':'an toan',
+#         #         'Utility_kitchen':'bep',
+#         #         'Utility_outdoor':'ngoai troi',
+#         #         'Utility_parking':'do xe',
+#         #         'Utility_service':'dich vu',
+#         #         'Utility_not_included':'khong bao gom'
+#         #     }
 
-        #     for key, cate_name in category_map.items():
-        #         if cate_name in clean_cate_name:
-        #             utility_data[key] = item_list
+#         #     for key, cate_name in category_map.items():
+#         #         if cate_name in clean_cate_name:
+#         #             utility_data[key] = item_list
 
-        #     log.info(f'\nCategory: {clean_cate_name}')
-        #     log.info(f'Item list: {item_list}')
-        #     lg.log_divider()
+#         #     log.info(f'\nCategory: {clean_cate_name}')
+#         #     log.info(f'Item list: {item_list}')
+#         #     lg.log_divider()
             
-        # close_button = utility_modal.find_element(By.CSS_SELECTOR, 'button[aria-label="Đóng"]')
-        # close_button.click()
-        # log.info('Close modal')
+#         # close_button = utility_modal.find_element(By.CSS_SELECTOR, 'button[aria-label="Đóng"]')
+#         # close_button.click()
+#         # log.info('Close modal')
 
-        utl.print_pretty_dict(utility_data)
-        return utility_data
+#         utl.print_pretty_dict(utility_data)
+#         return utility_data
 
-    except Exception as e:
-        lg.log_detail_error(e)
-        return utility_data
+#     except Exception as e:
+#         lg.log_detail_error(e)
+#         return utility_data
 
 
 
@@ -382,8 +382,6 @@ def host_info(driver: WebDriver) -> Dict[str, Any]:
     except Exception as e:
         lg.log_detail_error(e)
         return co_host_data
-
-
 
 
 

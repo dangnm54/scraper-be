@@ -1,0 +1,2434 @@
+___Header
+
+Request URL
+https://www.airbnb.com.vn/api/v3/ContextualPublicProfileQuery/e5be5314e402c6e215ee97b8584e02044115be7978555232e1b9fcaa8ca202cc?operationName=ContextualPublicProfileQuery&locale=vi&currency=VND&variables=%7B%22contextualUserId%22%3A%22Q29udGV4dHVhbFVzZXI6MTQ2OTMwMjQwMzI2NDk3NDE0Mw%3D%3D%22%2C%22viewerUserId%22%3A%22%22%2C%22isViewerLoggedIn%22%3Afalse%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%22e5be5314e402c6e215ee97b8584e02044115be7978555232e1b9fcaa8ca202cc%22%7D%7D
+Request Method
+GET
+Status Code
+200 OK (from service worker)
+Referrer Policy
+strict-origin-when-cross-origin
+akamai-request-bc
+[a=113.171.10.151,b=927552365,c=g,n=VN_HN_HANOI,o=45899],[c=c,n=HK__TSEUNGKWANO,o=20940],[c=c,n=US_VA_STERLING,o=20940],[a=247,c=o]
+alt-svc
+h3=":443"; ma=93600
+cache-control
+max-age=0, no-cache, no-store
+cachestatus
+on
+content-encoding
+gzip
+content-length
+9336
+content-type
+application/json;charset=utf-8
+date
+Sat, 13 Dec 2025 05:35:50 GMT
+expires
+Sat, 13 Dec 2025 05:35:50 GMT
+origin-trial
+AkOekvxwprBLSP7I2nhyRn5yZGt9lTJN6UIYziFKVYg5OhlzmlNDciWbBWkEQ5TYPz+aqsuIUT2pPEjPUD5dFAsAAABneyJvcmlnaW4iOiJodHRwczovL2FpcmJuYi5jb206NDQzIiwiZmVhdHVyZSI6IlByaW9yaXR5SGludHNBUEkiLCJleHBpcnkiOjE2NDc5OTM1OTksImlzU3ViZG9tYWluIjp0cnVlfQ==
+pragma
+no-cache
+quic-version
+0x00000001
+referrer-policy
+same-origin
+server
+nginx
+server-timing
+backend;dur=273, cdn-cache; desc=MISS, edge; dur=238, origin; dur=286
+status
+200 OK
+strict-transport-security
+max-age=10886400; includeSubdomains
+vary
+Accept-Encoding
+x-airbnb-graphql-schema-id
+d9e601a78842dbf33e4a96878022149d9e146fba81907f86826dd4042de472b5
+x-airbnb-internal-trace-id
+11bRegXVwhuIfKGoHWcWsg==
+x-airbnb-sureride
+c1a1o.0.970aab71.1765604149.3749536d%%i1c1o%%t1d1o.11bRegXVwhuIfKGoHWcWsg==%%h1
+x-app-git-sha
+sha=ac8c1d207cffc
+x-browser-type
+unknown
+x-client-request-id
+145cam80849f3y0sbtql10g4tmcr
+x-content-type-options
+nosniff
+x-envoy-upstream-service-time
+275
+x-erf-bev-bev
+1765604132_EAMjM3YWM1Y2M3OD
+x-erf-bev-bev-is-generated
+0
+x-frame-options
+SAMEORIGIN
+x-instrumentation
+airbnb, airbnb
+x-server-canonical-path
+//{path:(v2|v3)((/viaduct(/(external|legacy-psf)(/[A-Za-z0-9_-]+)?(/[0-9a-fA-F]{64})?)?)|(/[A-Za-z0-9_-]+))?}
+x-server-lifecycle-phase
+running, running
+x-xss-protection
+1; mode=block
+content-type
+application/json
+ect
+4g
+referer
+https://www.airbnb.com.vn/users/profile/1469302403264974143?previous_page_name=PdpHomeMarketplace
+sec-ch-device-memory
+8
+sec-ch-dpr
+2
+sec-ch-ua
+"Chromium";v="142", "Microsoft Edge";v="142", "Not_A Brand";v="99"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"macOS"
+sec-ch-ua-platform-version
+"26.1.0"
+sec-ch-viewport-width
+954
+user-agent
+Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0
+x-airbnb-api-key
+d306zoyjsyarp7ifhu67rjxn52tv0t20
+x-airbnb-client-trace-id
+0v8otze0egxvo21wr2lwo1yzdmh1
+x-airbnb-graphql-platform
+web
+x-airbnb-graphql-platform-client
+minimalist-niobe
+x-airbnb-network-log-link
+068dqnk1ukpal81vc8gvn03o2ce3
+x-airbnb-supports-airlock-v2
+true
+x-client-request-id
+145cam80849f3y0sbtql10g4tmcr
+x-client-version
+f65833cf996108f83ab6fa660619ee83a5b57747
+x-csrf-token
+x-csrf-without-token
+1
+x-niobe-short-circuited
+true
+
+
+___Payload
+operationName
+ContextualPublicProfileQuery
+locale
+vi
+currency
+VND
+variables
+%7B%22contextualUserId%22%3A%22Q29udGV4dHVhbFVzZXI6MTQ2OTMwMjQwMzI2NDk3NDE0Mw%3D%3D%22%2C%22viewerUserId%22%3A%22%22%2C%22isViewerLoggedIn%22%3Afalse%7D
+extensions
+%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%22e5be5314e402c6e215ee97b8584e02044115be7978555232e1b9fcaa8ca202cc%22%7D%7D
+
+
+___Response
+{
+    "errors": [
+        {
+            "message": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTU0NzExMDY1ODk2MDMwMDM3OA==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewHighlightsFromGuests[0]/contextualReviewer/isSuperHost, type: ContextualUser.Boolean",
+            "locations": [
+                {
+                    "line": 108,
+                    "column": 3
+                }
+            ],
+            "path": [
+                "contextualUser",
+                "reviewHighlightsFromGuests",
+                0,
+                "contextualReviewer",
+                "isSuperHost"
+            ],
+            "extensions": {
+                "errorType": "PERMISSION_DENIED",
+                "fatal": false,
+                "localizedMessage": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTU0NzExMDY1ODk2MDMwMDM3OA==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewHighlightsFromGuests[0]/contextualReviewer/isSuperHost, type: ContextualUser.Boolean",
+                "failedAtParentObject": false,
+                "fieldName": "isSuperHost",
+                "parentType": "ContextualUser",
+                "operationName": "ContextualPublicProfileQuery",
+                "classification": "DataFetchingException"
+            }
+        },
+        {
+            "message": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTQ4NTY0ODYxNzUxNTA3MjczNA==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewHighlightsFromGuests[1]/contextualReviewer/isSuperHost, type: ContextualUser.Boolean",
+            "locations": [
+                {
+                    "line": 108,
+                    "column": 3
+                }
+            ],
+            "path": [
+                "contextualUser",
+                "reviewHighlightsFromGuests",
+                1,
+                "contextualReviewer",
+                "isSuperHost"
+            ],
+            "extensions": {
+                "errorType": "PERMISSION_DENIED",
+                "fatal": false,
+                "localizedMessage": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTQ4NTY0ODYxNzUxNTA3MjczNA==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewHighlightsFromGuests[1]/contextualReviewer/isSuperHost, type: ContextualUser.Boolean",
+                "failedAtParentObject": false,
+                "fieldName": "isSuperHost",
+                "parentType": "ContextualUser",
+                "operationName": "ContextualPublicProfileQuery",
+                "classification": "DataFetchingException"
+            }
+        },
+        {
+            "message": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTU0MjA2Mzg0NjI4ODkxMDQwMw==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewHighlightsFromGuests[2]/contextualReviewer/isSuperHost, type: ContextualUser.Boolean",
+            "locations": [
+                {
+                    "line": 108,
+                    "column": 3
+                }
+            ],
+            "path": [
+                "contextualUser",
+                "reviewHighlightsFromGuests",
+                2,
+                "contextualReviewer",
+                "isSuperHost"
+            ],
+            "extensions": {
+                "errorType": "PERMISSION_DENIED",
+                "fatal": false,
+                "localizedMessage": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTU0MjA2Mzg0NjI4ODkxMDQwMw==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewHighlightsFromGuests[2]/contextualReviewer/isSuperHost, type: ContextualUser.Boolean",
+                "failedAtParentObject": false,
+                "fieldName": "isSuperHost",
+                "parentType": "ContextualUser",
+                "operationName": "ContextualPublicProfileQuery",
+                "classification": "DataFetchingException"
+            }
+        },
+        {
+            "message": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTUzODY2MjcxODI3MTE5MDM1Mg==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewHighlightsFromGuests[3]/contextualReviewer/isSuperHost, type: ContextualUser.Boolean",
+            "locations": [
+                {
+                    "line": 108,
+                    "column": 3
+                }
+            ],
+            "path": [
+                "contextualUser",
+                "reviewHighlightsFromGuests",
+                3,
+                "contextualReviewer",
+                "isSuperHost"
+            ],
+            "extensions": {
+                "errorType": "PERMISSION_DENIED",
+                "fatal": false,
+                "localizedMessage": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTUzODY2MjcxODI3MTE5MDM1Mg==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewHighlightsFromGuests[3]/contextualReviewer/isSuperHost, type: ContextualUser.Boolean",
+                "failedAtParentObject": false,
+                "fieldName": "isSuperHost",
+                "parentType": "ContextualUser",
+                "operationName": "ContextualPublicProfileQuery",
+                "classification": "DataFetchingException"
+            }
+        },
+        {
+            "message": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTUzMzgwOTM3NjM3MzQxNDQ0MA==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewHighlightsFromGuests[4]/contextualReviewer/isSuperHost, type: ContextualUser.Boolean",
+            "locations": [
+                {
+                    "line": 108,
+                    "column": 3
+                }
+            ],
+            "path": [
+                "contextualUser",
+                "reviewHighlightsFromGuests",
+                4,
+                "contextualReviewer",
+                "isSuperHost"
+            ],
+            "extensions": {
+                "errorType": "PERMISSION_DENIED",
+                "fatal": false,
+                "localizedMessage": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTUzMzgwOTM3NjM3MzQxNDQ0MA==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewHighlightsFromGuests[4]/contextualReviewer/isSuperHost, type: ContextualUser.Boolean",
+                "failedAtParentObject": false,
+                "fieldName": "isSuperHost",
+                "parentType": "ContextualUser",
+                "operationName": "ContextualPublicProfileQuery",
+                "classification": "DataFetchingException"
+            }
+        },
+        {
+            "message": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTU0NzExMDY1ODk2MDMwMDM3OA==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewsReceivedFromGuests/edges[0]/node/review/contextualReviewer/isSuperHost, type: ContextualUser.Boolean",
+            "locations": [
+                {
+                    "line": 108,
+                    "column": 3
+                }
+            ],
+            "path": [
+                "contextualUser",
+                "reviewsReceivedFromGuests",
+                "edges",
+                0,
+                "node",
+                "review",
+                "contextualReviewer",
+                "isSuperHost"
+            ],
+            "extensions": {
+                "errorType": "PERMISSION_DENIED",
+                "fatal": false,
+                "localizedMessage": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTU0NzExMDY1ODk2MDMwMDM3OA==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewsReceivedFromGuests/edges[0]/node/review/contextualReviewer/isSuperHost, type: ContextualUser.Boolean",
+                "failedAtParentObject": false,
+                "fieldName": "isSuperHost",
+                "parentType": "ContextualUser",
+                "operationName": "ContextualPublicProfileQuery",
+                "classification": "DataFetchingException"
+            }
+        },
+        {
+            "message": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTQ4NTY0ODYxNzUxNTA3MjczNA==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewsReceivedFromGuests/edges[1]/node/review/contextualReviewer/isSuperHost, type: ContextualUser.Boolean",
+            "locations": [
+                {
+                    "line": 108,
+                    "column": 3
+                }
+            ],
+            "path": [
+                "contextualUser",
+                "reviewsReceivedFromGuests",
+                "edges",
+                1,
+                "node",
+                "review",
+                "contextualReviewer",
+                "isSuperHost"
+            ],
+            "extensions": {
+                "errorType": "PERMISSION_DENIED",
+                "fatal": false,
+                "localizedMessage": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTQ4NTY0ODYxNzUxNTA3MjczNA==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewsReceivedFromGuests/edges[1]/node/review/contextualReviewer/isSuperHost, type: ContextualUser.Boolean",
+                "failedAtParentObject": false,
+                "fieldName": "isSuperHost",
+                "parentType": "ContextualUser",
+                "operationName": "ContextualPublicProfileQuery",
+                "classification": "DataFetchingException"
+            }
+        },
+        {
+            "message": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTU0MjA2Mzg0NjI4ODkxMDQwMw==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewsReceivedFromGuests/edges[2]/node/review/contextualReviewer/isSuperHost, type: ContextualUser.Boolean",
+            "locations": [
+                {
+                    "line": 108,
+                    "column": 3
+                }
+            ],
+            "path": [
+                "contextualUser",
+                "reviewsReceivedFromGuests",
+                "edges",
+                2,
+                "node",
+                "review",
+                "contextualReviewer",
+                "isSuperHost"
+            ],
+            "extensions": {
+                "errorType": "PERMISSION_DENIED",
+                "fatal": false,
+                "localizedMessage": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTU0MjA2Mzg0NjI4ODkxMDQwMw==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewsReceivedFromGuests/edges[2]/node/review/contextualReviewer/isSuperHost, type: ContextualUser.Boolean",
+                "failedAtParentObject": false,
+                "fieldName": "isSuperHost",
+                "parentType": "ContextualUser",
+                "operationName": "ContextualPublicProfileQuery",
+                "classification": "DataFetchingException"
+            }
+        },
+        {
+            "message": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTUzODY2MjcxODI3MTE5MDM1Mg==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewsReceivedFromGuests/edges[3]/node/review/contextualReviewer/isSuperHost, type: ContextualUser.Boolean",
+            "locations": [
+                {
+                    "line": 108,
+                    "column": 3
+                }
+            ],
+            "path": [
+                "contextualUser",
+                "reviewsReceivedFromGuests",
+                "edges",
+                3,
+                "node",
+                "review",
+                "contextualReviewer",
+                "isSuperHost"
+            ],
+            "extensions": {
+                "errorType": "PERMISSION_DENIED",
+                "fatal": false,
+                "localizedMessage": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTUzODY2MjcxODI3MTE5MDM1Mg==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewsReceivedFromGuests/edges[3]/node/review/contextualReviewer/isSuperHost, type: ContextualUser.Boolean",
+                "failedAtParentObject": false,
+                "fieldName": "isSuperHost",
+                "parentType": "ContextualUser",
+                "operationName": "ContextualPublicProfileQuery",
+                "classification": "DataFetchingException"
+            }
+        },
+        {
+            "message": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTUzMzgwOTM3NjM3MzQxNDQ0MA==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewsReceivedFromGuests/edges[4]/node/review/contextualReviewer/isSuperHost, type: ContextualUser.Boolean",
+            "locations": [
+                {
+                    "line": 108,
+                    "column": 3
+                }
+            ],
+            "path": [
+                "contextualUser",
+                "reviewsReceivedFromGuests",
+                "edges",
+                4,
+                "node",
+                "review",
+                "contextualReviewer",
+                "isSuperHost"
+            ],
+            "extensions": {
+                "errorType": "PERMISSION_DENIED",
+                "fatal": false,
+                "localizedMessage": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTUzMzgwOTM3NjM3MzQxNDQ0MA==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewsReceivedFromGuests/edges[4]/node/review/contextualReviewer/isSuperHost, type: ContextualUser.Boolean",
+                "failedAtParentObject": false,
+                "fieldName": "isSuperHost",
+                "parentType": "ContextualUser",
+                "operationName": "ContextualPublicProfileQuery",
+                "classification": "DataFetchingException"
+            }
+        },
+        {
+            "message": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTQ3ODgxNTUzOTM0NzM1NzE5Mw==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewsReceivedFromHosts/edges[0]/node/review/contextualReviewee/isSuperHost, type: ContextualUser.Boolean",
+            "locations": [
+                {
+                    "line": 108,
+                    "column": 3
+                }
+            ],
+            "path": [
+                "contextualUser",
+                "reviewsReceivedFromHosts",
+                "edges",
+                0,
+                "node",
+                "review",
+                "contextualReviewee",
+                "isSuperHost"
+            ],
+            "extensions": {
+                "errorType": "PERMISSION_DENIED",
+                "fatal": false,
+                "localizedMessage": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTQ3ODgxNTUzOTM0NzM1NzE5Mw==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewsReceivedFromHosts/edges[0]/node/review/contextualReviewee/isSuperHost, type: ContextualUser.Boolean",
+                "failedAtParentObject": false,
+                "fieldName": "isSuperHost",
+                "parentType": "ContextualUser",
+                "operationName": "ContextualPublicProfileQuery",
+                "classification": "DataFetchingException"
+            }
+        },
+        {
+            "message": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTQ3ODgxNTUzOTM0NzM1NzE5Mw==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewsReceivedFromHosts/edges[1]/node/review/contextualReviewee/isSuperHost, type: ContextualUser.Boolean",
+            "locations": [
+                {
+                    "line": 108,
+                    "column": 3
+                }
+            ],
+            "path": [
+                "contextualUser",
+                "reviewsReceivedFromHosts",
+                "edges",
+                1,
+                "node",
+                "review",
+                "contextualReviewee",
+                "isSuperHost"
+            ],
+            "extensions": {
+                "errorType": "PERMISSION_DENIED",
+                "fatal": false,
+                "localizedMessage": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTQ3ODgxNTUzOTM0NzM1NzE5Mw==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewsReceivedFromHosts/edges[1]/node/review/contextualReviewee/isSuperHost, type: ContextualUser.Boolean",
+                "failedAtParentObject": false,
+                "fieldName": "isSuperHost",
+                "parentType": "ContextualUser",
+                "operationName": "ContextualPublicProfileQuery",
+                "classification": "DataFetchingException"
+            }
+        },
+        {
+            "message": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTQ3ODgxNTUzOTM0NzM1NzE5Mw==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewsReceivedFromHosts/edges[2]/node/review/contextualReviewee/isSuperHost, type: ContextualUser.Boolean",
+            "locations": [
+                {
+                    "line": 108,
+                    "column": 3
+                }
+            ],
+            "path": [
+                "contextualUser",
+                "reviewsReceivedFromHosts",
+                "edges",
+                2,
+                "node",
+                "review",
+                "contextualReviewee",
+                "isSuperHost"
+            ],
+            "extensions": {
+                "errorType": "PERMISSION_DENIED",
+                "fatal": false,
+                "localizedMessage": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTQ3ODgxNTUzOTM0NzM1NzE5Mw==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewsReceivedFromHosts/edges[2]/node/review/contextualReviewee/isSuperHost, type: ContextualUser.Boolean",
+                "failedAtParentObject": false,
+                "fieldName": "isSuperHost",
+                "parentType": "ContextualUser",
+                "operationName": "ContextualPublicProfileQuery",
+                "classification": "DataFetchingException"
+            }
+        },
+        {
+            "message": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTQ3ODgxNTUzOTM0NzM1NzE5Mw==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewsReceivedFromHosts/edges[3]/node/review/contextualReviewee/isSuperHost, type: ContextualUser.Boolean",
+            "locations": [
+                {
+                    "line": 108,
+                    "column": 3
+                }
+            ],
+            "path": [
+                "contextualUser",
+                "reviewsReceivedFromHosts",
+                "edges",
+                3,
+                "node",
+                "review",
+                "contextualReviewee",
+                "isSuperHost"
+            ],
+            "extensions": {
+                "errorType": "PERMISSION_DENIED",
+                "fatal": false,
+                "localizedMessage": "Permission denied for id Q29udGV4dHVhbFVzZXI6MTQ3ODgxNTUzOTM0NzM1NzE5Mw==, with metadata: [HimejiMetadata(entityType=CONTEXTUAL_USER, entityPart=HOST_PROFILE, accessLevel=READ, entityId=null, shadowModeEntityPart=null)], path: /contextualUser/reviewsReceivedFromHosts/edges[3]/node/review/contextualReviewee/isSuperHost, type: ContextualUser.Boolean",
+                "failedAtParentObject": false,
+                "fieldName": "isSuperHost",
+                "parentType": "ContextualUser",
+                "operationName": "ContextualPublicProfileQuery",
+                "classification": "DataFetchingException"
+            }
+        }
+    ],
+    "data": {
+        "contextualUser": {
+            "__typename": "ContextualUser",
+            "aggregatedPastLocations": null,
+            "experienceListings": {
+                "__typename": "UserToActivityListingConnection",
+                "edges": []
+            },
+            "interests": [
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bơi",
+                    "typeV2": "SWIMMING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Cắm trại",
+                    "typeV2": "CAMPING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Du lịch",
+                    "typeV2": "TRAVEL"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Hoạt động ngoài trời",
+                    "typeV2": "OUTDOORS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Hoạt động xã hội",
+                    "typeV2": "SOCIAL_ACTIVISM"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Kiến trúc",
+                    "typeV2": "ARCHITECTURE"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Nghệ thuật",
+                    "typeV2": "ART"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Đạp xe",
+                    "typeV2": "CYCLING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Động vật",
+                    "typeV2": "ANIMALS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Đời sống ẩm thực",
+                    "typeV2": "FOODIE"
+                }
+            ],
+            "allInterestsList": [
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Anime",
+                    "typeV2": "ANIME"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bi đá trên băng",
+                    "typeV2": "CURLING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bi-da",
+                    "typeV2": "BILLARDS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bowling",
+                    "typeV2": "BOWLING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bài bridge",
+                    "typeV2": "BRIDGE"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bóng bocce",
+                    "typeV2": "BOCCE_BALL"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bóng bàn",
+                    "typeV2": "TABLE_TENNIS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bóng bầu dục",
+                    "typeV2": "RUGBY"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bóng bầu dục Mỹ",
+                    "typeV2": "AMERICAN_FOOTBALL"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bóng chuyền",
+                    "typeV2": "VOLLEYBALL"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bóng chày",
+                    "typeV2": "BASEBALL"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bóng lưới",
+                    "typeV2": "NETBALL"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bóng né",
+                    "typeV2": "DODGEBALL"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bóng ném",
+                    "typeV2": "HANDBALL"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bóng nước",
+                    "typeV2": "WATER_POLO"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bóng quần",
+                    "typeV2": "SQUASH"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bóng rổ",
+                    "typeV2": "BASKETBALL"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bóng vợt",
+                    "typeV2": "LACROSSE"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bóng đá",
+                    "typeV2": "SOCCER"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bơi",
+                    "typeV2": "SWIMMING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bảo tàng",
+                    "typeV2": "MUSEUMS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bắn cung",
+                    "typeV2": "ARCHERY"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Ca hát",
+                    "typeV2": "SINGING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Charreria",
+                    "typeV2": "CHARRERIA"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Chèo thuyền",
+                    "typeV2": "ROWING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Chèo thuyền canoe",
+                    "typeV2": "CANOEING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Chèo thuyền kayak",
+                    "typeV2": "KAYAKING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Chăm sóc bản thân",
+                    "typeV2": "SELF_CARE"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Chơi nhạc",
+                    "typeV2": "PLAYING_MUSIC"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Chạy",
+                    "typeV2": "RUNNING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Cocktail",
+                    "typeV2": "COCKTAILS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Cricket",
+                    "typeV2": "CRICKET"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Cuộc sống về đêm",
+                    "typeV2": "NIGHTLIFE"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Cà phê",
+                    "typeV2": "COFFEE"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Các môn thể thao bắn súng",
+                    "typeV2": "SHOOTING_SPORTS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Các môn thể thao cưỡi ngựa",
+                    "typeV2": "EQUESTRIAN_SPORTS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Các môn thể thao mạo hiểm",
+                    "typeV2": "ADRENALINE_SPORTS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Câu cá",
+                    "typeV2": "FISHING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Công nghệ",
+                    "typeV2": "TECHNOLOGY"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Cải tạo nhà cửa",
+                    "typeV2": "HOME_IMPROVEMENTS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Cầu lông",
+                    "typeV2": "BADMINTON"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Cắm trại",
+                    "typeV2": "CAMPING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Cờ vua",
+                    "typeV2": "CHESS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Cử tạ",
+                    "typeV2": "WEIGHT_LIFTING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Di sản văn hóa",
+                    "typeV2": "CULTURAL_HERITAGE"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Du lịch",
+                    "typeV2": "TRAVEL"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Giải đố",
+                    "typeV2": "PUZZLES"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Golf",
+                    "typeV2": "GOLF"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Hoạt động ngoài trời",
+                    "typeV2": "OUTDOORS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Hoạt động tình nguyện",
+                    "typeV2": "VOLUNTEERING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Hoạt động xã hội",
+                    "typeV2": "SOCIAL_ACTIVISM"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Hài kịch",
+                    "typeV2": "COMEDY"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Hàng không",
+                    "typeV2": "AVIATION"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Judo",
+                    "typeV2": "JUDO"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Karate",
+                    "typeV2": "KARATE"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Khúc côn cầu",
+                    "typeV2": "HOCKEY"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Khúc côn cầu trên cỏ",
+                    "typeV2": "FIELD_HOCKEY"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Kickboxing",
+                    "typeV2": "KICKBOXING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Kiến trúc",
+                    "typeV2": "ARCHITECTURE"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Kung Fu",
+                    "typeV2": "KUNG_FU"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Leo núi",
+                    "typeV2": "CLIMBING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Làm tóc",
+                    "typeV2": "HAIR"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Làm vườn",
+                    "typeV2": "GARDENING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Làm đồ thủ công",
+                    "typeV2": "CRAFTING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Lái thuyền buồm",
+                    "typeV2": "SAILING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Lướt sóng",
+                    "typeV2": "SURFING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Lắp ráp",
+                    "typeV2": "BUILDING_THINGS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Lặn",
+                    "typeV2": "DIVING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Lặn với ống thở",
+                    "typeV2": "SNORKELING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Lịch sử",
+                    "typeV2": "HISTORY"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Mua sắm",
+                    "typeV2": "SHOPPING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Mã cầu",
+                    "typeV2": "POLO"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Nghệ thuật",
+                    "typeV2": "ART"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Nhiếp ảnh",
+                    "typeV2": "PHOTOGRAPHY"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Nhạc sống",
+                    "typeV2": "LIVE_MUSIC"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Nhảy cổ vũ",
+                    "typeV2": "CHEERLEADING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Nhảy múa",
+                    "typeV2": "DANCE"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Ném phi tiêu",
+                    "typeV2": "DARTS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Ném đĩa Frisbee",
+                    "typeV2": "ULTIMATE_FRISBEE"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Năm môn phối hợp",
+                    "typeV2": "PENTATHLON"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Nấu ăn",
+                    "typeV2": "COOKING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Phim ảnh",
+                    "typeV2": "MOVIES"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Phát triển bền vững",
+                    "typeV2": "SUSTAINABILITY"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Pickleball",
+                    "typeV2": "PICKLEBALL"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Podcast",
+                    "typeV2": "PODCASTS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Poker",
+                    "typeV2": "POKER"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Quần vợt",
+                    "typeV2": "TENNIS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Quần vợt pelota của xứ Basque",
+                    "typeV2": "BASQUE_PELOTA"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Racquetball",
+                    "typeV2": "RACQUETBALL"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Rodeo",
+                    "typeV2": "RODEO"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Rèn luyện thể chất",
+                    "typeV2": "FITNESS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Rượu vang",
+                    "typeV2": "WINE_TASTING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Spa",
+                    "typeV2": "SPA"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Sáng tạo nội dung",
+                    "typeV2": "CONTENT_CREATION"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Sân khấu",
+                    "typeV2": "THEATER"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "TV",
+                    "typeV2": "WATCHING_TV"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Taekwondo",
+                    "typeV2": "TAEKWONDO"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Tennis lồng",
+                    "typeV2": "PADEL"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Thiết kế",
+                    "typeV2": "DESIGN"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Thiền",
+                    "typeV2": "MEDITATION"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Thái cực quyền",
+                    "typeV2": "TAI_CHI"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Thể dục dụng cụ",
+                    "typeV2": "GYMNASTICS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Thể thao dưới nước",
+                    "typeV2": "WATER_SPORTS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Thể thao fantasy",
+                    "typeV2": "FANTASY_SPORTS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Thể thao trực tiếp",
+                    "typeV2": "LIVE_SPORTS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Thời trang",
+                    "typeV2": "FASHION"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Thực vật",
+                    "typeV2": "PLANTS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Trang điểm",
+                    "typeV2": "MAKEUP"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Trò chơi bài",
+                    "typeV2": "CARD_GAMES"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Trò chơi cờ bàn",
+                    "typeV2": "BOARD_GAMES"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Trò chơi video",
+                    "typeV2": "VIDEO_GAMES"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Trượt băng nghệ thuật",
+                    "typeV2": "FIGURE_SKATING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Trượt băng nằm ngửa",
+                    "typeV2": "LUGE"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Trượt patin",
+                    "typeV2": "ROLLER_SKATING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Trượt patin đối kháng",
+                    "typeV2": "ROLLER_DERBY"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Trượt tuyết",
+                    "typeV2": "SKIING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Trượt ván",
+                    "typeV2": "SKATEBOARDING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Trượt ván tuyết",
+                    "typeV2": "SNOWBOARDING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Viết lách",
+                    "typeV2": "WRITING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Văn hóa địa phương",
+                    "typeV2": "LOCAL_CULTURE"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Xe hơi",
+                    "typeV2": "CARS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Xe trượt lòng máng",
+                    "typeV2": "BODSLEDDING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Yoga",
+                    "typeV2": "YOGA"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Đi bộ",
+                    "typeV2": "WALKING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Đi bộ đường dài",
+                    "typeV2": "HIKING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Điền kinh trong sân vận động",
+                    "typeV2": "TRACK_AND_FIELD"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Đua ngựa",
+                    "typeV2": "HORSE_RACING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Đua xe có động cơ",
+                    "typeV2": "MOTOR_SPORTS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Đạp xe",
+                    "typeV2": "CYCLING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Đấm bốc",
+                    "typeV2": "BOXING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Đấu kiếm",
+                    "typeV2": "FENCING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Đấu vật",
+                    "typeV2": "WRESTLING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Đấu vật sumo",
+                    "typeV2": "SUMO_WRESTLING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Đọc",
+                    "typeV2": "READING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Đồ thủ công mỹ nghệ",
+                    "typeV2": "ARTISANAL_CRAFTS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Động vật",
+                    "typeV2": "ANIMALS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Đời sống ẩm thực",
+                    "typeV2": "FOODIE"
+                }
+            ],
+            "rankedInterests": [
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Kiến trúc",
+                    "typeV2": "ARCHITECTURE"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Đời sống ẩm thực",
+                    "typeV2": "FOODIE"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Lịch sử",
+                    "typeV2": "HISTORY"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Nhạc sống",
+                    "typeV2": "LIVE_MUSIC"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Thể thao trực tiếp",
+                    "typeV2": "LIVE_SPORTS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Bảo tàng",
+                    "typeV2": "MUSEUMS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Hoạt động ngoài trời",
+                    "typeV2": "OUTDOORS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Nhiếp ảnh",
+                    "typeV2": "PHOTOGRAPHY"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Đọc",
+                    "typeV2": "READING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Mua sắm",
+                    "typeV2": "SHOPPING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Sân khấu",
+                    "typeV2": "THEATER"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Thể thao dưới nước",
+                    "typeV2": "WATER_SPORTS"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Rượu vang",
+                    "typeV2": "WINE_TASTING"
+                },
+                {
+                    "__typename": "UserProfileInterest",
+                    "isFeatured": true,
+                    "title": "Yoga",
+                    "typeV2": "YOGA"
+                }
+            ],
+            "managedListings": [
+                {
+                    "__typename": "UserProfileListing",
+                    "bathrooms": 1.0,
+                    "bedrooms": 1,
+                    "beds": 1,
+                    "id": "46118076",
+                    "instantBookEnabled": true,
+                    "isLuxury": false,
+                    "isNewListing": false,
+                    "isSelect": false,
+                    "isSuperhost": true,
+                    "localizedNameOrPlaceholderName": "Phòng riêng có ban công và tầm nhìn ra thành phố đẹp 4",
+                    "localizedRoomType": "Biệt thự",
+                    "name": null,
+                    "nameOrPlaceholderName": "Private room with balcony & beautiful city view 4",
+                    "pictureUrl": "https://a0.muscache.com/im/pictures/b1fc3199-0753-4d8d-a075-c894e2860a49.jpg?aki_policy=large",
+                    "propertyTypeId": "11",
+                    "propertyTypeName": "Villa",
+                    "ratingAverage": 4.75,
+                    "reviewCount": "57",
+                    "roomTypeCategory": "private_room",
+                    "thumbnailUrl": "https://a0.muscache.com/im/pictures/b1fc3199-0753-4d8d-a075-c894e2860a49.jpg?aki_policy=small"
+                },
+                {
+                    "__typename": "UserProfileListing",
+                    "bathrooms": 1.0,
+                    "bedrooms": 1,
+                    "beds": 1,
+                    "id": "46117897",
+                    "instantBookEnabled": true,
+                    "isLuxury": false,
+                    "isNewListing": false,
+                    "isSelect": false,
+                    "isSuperhost": true,
+                    "localizedNameOrPlaceholderName": "Phòng ở tầng trệt tối giản, phòng tắm khép kín",
+                    "localizedRoomType": "Biệt thự",
+                    "name": null,
+                    "nameOrPlaceholderName": "Minimalist ground floor room, ensuite bathroom",
+                    "pictureUrl": "https://a0.muscache.com/im/pictures/4c005c94-967a-4e72-a468-1546cff47b6b.jpg?aki_policy=large",
+                    "propertyTypeId": "11",
+                    "propertyTypeName": "Villa",
+                    "ratingAverage": 4.76,
+                    "reviewCount": "34",
+                    "roomTypeCategory": "private_room",
+                    "thumbnailUrl": "https://a0.muscache.com/im/pictures/4c005c94-967a-4e72-a468-1546cff47b6b.jpg?aki_policy=small"
+                },
+                {
+                    "__typename": "UserProfileListing",
+                    "bathrooms": 1.0,
+                    "bedrooms": 1,
+                    "beds": 1,
+                    "id": "47001503",
+                    "instantBookEnabled": true,
+                    "isLuxury": false,
+                    "isNewListing": false,
+                    "isSelect": false,
+                    "isSuperhost": true,
+                    "localizedNameOrPlaceholderName": "Phòng riêng có ban công và tầm nhìn ra thành phố đẹp 3",
+                    "localizedRoomType": "Biệt thự",
+                    "name": null,
+                    "nameOrPlaceholderName": "Private room with balcony & beautiful city view 3",
+                    "pictureUrl": "https://a0.muscache.com/im/pictures/9bac0a57-7898-439a-a8d3-fd43746d5694.jpg?aki_policy=large",
+                    "propertyTypeId": "11",
+                    "propertyTypeName": "Villa",
+                    "ratingAverage": 4.89,
+                    "reviewCount": "44",
+                    "roomTypeCategory": "private_room",
+                    "thumbnailUrl": "https://a0.muscache.com/im/pictures/9bac0a57-7898-439a-a8d3-fd43746d5694.jpg?aki_policy=small"
+                },
+                {
+                    "__typename": "UserProfileListing",
+                    "bathrooms": 1.0,
+                    "bedrooms": 1,
+                    "beds": 1,
+                    "id": "46191933",
+                    "instantBookEnabled": true,
+                    "isLuxury": false,
+                    "isNewListing": false,
+                    "isSelect": false,
+                    "isSuperhost": true,
+                    "localizedNameOrPlaceholderName": "Phòng trên tầng thượng riêng có ban công và tầm nhìn ra vườn",
+                    "localizedRoomType": "Biệt thự",
+                    "name": null,
+                    "nameOrPlaceholderName": "Private rooftop room with balcony & garden view",
+                    "pictureUrl": "https://a0.muscache.com/im/pictures/0d74d7a5-608a-494e-b63e-e431857a5110.jpg?aki_policy=large",
+                    "propertyTypeId": "11",
+                    "propertyTypeName": "Villa",
+                    "ratingAverage": 4.86,
+                    "reviewCount": "35",
+                    "roomTypeCategory": "private_room",
+                    "thumbnailUrl": "https://a0.muscache.com/im/pictures/0d74d7a5-608a-494e-b63e-e431857a5110.jpg?aki_policy=small"
+                },
+                {
+                    "__typename": "UserProfileListing",
+                    "bathrooms": 1.0,
+                    "bedrooms": 1,
+                    "beds": 1,
+                    "id": "46117408",
+                    "instantBookEnabled": true,
+                    "isLuxury": false,
+                    "isNewListing": false,
+                    "isSelect": false,
+                    "isSuperhost": true,
+                    "localizedNameOrPlaceholderName": "Phòng trệt riêng trong nhà đẹp",
+                    "localizedRoomType": "Biệt thự",
+                    "name": null,
+                    "nameOrPlaceholderName": "Private ground floor room in beautiful house",
+                    "pictureUrl": "https://a0.muscache.com/im/pictures/e8137529-6fa6-40e2-bd3c-12200a8c24c6.jpg?aki_policy=large",
+                    "propertyTypeId": "11",
+                    "propertyTypeName": "Villa",
+                    "ratingAverage": 4.89,
+                    "reviewCount": "28",
+                    "roomTypeCategory": "private_room",
+                    "thumbnailUrl": "https://a0.muscache.com/im/pictures/e8137529-6fa6-40e2-bd3c-12200a8c24c6.jpg?aki_policy=small"
+                },
+                {
+                    "__typename": "UserProfileListing",
+                    "bathrooms": 1.0,
+                    "bedrooms": 1,
+                    "beds": 1,
+                    "id": "46192415",
+                    "instantBookEnabled": true,
+                    "isLuxury": false,
+                    "isNewListing": false,
+                    "isSelect": false,
+                    "isSuperhost": true,
+                    "localizedNameOrPlaceholderName": "Phòng trên tầng thượng tối giản, phòng tắm riêng",
+                    "localizedRoomType": "Biệt thự",
+                    "name": null,
+                    "nameOrPlaceholderName": "Minimalist rooftop room, ensuite bathroom",
+                    "pictureUrl": "https://a0.muscache.com/im/pictures/8f557d50-c6b8-468e-8b58-5f89bbe31e5b.jpg?aki_policy=large",
+                    "propertyTypeId": "11",
+                    "propertyTypeName": "Villa",
+                    "ratingAverage": 4.92,
+                    "reviewCount": "25",
+                    "roomTypeCategory": "private_room",
+                    "thumbnailUrl": "https://a0.muscache.com/im/pictures/8f557d50-c6b8-468e-8b58-5f89bbe31e5b.jpg?aki_policy=small"
+                },
+                {
+                    "__typename": "UserProfileListing",
+                    "bathrooms": 1.0,
+                    "bedrooms": 1,
+                    "beds": 2,
+                    "id": "1340912355356759090",
+                    "instantBookEnabled": true,
+                    "isLuxury": false,
+                    "isNewListing": false,
+                    "isSelect": false,
+                    "isSuperhost": true,
+                    "localizedNameOrPlaceholderName": "Phòng gia đình trên tầng thượng - tầm nhìn ra thành phố",
+                    "localizedRoomType": "Biệt thự",
+                    "name": null,
+                    "nameOrPlaceholderName": "Rooftop family room - city view",
+                    "pictureUrl": "https://a0.muscache.com/im/pictures/hosting/Hosting-1340912355356759090/original/61afe29d-2902-43b1-9b11-60c4b55a0eac.jpeg?aki_policy=large",
+                    "propertyTypeId": "11",
+                    "propertyTypeName": "Villa",
+                    "ratingAverage": 5.0,
+                    "reviewCount": "1",
+                    "roomTypeCategory": "private_room",
+                    "thumbnailUrl": "https://a0.muscache.com/im/pictures/hosting/Hosting-1340912355356759090/original/61afe29d-2902-43b1-9b11-60c4b55a0eac.jpeg?aki_policy=small"
+                }
+            ],
+            "managedListingsTotalCount": 7,
+            "profileVisibility": {
+                "__typename": "UserProfileVisibility",
+                "profileViewMode": "PUBLIC",
+                "profileDisclaimerHtml": null,
+                "profileDisclaimerIcon": null
+            },
+            "prompts": {
+                "__typename": "UserPrompts",
+                "displayProfilePrompts": [
+                    {
+                        "__typename": "DisplayProfilePrompt",
+                        "fieldId": "PETS",
+                        "icon": "SYSTEM_PETS",
+                        "title": "Thú cưng",
+                        "subtitle": "Boo",
+                        "localizedSubtitle": {
+                            "__typename": "UGCText",
+                            "localizedString": "Boo",
+                            "source": "Boo"
+                        },
+                        "useConcatenationColon": true
+                    },
+                    {
+                        "__typename": "DisplayProfilePrompt",
+                        "fieldId": "LANGUAGES",
+                        "icon": "SYSTEM_LANGUAGE",
+                        "title": "Nói",
+                        "subtitle": "Tiếng Anh",
+                        "localizedSubtitle": null,
+                        "useConcatenationColon": false
+                    },
+                    {
+                        "__typename": "DisplayProfilePrompt",
+                        "fieldId": "LOCATION",
+                        "icon": "SYSTEM_GLOBE_STAND",
+                        "title": "Sống tại",
+                        "subtitle": "Việt Nam",
+                        "localizedSubtitle": null,
+                        "useConcatenationColon": false
+                    },
+                    {
+                        "__typename": "DisplayProfilePrompt",
+                        "fieldId": "IDENTITY_VERIFIED",
+                        "icon": "SYSTEM_VERIFIED",
+                        "title": "Đã xác minh danh tính",
+                        "subtitle": null,
+                        "localizedSubtitle": null,
+                        "useConcatenationColon": false
+                    }
+                ],
+                "editProfilePrompts": {
+                    "__typename": "EditProfilePrompts",
+                    "prompts": [],
+                    "flexForm": {
+                        "__typename": "FlexForm",
+                        "values": []
+                    }
+                }
+            },
+            "recognitions": null,
+            "reputationStats": [
+                {
+                    "__typename": "UserProfileReputation",
+                    "description": "Chủ nhà siêu cấp được đánh giá cao và cam kết mang lại kỳ nghỉ tuyệt vời cho khách.",
+                    "highlightedDescription": "Thuỷ Tiên là một Chủ nhà siêu cấp.",
+                    "key": "superhost",
+                    "labelTitle": "Chủ nhà siêu cấp",
+                    "labelValue": null,
+                    "linkCtaText": null,
+                    "linkUrl": null
+                },
+                {
+                    "__typename": "UserProfileReputation",
+                    "description": "Tìm hiểu Thuỷ Tiên kỹ hơn thông qua đánh giá. Chỉ khách đã từng ở hoặc chủ nhà mới có thể viết đánh giá.",
+                    "highlightedDescription": null,
+                    "key": "reviews",
+                    "labelTitle": "312 đánh giá",
+                    "labelValue": "312",
+                    "linkCtaText": "Tìm hiểu đánh giá",
+                    "linkUrl": null
+                },
+                {
+                    "__typename": "UserProfileReputation",
+                    "description": "Thuỷ Tiên đã cung cấp thành công thông tin bắt buộc để xác nhận danh tính của họ.",
+                    "highlightedDescription": null,
+                    "key": "id_checked",
+                    "labelTitle": "Đã xác minh danh tính",
+                    "labelValue": null,
+                    "linkCtaText": null,
+                    "linkUrl": null
+                }
+            ],
+            "serviceListings": {
+                "__typename": "UserToActivityListingConnection",
+                "edges": []
+            },
+            "canViewProfilePicture": true,
+            "displayFirstName": "Thuỷ Tiên",
+            "hasIdentityBadge": true,
+            "isSuperHost": true,
+            "location": "Việt Nam",
+            "pastTripsCount": 5,
+            "userRepresentationUrl": {
+                "__typename": "UserRepresentationUrl",
+                "profilePictureUrl": "https://a0.muscache.com/im/pictures/user/08e14623-e663-445d-812f-38f7c590bef6.jpg?aki_policy=profile_x_medium",
+                "hasProfilePicture": true
+            },
+            "hostRatingStats": {
+                "__typename": "UserRatingStats",
+                "ratingStats": {
+                    "__typename": "ReviewRatingStats",
+                    "ratingAverage": 4.77,
+                    "ratingCount": "308"
+                }
+            },
+            "guestRatingStats": {
+                "__typename": "ContextualUserReviewConnection",
+                "pageInfo": {
+                    "__typename": "PageInfoWithCount",
+                    "totalCount": 4
+                }
+            },
+            "showBusinessVerificationBadge": false,
+            "timeAsHost": {
+                "__typename": "TimeAsUser",
+                "years": 6,
+                "months": 9
+            },
+            "timeAsUser": {
+                "__typename": "TimeAsUser",
+                "years": 6,
+                "months": 9
+            },
+            "verificationInfo": {
+                "__typename": "ProfileVerificationInfo",
+                "verifiedSinceText": "Đã xác minh từ ngày tháng 3 năm 2019",
+                "hasVerificationBadge": true,
+                "verificationExplanationHtml": "Quy trình xác minh danh tính mà chúng tôi thực hiện bao gồm kiểm tra thông tin của một người dựa trên các nguồn đáng tin cậy từ bên thứ ba hoặc dựa trên giấy tờ tùy thân do chính phủ cấp. Quy trình này mang tính chất phòng ngừa nhưng không bảo đảm người gửi thông tin chính là người được xác minh danh tính. <a href='https://www.airbnb.com.vn/help/article/1237' target='_blank'>Tìm hiểu thêm</a>"
+            },
+            "about": "Sociable, friendly & cheerful",
+            "fieldRankings": null,
+            "flaggedByViewer": null,
+            "id": "Q29udGV4dHVhbFVzZXI6MTQ2OTMwMjQwMzI2NDk3NDE0Mw==",
+            "identityVerificationTypes": [
+                "Danh tính",
+                "Địa chỉ email",
+                "Số điện thoại"
+            ],
+            "isViewerProfileOwner": false,
+            "contextType": "HOST",
+            "localizedAbout": "Hòa đồng, thân thiện và vui vẻ",
+            "preference": {
+                "__typename": "UserProfilePreference",
+                "showBirthDecade": true,
+                "showPastTrips": false
+            },
+            "showBusinessLabel": null,
+            "travelGuides": {
+                "__typename": "UserToTravelGuidesConnection",
+                "edges": []
+            },
+            "reviewHighlightsFromGuests": [
+                {
+                    "__typename": "UserProfileReview",
+                    "id": "VXNlclByb2ZpbGVSZXZpZXc6MTU1NDE4Njc0Mjk3NjMzMDcyNA==",
+                    "createdAt": "2025-11-14T08:51:37.459Z",
+                    "commentV2": "Cảm giác rất thoải mái dễ chịu. Chủ nhà rất đáng iu và hỗ trợ tụi mình rất nhiệt tình. Tụi mình còn được tặng quà khi ra về nữa",
+                    "isHostHighlight": false,
+                    "photos": [],
+                    "localizedPaidPromotionDisclaimer": null,
+                    "displayRating": 5,
+                    "response": null,
+                    "contextualReviewee": null,
+                    "contextualReviewer": {
+                        "__typename": "ContextualUser",
+                        "id": "Q29udGV4dHVhbFVzZXI6MTU0NzExMDY1ODk2MDMwMDM3OA==",
+                        "isSuperHost": null,
+                        "location": null,
+                        "userRepresentationUrl": {
+                            "__typename": "UserRepresentationUrl",
+                            "profilePictureUrl": "https://a0.muscache.com/im/pictures/user/User/original/2e1e54c3-c0f6-4a21-826a-88b4c00a7fbe.jpeg?aki_policy=profile_x_medium"
+                        },
+                        "displayFirstName": "Vân Trường Sơn"
+                    },
+                    "translation": null,
+                    "respondedAt": null
+                },
+                {
+                    "__typename": "UserProfileReview",
+                    "id": "VXNlclByb2ZpbGVSZXZpZXc6MTU1MDQ5MTg1NzE2MDY3MDQzNQ==",
+                    "createdAt": "2025-11-09T06:30:32.746Z",
+                    "commentV2": "100% recommend. She gave me a little knitted gift when I checked out, so lovely 🥰",
+                    "isHostHighlight": false,
+                    "photos": [],
+                    "localizedPaidPromotionDisclaimer": null,
+                    "displayRating": 5,
+                    "response": null,
+                    "contextualReviewee": null,
+                    "contextualReviewer": {
+                        "__typename": "ContextualUser",
+                        "id": "Q29udGV4dHVhbFVzZXI6MTQ4NTY0ODYxNzUxNTA3MjczNA==",
+                        "isSuperHost": null,
+                        "location": null,
+                        "userRepresentationUrl": {
+                            "__typename": "UserRepresentationUrl",
+                            "profilePictureUrl": "https://a0.muscache.com/im/pictures/user/User-316779758/original/0b67c495-f1c1-49a1-a361-c8875b99620c.jpeg?aki_policy=profile_x_medium"
+                        },
+                        "displayFirstName": "Chrissanth"
+                    },
+                    "translation": {
+                        "__typename": "UserProfileReviewTranslation",
+                        "comments": "100% khuyên chọn. Cô ấy đã tặng tôi một món quà đan len nhỏ khi tôi trả phòng, thật đáng yêu 🥰",
+                        "commentsLanguage": "en",
+                        "disclaimer": "Đã dịch từ Tiếng Anh",
+                        "response": null,
+                        "responseDisclaimer": null,
+                        "responseLanguage": null
+                    },
+                    "respondedAt": null
+                },
+                {
+                    "__typename": "UserProfileReview",
+                    "id": "VXNlclByb2ZpbGVSZXZpZXc6MTU0OTc3MjkxNTEyODg5MjEzNg==",
+                    "createdAt": "2025-11-08T06:42:08.177Z",
+                    "commentV2": "Alles war super! Die Unterkunft war sauber und gemütlich, und die Gastgeberin war sehr freundlich und hilfsbereit. Besonders toll fanden wir den Extra-Service – man konnte einen Motorroller ausleihen und sogar Wäsche waschen lassen, alles zu einem fairen Preis. Absolut empfehlenswert, wir würden jederzeit wiederkommen!",
+                    "isHostHighlight": false,
+                    "photos": [],
+                    "localizedPaidPromotionDisclaimer": null,
+                    "displayRating": 5,
+                    "response": null,
+                    "contextualReviewee": null,
+                    "contextualReviewer": {
+                        "__typename": "ContextualUser",
+                        "id": "Q29udGV4dHVhbFVzZXI6MTU0MjA2Mzg0NjI4ODkxMDQwMw==",
+                        "isSuperHost": null,
+                        "location": null,
+                        "userRepresentationUrl": {
+                            "__typename": "UserRepresentationUrl",
+                            "profilePictureUrl": "https://a0.muscache.com/im/pictures/user/User/original/bfb2b89f-639d-4a83-b0e2-b1dea445c431.jpeg?aki_policy=profile_x_medium"
+                        },
+                        "displayFirstName": "Luca"
+                    },
+                    "translation": {
+                        "__typename": "UserProfileReviewTranslation",
+                        "comments": "Mọi thứ đều tuyệt vời! Chỗ ở sạch sẽ và ấm cúng, và chủ nhà rất thân thiện và hữu ích. Chúng tôi đặc biệt thích dịch vụ bổ sung – bạn có thể thuê xe tay ga và thậm chí có thể giặt ủi, tất cả với mức giá hợp lý. Hoàn toàn khuyên dùng, chúng tôi sẽ quay lại bất cứ lúc nào!",
+                        "commentsLanguage": "de",
+                        "disclaimer": "Đã dịch từ Tiếng Đức",
+                        "response": null,
+                        "responseDisclaimer": null,
+                        "responseLanguage": null
+                    },
+                    "respondedAt": null
+                },
+                {
+                    "__typename": "UserProfileReview",
+                    "id": "VXNlclByb2ZpbGVSZXZpZXc6MTU0MTg3OTAxNzI4NDE1OTEyNg==",
+                    "createdAt": "2025-10-28T09:18:22.223Z",
+                    "commentV2": "素晴らしい対応をありがとうございました！\n\nダラットはとても寒く寒暖差で風邪を引いてしまいましたが、生姜湯などを出して下って助かりました！\n\n色々な事に対応してくれました。\nとても優しい2人です。\n犬が好きなので犬と触れ合うのも癒しでした！",
+                    "isHostHighlight": false,
+                    "photos": [],
+                    "localizedPaidPromotionDisclaimer": null,
+                    "displayRating": 5,
+                    "response": null,
+                    "contextualReviewee": null,
+                    "contextualReviewer": {
+                        "__typename": "ContextualUser",
+                        "id": "Q29udGV4dHVhbFVzZXI6MTUzODY2MjcxODI3MTE5MDM1Mg==",
+                        "isSuperHost": null,
+                        "location": null,
+                        "userRepresentationUrl": {
+                            "__typename": "UserRepresentationUrl",
+                            "profilePictureUrl": "https://a0.muscache.com/im/Portrait/Avatars/messaging/b3e03835-ade9-4eb7-a0bb-2466ab9a534d.jpg?im_t=秀光&im_w=240&im_f=noto-sans-sc-medium.ttf&im_c=ffffff"
+                        },
+                        "displayFirstName": "秀光"
+                    },
+                    "translation": {
+                        "__typename": "UserProfileReviewTranslation",
+                        "comments": "Cảm ơn bạn đã phục vụ tuyệt vời!\n\nỞ Đà Lạt rất lạnh và tôi bị cảm lạnh do chênh lệch nhiệt độ, nhưng thật hữu ích khi có trà gừng và những thứ khác!\n\nHọ xử lý rất nhiều thứ.\n2 người rất tốt bụng.\nTôi thích c*ó, vì vậy thật nhẹ nhàng khi tương tác với chúng!",
+                        "commentsLanguage": "ja",
+                        "disclaimer": "Đã dịch từ Tiếng Nhật Bản",
+                        "response": null,
+                        "responseDisclaimer": null,
+                        "responseLanguage": null
+                    },
+                    "respondedAt": null
+                },
+                {
+                    "__typename": "UserProfileReview",
+                    "id": "VXNlclByb2ZpbGVSZXZpZXc6MTUzNzU0NTM3NzgyNTAxODA3MQ==",
+                    "createdAt": "2025-10-22T09:48:12.142Z",
+                    "commentV2": "chủ nhà siu dễ thương, cho nhận phòng sớm, chỗ ở gần trung tâm, tiện di chuyển!!!",
+                    "isHostHighlight": false,
+                    "photos": [],
+                    "localizedPaidPromotionDisclaimer": null,
+                    "displayRating": 5,
+                    "response": null,
+                    "contextualReviewee": null,
+                    "contextualReviewer": {
+                        "__typename": "ContextualUser",
+                        "id": "Q29udGV4dHVhbFVzZXI6MTUzMzgwOTM3NjM3MzQxNDQ0MA==",
+                        "isSuperHost": null,
+                        "location": null,
+                        "userRepresentationUrl": {
+                            "__typename": "UserRepresentationUrl",
+                            "profilePictureUrl": "https://a0.muscache.com/im/Portrait/Avatars/messaging/b3e03835-ade9-4eb7-a0bb-2466ab9a534d.jpg?im_t=P&im_w=240&im_f=airbnb-cereal-medium.ttf&im_c=ffffff"
+                        },
+                        "displayFirstName": "Phat"
+                    },
+                    "translation": null,
+                    "respondedAt": null
+                }
+            ],
+            "reviewsReceivedFromGuests": {
+                "__typename": "ContextualUserReviewConnection",
+                "edges": [
+                    {
+                        "__typename": "GuestUserReviewEdge",
+                        "node": {
+                            "__typename": "UserReviewTextSearch",
+                            "review": {
+                                "__typename": "StayListingReview",
+                                "id": "U3RheUxpc3RpbmdSZXZpZXc6MTU1NDE4Njc0Mjk3NjMzMDcyNA==",
+                                "createdAt": "2025-11-14T08:51:37.459Z",
+                                "commentV2": "Cảm giác rất thoải mái dễ chịu. Chủ nhà rất đáng iu và hỗ trợ tụi mình rất nhiệt tình. Tụi mình còn được tặng quà khi ra về nữa",
+                                "photos": [],
+                                "localizedPaidPromotionDisclaimer": null,
+                                "displayRating": 5,
+                                "publicResponse": null,
+                                "contextualReviewee": {
+                                    "__typename": "ContextualUser",
+                                    "id": "Q29udGV4dHVhbFVzZXI6MTQ2OTMwMjQwMzI2NDk3NDE0Mw==",
+                                    "isSuperHost": true,
+                                    "location": "Việt Nam",
+                                    "userRepresentationUrl": {
+                                        "__typename": "UserRepresentationUrl",
+                                        "profilePictureUrl": "https://a0.muscache.com/im/pictures/user/08e14623-e663-445d-812f-38f7c590bef6.jpg?aki_policy=profile_x_medium"
+                                    },
+                                    "displayFirstName": "Thuỷ Tiên"
+                                },
+                                "contextualReviewer": {
+                                    "__typename": "ContextualUser",
+                                    "id": "Q29udGV4dHVhbFVzZXI6MTU0NzExMDY1ODk2MDMwMDM3OA==",
+                                    "isSuperHost": null,
+                                    "location": null,
+                                    "userRepresentationUrl": {
+                                        "__typename": "UserRepresentationUrl",
+                                        "profilePictureUrl": "https://a0.muscache.com/im/pictures/user/User/original/2e1e54c3-c0f6-4a21-826a-88b4c00a7fbe.jpeg?aki_policy=profile_x_medium"
+                                    },
+                                    "displayFirstName": "Vân Trường Sơn"
+                                },
+                                "translation": null,
+                                "respondedAt": null,
+                                "revieweeRole": "HOST"
+                            }
+                        }
+                    },
+                    {
+                        "__typename": "GuestUserReviewEdge",
+                        "node": {
+                            "__typename": "UserReviewTextSearch",
+                            "review": {
+                                "__typename": "StayListingReview",
+                                "id": "U3RheUxpc3RpbmdSZXZpZXc6MTU1MDQ5MTg1NzE2MDY3MDQzNQ==",
+                                "createdAt": "2025-11-09T06:30:32.746Z",
+                                "commentV2": "100% recommend. She gave me a little knitted gift when I checked out, so lovely 🥰",
+                                "photos": [],
+                                "localizedPaidPromotionDisclaimer": null,
+                                "displayRating": 5,
+                                "publicResponse": null,
+                                "contextualReviewee": {
+                                    "__typename": "ContextualUser",
+                                    "id": "Q29udGV4dHVhbFVzZXI6MTQ2OTMwMjQwMzI2NDk3NDE0Mw==",
+                                    "isSuperHost": true,
+                                    "location": "Việt Nam",
+                                    "userRepresentationUrl": {
+                                        "__typename": "UserRepresentationUrl",
+                                        "profilePictureUrl": "https://a0.muscache.com/im/pictures/user/08e14623-e663-445d-812f-38f7c590bef6.jpg?aki_policy=profile_x_medium"
+                                    },
+                                    "displayFirstName": "Thuỷ Tiên"
+                                },
+                                "contextualReviewer": {
+                                    "__typename": "ContextualUser",
+                                    "id": "Q29udGV4dHVhbFVzZXI6MTQ4NTY0ODYxNzUxNTA3MjczNA==",
+                                    "isSuperHost": null,
+                                    "location": "Thành phố Hồ Chí Minh, Việt Nam",
+                                    "userRepresentationUrl": {
+                                        "__typename": "UserRepresentationUrl",
+                                        "profilePictureUrl": "https://a0.muscache.com/im/pictures/user/User-316779758/original/0b67c495-f1c1-49a1-a361-c8875b99620c.jpeg?aki_policy=profile_x_medium"
+                                    },
+                                    "displayFirstName": "Chrissanth"
+                                },
+                                "translation": {
+                                    "__typename": "UserProfileReviewTranslation",
+                                    "comments": "100% khuyên chọn. Cô ấy đã tặng tôi một món quà đan len nhỏ khi tôi trả phòng, thật đáng yêu 🥰",
+                                    "commentsLanguage": "en",
+                                    "disclaimer": "Đã dịch từ Tiếng Anh",
+                                    "response": null,
+                                    "responseDisclaimer": null,
+                                    "responseLanguage": null
+                                },
+                                "respondedAt": null,
+                                "revieweeRole": "HOST"
+                            }
+                        }
+                    },
+                    {
+                        "__typename": "GuestUserReviewEdge",
+                        "node": {
+                            "__typename": "UserReviewTextSearch",
+                            "review": {
+                                "__typename": "StayListingReview",
+                                "id": "U3RheUxpc3RpbmdSZXZpZXc6MTU0OTc3MjkxNTEyODg5MjEzNg==",
+                                "createdAt": "2025-11-08T06:42:08.177Z",
+                                "commentV2": "Alles war super! Die Unterkunft war sauber und gemütlich, und die Gastgeberin war sehr freundlich und hilfsbereit. Besonders toll fanden wir den Extra-Service – man konnte einen Motorroller ausleihen und sogar Wäsche waschen lassen, alles zu einem fairen Preis. Absolut empfehlenswert, wir würden jederzeit wiederkommen!",
+                                "photos": [],
+                                "localizedPaidPromotionDisclaimer": null,
+                                "displayRating": 5,
+                                "publicResponse": null,
+                                "contextualReviewee": {
+                                    "__typename": "ContextualUser",
+                                    "id": "Q29udGV4dHVhbFVzZXI6MTQ2OTMwMjQwMzI2NDk3NDE0Mw==",
+                                    "isSuperHost": true,
+                                    "location": "Việt Nam",
+                                    "userRepresentationUrl": {
+                                        "__typename": "UserRepresentationUrl",
+                                        "profilePictureUrl": "https://a0.muscache.com/im/pictures/user/08e14623-e663-445d-812f-38f7c590bef6.jpg?aki_policy=profile_x_medium"
+                                    },
+                                    "displayFirstName": "Thuỷ Tiên"
+                                },
+                                "contextualReviewer": {
+                                    "__typename": "ContextualUser",
+                                    "id": "Q29udGV4dHVhbFVzZXI6MTU0MjA2Mzg0NjI4ODkxMDQwMw==",
+                                    "isSuperHost": null,
+                                    "location": null,
+                                    "userRepresentationUrl": {
+                                        "__typename": "UserRepresentationUrl",
+                                        "profilePictureUrl": "https://a0.muscache.com/im/pictures/user/User/original/bfb2b89f-639d-4a83-b0e2-b1dea445c431.jpeg?aki_policy=profile_x_medium"
+                                    },
+                                    "displayFirstName": "Luca"
+                                },
+                                "translation": {
+                                    "__typename": "UserProfileReviewTranslation",
+                                    "comments": "Mọi thứ đều tuyệt vời! Chỗ ở sạch sẽ và ấm cúng, và chủ nhà rất thân thiện và hữu ích. Chúng tôi đặc biệt thích dịch vụ bổ sung – bạn có thể thuê xe tay ga và thậm chí có thể giặt ủi, tất cả với mức giá hợp lý. Hoàn toàn khuyên dùng, chúng tôi sẽ quay lại bất cứ lúc nào!",
+                                    "commentsLanguage": "de",
+                                    "disclaimer": "Đã dịch từ Tiếng Đức",
+                                    "response": null,
+                                    "responseDisclaimer": null,
+                                    "responseLanguage": null
+                                },
+                                "respondedAt": null,
+                                "revieweeRole": "HOST"
+                            }
+                        }
+                    },
+                    {
+                        "__typename": "GuestUserReviewEdge",
+                        "node": {
+                            "__typename": "UserReviewTextSearch",
+                            "review": {
+                                "__typename": "StayListingReview",
+                                "id": "U3RheUxpc3RpbmdSZXZpZXc6MTU0MTg3OTAxNzI4NDE1OTEyNg==",
+                                "createdAt": "2025-10-28T09:18:22.223Z",
+                                "commentV2": "素晴らしい対応をありがとうございました！\n\nダラットはとても寒く寒暖差で風邪を引いてしまいましたが、生姜湯などを出して下って助かりました！\n\n色々な事に対応してくれました。\nとても優しい2人です。\n犬が好きなので犬と触れ合うのも癒しでした！",
+                                "photos": [],
+                                "localizedPaidPromotionDisclaimer": null,
+                                "displayRating": 5,
+                                "publicResponse": null,
+                                "contextualReviewee": {
+                                    "__typename": "ContextualUser",
+                                    "id": "Q29udGV4dHVhbFVzZXI6MTQ2OTMwMjQwMzI2NDk3NDE0Mw==",
+                                    "isSuperHost": true,
+                                    "location": "Việt Nam",
+                                    "userRepresentationUrl": {
+                                        "__typename": "UserRepresentationUrl",
+                                        "profilePictureUrl": "https://a0.muscache.com/im/pictures/user/08e14623-e663-445d-812f-38f7c590bef6.jpg?aki_policy=profile_x_medium"
+                                    },
+                                    "displayFirstName": "Thuỷ Tiên"
+                                },
+                                "contextualReviewer": {
+                                    "__typename": "ContextualUser",
+                                    "id": "Q29udGV4dHVhbFVzZXI6MTUzODY2MjcxODI3MTE5MDM1Mg==",
+                                    "isSuperHost": null,
+                                    "location": null,
+                                    "userRepresentationUrl": {
+                                        "__typename": "UserRepresentationUrl",
+                                        "profilePictureUrl": "https://a0.muscache.com/im/Portrait/Avatars/messaging/b3e03835-ade9-4eb7-a0bb-2466ab9a534d.jpg?im_t=秀光&im_w=240&im_f=noto-sans-sc-medium.ttf&im_c=ffffff"
+                                    },
+                                    "displayFirstName": "秀光"
+                                },
+                                "translation": {
+                                    "__typename": "UserProfileReviewTranslation",
+                                    "comments": "Cảm ơn bạn đã phục vụ tuyệt vời!\n\nỞ Đà Lạt rất lạnh và tôi bị cảm lạnh do chênh lệch nhiệt độ, nhưng thật hữu ích khi có trà gừng và những thứ khác!\n\nHọ xử lý rất nhiều thứ.\n2 người rất tốt bụng.\nTôi thích c*ó, vì vậy thật nhẹ nhàng khi tương tác với chúng!",
+                                    "commentsLanguage": "ja",
+                                    "disclaimer": "Đã dịch từ Tiếng Nhật Bản",
+                                    "response": null,
+                                    "responseDisclaimer": null,
+                                    "responseLanguage": null
+                                },
+                                "respondedAt": null,
+                                "revieweeRole": "HOST"
+                            }
+                        }
+                    },
+                    {
+                        "__typename": "GuestUserReviewEdge",
+                        "node": {
+                            "__typename": "UserReviewTextSearch",
+                            "review": {
+                                "__typename": "StayListingReview",
+                                "id": "U3RheUxpc3RpbmdSZXZpZXc6MTUzNzU0NTM3NzgyNTAxODA3MQ==",
+                                "createdAt": "2025-10-22T09:48:12.142Z",
+                                "commentV2": "chủ nhà siu dễ thương, cho nhận phòng sớm, chỗ ở gần trung tâm, tiện di chuyển!!!",
+                                "photos": [],
+                                "localizedPaidPromotionDisclaimer": null,
+                                "displayRating": 5,
+                                "publicResponse": null,
+                                "contextualReviewee": {
+                                    "__typename": "ContextualUser",
+                                    "id": "Q29udGV4dHVhbFVzZXI6MTQ2OTMwMjQwMzI2NDk3NDE0Mw==",
+                                    "isSuperHost": true,
+                                    "location": "Việt Nam",
+                                    "userRepresentationUrl": {
+                                        "__typename": "UserRepresentationUrl",
+                                        "profilePictureUrl": "https://a0.muscache.com/im/pictures/user/08e14623-e663-445d-812f-38f7c590bef6.jpg?aki_policy=profile_x_medium"
+                                    },
+                                    "displayFirstName": "Thuỷ Tiên"
+                                },
+                                "contextualReviewer": {
+                                    "__typename": "ContextualUser",
+                                    "id": "Q29udGV4dHVhbFVzZXI6MTUzMzgwOTM3NjM3MzQxNDQ0MA==",
+                                    "isSuperHost": null,
+                                    "location": null,
+                                    "userRepresentationUrl": {
+                                        "__typename": "UserRepresentationUrl",
+                                        "profilePictureUrl": "https://a0.muscache.com/im/Portrait/Avatars/messaging/b3e03835-ade9-4eb7-a0bb-2466ab9a534d.jpg?im_t=P&im_w=240&im_f=airbnb-cereal-medium.ttf&im_c=ffffff"
+                                    },
+                                    "displayFirstName": "Phat"
+                                },
+                                "translation": null,
+                                "respondedAt": null,
+                                "revieweeRole": "HOST"
+                            }
+                        }
+                    }
+                ],
+                "pageInfo": {
+                    "__typename": "PageInfoWithCount",
+                    "totalCount": 308
+                }
+            },
+            "reviewsReceivedFromHosts": {
+                "__typename": "ContextualUserReviewConnection",
+                "edges": [
+                    {
+                        "__typename": "GuestUserReviewEdge",
+                        "node": {
+                            "__typename": "UserReviewTextSearch",
+                            "review": {
+                                "__typename": "StayListingReview",
+                                "id": "U3RheUxpc3RpbmdSZXZpZXc6MTUwOTk3MTEwOTYxODUyMDAyNg==",
+                                "createdAt": "2025-09-14T08:43:03.219Z",
+                                "commentV2": "It was a pleasure hosting Thuy Tien. From the moment she arrived, she was respectful, polite and followed all house rules very well. Communication was smooth throughout the stay. We’d gladly welcome her back anytime and recommend to any future host.",
+                                "photos": [],
+                                "localizedPaidPromotionDisclaimer": null,
+                                "displayRating": null,
+                                "publicResponse": null,
+                                "contextualReviewee": {
+                                    "__typename": "ContextualUser",
+                                    "id": "Q29udGV4dHVhbFVzZXI6MTQ3ODgxNTUzOTM0NzM1NzE5Mw==",
+                                    "isSuperHost": null,
+                                    "location": "Việt Nam",
+                                    "userRepresentationUrl": {
+                                        "__typename": "UserRepresentationUrl",
+                                        "profilePictureUrl": "https://a0.muscache.com/im/pictures/user/08e14623-e663-445d-812f-38f7c590bef6.jpg?aki_policy=profile_x_medium"
+                                    },
+                                    "displayFirstName": "Thuỷ Tiên"
+                                },
+                                "contextualReviewer": {
+                                    "__typename": "ContextualUser",
+                                    "id": "Q29udGV4dHVhbFVzZXI6MTQ2MjkzMjYwNDUxNjY4MDYxMA==",
+                                    "isSuperHost": true,
+                                    "location": "Thành phố Hồ Chí Minh, Việt Nam",
+                                    "userRepresentationUrl": {
+                                        "__typename": "UserRepresentationUrl",
+                                        "profilePictureUrl": "https://a0.muscache.com/im/pictures/user/User-126966244/original/9fee94aa-7da4-4826-ae4d-19aba840e421.jpeg?aki_policy=profile_x_medium"
+                                    },
+                                    "displayFirstName": "Austin & Vanessa"
+                                },
+                                "translation": {
+                                    "__typename": "UserProfileReviewTranslation",
+                                    "comments": "Rất vui được đón tiếp Thủy Tiên. Từ thời điểm cô đến, cô đã tôn trọng, lịch sự và tuân thủ tất cả các nội quy nhà rất tốt. Giao tiếp suôn sẻ trong suốt thời gian lưu trú. Chúng tôi rất vui được chào đón cô ấy trở lại bất cứ lúc nào và giới thiệu cho bất kỳ chủ nhà nào trong tương lai.",
+                                    "commentsLanguage": "en",
+                                    "disclaimer": "Đã dịch từ Tiếng Anh",
+                                    "response": null,
+                                    "responseDisclaimer": null,
+                                    "responseLanguage": null
+                                },
+                                "respondedAt": null,
+                                "revieweeRole": "GUEST"
+                            }
+                        }
+                    },
+                    {
+                        "__typename": "GuestUserReviewEdge",
+                        "node": {
+                            "__typename": "UserReviewTextSearch",
+                            "review": {
+                                "__typename": "StayListingReview",
+                                "id": "U3RheUxpc3RpbmdSZXZpZXc6MTUwODUxOTExODA0NDkxMjAzNw==",
+                                "createdAt": "2025-09-12T08:38:12.335Z",
+                                "commentV2": "Nice guests",
+                                "photos": [],
+                                "localizedPaidPromotionDisclaimer": null,
+                                "displayRating": null,
+                                "publicResponse": null,
+                                "contextualReviewee": {
+                                    "__typename": "ContextualUser",
+                                    "id": "Q29udGV4dHVhbFVzZXI6MTQ3ODgxNTUzOTM0NzM1NzE5Mw==",
+                                    "isSuperHost": null,
+                                    "location": "Việt Nam",
+                                    "userRepresentationUrl": {
+                                        "__typename": "UserRepresentationUrl",
+                                        "profilePictureUrl": "https://a0.muscache.com/im/pictures/user/08e14623-e663-445d-812f-38f7c590bef6.jpg?aki_policy=profile_x_medium"
+                                    },
+                                    "displayFirstName": "Thuỷ Tiên"
+                                },
+                                "contextualReviewer": {
+                                    "__typename": "ContextualUser",
+                                    "id": "Q29udGV4dHVhbFVzZXI6MTQ2OTMxNzczMjQ1MzkzODkwNQ==",
+                                    "isSuperHost": true,
+                                    "location": "Dalat, Việt Nam",
+                                    "userRepresentationUrl": {
+                                        "__typename": "UserRepresentationUrl",
+                                        "profilePictureUrl": "https://a0.muscache.com/im/pictures/user/User-248513037/original/3428ea9b-d310-4e20-ae8a-57e5c222fe41.jpeg?aki_policy=profile_x_medium"
+                                    },
+                                    "displayFirstName": "Nhung"
+                                },
+                                "translation": {
+                                    "__typename": "UserProfileReviewTranslation",
+                                    "comments": "Khách tốt",
+                                    "commentsLanguage": "en",
+                                    "disclaimer": "Đã dịch từ Tiếng Anh",
+                                    "response": null,
+                                    "responseDisclaimer": null,
+                                    "responseLanguage": null
+                                },
+                                "respondedAt": null,
+                                "revieweeRole": "GUEST"
+                            }
+                        }
+                    },
+                    {
+                        "__typename": "GuestUserReviewEdge",
+                        "node": {
+                            "__typename": "UserReviewTextSearch",
+                            "review": {
+                                "__typename": "StayListingReview",
+                                "id": "U3RheUxpc3RpbmdSZXZpZXc6MTM3NDM1NzMxOTA3MjM3NjU3Mw==",
+                                "createdAt": "2025-03-11T06:02:39.595Z",
+                                "commentV2": "Thuỷ Tiên was a respectful and responsible guest who made hosting easy. They left the place in perfect condition and were very easy to communicate with. I’d be more than happy to host them again",
+                                "photos": [],
+                                "localizedPaidPromotionDisclaimer": null,
+                                "displayRating": null,
+                                "publicResponse": null,
+                                "contextualReviewee": {
+                                    "__typename": "ContextualUser",
+                                    "id": "Q29udGV4dHVhbFVzZXI6MTQ3ODgxNTUzOTM0NzM1NzE5Mw==",
+                                    "isSuperHost": null,
+                                    "location": "Việt Nam",
+                                    "userRepresentationUrl": {
+                                        "__typename": "UserRepresentationUrl",
+                                        "profilePictureUrl": "https://a0.muscache.com/im/pictures/user/08e14623-e663-445d-812f-38f7c590bef6.jpg?aki_policy=profile_x_medium"
+                                    },
+                                    "displayFirstName": "Thuỷ Tiên"
+                                },
+                                "contextualReviewer": {
+                                    "__typename": "ContextualUser",
+                                    "id": "Q29udGV4dHVhbFVzZXI6MTQ3MDY0MjM1NzY5MDgyOTQ0Mg==",
+                                    "isSuperHost": true,
+                                    "location": "Thành phố Hồ Chí Minh, Việt Nam",
+                                    "userRepresentationUrl": {
+                                        "__typename": "UserRepresentationUrl",
+                                        "profilePictureUrl": "https://a0.muscache.com/im/pictures/user/User/original/b21a9d1f-13c4-48df-89b9-dc4e1ec74180.jpeg?aki_policy=profile_x_medium"
+                                    },
+                                    "displayFirstName": "Kolab Living"
+                                },
+                                "translation": {
+                                    "__typename": "UserProfileReviewTranslation",
+                                    "comments": "Thuỷ Tiên là một vị khách tôn trọng và có trách nhiệm, giúp việc đón tiếp khách trở nên dễ dàng. Họ rời khỏi nơi này trong tình trạng hoàn hảo và rất dễ liên lạc. Tôi sẽ rất vui được đón tiếp họ trở lại",
+                                    "commentsLanguage": "en",
+                                    "disclaimer": "Đã dịch từ Tiếng Anh",
+                                    "response": null,
+                                    "responseDisclaimer": null,
+                                    "responseLanguage": null
+                                },
+                                "respondedAt": null,
+                                "revieweeRole": "GUEST"
+                            }
+                        }
+                    },
+                    {
+                        "__typename": "GuestUserReviewEdge",
+                        "node": {
+                            "__typename": "UserReviewTextSearch",
+                            "review": {
+                                "__typename": "StayListingReview",
+                                "id": "U3RheUxpc3RpbmdSZXZpZXc6MTMxNTcwMzQ0MzkyMDU5MDIwMQ==",
+                                "createdAt": "2024-12-20T07:47:52.809Z",
+                                "commentV2": "Tien and her friends are nice guests. They took good care of the house and left things in good shape. I would recommend her to other hosts and love to welcome her back anytime.",
+                                "photos": [],
+                                "localizedPaidPromotionDisclaimer": null,
+                                "displayRating": null,
+                                "publicResponse": null,
+                                "contextualReviewee": {
+                                    "__typename": "ContextualUser",
+                                    "id": "Q29udGV4dHVhbFVzZXI6MTQ3ODgxNTUzOTM0NzM1NzE5Mw==",
+                                    "isSuperHost": null,
+                                    "location": "Việt Nam",
+                                    "userRepresentationUrl": {
+                                        "__typename": "UserRepresentationUrl",
+                                        "profilePictureUrl": "https://a0.muscache.com/im/pictures/user/08e14623-e663-445d-812f-38f7c590bef6.jpg?aki_policy=profile_x_medium"
+                                    },
+                                    "displayFirstName": "Thuỷ Tiên"
+                                },
+                                "contextualReviewer": {
+                                    "__typename": "ContextualUser",
+                                    "id": "Q29udGV4dHVhbFVzZXI6MTQ2OTMxNzczMjQ1MzkzODkwNQ==",
+                                    "isSuperHost": true,
+                                    "location": "Dalat, Việt Nam",
+                                    "userRepresentationUrl": {
+                                        "__typename": "UserRepresentationUrl",
+                                        "profilePictureUrl": "https://a0.muscache.com/im/pictures/user/User-248513037/original/3428ea9b-d310-4e20-ae8a-57e5c222fe41.jpeg?aki_policy=profile_x_medium"
+                                    },
+                                    "displayFirstName": "Nhung"
+                                },
+                                "translation": {
+                                    "__typename": "UserProfileReviewTranslation",
+                                    "comments": "Tiến và bạn bè của cô ấy là những vị khách tốt. Họ chăm sóc tốt ngôi nhà và để mọi thứ trong tình trạng tốt. Tôi sẽ giới thiệu cô ấy với các chủ nhà khác và muốn chào đón cô ấy trở lại bất cứ lúc nào.",
+                                    "commentsLanguage": "en",
+                                    "disclaimer": "Đã dịch từ Tiếng Anh",
+                                    "response": null,
+                                    "responseDisclaimer": null,
+                                    "responseLanguage": null
+                                },
+                                "respondedAt": null,
+                                "revieweeRole": "GUEST"
+                            }
+                        }
+                    }
+                ],
+                "pageInfo": {
+                    "__typename": "PageInfoWithCount",
+                    "totalCount": 4
+                }
+            }
+        }
+    },
+    "extensions": {
+        "traceId": "11bRegXVwhuIfKGoHWcWsg=="
+    }
+}

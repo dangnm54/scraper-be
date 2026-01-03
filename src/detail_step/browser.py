@@ -23,7 +23,7 @@ log = logging.getLogger(__name__)
 
 def crt_proxy_helper_extention(proxy_user: str, proxy_password: str, proxy_ip: str, proxy_port: str) -> str:
 
-    lg.log_divider('Create proxy helper extension')
+    lg.log_divider('crt_proxy_helper_extention')
 
     # 1. define directory (folder) for the extension
     extension_dir: str = 'proxy_auth_extension'
@@ -108,7 +108,7 @@ def crt_proxy_helper_extention(proxy_user: str, proxy_password: str, proxy_ip: s
 
 def config_basic_driver_setting(browser_mode: BrowserMode = 'local') -> EdgeOptions:
 
-    lg.log_divider('Config basic driver setting')
+    lg.log_divider('config_basic_driver_setting')
 
     options: EdgeOptions = EdgeOptions()
 
@@ -138,7 +138,7 @@ def config_basic_driver_setting(browser_mode: BrowserMode = 'local') -> EdgeOpti
 
 def config_proxy_driver_setting(extension_dir_ipt: str | None, options_ipt: EdgeOptions) -> EdgeOptions:
 
-    lg.log_divider('Config advanced driver setting')
+    lg.log_divider('config_proxy_driver_setting')
 
     logging.getLogger('selenium.webdriver.remote.remote_connection').setLevel(logging.WARNING)
     log.info(f'Configured minimal logging for selenium')
@@ -166,7 +166,7 @@ def config_proxy_driver_setting(extension_dir_ipt: str | None, options_ipt: Edge
 
 def start_browser(driver_path_ipt: str, option_ipt: EdgeOptions, browser_mode: BrowserMode = 'local') -> Tuple[WebDriver | None, WebDriverWait | None]:
 
-    lg.log_divider('Start browser')
+    lg.log_divider('start_browser')
 
     try:
         service: EdgeService = EdgeService(executable_path = driver_path_ipt, log_output=os.devnull)
@@ -224,12 +224,9 @@ def start_browser(driver_path_ipt: str, option_ipt: EdgeOptions, browser_mode: B
 
 
 
-
-
-
 def close_browser(driver: WebDriver) -> None:
 
-    lg.log_divider('Close browser')
+    lg.log_divider('close_browser')
 
     driver.quit()
     log.info('Close browser')

@@ -72,7 +72,6 @@ Refactor Phase 2 (Calendar): Biggest speed gain.
 Refactor Phase 3 (Details): Biggest stability gain.
 Refactor Phase 1 (Search): Optimization.
 
-
 ---------------------------------------------------------------------------------------------------------
 
 Here is your high-level roadmap for refactoring to a Hybrid Selenium/API scraper.
@@ -96,3 +95,9 @@ Milestone 4: Optimizing Search (Speed)
 Goal: Optimize scrape1.py to extract links faster.
 Key Task: Instead of scrolling and finding elements, parse the initial state data embedded in the HTML source.
 Concept to Learn: "Pre-loaded State" scraping (extracting JSON from <script> tags inside HTML).
+
+
+------------------------
+
+
+all the api information I provided you will be from my web browser using icognito mode
